@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · 3강 통합 마스터 | 2026 심화영어독해 II</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* 원본 CSS 스타일 유지 */
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · 3강 통합 마스터</div>
+      <div class="hdr-sub">2026 심화영어독해 II — 전지문 완전 분석 (진하 전용)</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">01</button><button class="nb" onclick="show('p2')">02</button><button class="nb" onclick="show('p3')">03</button>
+      <button class="nb" onclick="show('p4')">04</button><button class="nb" onclick="show('p5')">05</button><button class="nb" onclick="show('p6')">06</button>
+      <button class="nb" onclick="show('p7')">07</button><button class="nb" onclick="show('p8')">08</button><button class="nb" onclick="show('p9')">09</button>
+      <button class="nb" onclick="show('p10')">10</button><button class="nb" onclick="show('p11')">11</button><button class="nb" onclick="show('p12')">12</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">Focus Framework · 3강 통합 인덱스</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:22px;">1번부터 12번까지 모든 분석 내용이 요약 없이 원문 그대로 포함되어 있습니다. 학습할 지문을 선택하세요.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')"><div class="toc-en">#001 Self-Esteem and Evaluative Consistency</div><div class="toc-ko">자존감과 자기 평가의 일관성</div></a>
+    <a class="toc-card" onclick="show('p2')"><div class="toc-en">#002 Literacy and Quality of Life</div><div class="toc-ko">문해력과 사회의 삶의 질 관계</div></a>
+    <a class="toc-card" onclick="show('p3')"><div class="toc-en">#003 Cultural Differences in Attention</div><div class="toc-ko">주의 과정에서의 문화적 차이</div></a>
+    <a class="toc-card" onclick="show('p4')"><div class="toc-en">#004 Latent Demand and Price</div><div class="toc-ko">가격 하락으로 인한 잠재 수요의 가시화</div></a>
+    <a class="toc-card" onclick="show('p5')"><div class="toc-en">#005 Historical Narratives</div><div class="toc-ko">역사적 내러티브의 구성과 의미 부여</div></a>
+    <a class="toc-card" onclick="show('p6')"><div class="toc-en">#006 Prestige and Cultural Transmission</div><div class="toc-ko">명망(Prestige)과 문화적 전파</div></a>
+    <a class="toc-card" onclick="show('p7')"><div class="toc-en">#007 Emotion vs Feeling</div><div class="toc-ko">감정과 느낌의 차이 및 의사결정</div></a>
+    <a class="toc-card" onclick="show('p8')"><div class="toc-en">#008 Irrigation and Power in Mesopotamia</div><div class="toc-ko">메소포타미아의 관개와 권력의 집중</div></a>
+    <a class="toc-card" onclick="show('p9')"><div class="toc-en">#009 Culture vs Civilization</div><div class="toc-ko">문화와 문명의 상반된 성격과 교류</div></a>
+    <a class="toc-card" onclick="show('p10')"><div class="toc-en">#010 Representation in Science and Democracy</div><div class="toc-ko">과학과 민주주의의 기반으로서의 대표성</div></a>
+    <a class="toc-card" onclick="show('p11')"><div class="toc-en">#011 Climate, Geology and Soil Fertility</div><div class="toc-ko">기후와 지질이 토양 비옥도에 미치는 영향</div></a>
+    <a class="toc-card" onclick="show('p12')"><div class="toc-en">#012 Information Sharing and Trust</div><div class="toc-ko">팀 내 신뢰의 척도로서의 정보 공유</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p1">
+  <div class="p-header"><div class="p-code">#001</div><div class="p-title">Self-Esteem and Evaluative Consistency</div></div>
+  <div class="card"><div class="plain-passage-box"><p class="plain-sent">There is evidence that low self-esteem people are <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p><p class="plain-sent">When Campbell and Fehr examined how subjects rated themselves on sets of adjectives that were either uniformly positive or uniformly negative, subjects with low self-esteem not only gave ratings that were (on average) less positive or more negative, but their ratings within each set exhibited more individual scatter or greater variance.</p><p class="plain-sent">High self-esteem subjects strongly and consistently endorsed the positive adjectives and rejected the negative adjectives.</p><p class="plain-sent">Low self-esteem subjects did not, in contrast, strongly and consistently endorse the negative adjectives and reject the positive adjectives.</p><p class="plain-sent">Rather, they gave more intermediate ratings and more variable ratings to both types of adjectives.</p><p class="plain-sent">Therefore, it appears that low and high self-esteem individuals differ not only in the average positivity of their self-views, but also in the extent to which their self-views are evaluatively consistent with one another.</p></div></div>
+  <div class="card"><div class="q-block"><div class="q-type">빈칸 추론</div><div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div><div class="choices"><div class="choice"><span class="cn">①</span> inherently sensitive to their own interpretations of situations</div><div class="choice"><span class="cn">②</span> relatively stable despite changes in interpersonal dynamics</div><div class="choice"><span class="cn">③</span> less evaluatively consistent in their self-descriptions</div><div class="choice"><span class="cn">④</span> consistently refined in response to evolving self-perceptions</div><div class="choice"><span class="cn">⑤</span> solely dependent on validation from peers and significant others</div></div></div><div class="ans-box"><div class="ans-lbl">정답 및 해설</div><div class="ans-num">정답: <span class="ans">③ less evaluatively consistent in their self-descriptions</span></div><div class="ans-exp">자존감이 높은 사람들은 긍정적 단어는 인정하고 부정적 단어는 거부하며 일관성을 보였으나, 자존감이 낮은 사람들은 중간적이고 변동이 심한 평가를 내렸습니다. 결론 문장에서 자존감이 낮은 이들은 '평가적으로 일관된 정도'에서 차이가 난다고 명시합니다.</div></div></div>
+  <div class="card"><div class="card-lbl">02 구문 해석</div><div class="passage-box">
+    <div class="sp"><div class="sp-en">There is evidence <span class="gr">[= that low <span class="vw">self-esteem<span class="tt">자존감</span></span> people are <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>]</span>.</div><div class="sp-ko">자존감이 낮은 사람들이 ____________ 하다는 증거가 있다. <span class="sp-note">★ 선생님 필기: [= that ... ] 동격의 that. evidence의 구체적 내용을 설명하며, 이 부분이 글 전체의 주제이자 결론입니다.</span></div></div>
+    <div class="sp"><div class="sp-en">When Campbell and Fehr examined how subjects <span class="vw">rating<span class="tt">평가</span></span>ed themselves on sets of <span class="vw">adjective<span class="tt">형용사</span></span>s that were either <span class="vw">uniformly<span class="tt">일관되게</span></span> positive or <span class="vw">uniformly<span class="tt">일관되게</span></span> negative, subjects with low <span class="vw">self-esteem<span class="tt">자존감</span></span> not only gave ratings that were (on average) less positive or more negative, but their ratings within each set <span class="vw">exhibit<span class="tt">보이다</span></span>ed more individual <span class="vw">scatter<span class="tt">산포도</span></span> or greater <span class="vw">variance<span class="tt">분산</span></span>.</div><div class="sp-ko">Campbell과 Fehr가 피실험자들이 일관되게 긍정적이거나 일관되게 부정적인 형용사 세트에 대해 자신을 어떻게 평가하는지 조사했을 때, 자존감이 낮은 피실험자들은 (평균적으로) 덜 긍정적이거나 더 부정적인 평가를 내렸을 뿐만 아니라, 각 세트 내에서의 그들의 평가가 더 많은 개별적 산포도나 더 큰 분산을 보였다.</div></div>
+    <div class="sp"><div class="sp-en">High <span class="vw">self-esteem<span class="tt">자존감</span></span> subjects strongly and <span class="vw">consistently<span class="tt">일관되게</span></span> <span class="vw">endorse<span class="tt">인정하다</span></span>d the positive <span class="vw">adjective<span class="tt">형용사</span></span>s and rejected the negative <span class="vw">adjective<span class="tt">형용사</span></span>s.</div><div class="sp-ko">자존감이 높은 피실험자들은 강력하고 일관되게 긍정적인 형용사를 인정하고 부정적인 형용사를 거부했다.</div></div>
+    <div class="sp"><div class="sp-en">Low <span class="vw">self-esteem<span class="tt">자존감</span></span> subjects did not, in contrast, strongly and <span class="vw">consistently<span class="tt">일관되게</span></span> <span class="vw">endorse<span class="tt">인정하다</span></span> the negative <span class="vw">adjective<span class="tt">형용사</span></span>s and reject the positive <span class="vw">adjective<span class="tt">형용사</span></span>s.</div><div class="sp-ko">대조적으로, 자존감이 낮은 피실험자들은 강력하고 일관되게 부정적인 형용사를 인정하고 긍정적인 형용사를 거부하지 않았다.</div></div>
+    <div class="sp"><div class="sp-en">Rather, <span class="gr">they(=low self-esteem subjects)</span> gave more <span class="vw">intermediate<span class="tt">중간적인</span></span> ratings and more <span class="vw">variable<span class="tt">가변적인</span></span> ratings to both types (= negative and positive types) of <span class="vw">adjective<span class="tt">형용사</span></span>s.</div><div class="sp-ko">오히려 그들(자존감 낮은 피실험자들)은 두 가지 유형의 형용사 모두에 대해 더 중간적인 평가와 더 변동이 심한 평가를 내렸다. <span class="sp-note">★ 대명사 지칭: they = low self-esteem subjects</span></div></div>
+    <div class="sp"><div class="sp-en">Therefore, it appears that low and high <span class="vw">self-esteem<span class="tt">자존감</span></span> individuals differ not only in the average <span class="vw">positivity<span class="tt">긍정성</span></span> of their self-views, but also in the extent to which their self-views are <span class="vw">evaluatively<span class="tt">평가적으로</span></span> consistent with one another.</div><div class="sp-ko">따라서 자존감이 낮고 높은 개인들은 자아관의 평균적인 긍정성뿐만 아니라, 그들의 자아관이 서로 평가적으로 일관된 정도에서도 차이가 나는 것으로 보인다. <span class="sp-note">★ not only A but also B 구문 유의</span></div></div>
+  </div></div>
+  <div class="card"><div class="card-lbl">03 Topic & 04 Framework</div><div class="topic-box">자존감이 낮고 높은 개인들 간의 자아관에 대한 평가적 일관성의 차이</div><table class="fw-table"><thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead><tbody><tr><td><span class="step-badge">① Intro</span></td><td>Evidence of low consistency</td><td>자존감 낮은 사람은 자기 평가 일관성이 낮음.</td></tr><tr><td><span class="step-badge">② Dev</span></td><td>Experiment results</td><td>높은 그룹은 긍정특성 일관 수용, 낮은 그룹은 변동 심함.</td></tr><tr><td><span class="step-badge">③ Con</span></td><td>Evaluation consistency</td><td>자존감 수준은 평가의 '일관성' 차이로 나타남.</td></tr></tbody></table></div>
+  <div class="card"><div class="card-lbl">05 Focus Vocabulary</div><table class="voca-table"><thead><tr><th>단어</th><th>의미</th></tr></thead><tbody><tr><td class="vw-word">self-esteem</td><td>자존감</td></tr><tr><td class="vw-word">uniformly</td><td>일관되게</td></tr><tr><td class="vw-word">variance</td><td>분산</td></tr><tr><td class="vw-word">endorse</td><td>인정하다</td></tr></tbody></table></div>
+</div>
+
+<div class="sec" id="p2">
+  <div class="p-header"><div class="p-code">#002</div><div class="p-title">Literacy and Quality of Life</div></div>
+  <div class="card"><div class="plain-passage-box">
+    <p class="plain-sent">The power and value of being literate in a literate society are played out every day around the world.</p>
+    <p class="plain-sent">Societies that do not practice literate behavior are often squalid, undernourished in mind and body, repressive of human rights and dignity, brutal, and harsh.</p>
+    <p class="plain-sent">As Samuel Johnson observed more than two centuries ago, "The mass of every people must be barbarous where there is no printing."</p>
+    <p class="plain-sent">We admit that various forms of "barbarity" can be found in all societies, but they are much more prevalent where <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+    <p class="plain-sent">Literacy and quality of life go hand in hand. Once you learn to read, you will be forever free.</p>
+  </div></div>
+  <div class="card"><div class="ans-box"><div class="ans-num">정답: <span class="ans">④ literate behavior is absent</span></div><div class="ans-exp">문해력과 삶의 질은 밀접한 관련이 있습니다. 인쇄가 없는 곳에 야만성이 있다는 언급에 따라 야만성이 널리 퍼진 곳은 문해 행동이 없는 곳입니다.</div></div></div>
+  <div class="card"><div class="card-lbl">02 구문 해석</div><div class="passage-box">
+    <div class="sp"><div class="sp-en">The power and value of being <span class="vw">literate<span class="tt">문해력 있는</span></span> in a literate society are <span class="vw">play out<span class="tt">발생하다</span></span>ed every day around the world.</div><div class="sp-ko">문해 사회에서 문해력을 갖추는 것의 힘과 가치는 전 세계에서 매일 발휘되고 있다.</div></div>
+    <div class="sp"><div class="sp-en">Societies that do not practice literate behavior are often <span class="vw">squalid<span class="tt">지저분한</span></span>, <span class="vw">undernourished<span class="tt">피폐한</span></span> in mind and body, <span class="vw">repressive<span class="tt">억압하는</span></span> of human rights and <span class="vw">dignity<span class="tt">존엄</span></span>, <span class="vw">brutal<span class="tt">잔인한</span></span>, and <span class="vw">harsh<span class="tt">가혹한</span></span>.</div><div class="sp-ko">문해 행동을 실천하지 않는 사회는 종종 지저분하고, 심신이 영양 부족 상태이며, 인권과 존엄성을 억압하고, 잔인하며, 가혹하다.</div></div>
+    <div class="sp"><div class="sp-en"><span class="gr">With literacy comes the power of belonging to a <span class="vw">privileged<span class="tt">특권이 있는</span></span> group and the freedom that <span class="vw">derive from<span class="tt">파생되다</span></span>s from that power.</span></div><div class="sp-ko">문해력과 함께 특권 그룹에 속하는 힘과 그 힘에서 파생되는 자유가 온다. <span class="sp-note">★ 도치 구문 주의! 부사구 강조로 인한 주어-동사 위치 변경.</span></div></div>
+  </div></div>
+</div>
+
+<div class="sec" id="p3">
+  <div class="p-header"><div class="p-code">#003</div><div class="p-title">Cultural Differences in Attention</div></div>
+  <div class="card"><div class="plain-passage-box">
+    <p class="plain-sent">Culturally shared views of the self have been suggested <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+    <p class="plain-sent">In Western cultures, individuals are encouraged to discover their internal attributes... and focus their attention on events relevant to such goals. This cognitive style has been called analytic.</p>
+    <p class="plain-sent">In contrast, in Eastern cultures individuals are more attuned to social relations... attend more broadly to a focal object as well as its context. This mode of cognition has been called holistic.</p>
+  </div></div>
+  <div class="card"><div class="ans-box"><div class="ans-num">정답: <span class="ans">③ to have profound influences on basic attention processes</span></div><div class="ans-exp">서양은 내적 속성에 집중하는 '분석적' 인지 스타일을, 동양은 맥락과 관계를 중시하는 '총체적' 인지 스타일을 보인다는 점에서 문화적 자아관이 주의 과정에 깊은 영향을 미침을 알 수 있습니다.</div></div></div>
+  <div class="card"><div class="card-lbl">02 구문 해석</div><div class="passage-box">
+    <div class="sp"><div class="sp-en">This <span class="vw">cognitive<span class="tt">인지적인</span></span> style, <span class="gr">which is <span class="vw">be anchored in<span class="tt">기반을 둔</span></span> a focal object <span class="vw">in lieu of<span class="tt">~대신에</span></span> its context</span>, has been called <span class="vw">analytic<span class="tt">분석적인</span></span>.</div><div class="sp-ko">맥락 대신 중심 대상에 단단히 기반을 둔 이 인지 스타일은 분석적이라 불린다. <span class="sp-note">★ 계속적 용법의 관계대명사 which</span></div></div>
+    <div class="sp"><div class="sp-en"><span class="gr">In contrast</span>, in Eastern cultures... they may be expected to attend more <span class="vw">broadly<span class="tt">폭폭게</span></span> to a focal object <span class="gr">as well as</span> to its surrounding context...</div><div class="sp-ko">대조적으로, 동양 문화에서는 중심 대상뿐만 아니라 주변 맥락에도 폭넓게 주의를 기울일 것으로 기대된다. <span class="sp-note">★ B as well as A: A뿐만 아니라 B도</span></div></div>
+  </div></div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
