@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 중간고사 대비 · 빈칸 유형 통합본 | 진하 전용</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">2026 중간고사 대비 마스터</div>
+      <div class="hdr-sub">심화영어독해 II — 빈칸 유형 (01번~12번) 전지문 분석</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">01</button><button class="nb" onclick="show('p2')">02</button><button class="nb" onclick="show('p3')">03</button>
+      <button class="nb" onclick="show('p4')">04</button><button class="nb" onclick="show('p5')">05</button><button class="nb" onclick="show('p6')">06</button>
+      <button class="nb" onclick="show('p7')">07</button><button class="nb" onclick="show('p8')">08</button><button class="nb" onclick="show('p9')">09</button>
+      <button class="nb" onclick="show('p10')">10</button><button class="nb" onclick="show('p11')">11</button><button class="nb" onclick="show('p12')">12</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">2026 중간고사 대비 빈칸 유형 인덱스</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:22px;">제공된 4개 파일의 모든 데이터가 통합되었습니다. 학습할 지문을 선택하세요.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')"><div class="toc-en">#01 Categorization without Typicality</div><div class="toc-ko">전형성에 의존하지 않는 범주 판단</div></a>
+    <a class="toc-card" onclick="show('p2')"><div class="toc-en">#02 Incentives Undermine Motivation</div><div class="toc-ko">유인책이 내재적 동기에 미치는 영향</div></a>
+    <a class="toc-card" onclick="show('p3')"><div class="toc-en">#03 Replication in Science</div><div class="toc-ko">과학 이론 발전에서 반복 실험의 역할</div></a>
+    <a class="toc-card" onclick="show('p4')"><div class="toc-en">#04 Driving and Mobile Phones</div><div class="toc-ko">운전 중 휴대 전화 통화 시 방해 요소</div></a>
+    <a class="toc-card" onclick="show('p5')"><div class="toc-en">#05 Economics of Bundling</div><div class="toc-ko">상품 및 서비스 묶음 판매의 경제학</div></a>
+    <a class="toc-card" onclick="show('p6')"><div class="toc-en">#06 Refining Hypotheses</div><div class="toc-ko">연구 가설 수정을 위한 개념 세분화</div></a>
+    <a class="toc-card" onclick="show('p7')"><div class="toc-en">#07 Accuracy of Oral Cultures</div><div class="toc-ko">구전 문화의 정보 전달의 정확성</div></a>
+    <a class="toc-card" onclick="show('p8')"><div class="toc-en">#08 Emotions as Adaptations</div><div class="toc-ko">이로운 적응 기제로서의 감정</div></a>
+    <a class="toc-card" onclick="show('p9')"><div class="toc-en">#09 US Farm Homesteads</div><div class="toc-ko">미국 자영 농지의 인위적 분배 방식</div></a>
+    <a class="toc-card" onclick="show('p10')"><div class="toc-en">#10 Exaggeration in Competition</div><div class="toc-ko">동물들의 경쟁에서의 과장된 행동</div></a>
+    <a class="toc-card" onclick="show('p11')"><div class="toc-en">#11 Failure of Natural Philosophy</div><div class="toc-ko">고대 문화에서 자연 철학이 발달하지 못한 이유</div></a>
+    <a class="toc-card" onclick="show('p12')"><div class="toc-en">#12 Quasiregularity in Language</div><div class="toc-ko">언어의 준규칙성과 유연성</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p1">
+  <div class="p-header"><div class="p-code">01</div><div class="p-title">Categorization without Typicality</div></div>
+  <div class="card"><div class="plain-passage-box"><p class="plain-sent">How are category judgments made when they don't rely on <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>?</p><p class="plain-sent">As an approach to this question, let's think through an example. Consider a lemon...</p></div></div>
+  </div>
+
+</main>
+<script>
+const ids = ['home','p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
