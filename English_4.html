@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · 4강 완전 분석 | 2026 심화영어독해 II</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f2ec;
+  --paper: #fefcf8;
+  --ink: #1c1812;
+  --ink2: #4a3f30;
+  --ink3: #7a6e60;
+  --accent: #7c3d12;
+  --accent2: #b05a1e;
+  --blue: #1a4b8c;
+  --blue-light: #2563b0;
+  --blue-bg: rgba(26,75,140,0.07);
+  --green: #1a6b3a;
+  --green-bg: rgba(26,107,58,0.09);
+  --orange: #c05010;
+  --orange-bg: rgba(192,80,16,0.09);
+  --border: #ddd5c5;
+  --border2: #ece5d8;
+  --shadow: rgba(80,50,20,0.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+
+/* ─── HEADER ─── */
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.72rem;opacity:.55;margin-top:2px;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+
+/* ─── LAYOUT ─── */
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── TOC ─── */
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;transition:all .2s;text-decoration:none;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);}
+.toc-code{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;line-height:1.35;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+
+/* ─── PASSAGE HEADER ─── */
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;font-style:italic;}
+
+/* ─── CARD ─── */
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.p-gap{margin-bottom:30px;}
+
+/* ─── VOCAB TABLE ─── */
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);vertical-align:top;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.95rem;}
+.vw-mean{color:var(--ink2);line-height:1.5;}
+.vw-extra{font-size:.78rem;color:var(--ink3);margin-top:2px;}
+
+/* ─── PASSAGE TEXT ─── */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 (원문)';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+
+/* Sentence pairs */
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;color:var(--ink);}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;font-family:'Noto Sans KR',sans-serif;}
+
+/* Vocab word highlight (blue + tooltip) */
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100%+7px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+
+/* Grammar highlight (green) */
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+
+/* Answer highlight (orange underline) */
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:2px;}
+
+/* Blank */
+.bk{display:inline-block;border-bottom:2.5px solid var(--ink);min-width:200px;margin:0 3px;vertical-align:bottom;}
+
+/* Footnote */
+.fn{font-size:.77rem;color:var(--ink3);margin-top:12px;border-top:1px solid var(--border2);padding-top:10px;font-style:italic;line-height:1.6;}
+
+/* ─── GRAMMAR NOTE ─── */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;margin-top:10px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;letter-spacing:.06em;margin-bottom:8px;}
+.gr-note p{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:6px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+
+/* ─── QUESTION ─── */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:14px;}
+.q-type{font-size:.68rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:10px;text-transform:uppercase;}
+.q-stem{font-size:.91rem;font-weight:700;color:var(--ink);line-height:1.55;margin-bottom:14px;}
+.q-stem em{font-style:italic;border-bottom:2.5px solid var(--ink);padding-bottom:1px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;line-height:1.55;padding:7px 12px;border-radius:5px;border:1px solid transparent;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;color:var(--ink);}
+
+/* ─── ANSWER ─── */
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:7px;}
+.ans-num{font-size:1.05rem;font-weight:700;color:var(--orange);margin-bottom:8px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;}
+.ans-exp strong{color:var(--ink);}
+
+/* ─── TOPIC ─── */
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;border-radius:0 7px 7px 0;margin-bottom:14px;font-size:.9rem;line-height:1.65;}
+.topic-ko{margin-top:8px;font-size:.8rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:8px;font-style:italic;}
+
+/* ─── FRAMEWORK TABLE ─── */
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:9px 15px;text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.06em;margin-bottom:4px;}
+.logic-sub{font-size:.7rem;color:var(--accent2);font-weight:600;margin-bottom:4px;}
+.fw-ko{margin-top:8px;font-size:.79rem;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:8px;}
+
+/* ─── DIVIDER ─── */
+.divider{height:1px;background:linear-gradient(to right,var(--border),transparent);margin:20px 0;}
+
+/* Responsive */
+@media(max-width:640px){
+  .hdr-inner{flex-direction:column;align-items:flex-start;}
+  .card{padding:16px;}
+  .passage-box{padding:16px 18px;}
+}
+@media print{
+  .site-header,.hdr-nav{display:none;}
+  .sec{display:block!important;}
+  .card{page-break-inside:avoid;}
+}
+
+/* ─── PLAIN PASSAGE (문제용 원문) ─── */
+.plain-passage-card { background: #fffef9; }
+.plain-passage-box {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 24px 28px;
+  position: relative;
+}
+.plain-passage-box::before {
+  content: '본문';
+  position: absolute;
+  top: -10px; left: 16px;
+  background: var(--paper);
+  padding: 0 8px;
+  font-size: .62rem; letter-spacing: .15em;
+  color: var(--ink); font-weight: 700;
+}
+.plain-sent {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.05rem;
+  line-height: 1.95;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.plain-bk {
+  display: inline-block;
+  border-bottom: 2.5px solid var(--ink);
+  min-width: 200px;
+  margin: 0 3px;
+  vertical-align: bottom;
+}
+.plain-fn {
+  font-size: .77rem;
+  color: var(--ink3);
+  margin-top: 14px;
+  border-top: 1px solid var(--border2);
+  padding-top: 10px;
+  font-style: italic;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · 4강 완전 분석</div>
+      <div class="hdr-sub">2026 고3 1학기 심화영어독해 II — 빈칸추론·어휘·구문·Topic·Logical Framework</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">001</button>
+      <button class="nb" onclick="show('p2')">002</button>
+      <button class="nb" onclick="show('p3')">003</button>
+      <button class="nb" onclick="show('p4')">004</button>
+      <button class="nb" onclick="show('p5')">005</button>
+      <button class="nb" onclick="show('p6')">006</button>
+      <button class="nb" onclick="show('p7')">007</button>
+      <button class="nb" onclick="show('p8')">008</button>
+      <button class="nb" onclick="show('p9')">009</button>
+      <button class="nb" onclick="show('p10')">010</button>
+      <button class="nb" onclick="show('p11')">011</button>
+      <button class="nb" onclick="show('p12')">012</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ══════════════ HOME ══════════════ -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">Focus Framework · 4강 전체 목록</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">총 12개 지문 · 각 지문을 클릭하면 원문 / 구문별 해석 / 어휘 / 문법 / Topic / Logical Framework / 정답 해설을 모두 확인할 수 있습니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')"><div class="toc-code">#001 · 26007-0037 · 쪽 042</div><div class="toc-en">Categorization & Fear of Bats</div><div class="toc-ko">확률론적 범주화와 박쥐에 대한 두려움</div></a>
+    <a class="toc-card" onclick="show('p2')"><div class="toc-code">#002 · 26007-0038 · 쪽 043</div><div class="toc-en">Brilliant Leadership & Authenticity</div><div class="toc-ko">진정성 있는 뛰어난 리더십</div></a>
+    <a class="toc-card" onclick="show('p3')"><div class="toc-code">#003 · 26007-0039 · 쪽 044</div><div class="toc-en">Language vs. Emotion</div><div class="toc-ko">언어와 감정의 병렬적 독립성</div></a>
+    <a class="toc-card" onclick="show('p4')"><div class="toc-code">#004 · 26007-0040 · 쪽 045</div><div class="toc-en">All-or-Nothing Environmentalism</div><div class="toc-ko">완벽하지 않아도 괜찮은 친환경 실천</div></a>
+    <a class="toc-card" onclick="show('p5')"><div class="toc-code">#005 · 26007-0041 · 쪽 046</div><div class="toc-en">Marginal Utility & Sports</div><div class="toc-ko">한계효용과 프로 스포츠의 역설</div></a>
+    <a class="toc-card" onclick="show('p6')"><div class="toc-code">#006 · 26007-0042 · 쪽 047</div><div class="toc-en">Quiet Activism in Fashion</div><div class="toc-ko">슬로 패션과 조용한 행동주의</div></a>
+    <a class="toc-card" onclick="show('p7')"><div class="toc-code">#007 · 26007-0043 · 쪽 048</div><div class="toc-en">Natural Meaning (Grice)</div><div class="toc-ko">Grice의 자연적 의미 이론</div></a>
+    <a class="toc-card" onclick="show('p8')"><div class="toc-code">#008 · 26007-0044 · 쪽 049</div><div class="toc-en">Paradox of Scientific Control</div><div class="toc-ko">과학적 통제의 역설</div></a>
+    <a class="toc-card" onclick="show('p9')"><div class="toc-code">#009 · 26007-0045 · 쪽 050</div><div class="toc-en">Animal Welfare & Natural Behaviour</div><div class="toc-ko">동물 복지와 자연 행동 레퍼토리</div></a>
+    <a class="toc-card" onclick="show('p10')"><div class="toc-code">#010 · 26007-0046 · 쪽 051</div><div class="toc-en">Electoral Systems Typology</div><div class="toc-ko">선거 제도의 유형 분류 체계</div></a>
+    <a class="toc-card" onclick="show('p11')"><div class="toc-code">#011 · 26007-0047 · 쪽 052</div><div class="toc-en">Melody as Abstract Prototype</div><div class="toc-ko">멜로디는 추상적 원형</div></a>
+    <a class="toc-card" onclick="show('p12')"><div class="toc-code">#012 · 26007-0048 · 쪽 053</div><div class="toc-en">De Correspondent & Active Readers</div><div class="toc-ko">독자 참여형 저널리즘</div></a>
+  </div>
+</div>
+
+<!-- ══════════════ P001 ══════════════ -->
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 042 · #번 001 · #문항코드 26007-0037</div>
+    <div class="p-title">Categorization & Fear of Bats</div>
+    <div class="p-title-ko">확률론적 범주화와 박쥐에 대한 두려움 · 빈칸 추론</div>
+  </div>
+
+  <!-- VOCAB -->
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">In the probabilistic view, the typical exemplars or category members are recognized more quickly because they share more features with other category members.</p>
+        <p class="plain-sent">In a sense, the typical category member is closer to the centre of the category.</p>
+        <p class="plain-sent">And a similar effect might be observed with the exceptional category members.</p>
+        <p class="plain-sent">A very atypical member of a category (like bats as atypical mammals, or even as atypical birds if your category for "bird" is based on observable features) is really an outlier.</p>
+        <p class="plain-sent">It really is the case that the bat is a lousy member of the mammal category.</p>
+        <p class="plain-sent">It looks like a bird, acts like a bird, and cannot see very well.</p>
+        <p class="plain-sent">A probabilistic categorization system would assume that bats will be misclassified and will present people with some difficulty.</p>
+        <p class="plain-sent">It is plausible that our own inability to classify them readily corresponds to the fact that bats are often feared.</p>
+        <p class="plain-sent">Perhaps we fear bats because <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+<div class="plain-fn">* outlier: 관측된 데이터의 분포에서 많이 벗어난 것 &nbsp;&nbsp;** lousy: 형편없는 &nbsp;&nbsp;*** plausible: 가능성이 있어 보이는, 그럴듯한</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 (Blank Completion)</div>
+      <div class="q-stem">Perhaps we fear bats because <span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:220px;">&nbsp;</span>.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> they often cause harm to other groups, including mammals and birds</div>
+        <div class="choice"><span class="cn">②</span> they tend to match our observable predictions accurately</div>
+        <div class="choice"><span class="cn">③</span> we observe only the features they share with mammals</div>
+        <div class="choice"><span class="cn">④</span> they do not fit into a simple, basic category very easily</div>
+        <div class="choice"><span class="cn">⑤</span> they rarely act like they belong to a different group</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">④ they do not fit into a simple, basic category very easily</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> "It is plausible that our own <u>inability to classify them readily</u> corresponds to the fact that bats are often feared." → 분류하기 어렵다 = 두려움의 원인.<br><br>
+        <strong>정답 근거:</strong> ④ "they do not fit into a simple, basic category very easily"는 "classify them readily"의 paraphrase.<br><br>
+        <strong>오답 분석:</strong> ①은 본문에 언급 없음 / ②는 본문과 반대 방향 / ③은 포유류 특징에만 집중(범주화 어려움을 설명 못 함) / ⑤는 "다른 그룹처럼 행동한다"가 오히려 본문 내용(새처럼 행동)과 반대
+      </div>
+    </div>
+  </div>
+
+  <!-- TOPIC -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+
+      <div class="sp">
+        <div class="sp-en">In the <span class="vw">probabilistic<span class="tt">확률론적인</span></span> view, the <span class="vw">typical<span class="tt">전형적인</span></span> <span class="vw">exemplar<span class="tt">전형적인 예, 본보기</span></span>s or <span class="vw">category<span class="tt">범주</span></span> members are <span class="vw">recognize<span class="tt">인식하다</span></span>d more quickly because they share more <span class="vw">feature<span class="tt">특징</span></span>s with other <span class="vw">category<span class="tt">범주</span></span> members.</div>
+        <div class="sp-ko">확률론적 관점에서, / 전형적인 예시들 또는 범주 구성원들은 / 다른 범주 구성원들과 더 많은 특징을 공유하기 때문에 / 더 빠르게 인식된다.</div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">In a sense, the <span class="vw">typical<span class="tt">전형적인</span></span> <span class="vw">category<span class="tt">범주</span></span> member is closer to the centre of the <span class="vw">category<span class="tt">범주</span></span>.</div>
+        <div class="sp-ko">어떤 의미에서, / 전형적인 범주 구성원은 / 그 범주의 중심에 더 가깝다.</div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">And a similar effect might be observed with the <span class="vw">exceptional<span class="tt">예외적인</span></span> <span class="vw">category<span class="tt">범주</span></span> members.</div>
+        <div class="sp-ko">그리고 비슷한 효과가 / 예외적인 범주 구성원들에게서도 / 관찰될 수 있다.</div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">A very <span class="vw">atypical<span class="tt">비전형적인</span></span> member of a <span class="vw">category<span class="tt">범주</span></span> (<span class="gr">like bats as atypical mammals, or even as atypical birds if your category for "bird" is based on observable features</span>) is really an <span class="vw">outlier<span class="tt">관측 분포에서 벗어난 것</span></span>.</div>
+        <div class="sp-ko">한 범주의 매우 비전형적인 구성원은 / (마치 비전형적 포유류로서의 박쥐처럼, / 혹은 심지어 "새"에 대한 범주가 관찰 가능한 특징에 기반한다면 비전형적 새처럼) / 사실 이상치(outlier)이다.</div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en"><span class="gr">It really is the case [that the bat is a <span class="vw">lousy<span class="tt">형편없는</span></span> member of the mammal <span class="vw">category<span class="tt">범주</span></span>]</span>.</div>
+        <div class="sp-ko">박쥐가 포유류 범주의 형편없는 구성원이라는 것은 / 실제로 사실이다. <span class="sp-note">★ It ~ that 강조구문</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">It(= the bat) looks like a bird, acts like a bird, and cannot see very well.</div>
+        <div class="sp-ko">박쥐는 새처럼 생겼고, / 새처럼 행동하며, / 시력도 매우 좋지 않다.</div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">A <span class="vw">probabilistic<span class="tt">확률론적인</span></span> categorization system would <span class="vw">assume<span class="tt">추정하다</span></span> <span class="gr">that bats will be <span class="vw">misclassify<span class="tt">잘못 분류하다</span></span>ied and will present people with some difficulty</span>.</div>
+        <div class="sp-ko">확률론적 범주화 시스템은 / 박쥐가 잘못 분류될 것이라고 추정할 것이며 / 사람들에게 어느 정도의 어려움을 줄 것이다. <span class="sp-note">★ assume that절</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en"><span class="gr">It is <span class="vw">plausible<span class="tt">그럴듯한</span></span> [that our own inability to classify them <span class="vw">readily<span class="tt">쉽게</span></span> <span class="vw">correspond to<span class="tt">~에 상응하다</span></span>s to the fact [that bats are often <span class="vw">fear<span class="tt">두려워하다</span></span>ed]]</span>.</div>
+        <div class="sp-ko">우리 스스로 박쥐를 쉽게 분류하지 못하는 것이 / 박쥐가 종종 두려움의 대상이 된다는 사실에 / 상응한다는 것은 그럴듯하다. <span class="sp-note">★ It is plausible that ~ (가주어·진주어) / the fact that ~ (동격 that절)</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">Perhaps we <span class="vw">fear<span class="tt">두려워하다</span></span> bats because <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">아마도 우리는 박쥐를 두려워하는데, / 왜냐하면 ___________________________________________때문이다.</div>
+      </div>
+
+      <div class="fn">* outlier: 관측된 데이터의 분포에서 많이 벗어난 것 &nbsp;&nbsp;** lousy: 형편없는 &nbsp;&nbsp;*** plausible: 가능성이 있어 보이는, 그럴듯한</div>
+    </div>
+
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① It really is the case [that ~]</strong> — 가주어 It, 진주어 that절 강조 구문: "~라는 것이 실제로 사실이다"</p>
+      <p><strong>② It is plausible [that S+V]</strong> — 가주어·진주어 구문: "~라는 것은 그럴듯하다"</p>
+      <p><strong>③ the fact [that bats are often feared]</strong> — 동격의 that절: fact의 구체적 내용을 that절이 설명</p>
+      <p><strong>④ A very atypical member ... (like bats ...) is really an outlier</strong> — 괄호 삽입구 구조: 주어와 동사 사이에 예시 삽입</p>
+    </div>
+  </div>
+
+  <!-- QUESTION -->
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      <strong>Categorization and Fear:</strong> How the probabilistic view explains our psychological reaction to atypical members like bats.
+      <div class="topic-ko">확률론적 관점이 어떻게 박쥐와 같은 비전형적 구성원에 대한 우리의 심리적 반응을 설명하는지.</div>
+    </div>
+  </div>
+
+  <!-- FRAMEWORK -->
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span><br><span class="logic-sub">Principle</span></td>
+          <td>Probabilistic View → Categorization relies on the statistical similarity of features. (The more overlapping features an entity has, the faster the brain computes its probability of belonging.)</td>
+          <td class="fw-ko">확률론적 관점에서, 범주화는 특징들의 통계적 유사성에 의존하며 공통 특징이 많을수록 빠르게 인식된다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Development</span><br><span class="logic-sub">Contrast / Example</span></td>
+          <td>- Atypical member (bats) possess features from multiple categories, making them outliers that deviate from clear classifications.<br>- When encountering ambiguous entities with overlapping features, our mental sorting system struggles and makes errors.</td>
+          <td class="fw-ko">박쥐 같은 비전형적 구성원은 여러 범주의 특징을 동시에 가져 이상치가 되며, 우리의 정신적 분류 시스템이 오류를 일으킨다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span></td>
+          <td>This cognitive confusion — the inability to easily place an entity into a clear, basic category — probably causes the emotion of fear.</td>
+          <td class="fw-ko">명확한 기본 범주에 쉽게 배치하지 못하는 인지적 혼란이 두려움이라는 감정을 유발한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">probabilistic</td><td class="vw-mean">확률론적인</td></tr>
+        <tr><td class="vw-word">typical</td><td class="vw-mean">전형적인</td></tr>
+        <tr><td class="vw-word">exemplar</td><td class="vw-mean">전형적인 예, 본보기</td></tr>
+        <tr><td class="vw-word">category</td><td class="vw-mean">범주, 카테고리</td></tr>
+        <tr><td class="vw-word">recognize</td><td class="vw-mean">인식하다, 알아보다</td></tr>
+        <tr><td class="vw-word">feature</td><td class="vw-mean">특징, 특성</td></tr>
+        <tr><td class="vw-word">exceptional</td><td class="vw-mean">예외적인</td></tr>
+        <tr><td class="vw-word">atypical</td><td class="vw-mean">비전형적인</td></tr>
+        <tr><td class="vw-word">assume</td><td class="vw-mean">추정하다, 가정하다</td></tr>
+        <tr><td class="vw-word">misclassify</td><td class="vw-mean">잘못 분류하다</td></tr>
+        <tr><td class="vw-word">readily</td><td class="vw-mean">쉽게, 즉시</td></tr>
+        <tr><td class="vw-word">correspond to</td><td class="vw-mean">~에 상응하다, 일치하다</td></tr>
+        <tr><td class="vw-word">fear</td><td class="vw-mean">두려워하다; 두려움</td></tr>
+        <tr><td class="vw-word">outlier</td><td class="vw-mean">관측된 데이터의 분포에서 많이 벗어난 것</td></tr>
+        <tr><td class="vw-word">lousy</td><td class="vw-mean">형편없는</td></tr>
+        <tr><td class="vw-word">plausible</td><td class="vw-mean">가능성이 있어 보이는, 그럴듯한</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PASSAGE -->
+</div><!-- end p1 -->
+
+<!-- ══════════════ P002 ══════════════ -->
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 043 · #번 002 · #문항코드 26007-0038</div>
+    <div class="p-title">Brilliant Leadership & Authenticity</div>
+    <div class="p-title-ko">뛰어난 리더십과 진정성 — 공감의 내재적 가치 · 빈칸 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">Central to the notion of brilliant leadership is the critical linkage between empathy and authenticity.</p>
+        <p class="plain-sent">While leaders may act on the premise that sensitivity to employee concerns is helpful in achieving organizational goals, brilliant leaders believe that empathy has value in its own right.</p>
+        <p class="plain-sent">In this regard, empathy is less a means to an end (e.g., profiting) but rather is consistent with Kant's notion of "character," which underscore truthfulness as a core element of virtue.</p>
+        <p class="plain-sent">From a stakeholder perspective, particularly employees, brilliant leaders would be seen as behaving in ways {that reveal a genuineness of motives}.</p>
+        <p class="plain-sent">Guided by the deontologically-based philosophical guidepost, "We should do our duty for no other reason than because it's the right thing to do," the brilliant leader's empathetic conduct is be derived from less from strategic or tactical interests than it is from one's personal sense of integrity.</p>
+        <p class="plain-sent">That, then, is a defining feature of authenticity: it frames empathy as <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+<div class="plain-fn">* deontologically-based: 의무론에 근거한 &nbsp;&nbsp;** tactical: 전술적인</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 (Blank Completion)</div>
+      <div class="q-stem">That, then, is a defining feature of authenticity: it frames empathy as <span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:200px;">&nbsp;</span>.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> being less important than sensitivity</div>
+        <div class="choice"><span class="cn">②</span> a key to moral growth for employees</div>
+        <div class="choice"><span class="cn">③</span> values-driven rather than outcome-driven</div>
+        <div class="choice"><span class="cn">④</span> an individual success rather than a collective goal</div>
+        <div class="choice"><span class="cn">⑤</span> consistent with the leader's educational background</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">③ values-driven rather than outcome-driven</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> "empathetic conduct is derived less from <u>strategic or tactical interests</u>(outcome) than it is from one's personal sense of <u>integrity</u>(values)" → 결과 지향이 아닌 가치 지향 = "values-driven rather than outcome-driven"<br><br>
+        <strong>오답 분석:</strong> ①은 공감의 중요성을 낮추는 내용으로 글의 방향과 반대 / ②는 직원의 도덕적 성장에 관한 내용 없음 / ④는 개인 성공 vs 집단 목표 구도가 글에 없음 / ⑤는 교육적 배경 언급 없음
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Central to the <span class="vw">notion<span class="tt">개념</span></span> of brilliant leadership</span> is the critical linkage between <span class="vw">empathy<span class="tt">공감</span></span> and <span class="vw">authenticity<span class="tt">진정성</span></span>.</div>
+        <div class="sp-ko">뛰어난 리더십이라는 개념의 핵심에는 / 공감과 진정성 사이의 중요한 연결고리가 있다. <span class="sp-note">★ 도치구문: Central to ~ is [주어]</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">While leaders may act on the <span class="vw">premise<span class="tt">전제</span></span> <span class="gr">[that sensitivity to employee concerns is helpful in achieving <span class="vw">organizational<span class="tt">조직의</span></span> goals]</span>, brilliant leaders believe <span class="gr">[that <span class="vw">empathy<span class="tt">공감</span></span> has value <span class="vw">in its own right<span class="tt">그 자체로</span></span>]</span>.</div>
+        <div class="sp-ko">일반 리더들은 직원들의 관심사에 대한 민감성이 조직 목표 달성에 도움이 된다는 전제 아래 행동할 수 있지만, / 뛰어난 리더들은 공감이 그 자체로 가치가 있다고 믿는다. <span class="sp-note">★ While(대조절) / believe that절</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en"><span class="vw">In this regard<span class="tt">이 점에서</span></span>, <span class="vw">empathy<span class="tt">공감</span></span> is less a means to an end (e.g., profiting) but rather is <span class="vw">consistent<span class="tt">일치하는</span></span> with Kant's <span class="vw">notion<span class="tt">개념</span></span> of "<span class="vw">character<span class="tt">성품</span></span>," <span class="gr">which <span class="vw">underscore<span class="tt">강조하다</span></span>s truthfulness as a core element of <span class="vw">virtue<span class="tt">덕목</span></span></span>.</div>
+        <div class="sp-ko">이 점에서, 공감은 목표를 위한 수단(예: 이익 창출)이라기보다 / 진실성을 덕목의 핵심 요소로 강조하는 / 칸트의 '성품' 개념과 일치한다. <span class="sp-note">★ less A but rather B / which(계속적 관계절)</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">From a <span class="vw">stakeholder<span class="tt">이해관계자</span></span> <span class="vw">perspective<span class="tt">관점</span></span>, particularly employees, brilliant leaders would be seen as behaving in ways <span class="gr">{that reveal a <span class="vw">genuineness<span class="tt">진실성</span></span> of motives}</span>.</div>
+        <div class="sp-ko">이해관계자, 특히 직원들의 관점에서 / 뛰어난 리더들은 동기의 진실성을 드러내는 방식으로 / 행동하는 것으로 여겨질 것이다.</div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Guided by the <span class="vw">deontologically-based<span class="tt">의무론에 근거한</span></span> philosophical <span class="vw">guidepost<span class="tt">지침</span></span></span>, "We should do our duty for no other reason than because it's the right thing to do," the brilliant leader's empathetic <span class="vw">conduct<span class="tt">행동</span></span> is <span class="vw">be derived from<span class="tt">~에서 비롯되다</span></span> less from <span class="vw">strategic<span class="tt">전략적인</span></span> or <span class="vw">tactical<span class="tt">전술적인</span></span> interests than it is from one's personal sense of <span class="vw">integrity<span class="tt">성실성</span></span>.</div>
+        <div class="sp-ko">"우리는 그것이 옳은 일이기 때문이라는 이유 외에는 의무를 행해야 한다"는 의무론에 근거한 철학적 지침을 따라, / 뛰어난 리더의 공감적 행동은 / 전략적·전술적 이해관계에서라기보다 / 개인적인 성실성에서 비롯된다. <span class="sp-note">★ Guided by ~(분사구문) / less A than B("A라기보다 B")</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">That, then, is a <span class="vw">defining<span class="tt">결정적인</span></span> feature of <span class="vw">authenticity<span class="tt">진정성</span></span>: it <span class="vw">frame<span class="tt">규정하다</span></span>s <span class="vw">empathy<span class="tt">공감</span></span> as <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">그것이 바로 진정성의 결정적인 특징이다: / 진정성은 공감을 _______________으로 규정한다.</div>
+      </div>
+
+      <div class="fn">* deontologically-based: 의무론에 근거한 &nbsp;&nbsp;** tactical: 전술적인</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 도치 구문: Central to ~ is [주어]</strong> — 보어가 문두로 나와 강조. 원래 어순: "The critical linkage ~ is central to the notion of brilliant leadership."</p>
+      <p><strong>② less A but rather B</strong> — "A라기보다 오히려 B": empathy is less a means to an end but rather consistent with ~</p>
+      <p><strong>③ Guided by + 명사구 (분사구문)</strong> — 주절 주어(the brilliant leader's conduct)를 수식. "~에 의해 인도되어"</p>
+      <p><strong>④ less A than B</strong> — "A라기보다 B": "derived less from strategic interests than from one's personal sense of integrity"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      True leadership is defined by 'authenticity,' where <strong>e<span style="border-bottom:2px solid var(--ink);">mpathy</span></strong> is practiced as a moral duty rather than a strategic tool for profit.
+      <div class="topic-ko">진정한 리더십은 '진정성'으로 정의되며, 여기서 <strong>공감</strong>은 이익을 위한 전략적 도구가 아닌 도덕적 의무로서 실천된다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Empathy should be coupled with authenticity (genuineness) to constitute truly "brilliant" leadership.<br>Ordinary Leaders (instrumental value) vs. Brilliant Leaders (intrinsic value)</td>
+          <td class="fw-ko">공감은 진정성과 결합되어야 비로소 뛰어난 리더십을 구성하며, 일반 리더(도구적 가치)와 뛰어난 리더(내재적 가치)가 대비된다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Development</span></td>
+          <td>The leader's actions are driven by internal character and truthfulness.<br>- Kant's "Character"<br>- Genuineness of Motives</td>
+          <td class="fw-ko">리더의 행동은 내적 성품과 진실성에서 비롯되며, 칸트의 성품 개념과 동기의 진실성이 이를 뒷받침한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span></td>
+          <td>Authenticity in leadership is ultimately achieved when empathy is driven by core values rather than desired outcomes.</td>
+          <td class="fw-ko">리더십의 진정성은 공감이 기대되는 결과가 아닌 핵심 가치에 의해 추동될 때 달성된다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">notion</td><td class="vw-mean">개념, 관념</td></tr>
+        <tr><td class="vw-word">empathy</td><td class="vw-mean">공감(능력)</td></tr>
+        <tr><td class="vw-word">authenticity</td><td class="vw-mean">진정성, 진실성</td></tr>
+        <tr><td class="vw-word">premise</td><td class="vw-mean">전제</td></tr>
+        <tr><td class="vw-word">organizational</td><td class="vw-mean">조직의, 조직적인</td></tr>
+        <tr><td class="vw-word">in its own right</td><td class="vw-mean">그 자체로, 자체적인 이유로</td></tr>
+        <tr><td class="vw-word">in this regard</td><td class="vw-mean">이 점에서, 이와 관련하여</td></tr>
+        <tr><td class="vw-word">consistent</td><td class="vw-mean">일치하는, 일관된</td></tr>
+        <tr><td class="vw-word">character</td><td class="vw-mean">성품, 인격</td></tr>
+        <tr><td class="vw-word">underscore</td><td class="vw-mean">강조하다</td></tr>
+        <tr><td class="vw-word">virtue</td><td class="vw-mean">덕목, 미덕</td></tr>
+        <tr><td class="vw-word">stakeholder</td><td class="vw-mean">이해관계자</td></tr>
+        <tr><td class="vw-word">perspective</td><td class="vw-mean">관점</td></tr>
+        <tr><td class="vw-word">genuineness</td><td class="vw-mean">진실성, 진정성</td></tr>
+        <tr><td class="vw-word">guidepost</td><td class="vw-mean">지침, 이정표</td></tr>
+        <tr><td class="vw-word">conduct</td><td class="vw-mean">행동, 행위</td></tr>
+        <tr><td class="vw-word">be derived from</td><td class="vw-mean">~에서 비롯되다, ~에서 파생되다</td></tr>
+        <tr><td class="vw-word">strategic</td><td class="vw-mean">전략적인</td></tr>
+        <tr><td class="vw-word">integrity</td><td class="vw-mean">성실성, 도덕적 온전함</td></tr>
+        <tr><td class="vw-word">defining</td><td class="vw-mean">결정적인, 핵심적인</td></tr>
+        <tr><td class="vw-word">frame</td><td class="vw-mean">틀 지우다, 규정하다</td></tr>
+        <tr><td class="vw-word">deontologically-based</td><td class="vw-mean">의무론에 근거한</td></tr>
+        <tr><td class="vw-word">tactical</td><td class="vw-mean">전술적인</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- end p2 -->
+
+<!-- ══════════════ P003 ══════════════ -->
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 044 · #번 003 · #문항코드 26007-0039</div>
+    <div class="p-title">Language vs. Emotion — Parallel Independence</div>
+    <div class="p-title-ko">언어와 감정의 병렬적 독립성 · 빈칸 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">Language is socially constructed; over time our cultural collectives agreed upon various abstract symbols and sounds to represent objects, people, places, and experiences.</p>
+        <p class="plain-sent">Conversely, basic emotions are biologically constructed; over time evolution repeatedly crafted responses to important life situations — which we later associated with symbols, words, and phrases.</p>
+        <p class="plain-sent">The presence of a unique emotion word in one culture does not imply the presence of unique circuitry or unique phenomenology for a special emotion {found only in that culture}.</p>
+        <p class="plain-sent">Similarly, the absence of a specific basic emotion word in one culture does not imply the absence of analogous basic emotion circuitry.</p>
+        <p class="plain-sent">Emotions and language are parallel processes {that can inform and provide context about one another, but ultimately <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span>.</p>
+        <p class="plain-sent">An example of this is in Robert Levy's pioneering work in Tahiti, {where he found that Tahitians had no words for "grief" and "sadness."}</p>
+        <p class="plain-sent">Nevertheless, they experienced a "sick, strange" feeling when processing the loss of a loved one.</p>
+<div class="plain-fn">* circuitry: (뇌의) 신경 회로 &nbsp;&nbsp;** phenomenology: 현상학, 주관적 감정 경험 &nbsp;&nbsp;*** analogous: 유사한</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 (Blank Completion)</div>
+      <div class="q-stem">Emotions and language are parallel processes that can inform and provide context about one another, but ultimately <span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:220px;">&nbsp;</span>.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> cannot guarantee the existence of one another</div>
+        <div class="choice"><span class="cn">②</span> tend to intensify each other in certain circumstances</div>
+        <div class="choice"><span class="cn">③</span> cannot be fully understood without a universal context</div>
+        <div class="choice"><span class="cn">④</span> are effortlessly substituted for one another in expression</div>
+        <div class="choice"><span class="cn">⑤</span> are shaped by memorable experiences from early childhood</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">① cannot guarantee the existence of one another</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> "The presence of a unique emotion word does not <u>imply</u> the presence of unique circuitry" (단어 있어도 감정 있다는 보장 없음) + "the absence of ... does not imply the absence of ... circuitry" (단어 없어도 감정 없다는 보장 없음) → 서로의 존재를 보장하지 않음.<br><br>
+        <strong>타히티 사례:</strong> "슬픔" 단어 없음 → 그래도 슬픔 경험 있음 = 언어가 감정의 존재를 보장하지 않음<br><br>
+        <strong>오답:</strong> ②는 반대 방향 / ③은 '보편적 맥락 없이 이해 불가' — 논점 이탈 / ④⑤는 본문 내용 없음
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+
+      <div class="sp">
+        <div class="sp-en">Language is socially <span class="vw">construct<span class="tt">구성하다</span></span>ed; over time our cultural <span class="vw">collective<span class="tt">집단</span></span>s agreed upon various <span class="vw">abstract<span class="tt">추상적인</span></span> symbols and sounds to <span class="vw">represent<span class="tt">나타내다</span></span> objects, people, places, and experiences.</div>
+        <div class="sp-ko">언어는 사회적으로 구성된다; / 시간이 지나면서 우리의 문화적 집단들은 / 사물, 사람, 장소, 경험을 나타내기 위한 / 다양한 추상적 기호와 소리에 동의했다.</div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">Conversely, basic emotions are biologically <span class="vw">construct<span class="tt">구성하다</span></span>ed; over time evolution repeatedly <span class="vw">craft<span class="tt">만들다</span></span>ed responses to important life situations — <span class="gr">which we later <span class="vw">associate<span class="tt">연관 짓다</span></span>d with symbols, words, and phrases</span>.</div>
+        <div class="sp-ko">반대로, 기본 감정들은 생물학적으로 구성된다; / 시간이 지나면서 진화는 중요한 삶의 상황에 대한 반응을 반복적으로 형성했는데, / 우리는 이것들을 나중에 기호, 단어, 구절과 연관 짓게 되었다. <span class="sp-note">★ which(계속적 용법 관계대명사: 앞 절 전체를 받음)</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">The <span class="vw">presence<span class="tt">존재</span></span> of a unique emotion word in one culture does not <span class="vw">imply<span class="tt">암시하다</span></span> the <span class="vw">presence<span class="tt">존재</span></span> of unique <span class="vw">circuitry<span class="tt">(뇌의) 신경 회로</span></span> or unique <span class="vw">phenomenology<span class="tt">현상학, 주관적 감정 경험</span></span> for a special emotion <span class="gr">{found only in that culture}</span>.</div>
+        <div class="sp-ko">한 문화에 고유한 감정 단어가 존재한다고 해서 / 그 문화에서만 발견되는 특별한 감정을 위한 / 고유한 신경 회로나 고유한 현상학적 경험의 존재를 / 함의하지는 않는다.</div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">Similarly, the absence of a specific basic emotion word in one culture does not <span class="vw">imply<span class="tt">함의하다</span></span> the absence of <span class="vw">analogous<span class="tt">유사한</span></span> basic emotion <span class="vw">circuitry<span class="tt">신경 회로</span></span>.</div>
+        <div class="sp-ko">마찬가지로, / 한 문화에 특정 기본 감정 단어가 없다고 해서 / 유사한 기본 감정 신경 회로의 부재를 함의하지도 않는다.</div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">Emotions and language are <span class="vw">parallel<span class="tt">병렬적인</span></span> processes <span class="gr">{that can inform and provide <span class="vw">context<span class="tt">맥락</span></span> about one another, but ultimately <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>}</span>.</div>
+        <div class="sp-ko">감정과 언어는 서로에 대해 정보를 제공하고 맥락을 제시할 수 있는 병렬적 과정들이지만, / 궁극적으로는 _______________.</div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">An example of this is in Robert Levy's <span class="vw">pioneering<span class="tt">선구적인</span></span> work in Tahiti, <span class="gr">{where he found [that Tahitians had no words for "<span class="vw">grief<span class="tt">슬픔</span></span>" and "sadness."]}</span></div>
+        <div class="sp-ko">이것의 예는 타히티에서의 Robert Levy의 선구적인 연구에서 나온다, / 그 연구에서 그는 타히티인들이 "슬픔"과 "비통함"에 대한 단어를 갖고 있지 않다는 것을 발견했다. <span class="sp-note">★ where(계속적 용법 관계부사) / find that절</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">Nevertheless, they(= Tahitians) experienced a "sick, strange" feeling when processing the loss of a loved one.</div>
+        <div class="sp-ko">그럼에도 불구하고, / 그들(타히티인들)은 사랑하는 사람의 죽음을 겪을 때 / "병적이고 이상한" 느낌을 경험했다.</div>
+      </div>
+
+      <div class="fn">* circuitry: (뇌의) 신경 회로 &nbsp;&nbsp;** phenomenology: 현상학, 주관적 감정 경험 &nbsp;&nbsp;*** analogous: 유사한</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 관계대명사 계속적 용법 which</strong> — "which we later associated with ~": 앞 절 전체(=evolution crafted responses)를 선행사로 받음. "그것들을 우리는 나중에 ~와 연관 지었다"</p>
+      <p><strong>② 관계부사 계속적 용법 where</strong> — "where he found that ~": 장소(Tahiti)를 선행사로 받으며 추가 설명. "거기서 그는 ~를 발견했다"</p>
+      <p><strong>③ does not imply ~ (부정 논리 전개)</strong> — "A가 있다고 해서 B가 있음을 의미하지 않는다" 패턴이 두 번 반복됨</p>
+      <p><strong>④ {found only in that culture} (과거분사구)</strong> — emotion을 수식하는 후치 수식어</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      While language is a <strong>s<span style="border-bottom:2px solid var(--ink);">ocial</span></strong> construct, emotions are <strong>e<span style="border-bottom:2px solid var(--ink);">volutionary</span></strong> responses that do not require a name to be felt.
+      <div class="topic-ko">언어는 사회적 구성물인 반면, 감정은 이름이 없어도 느껴지는 진화적 반응이다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span><br><span class="logic-sub">The Premises: Divergent Origins</span></td>
+          <td>• Language = Social Construct (arbitrary symbols agreed upon by groups)<br>• Emotion = Biological Construct (evolutionary responses to life situations)</td>
+          <td class="fw-ko">언어는 사회적 합의의 산물이고, 감정은 생물학적 진화의 산물이라는 두 가지 전제가 제시된다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Development</span><br><span class="logic-sub">Parallel Independence</span></td>
+          <td>They are parallel processes. They operate independently and do not inherently confirm each other's existence.</td>
+          <td class="fw-ko">감정과 언어는 병렬 과정으로 서로 정보를 제공할 수 있지만 서로의 존재를 본질적으로 확인하지는 않는다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Example</span></td>
+          <td>Empirical proof: Tahitian "grief" example — no word, but the emotion is felt.</td>
+          <td class="fw-ko">타히티인들은 '슬픔' 단어가 없어도 슬픔을 경험했다는 실증 사례가 이를 뒷받침한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">construct</td><td class="vw-mean">구성물; 구성하다</td></tr>
+        <tr><td class="vw-word">collective</td><td class="vw-mean">집단, 공동체</td></tr>
+        <tr><td class="vw-word">abstract</td><td class="vw-mean">추상적인</td></tr>
+        <tr><td class="vw-word">represent</td><td class="vw-mean">나타내다, 표현하다</td></tr>
+        <tr><td class="vw-word">craft</td><td class="vw-mean">만들다, 빚다 (정성스럽게)</td></tr>
+        <tr><td class="vw-word">associate</td><td class="vw-mean">연관 짓다, 결부시키다</td></tr>
+        <tr><td class="vw-word">presence</td><td class="vw-mean">존재, 있음</td></tr>
+        <tr><td class="vw-word">imply</td><td class="vw-mean">암시하다, 함의하다</td></tr>
+        <tr><td class="vw-word">parallel</td><td class="vw-mean">병렬적인, 동시에 진행되는</td></tr>
+        <tr><td class="vw-word">context</td><td class="vw-mean">맥락, 상황</td></tr>
+        <tr><td class="vw-word">pioneering</td><td class="vw-mean">선구적인</td></tr>
+        <tr><td class="vw-word">grief</td><td class="vw-mean">슬픔, 비통함</td></tr>
+        <tr><td class="vw-word">circuitry</td><td class="vw-mean">(뇌의) 신경 회로</td></tr>
+        <tr><td class="vw-word">phenomenology</td><td class="vw-mean">현상학, 주관적 감정 경험</td></tr>
+        <tr><td class="vw-word">analogous</td><td class="vw-mean">유사한</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- end p3 -->
+
+<!-- ══════════════ P004 ══════════════ -->
+<div class="sec" id="p4">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 045 · #번 004 · #문항코드 26007-0040</div>
+    <div class="p-title">All-or-Nothing Environmentalism</div>
+    <div class="p-title-ko">완벽하지 않아도 괜찮은 친환경 실천 · 빈칸 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">There are some pretty big lifestyle changes {you can choose to make} if you want to help the planet.</p>
+        <p class="plain-sent">For instance, you could follow a plant-based diet, or you could pledge to go zero-waste.</p>
+        <p class="plain-sent">If you're surrounded by people {who are making these drastic changes}, you might feel pressured into follow suiting: you might feel that if you don't make these changes, your efforts to save the planet are inadequate.</p>
+        <p class="plain-sent">Despite what you might hear, a plant-based diet or zero-waste living is <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+        <p class="plain-sent">Reducing your meat and dairy intake a little is better than not doing so at all; buying fruit, veg and grains loose when you can is better than always buying them {wrapped in plastic}.</p>
+        <p class="plain-sent">The fact is, you don't have to follow a vegan or a zero-waste lifestyle perfectly to make a difference.</p>
+        <p class="plain-sent">Making little changes {where you can and how you can} is what truly counts.</p>
+<div class="plain-fn">* pledge: (공식적으로) 약속하다</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 (Blank Completion)</div>
+      <div class="q-stem">Despite what you might hear, a plant-based diet or zero-waste living is <span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:200px;">&nbsp;</span>.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> less a shared goal than a personal choice</div>
+        <div class="choice"><span class="cn">②</span> not necessarily an all-or-nothing venture</div>
+        <div class="choice"><span class="cn">③</span> increasingly common for people to follow</div>
+        <div class="choice"><span class="cn">④</span> not always the best way to help our planet</div>
+        <div class="choice"><span class="cn">⑤</span> practiced for society rather than the individual</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">② not necessarily an all-or-nothing venture</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> "you don't have to follow a vegan or zero-waste lifestyle <u>perfectly</u> to make a difference" + "Making <u>little changes</u> ... is what truly counts" → 완벽하지 않아도 된다 = "전부 아니면 전무(all-or-nothing)"가 아니다.<br><br>
+        <strong>오답:</strong> ①은 개인 vs 공동 목표 구도 — 논점 이탈 / ③은 글의 주장과 무관 / ④는 "최선의 방법이 아니다"라고 하면 글 전체와 충돌 / ⑤는 사회 vs 개인 구도 없음
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">There are some pretty big lifestyle changes <span class="gr">{you can choose to make}</span> if you want to help the planet.</div>
+        <div class="sp-ko">지구를 돕고 싶다면 / 선택할 수 있는 꽤 큰 생활양식 변화들이 있다. <span class="sp-note">★ 관계절 목적격 생략: changes [that] you can choose to make</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For instance, you could follow a <span class="vw">plant-based diet<span class="tt">채식 중심 식단</span></span>, or you could <span class="vw">pledge<span class="tt">약속하다</span></span> to go <span class="vw">zero-waste<span class="tt">쓰레기 제로 생활</span></span>.</div>
+        <div class="sp-ko">예를 들어, 식물성 식단을 따를 수도 있고, / 쓰레기 제로 생활을 하겠다고 약속할 수도 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">If you're <span class="vw">surround<span class="tt">둘러싸다</span></span>ed by people <span class="gr">{who are making these <span class="vw">drastic<span class="tt">과감한</span></span> changes}</span>, you might feel pressured into <span class="vw">follow suit<span class="tt">선례를 따르다</span></span>ing: you might feel <span class="gr">[that if you don't make these changes, your efforts to save the planet are <span class="vw">inadequate<span class="tt">불충분한</span></span>]</span>.</div>
+        <div class="sp-ko">이런 과감한 변화를 하는 사람들에게 둘러싸여 있다면, / 당신은 그들을 따라야 한다는 압박을 느낄 수도 있다: / 이런 변화를 하지 않으면 지구를 구하려는 자신의 노력이 불충분하다고 느낄 수도 있다. <span class="sp-note">★ feel that절 / who(관계절)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Despite <span class="gr">[what you might hear]</span>, a <span class="vw">plant-based diet<span class="tt">채식 중심 식단</span></span> or <span class="vw">zero-waste<span class="tt">쓰레기 제로 생활</span></span> living is <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">당신이 들을 수 있는 것과 달리, / 채식 식단이나 쓰레기 제로 생활 방식은 _______________이다. <span class="sp-note">★ Despite what ~: "~임에도 불구하고" (what = 관계대명사)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Reducing your meat and dairy <span class="vw">intake<span class="tt">섭취량</span></span> a little is better than not doing so at all; buying fruit, <span class="vw">veg<span class="tt">채소</span></span> and <span class="vw">grain<span class="tt">곡물</span></span>s <span class="vw">loose<span class="tt">포장 없이 낱개로</span></span> when you can is better than always buying them <span class="gr">{wrapped in plastic}</span>.</div>
+        <div class="sp-ko">고기와 유제품 섭취를 조금 줄이는 것이 전혀 하지 않는 것보다 낫다; / 할 수 있을 때 과일, 채소, 곡물을 포장 없이 사는 것이 / 항상 비닐에 싸인 것을 사는 것보다 낫다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The fact is, you don't have to follow a <span class="vw">vegan<span class="tt">완전 채식주의</span></span> or a <span class="vw">zero-waste<span class="tt">쓰레기 제로</span></span> lifestyle perfectly to make a difference.</div>
+        <div class="sp-ko">사실은, / 변화를 만들기 위해 완전 채식주의나 쓰레기 제로 생활 방식을 완벽히 따를 필요가 없다는 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Making little changes <span class="gr">{where you can and how you can}</span> is <span class="gr">[what truly <span class="vw">count<span class="tt">중요하다</span></span>s]</span>.</div>
+        <div class="sp-ko">할 수 있는 곳에서, 할 수 있는 방법으로 작은 변화를 만드는 것이 / 진정으로 중요한 것이다. <span class="sp-note">★ 동명사 주어 / what truly counts = 관계대명사 what절(보어)</span></div>
+      </div>
+      <div class="fn">* pledge: (공식적으로) 약속하다</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 관계절 목적격 생략</strong> — "lifestyle changes [that] you can choose to make": 목적격 관계대명사 that 생략</p>
+      <p><strong>② Despite + what절</strong> — "Despite what you might hear": 양보절. "들을 수 있는 것에도 불구하고". what = the thing that</p>
+      <p><strong>③ 동명사 주어 + is what ~</strong> — "Making little changes ... is what truly counts": 동명사구 주어, what절 보어</p>
+      <p><strong>④ {wrapped in plastic} (과거분사구)</strong> — them을 수식하는 후치 수식어</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      Meaningful environmental impact is achieved not through the perfect adherence, but through the <strong>c<span style="border-bottom:2px solid var(--ink);">onsistent</span></strong>, incremental efforts.
+      <div class="topic-ko">의미 있는 환경적 영향은 완벽한 준수가 아닌, 꾸준하고 점진적인 노력을 통해 달성된다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>High-impact lifestyle changes (plant-based, zero-waste) are often seen as the gold standard for helping the planet.</td><td class="fw-ko">채식·제로웨이스트가 지구를 위한 최선의 기준으로 여겨지는 경향이 제시된다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>Social pressure creates "all-or-nothing" binary, making people feel their partial efforts are inadequate.</td><td class="fw-ko">사회적 압박이 '전부 아니면 전무' 이분법을 만들고 부분적 노력을 불충분하게 느끼게 한다.</td></tr>
+        <tr><td><span class="step-badge">③ Elaboration</span></td><td>- Incremental actions — like reducing meat intake or choosing loose produce — provide tangible environmental benefits without requiring "perfection."<br>- Sustainable progress is driven by imperfect, consistent actions rather than flawless, extreme adherence.</td><td class="fw-ko">완벽하지 않은 작은 실천도 실질적인 효과가 있으며, 지속 가능한 진전은 완벽한 극단적 준수보다 꾸준한 행동에서 나온다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">plant-based diet</td><td class="vw-mean">채식 중심 식단</td></tr>
+        <tr><td class="vw-word">zero-waste</td><td class="vw-mean">쓰레기 제로 생활 방식</td></tr>
+        <tr><td class="vw-word">surround</td><td class="vw-mean">둘러싸다</td></tr>
+        <tr><td class="vw-word">drastic</td><td class="vw-mean">과감한, 급격한</td></tr>
+        <tr><td class="vw-word">pressure ~ into ...</td><td class="vw-mean">~에게 ...하도록 압력을 가하다</td></tr>
+        <tr><td class="vw-word">follow suit</td><td class="vw-mean">선례를 따르다, 남이 하는 대로 하다</td></tr>
+        <tr><td class="vw-word">inadequate</td><td class="vw-mean">불충분한, 부적절한</td></tr>
+        <tr><td class="vw-word">intake</td><td class="vw-mean">섭취(량)</td></tr>
+        <tr><td class="vw-word">veg</td><td class="vw-mean">채소 (= vegetables)</td></tr>
+        <tr><td class="vw-word">grain</td><td class="vw-mean">곡물</td></tr>
+        <tr><td class="vw-word">loose</td><td class="vw-mean">포장 없이 낱개로</td></tr>
+        <tr><td class="vw-word">vegan</td><td class="vw-mean">완전 채식주의(자)</td></tr>
+        <tr><td class="vw-word">count</td><td class="vw-mean">중요하다, 의미 있다</td></tr>
+        <tr><td class="vw-word">pledge</td><td class="vw-mean">(공식적으로) 약속하다; 약속, 서약</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p4 -->
+
+<!-- ══════════════ P005 ══════════════ -->
+<div class="sec" id="p5">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 046 · #번 005 · #문항코드 26007-0041</div>
+    <div class="p-title">Marginal Utility & Professional Sports</div>
+    <div class="p-title-ko">한계효용과 프로 스포츠의 역설 · 빈칸 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">When income rises, so will the quantity demanded. When income falls, so will demand.</p>
+        <p class="plain-sent">However, if your income doubles, you would not always buy twice as much of a particular good or service.</p>
+        <p class="plain-sent">For example, there are only so many tubs of ice cream {you would want to eat}, no matter how wealthy you are.</p>
+        <p class="plain-sent">This is an example of "marginal utility." Marginal utility is the concept that each unit of a good or service is a little less useful to you than the first.</p>
+        <p class="plain-sent">At some point, you will not want it anymore, and the marginal utility drops to zero.</p>
+        <p class="plain-sent">We can see that <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+        <p class="plain-sent">Fans (consumers) often want more games to watch.</p>
+        <p class="plain-sent">We have seen this example play out in recent years / in relation to the number of sport matches on live television increasing and through the advents of new competitions or formats of the game (e.g., Twenty20 cricket) or expansions of league reforms to fit in additional fixtures (e.g., UEFA Champions League reforms for 2024).</p>
+<div class="plain-fn">* advent: 출현 &nbsp;&nbsp;** fixture: (특정 날짜와 장소에서 개최 예정인) 경기</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 (Blank Completion)</div>
+      <div class="q-stem">We can see that <span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:220px;">&nbsp;</span>.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> sports fandom is not just about games, but also about player skills</div>
+        <div class="choice"><span class="cn">②</span> income determines the marginal utility of goods and services</div>
+        <div class="choice"><span class="cn">③</span> demand for many sports events varies across countries</div>
+        <div class="choice"><span class="cn">④</span> any desire for services largely coincides with supply</div>
+        <div class="choice"><span class="cn">⑤</span> professional team sports contradict this assumption</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤ professional team sports contradict this assumption</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> 빈칸 앞에서 한계효용 체감의 법칙(the law of diminishing marginal utility)이 설명되고, 빈칸 이후 팬들이 계속 더 많은 경기를 원한다는 스포츠 사례가 이어진다.<br><br>
+        <strong>"this assumption" = the law of diminishing marginal utility</strong> → 프로 스포츠는 이 법칙에 반하는 사례 → ⑤ "professional team sports contradict this assumption"<br><br>
+        <strong>오답:</strong> ①②③④ 모두 앞뒤 문맥과 연결되지 않음 / 특히 ②는 원인-결과를 반대로 이해한 오답
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">When <span class="vw">income<span class="tt">소득</span></span> rises, <span class="gr">so will [the <span class="vw">quantity demanded<span class="tt">수요량</span></span>]</span>. When <span class="vw">income<span class="tt">소득</span></span> falls, so will demand.</div>
+        <div class="sp-ko">소득이 오르면, 수요량도 오를 것이다. / 소득이 떨어지면, 수요도 떨어질 것이다. <span class="sp-note">★ so + 조동사 + 주어: "~도 그러할 것이다" (도치)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, if your <span class="vw">income<span class="tt">소득</span></span> doubles, you would not always buy twice as much of a <span class="vw">particular<span class="tt">특정한</span></span> good or service.</div>
+        <div class="sp-ko">그러나 소득이 두 배가 된다고 해서, / 특정 상품이나 서비스를 항상 두 배 구매하지는 않을 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, there are only so many <span class="vw">tub<span class="tt">통</span></span>s of ice cream <span class="gr">{you would want to eat}</span>, <span class="gr">no matter how wealthy you are</span>.</div>
+        <div class="sp-ko">예를 들어, 아무리 부유하더라도 / 먹고 싶은 아이스크림 통의 수에는 한계가 있다. <span class="sp-note">★ no matter how + 형용사 = however 형용사: "아무리 ~하더라도"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This is an example of "<span class="vw">marginal utility<span class="tt">한계 효용</span></span>." Marginal utility is the <span class="vw">concept<span class="tt">개념</span></span> <span class="gr">[that each <span class="vw">unit<span class="tt">단위</span></span> of a good or service is a little less useful to you than the first]</span>.</div>
+        <div class="sp-ko">이것이 "한계 효용"의 예이다. / 한계 효용은 상품이나 서비스의 각 단위가 / 첫 번째보다 조금씩 덜 유용하다는 개념이다. <span class="sp-note">★ 동격 that절: the concept that ~</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">At some point, you will not want it anymore, and the <span class="vw">marginal utility<span class="tt">한계 효용</span></span> drops to zero.</div>
+        <div class="sp-ko">어느 순간 더 이상 원하지 않게 되고, / 한계 효용은 0으로 떨어진다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We can see that <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">우리는 _______________라는 것을 알 수 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Fans (<span class="vw">consumer<span class="tt">소비자</span></span>s) often want more games to watch.</div>
+        <div class="sp-ko">팬(소비자)들은 종종 더 많은 경기를 보고 싶어 한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We have seen this example <span class="vw">play out<span class="tt">전개되다</span></span> in recent years / in relation to the number of sport matches on live television increasing and through the <span class="vw">advent<span class="tt">출현</span></span>s of new competitions or formats of the game (e.g., Twenty20 cricket) or <span class="vw">expansion<span class="tt">확장</span></span>s of league reforms to <span class="vw">fit in<span class="tt">끼워 넣다</span></span> additional <span class="vw">fixture<span class="tt">(예정) 경기</span></span>s (e.g., UEFA Champions League reforms for 2024).</div>
+        <div class="sp-ko">우리는 이 예가 최근 몇 년간 전개되는 것을 보아왔다 / — 생중계 스포츠 경기 수의 증가, / 새로운 대회나 경기 방식의 출현(예: 트웬티20 크리켓), / 추가 경기를 포함하기 위한 리그 개편의 확장(예: 2024년 UEFA 챔피언스리그 개편)과 관련하여.</div>
+      </div>
+      <div class="fn">* advent: 출현 &nbsp;&nbsp;** fixture: (특정 날짜와 장소에서 개최 예정인) 경기</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① so + 조동사 + 주어 (도치)</strong> — "so will the quantity demanded": "수요량도 그러할 것이다" — 긍정문 앞 내용을 받아 같은 상황 표현</p>
+      <p><strong>② 동격 that</strong> — "the concept [that each unit ~ is less useful]": concept의 내용을 that절이 설명</p>
+      <p><strong>③ no matter how + 형용사</strong> — "no matter how wealthy you are" = "however wealthy you are": 양보 부사절 "아무리 ~하더라도"</p>
+      <p><strong>④ have seen ~ play out (지각동사 + 목적어 + 원형부정사)</strong> — "We have seen this example play out": "이 예가 전개되는 것을 보아왔다"</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      Professional team sports defy the conventional economic principle of diminishing <strong>m<span style="border-bottom:2px solid var(--ink);">arginal</span> u<span style="border-bottom:2px solid var(--ink);">tility</span></strong>, as evidenced by fans' relentless demand for more games.
+      <div class="topic-ko">프로 팀 스포츠는 팬들의 끊임없는 더 많은 경기 수요에서 알 수 있듯, 체감 <strong>한계효용</strong>이라는 전통적 경제 원칙에 반한다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span><br><span class="logic-sub">Theory</span></td><td>General correlation between rising income and demand, along with its inherent limitations. (Consumption does not scale infinitely with wealth.)</td><td class="fw-ko">소득 증가는 수요 증가로 이어지지만, 이 상관관계에는 내재적 한계가 있다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span><br><span class="logic-sub">Challenge</span></td><td>The concept of "marginal utility" illustrating how utility eventually drops to zero. (the law of diminishing marginal utility regarding traditional consumer goods)</td><td class="fw-ko">한계효용 체감의 법칙: 상품·서비스의 각 단위는 점점 덜 유용해져 결국 0에 도달한다.</td></tr>
+        <tr><td><span class="step-badge">③ Elaboration</span><br><span class="logic-sub">Example</span></td><td>- Professional team sports contradict the preceding assumption of marginal utility, positing that sports fans (consumers) perpetually desire more games (without reaching a threshold of zero utility).<br>- The increase in live television matches, the creation of Twenty20 cricket, and the 2024 UEFA Champions League reforms</td><td class="fw-ko">프로 스포츠는 한계효용이 0에 도달하지 않는 반례이며, TV 중계 증가·트웬티20·UEFA 개편이 이를 증명한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">income</td><td class="vw-mean">소득, 수입</td></tr>
+        <tr><td class="vw-word">quantity demanded</td><td class="vw-mean">수요량</td></tr>
+        <tr><td class="vw-word">particular</td><td class="vw-mean">특정한</td></tr>
+        <tr><td class="vw-word">tub</td><td class="vw-mean">통(용기)</td></tr>
+        <tr><td class="vw-word">marginal utility</td><td class="vw-mean">한계 효용</td></tr>
+        <tr><td class="vw-word">concept</td><td class="vw-mean">개념</td></tr>
+        <tr><td class="vw-word">unit</td><td class="vw-mean">단위</td></tr>
+        <tr><td class="vw-word">consumer</td><td class="vw-mean">소비자</td></tr>
+        <tr><td class="vw-word">play out</td><td class="vw-mean">전개되다, 펼쳐지다</td></tr>
+        <tr><td class="vw-word">expansion</td><td class="vw-mean">확장</td></tr>
+        <tr><td class="vw-word">fit in</td><td class="vw-mean">끼워 넣다, 포함시키다</td></tr>
+        <tr><td class="vw-word">advent</td><td class="vw-mean">출현, 도래</td></tr>
+        <tr><td class="vw-word">fixture</td><td class="vw-mean">(특정 날짜와 장소에서 개최 예정인) 경기</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p5 -->
+
+<!-- ══════════════ P006 ══════════════ -->
+<div class="sec" id="p6">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 047 · #번 006 · #문항코드 26007-0042</div>
+    <div class="p-title">Quiet Activism in Fashion</div>
+    <div class="p-title-ko">슬로 패션과 조용한 행동주의 · 밑줄 어휘 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">Among the attempts to resist fast fashion are consumer movements to make more informed, ethical decisions as they purchase, use, and repair their clothing.</p>
+        <p class="plain-sent">The "slow fashion" movement, for example, encourages buying fewer clothes of higher quality and wearing them longer, purchasing clothes {produced (or at least sold) locally}, and thinking critically about the labor and environmental conditions {surrounding their production and distribution}.</p>
+        <p class="plain-sent">Some consumers have become more active in producing (sewing or knitting) and repairing their own clothing.</p>
+        <p class="plain-sent">The design historian Fiona Hackney refer tos to the of everyday making.</p>
+        <p class="plain-sent">She argues for "the emergence of a new, historically conscious, socially engaged amateur practice."</p>
+        <p class="plain-sent">This practice represents a return to the intimate connection of production (making) with consumption (use, wear) before the industrialization of fibers, textiles, and apparel.</p>
+        <p class="plain-sent">industrialization changed the production-consumption dynamic in at least two ways: Factory-made, store-bought clothes were more detached from consumer-made ones, and they also tended to be less expensive.</p>
+        <p class="plain-sent">Prior to industrialization, only wealthy people could can afford a closet of many garments.</p>
+        <p class="plain-sent">Among working-class people, formal clothes were often prized possessions {that were included in wills}.</p>
+<div class="plain-fn">* apparel: 의류 &nbsp;&nbsp;** garment: 의복 &nbsp;&nbsp;*** will: 유언장</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 밑줄 친 <em>quiet activism</em>이 다음 글에서 의미하는 바로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">밑줄 어휘 추론 (Underlined Word Meaning)</div>
+      <div class="q-stem">밑줄 친 <em>quiet activism</em>이 다음 글에서 의미하는 바로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> practicing economical and conventional fashion consciously</div>
+        <div class="choice"><span class="cn">②</span> associating ethical characteristics with personal fashion style</div>
+        <div class="choice"><span class="cn">③</span> promoting fair production to challenge post-industrial inequality</div>
+        <div class="choice"><span class="cn">④</span> engaging in social participation through crafting personal clothing</div>
+        <div class="choice"><span class="cn">⑤</span> valuing handmade production while separating it from consumption</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">④ engaging in social participation through crafting personal clothing</span></div>
+      <div class="ans-exp">
+        <strong>"quiet activism"의 의미:</strong> Fiona Hackney가 제시한 개념. "일상적인 만들기(everyday making)"를 통한 "사회적으로 참여하는(socially engaged) 아마추어 실천"<br><br>
+        <strong>근거:</strong> "the emergence of a new, historically conscious, <u>socially engaged</u> amateur practice" = 사회 참여 + everyday making(sewing, knitting, repairing) = 개인 의류 제작 → <strong>④ "engaging in social participation through crafting personal clothing"</strong><br><br>
+        <strong>오답:</strong> ①은 경제적·관습적 패션 — quiet activism의 핵심 미스 / ③은 공정 생산 촉진이 목적이 아님 / ⑤는 "생산을 소비에서 분리"는 오히려 반대 (intimate connection이 핵심)
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Among the attempts to <span class="vw">resist<span class="tt">저항하다</span></span> fast fashion</span> are consumer movements to make more informed, <span class="vw">ethical<span class="tt">윤리적인</span></span> decisions as they purchase, use, and <span class="vw">repair<span class="tt">수선하다</span></span> their clothing.</div>
+        <div class="sp-ko">패스트 패션에 저항하려는 시도들 중에는 / 의류를 구매하고 사용하고 수선할 때 / 더 많은 정보에 입각한 윤리적 결정을 내리는 소비자 운동이 있다. <span class="sp-note">★ 도치: Among ~ are [주어]</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The "slow fashion" movement, for example, encourages buying fewer clothes of higher quality and wearing them longer, purchasing clothes <span class="gr">{produced (or at least sold) locally}</span>, and thinking <span class="vw">critically<span class="tt">비판적으로</span></span> about the labor and environmental conditions <span class="gr">{surrounding their production and <span class="vw">distribution<span class="tt">유통</span></span>}</span>.</div>
+        <div class="sp-ko">"슬로 패션" 운동은 예를 들어, / 질 좋은 옷을 더 적게 사고 더 오래 입는 것, / (적어도) 지역에서 생산되거나 판매된 옷을 구매하는 것, / 의류 생산과 유통을 둘러싼 노동 및 환경 조건에 대해 비판적으로 생각하는 것을 / 장려한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Some consumers have become more active in producing (sewing or knitting) and <span class="vw">repair<span class="tt">수선하다</span></span>ing their own clothing.</div>
+        <div class="sp-ko">일부 소비자들은 자신의 의류를 직접 만들거나(바느질이나 뜨개질) 수선하는 데 / 더 적극적으로 임하게 되었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The design historian Fiona Hackney <span class="vw">refer to<span class="tt">가리키다, 언급하다</span></span>s to the <em style="border-bottom:2.5px solid var(--ink);font-style:normal;">"quiet <span class="vw">activism<span class="tt">행동주의</span></span>"</em> of everyday making.</div>
+        <div class="sp-ko">디자인 역사가 Fiona Hackney는 / 일상적인 만들기의 <em>"<u>조용한 행동주의</u>"</em>를 언급한다. <span class="sp-note">★ 밑줄 어휘: quiet activism</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">She argues for "the emergence of a new, historically conscious, socially engaged amateur practice."</div>
+        <div class="sp-ko">그녀는 "역사적으로 의식이 있고, 사회적으로 참여하는 새로운 아마추어 실천의 등장"을 주장한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This practice represents a return to the <span class="vw">intimate<span class="tt">긴밀한</span></span> connection of production (making) with consumption (use, wear) before the <span class="vw">industrialization<span class="tt">산업화</span></span> of fibers, textiles, and <span class="vw">apparel<span class="tt">의류</span></span>.</div>
+        <div class="sp-ko">이 실천은 섬유, 직물, 의류의 산업화 이전에 존재했던 / 생산(만들기)과 소비(사용, 착용) 사이의 긴밀한 연결로의 / 회귀를 나타낸다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="vw">industrialization<span class="tt">산업화</span></span> changed the production-consumption <span class="vw">dynamic<span class="tt">역학 관계</span></span> in at least two ways: Factory-made, store-bought clothes were more <span class="vw">detached<span class="tt">분리된</span></span> from consumer-made ones, and they also tended to be less expensive.</div>
+        <div class="sp-ko">산업화는 생산-소비 역학을 적어도 두 가지 방식으로 변화시켰다: / 공장에서 만들어진, 매장에서 판매되는 옷들은 소비자가 만든 것들보다 더 분리되었고, / 또한 더 저렴한 경향이 있었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Prior to <span class="vw">industrialization<span class="tt">산업화</span></span>, only wealthy people could <span class="vw">can afford<span class="tt">~을 살 여유가 있다</span></span> a closet of many <span class="vw">garment<span class="tt">의복</span></span>s.</div>
+        <div class="sp-ko">산업화 이전에는, / 부유한 사람들만이 옷장 가득 많은 옷을 살 여유가 있었다. <span class="sp-note">★ Prior to = before</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Among working-class people, formal clothes were often prized <span class="vw">possession<span class="tt">소유물</span></span>s <span class="gr">{that were included in <span class="vw">will<span class="tt">유언장</span></span>s}</span>.</div>
+        <div class="sp-ko">노동자 계층 사람들 사이에서, / 격식 있는 옷들은 종종 유언장에 포함될 만큼 / 소중한 소유물이었다.</div>
+      </div>
+      <div class="fn">* apparel: 의류 &nbsp;&nbsp;** garment: 의복 &nbsp;&nbsp;*** will: 유언장</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 도치 구문: Among ~ are [주어]</strong> — 장소 부사구가 문두에 나와 주어-동사 도치. "패스트 패션에 저항하려는 시도들 중에는 소비자 운동이 있다"</p>
+      <p><strong>② {produced (or at least sold) locally} (과거분사구)</strong> — clothes를 수식하는 후치 수식어</p>
+      <p><strong>③ Prior to + 명사</strong> — "Prior to industrialization" = "before industrialization" (격식체 표현)</p>
+      <p><strong>④ {that were included in wills} (관계절)</strong> — formal clothes를 수식: "유언장에 포함된"</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      The slow fashion movement seeks to restore the intimate connection and high value of clothing that were lost during the process of industrialization.
+      <div class="topic-ko">슬로 패션 운동은 산업화 과정에서 상실된 의류의 긴밀한 연결과 높은 가치를 회복하고자 한다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Attempts to resist Fast Fashion through informed and ethical consumer movements. (Buying less, choosing quality, local purchasing, and critical thinking)</td><td class="fw-ko">패스트 패션에 저항하는 정보에 입각한 윤리적 소비자 운동이 제시된다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>"Quiet Activism" → Fiona Hackney's theory: Everyday making (sewing/repairing) as a "socially engaged practice."</td><td class="fw-ko">일상적 만들기(바느질·수선)가 사회적으로 참여하는 실천이라는 Hackney의 이론이 전개된다.</td></tr>
+        <tr><td><span class="step-badge">③ Elaboration</span></td><td>Comparison: The "intimate connection" of the past vs. the "detachment" and "cheapness" of the industrial era. Prior to industry: Clothes as "prized possessions" (e.g., included in wills).</td><td class="fw-ko">과거의 긴밀한 연결(산업화 전: 유언장에 포함될 만큼 소중한 소유물) vs 산업화 후의 분리와 저렴화가 대조된다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">resist</td><td class="vw-mean">저항하다</td></tr>
+        <tr><td class="vw-word">ethical</td><td class="vw-mean">윤리적인</td></tr>
+        <tr><td class="vw-word">repair</td><td class="vw-mean">수선하다, 고치다</td></tr>
+        <tr><td class="vw-word">critically</td><td class="vw-mean">비판적으로</td></tr>
+        <tr><td class="vw-word">distribution</td><td class="vw-mean">유통, 배포</td></tr>
+        <tr><td class="vw-word">refer to</td><td class="vw-mean">~을 가리키다, 언급하다</td></tr>
+        <tr><td class="vw-word">activism</td><td class="vw-mean">행동주의, 활동주의</td></tr>
+        <tr><td class="vw-word">intimate</td><td class="vw-mean">친밀한, 긴밀한</td></tr>
+        <tr><td class="vw-word">industrialization</td><td class="vw-mean">산업화 (= industrialisation)</td></tr>
+        <tr><td class="vw-word">dynamic</td><td class="vw-mean">역학 관계; 역동적인</td></tr>
+        <tr><td class="vw-word">detached</td><td class="vw-mean">분리된, 멀어진</td></tr>
+        <tr><td class="vw-word">can afford</td><td class="vw-mean">~을 살 여유가 있다</td></tr>
+        <tr><td class="vw-word">possession</td><td class="vw-mean">소유물</td></tr>
+        <tr><td class="vw-word">apparel</td><td class="vw-mean">의류</td></tr>
+        <tr><td class="vw-word">garment</td><td class="vw-mean">의복, 옷</td></tr>
+        <tr><td class="vw-word">will</td><td class="vw-mean">유언장</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p6 -->
+
+<!-- ══════════════ P007 ══════════════ -->
+<div class="sec" id="p7">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 048 · #번 007 · #문항코드 26007-0043</div>
+    <div class="p-title">Natural Meaning — Grice's Theory</div>
+    <div class="p-title-ko">Grice의 자연적 의미 이론 · 빈칸 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">Grice, a British philosopher of language, proposed that, in addition to communicative meaning, there is another kind of meaning, which he refer to ~ as ...erred to as natural meaning, characterized by 'things' {that have meaning regardless of whether there is any communicative intention on anyone's part}.</p>
+        <p class="plain-sent">For example, I have learned that dynamite means danger. Thus, if I find a box of dynamite in my garage, dynamite is/means danger to me and I am going to be frightened.</p>
+        <p class="plain-sent">To recognize the danger, it is not necessary for me to recognize that someone intentionally placed the dynamite there with the intention of getting me to recognize that dynamite is dangerous; that is, it is not necessary that I recognize any communicative intention behind the box being there to recognize danger.</p>
+        <p class="plain-sent">And, further, even if the dynamite had been put there with the intention of getting me to recognize I was in danger, it would not be necessary for me to recognize that in order to feel in danger.</p>
+        <p class="plain-sent">Simply put, the word 'dynamite' on a box means danger <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 (Blank Completion)</div>
+      <div class="q-stem">Simply put, the word 'dynamite' on a box means danger <span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:220px;">&nbsp;</span>.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> even if the reader had no personal connection to dynamite</div>
+        <div class="choice"><span class="cn">②</span> only when the word had no explicit communicative meaning</div>
+        <div class="choice"><span class="cn">③</span> because I experienced the destructive power of dynamite myself</div>
+        <div class="choice"><span class="cn">④</span> whether or not anyone intended to have me recognize that meaning</div>
+        <div class="choice"><span class="cn">⑤</span> when I understood the communicative intention conveyed by the box</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">④ whether or not anyone intended to have me recognize that meaning</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> 글 전체가 "의사소통 의도와 무관하게 자연적 의미가 존재한다"는 것을 반복적으로 강조함.<br><br>
+        <strong>반복 구조:</strong> "it is not necessary to recognize communicative intention (×1)" → "it is not necessary to recognize communicative intention (×2)" → "even if there was an intention, it would still not be necessary to recognize it (×3)" → 결론: "whether or not anyone intended ~" (의도 여부에 관계없이)<br><br>
+        <strong>오답:</strong> ①은 관련 없음 / ②는 "명시적 의사소통 의미가 없을 때만"으로 조건이 반대 / ③은 개인적 경험 — 본문에 없음 / ⑤는 오히려 communicative intention을 인식해야 한다는 반대 내용
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Grice, a British <span class="vw">philosopher<span class="tt">철학자</span></span> of language, <span class="vw">propose<span class="tt">주장하다</span></span>d that, in addition to communicative meaning, there is another kind of meaning, <span class="gr">which he <span class="vw">refer to ~ as ...<span class="tt">~을 ...라고 부르다</span></span>erred to as natural meaning</span>, <span class="gr">characterized by 'things' {that have meaning regardless of whether there is any communicative <span class="vw">intention<span class="tt">의도</span></span> on anyone's part}</span>.</div>
+        <div class="sp-ko">영국의 언어 철학자 Grice는 / 의사소통적 의미에 더해, / 그가 '자연적 의미'라고 부른 또 다른 종류의 의미가 있다고 주장했는데, / 이는 누군가의 의사소통 의도가 있든 없든 의미를 갖는 '것들'을 특징으로 한다. <span class="sp-note">★ which he referred to as ~: 계속적 관계절 / regardless of whether ~: "~인지 아닌지에 관계없이"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, I have learned <span class="gr">[that dynamite means danger]</span>. Thus, if I find a box of dynamite in my garage, dynamite is/means danger to me and I am going to be frightened.</div>
+        <div class="sp-ko">예를 들어, 나는 다이너마이트가 위험을 의미한다는 것을 배웠다. / 따라서 내 차고에서 다이너마이트 상자를 발견한다면, 다이너마이트는 나에게 위험을 의미하고 나는 두려움을 느낄 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">To <span class="vw">recognize<span class="tt">인식하다</span></span> the danger, <span class="gr">it is not necessary for me [to recognize that someone intentionally placed the dynamite there with the <span class="vw">intention<span class="tt">의도</span></span> of getting me to <span class="vw">recognize<span class="tt">인식하다</span></span> that dynamite is dangerous]</span>; that is, <span class="gr">it is not necessary [that I recognize any communicative <span class="vw">intention<span class="tt">의도</span></span> behind the box being there to recognize danger]</span>.</div>
+        <div class="sp-ko">위험을 인식하기 위해, / 나는 누군가가 다이너마이트가 위험하다는 것을 내가 인식하게 하려는 의도로 그곳에 의도적으로 놓았다는 것을 / 인식할 필요가 없다; / 즉, 위험을 인식하기 위해 그 상자가 거기에 있는 것 뒤에 어떠한 의사소통 의도도 인식할 필요가 없다. <span class="sp-note">★ It is not necessary for sb to V: "~가 V할 필요가 없다" (가주어·진주어 구문)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">And, further, <span class="gr">even if the dynamite had been put there with the <span class="vw">intention<span class="tt">의도</span></span> of getting me to <span class="vw">recognize<span class="tt">인식하다</span></span> I was in danger</span>, it would not be necessary for me to recognize that in order to feel in danger.</div>
+        <div class="sp-ko">그리고 더 나아가, / 설령 다이너마이트가 내가 위험에 처했다는 것을 인식하게 하려는 의도로 그곳에 놓여 있었다 하더라도, / 위험을 느끼기 위해 그것을 인식할 필요는 없을 것이다. <span class="sp-note">★ even if + 가정법 과거완료 (had been put) — 반사실적 가정</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Simply put, the word 'dynamite' on a box means danger <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">간단히 말해서, / 상자에 적힌 '다이너마이트'라는 단어는 _______________ 위험을 의미한다.</div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① regardless of whether S+V</strong> — "~인지 아닌지에 관계없이": "regardless of whether there is any communicative intention"</p>
+      <p><strong>② It is not necessary for sb to V (가주어·진주어)</strong> — "~가 V할 필요가 없다": 두 번 반복되어 핵심 논리를 강조</p>
+      <p><strong>③ even if + 가정법 과거완료</strong> — "even if the dynamite had been put there ~": 반사실적 가정 "설령 ~였다 하더라도"</p>
+      <p><strong>④ with the intention of -ing</strong> — "~하려는 의도로": "with the intention of getting me to recognize ~"</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      The Distinction Between Communicative Intent and Independent <strong>N<span style="border-bottom:2px solid var(--ink);">atural</span> M<span style="border-bottom:2px solid var(--ink);">eaning</span></strong>: Natural meaning exists as an inherent property of things, functioning independently of any communicative intention or human interaction.
+      <div class="topic-ko">의사소통 의도와 독립적인 <strong>자연적 의미</strong>의 구분: 자연적 의미는 사물의 내재적 속성으로 존재하며, 의사소통 의도나 인간의 상호작용과 무관하게 작동한다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Grice introduces "Natural Meaning" as a distinct category alongside communicative meaning, defining it as meaning that exists regardless of any communicative intention.</td><td class="fw-ko">Grice는 의사소통적 의미와 별개로, 의사소통 의도와 무관하게 존재하는 '자연적 의미'를 소개한다.</td></tr>
+        <tr><td><span class="step-badge">② Example</span></td><td>The "Dynamite" case: Learning that dynamite signifies danger is an objective process. Recognizing the danger does not require recognizing that someone "intended" for the danger to be known.</td><td class="fw-ko">다이너마이트 사례: 위험을 인식하기 위해 타인의 의사소통 의도를 인식할 필요가 없다.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span></td><td>The word or object (dynamite) carries its meaning (danger) autonomously, whether intended or not.</td><td class="fw-ko">단어나 사물은 의도 여부에 관계없이 자율적으로 의미를 지닌다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">philosopher</td><td class="vw-mean">철학자</td></tr>
+        <tr><td class="vw-word">propose</td><td class="vw-mean">제안하다, 주장하다</td></tr>
+        <tr><td class="vw-word">refer to ~ as ...</td><td class="vw-mean">~을 ...라고 부르다, 언급하다</td></tr>
+        <tr><td class="vw-word">characterized by</td><td class="vw-mean">~을 특징으로 하는</td></tr>
+        <tr><td class="vw-word">intention</td><td class="vw-mean">의도</td></tr>
+        <tr><td class="vw-word">recognize</td><td class="vw-mean">인식하다, 알아보다</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p7 -->
+
+<!-- ══════════════ P008 ══════════════ -->
+<div class="sec" id="p8">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 049 · #번 008 · #문항코드 26007-0044</div>
+    <div class="p-title">The Paradox of Scientific Control</div>
+    <div class="p-title-ko">과학적 통제의 역설 — 복지의 이중성 · 빈칸 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">Scientific progress is measured not only by an increase in understanding but by an increase in control over nature and redirection of nature's course.</p>
+        <p class="plain-sent">"The contemplative ideal of scientific investigations for one's own sake has been replaced in modern times," Wieland comments, "by the practical ideal of scientific research in the service of humanity."</p>
+        <p class="plain-sent">The natural course of things once presented and still presents threats to human welfare: people went and still go hungry, die in infancy and early adulthood, and face natural disasters.</p>
+        <p class="plain-sent">But not all control and redirection <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+        <p class="plain-sent">Medical technology, based on science, has lengthened the number of years human beings suffer from chronic diseases, condemning them to lonely, bedridden existences.</p>
+        <p class="plain-sent">end-of-life treatments, which prove medical innovation and competence, can sustain life, but not living.</p>
+        <p class="plain-sent">The illustrious medical journal The Lancet reports frequently on the "sea of suffering" in aging populations.</p>
+
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 (Blank Completion)</div>
+      <div class="q-stem">But not all control and redirection <span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:200px;">&nbsp;</span>.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> result in disasters</div>
+        <div class="choice"><span class="cn">②</span> require human effort</div>
+        <div class="choice"><span class="cn">③</span> depend on technology</div>
+        <div class="choice"><span class="cn">④</span> add to human welfare</div>
+        <div class="choice"><span class="cn">⑤</span> harm natural processes</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">④ add to human welfare</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> 과학의 목표는 "인류를 위한(in the service of humanity)" = 인간 복지 증진이었으나, 빈칸 이후 의학 기술이 오히려 만성 고통 기간을 늘리고 "고통의 바다"를 초래한다는 반례가 이어짐.<br><br>
+        <strong>논리 구조:</strong> "not all control and redirection <u>add to human welfare</u>" → "Medical technology has lengthened the number of years human beings suffer" → "sustain life, but not living" → "sea of suffering"<br><br>
+        <strong>오답:</strong> ①은 '재해를 초래한다' — 너무 강함 / ②③은 글의 논점과 무관 / ⑤는 '자연 과정을 해친다' — 글의 주제와 맞지 않음
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Scientific progress is measured <span class="gr">not only by an increase in understanding but by an increase in control over nature and <span class="vw">redirection<span class="tt">방향 전환</span></span> of nature's course</span>.</div>
+        <div class="sp-ko">과학적 진보는 이해의 증가뿐만 아니라 / 자연에 대한 통제와 자연의 흐름에 대한 방향 전환의 증가로도 / 측정된다. <span class="sp-note">★ not only A but (also) B: "A뿐만 아니라 B도"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">"The <span class="vw">contemplative<span class="tt">관조적인</span></span> <span class="vw">ideal<span class="tt">이상</span></span> of scientific <span class="vw">investigation<span class="tt">연구</span></span>s <span class="vw">for one's own sake<span class="tt">그 자체를 위해</span></span> has been replaced in modern times," Wieland comments, "by the practical <span class="vw">ideal<span class="tt">이상</span></span> of scientific research in the service of humanity."</div>
+        <div class="sp-ko">Wieland는 말한다, / "과학 연구 자체를 위한 관조적 이상은 현대에 들어서 / 인류를 위한 과학 연구의 실용적 이상으로 대체되었다." <span class="sp-note">★ has been replaced by ~: 수동태 현재완료 / in the service of humanity: "인류를 위하여"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The natural course of things once presented and still presents threats to human welfare: people went and still go hungry, die in <span class="vw">infancy<span class="tt">유아기</span></span> and early <span class="vw">adulthood<span class="tt">성인기</span></span>, and face natural disasters.</div>
+        <div class="sp-ko">사물의 자연적 흐름은 예전에도 그랬고 지금도 인간의 복지에 위협을 가한다: / 사람들은 예전에도 그랬고 지금도 굶주리고, / 유아기나 초기 성인기에 죽으며, / 자연재해에 직면한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But not all control and <span class="vw">redirection<span class="tt">방향 전환</span></span> <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">그러나 모든 통제와 방향 전환이 / _______________은 아니다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Medical technology, based on science, has lengthened the number of years human beings suffer from <span class="vw">chronic<span class="tt">만성적인</span></span> diseases, <span class="gr">condemning them to lonely, <span class="vw">bedridden<span class="tt">병상에 누워 있는</span></span> existences</span>.</div>
+        <div class="sp-ko">과학에 기반한 의료 기술은 인간이 만성 질환으로 고통받는 기간을 늘려, / 그들을 외롭고 병상에 누워 있는 삶에 처하게 한다. <span class="sp-note">★ condemning(분사구문 — 결과): "그 결과 ~하게 하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="vw">end-of-life treatment<span class="tt">말기 치료</span></span>s, <span class="gr">which prove medical innovation and competence</span>, can sustain life, but not living.</div>
+        <div class="sp-ko">의료 혁신과 역량을 증명하는 말기 치료는 / 생명을 유지할 수는 있지만, 삶을 유지하지는 못한다. <span class="sp-note">★ sustain life ≠ sustain living: 생물학적 생명 vs 삶의 질 대비</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The <span class="vw">illustrious<span class="tt">저명한</span></span> medical journal The Lancet reports frequently on the "sea of suffering" in aging populations.</div>
+        <div class="sp-ko">저명한 의학 저널 Lancet은 / 고령화 인구 속 "고통의 바다"에 대해 자주 보고한다.</div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① not only A but (also) B</strong> — "A뿐만 아니라 B도": "not only by an increase in understanding but by an increase in control"</p>
+      <p><strong>② has been replaced by ~ (수동태 현재완료)</strong> — 과거부터 현재까지 지속: "현대에 들어서 대체되어 왔다"</p>
+      <p><strong>③ condemning them to ~ (결과의 분사구문)</strong> — 주절의 결과를 현재분사로 표현. "그 결과 ~한 상태에 처하게 한다"</p>
+      <p><strong>④ sustain life, but not living (대조 어법)</strong> — life(생물학적 생명) ≠ living(삶의 질). 글의 핵심 역설을 압축적으로 표현</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      The Paradox of Scientific Control: The practical ideal of scientific progress creates a paradox where medical competence increases longevity at the cost of increased suffering.
+      <div class="topic-ko">과학적 통제의 역설: 과학적 진보의 실용적 이상이 역설을 만들어내는데, 의학적 역량이 증가된 고통을 대가로 수명을 늘린다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>- Shift in Scientific Goal: from "Understanding Nature"(Contemplative) to "Controlling Nature"(Practical)<br>- Original Purpose: To protect human welfare from natural threats (Hunger, Disease, Disasters).</td><td class="fw-ko">과학의 목표가 자연 이해(관조)에서 자연 통제(실용)로 전환되었으며, 원래 목적은 자연 위협으로부터 인류를 보호하는 것이었다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>However, total control does not always result in better welfare. The Medical Paradox: Science can "Sustain Life"(Biological) but often fails to "Sustain Living"(Quality).</td><td class="fw-ko">그러나 완전한 통제가 항상 더 나은 복지를 가져오지는 않으며, 의학의 역설은 생물학적 생명 유지와 삶의 질 유지의 불일치에서 나타난다.</td></tr>
+        <tr><td><span class="step-badge">③ Example</span></td><td>Innovation leads to "Chronic Suffering" and a "Sea of Suffering" in aging populations.</td><td class="fw-ko">의료 혁신은 만성 고통을 늘리고 고령화 인구의 "고통의 바다"로 이어지는 역설을 만든다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">redirection</td><td class="vw-mean">방향 전환, 재조정</td></tr>
+        <tr><td class="vw-word">contemplative</td><td class="vw-mean">성찰적인, 관조적인</td></tr>
+        <tr><td class="vw-word">ideal</td><td class="vw-mean">이상; 이상적인</td></tr>
+        <tr><td class="vw-word">investigation</td><td class="vw-mean">연구, 조사</td></tr>
+        <tr><td class="vw-word">for one's own sake</td><td class="vw-mean">그 자체를 위해, 그 자체가 목적으로</td></tr>
+        <tr><td class="vw-word">infancy</td><td class="vw-mean">유아기</td></tr>
+        <tr><td class="vw-word">adulthood</td><td class="vw-mean">성인기</td></tr>
+        <tr><td class="vw-word">chronic</td><td class="vw-mean">만성적인</td></tr>
+        <tr><td class="vw-word">condemn ~ to ...</td><td class="vw-mean">~을 ...한 상황에 처하게 하다</td></tr>
+        <tr><td class="vw-word">bedridden</td><td class="vw-mean">병상에 누워 있는</td></tr>
+        <tr><td class="vw-word">end-of-life treatment</td><td class="vw-mean">말기 치료</td></tr>
+        <tr><td class="vw-word">illustrious</td><td class="vw-mean">저명한, 유명한</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p8 -->
+
+<!-- ══════════════ P009 ══════════════ -->
+<div class="sec" id="p9">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 050 · #번 009 · #문항코드 26007-0045</div>
+    <div class="p-title">Animal Welfare & Natural Behaviour</div>
+    <div class="p-title-ko">동물 복지와 자연 행동 레퍼토리 · 빈칸 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">In the process of discovering what animals want to do, a knowledge of the natural or normal behavioural repertoire of a species is a vital step in understanding <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+        <p class="plain-sent">It draws our attention to the differences between wild and captive members of that species and therefore makes us aware of the possible behaviours {that the captive ones might want to do}.</p>
+        <p class="plain-sent">It does not necessarily say that they will necessarily want to do them just because they are natural but it provides obvious candidates to be tested.</p>
+        <p class="plain-sent">The fact that the jungle fowl ancestors of our domestic chickens always roost in trees at night, for example, highlights the possible importance of roosting to modern breeds.</p>
+        <p class="plain-sent">It does not tell us that all modern chickens still definitely want to roost, but it provides a very plausible hypothesis that this might be important to them.</p>
+        <p class="plain-sent">Such a hypothesis can then be tested by investigating whether modern chickens still want to roost (they do).</p>
+<div class="plain-fn">* jungle fowl: 야생 닭 &nbsp;&nbsp;** roost: (새가 횃대에서) 자다, 쉬다</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 (Blank Completion)</div>
+      <div class="q-stem">a knowledge of the natural or normal behavioural repertoire of a species is a vital step in understanding <span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:200px;">&nbsp;</span>.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> what is good for their welfare</div>
+        <div class="choice"><span class="cn">②</span> how to train them to perform specific tasks</div>
+        <div class="choice"><span class="cn">③</span> how to prevent the spread of animal diseases</div>
+        <div class="choice"><span class="cn">④</span> what improves economic efficiency in farming</div>
+        <div class="choice"><span class="cn">⑤</span> what helps animals become fully domesticated</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">① what is good for their welfare</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> 글의 전체 목적: 야생 행동 레퍼토리 → 사육 동물이 하고 싶어 할 행동 파악 → 가설 수립 → 검증 → <strong>동물 복지(animal welfare)</strong> 개선에 활용<br><br>
+        <strong>첫 문장 구조:</strong> "a vital step in understanding [what is good for their welfare]" — 이것이 글의 목적이자 결론<br><br>
+        <strong>오답:</strong> ②훈련 / ③질병 예방 / ④경제적 효율 / ⑤완전한 가축화 → 모두 글의 주제(동물이 원하는 것 → 복지)와 맞지 않음
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In the process of discovering <span class="gr">what animals want to do</span>, a knowledge of the natural or normal behavioural <span class="vw">repertoire<span class="tt">행동 목록</span></span> of a <span class="vw">species<span class="tt">종</span></span> is a vital step in understanding <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">동물이 무엇을 하고 싶어 하는지 발견하는 과정에서, / 한 종의 자연적이거나 정상적인 행동 레퍼토리에 대한 지식은 / _______________ 이해하는 데 중요한 단계이다. <span class="sp-note">★ what animals want to do: 관계대명사 what절 (명사절)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It draws our attention to the differences between wild and <span class="vw">captive<span class="tt">사육 중인</span></span> members of that <span class="vw">species<span class="tt">종</span></span> and therefore makes us aware of the possible behaviours <span class="gr">{that the <span class="vw">captive<span class="tt">사육 중인</span></span> ones might want to do}</span>.</div>
+        <div class="sp-ko">그것은 그 종의 야생 개체와 사육 개체의 차이점에 우리의 주의를 끌어, / 사육 개체들이 하고 싶어 할 수도 있는 가능한 행동들을 우리가 인식하게 한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It does <span class="vw">not necessarily<span class="tt">반드시 ~은 아니다</span></span> say <span class="gr">[that they will necessarily want to do them(= the possible behaviours) just because they are natural]</span> but it provides <span class="vw">obvious<span class="tt">명백한</span></span> <span class="vw">candidate<span class="tt">후보</span></span>s to be tested.</div>
+        <div class="sp-ko">그것이 반드시 그 행동들이 자연적이라는 이유만으로 사육 개체들이 그것들을 하고 싶어 할 것이라고 말하는 것은 아니지만, / 검증할 명백한 후보들을 제공한다. <span class="sp-note">★ not necessarily: 부분 부정 "반드시 ~은 아니다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The fact <span class="gr">[that the <span class="vw">jungle fowl<span class="tt">야생 닭</span></span> ancestors of our <span class="vw">domestic<span class="tt">가축화된</span></span> chickens always <span class="vw">roost<span class="tt">(새가 횃대에서) 자다</span></span> in trees at night]</span>, for example, <span class="vw">highlight<span class="tt">강조하다</span></span>s the possible importance of roosting to modern <span class="vw">breed<span class="tt">품종</span></span>s.</div>
+        <div class="sp-ko">예를 들어, / 우리의 가축화된 닭의 조상인 야생 닭이 밤에 항상 나무에서 잔다는 사실은 / 현대 품종에게 횃대에서 자는 것의 가능한 중요성을 부각시킨다. <span class="sp-note">★ The fact [that ~]: 동격 that절 / 삽입구 for example로 인해 주어(The fact ~) - 동사(highlights) 거리가 멂</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It does not tell us <span class="gr">[that all modern chickens still <span class="vw">definitely<span class="tt">확실히</span></span> want to <span class="vw">roost<span class="tt">횃대에서 자다</span></span>]</span>, but it provides a very <span class="vw">plausible<span class="tt">그럴듯한</span></span> <span class="vw">hypothesis<span class="tt">가설</span></span> <span class="gr">[that this might be important to them]</span>.</div>
+        <div class="sp-ko">그것이 모든 현대 닭들이 여전히 확실히 횃대에서 자기를 원한다고 알려주지는 않지만, / 이것이 그들에게 중요할 수도 있다는 매우 그럴듯한 가설을 제공한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Such a <span class="vw">hypothesis<span class="tt">가설</span></span> can then be tested by <span class="gr">investigating whether modern chickens still want to <span class="vw">roost<span class="tt">횃대에서 자다</span></span></span> (they do).</div>
+        <div class="sp-ko">그런 다음 그러한 가설은 현대 닭들이 여전히 횃대에서 자기를 원하는지 조사함으로써 검증될 수 있다 / (그들은 실제로 그렇다). <span class="sp-note">★ by investigating: 수단의 by -ing / whether ~: 간접의문문</span></div>
+      </div>
+      <div class="fn">* jungle fowl: 야생 닭 &nbsp;&nbsp;** roost: (새가 횃대에서) 자다, 쉬다</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① what animals want to do (관계대명사 what절)</strong> — 명사절로 discovering의 목적어: "동물이 하고 싶어 하는 것"</p>
+      <p><strong>② The fact [that ~] (동격 that절)</strong> — The fact의 내용을 that절이 설명. 삽입구 "for example" 때문에 주어-동사 거리가 멈 → highlights에 주목</p>
+      <p><strong>③ not necessarily (부분 부정)</strong> — "반드시 ~은 아니다". 전체 부정(never)과 구별할 것</p>
+      <p><strong>④ by investigating whether ~ (수단 + 간접의문문)</strong> — by + -ing(수단), whether + 주어 + 동사(간접의문문)</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      Understanding the ancestral behaviors of a species allows researchers to identify potential <strong>w<span style="border-bottom:2px solid var(--ink);">elfare</span></strong> requirements that should be empirically verified in modern breeds.
+      <div class="topic-ko">한 종의 조상 행동을 이해하면 연구자들이 현대 품종에서 경험적으로 검증되어야 할 잠재적 <strong>복지</strong> 요건을 식별할 수 있다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span><br><span class="logic-sub">Observation</span></td><td>Study the natural behavior of the species in the wild.</td><td class="fw-ko">야생 종의 자연 행동을 연구하는 것이 첫 번째 단계이다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span><br><span class="logic-sub">Observation</span></td><td>- Spot behaviors missing in captive environments → These "natural" behaviors might still be important.</td><td class="fw-ko">사육 환경에서 없는 행동을 파악하면, 이 자연적 행동들이 사육 동물에게도 여전히 중요할 수 있다는 가설이 도출된다.</td></tr>
+        <tr><td><span class="step-badge">③ Example</span><br><span class="logic-sub">Testing</span></td><td>Experiment to see if captive animals still have the desire for them ⇒ Confirm and apply the findings to improve animal welfare.</td><td class="fw-ko">사육 동물이 여전히 그 욕구를 갖는지 검증하고, 결과를 확인해 동물 복지 개선에 적용한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">repertoire</td><td class="vw-mean">레퍼토리, 행동 목록</td></tr>
+        <tr><td class="vw-word">species</td><td class="vw-mean">종(種)</td></tr>
+        <tr><td class="vw-word">captive</td><td class="vw-mean">포획된, 사육 중인</td></tr>
+        <tr><td class="vw-word">not necessarily</td><td class="vw-mean">반드시 ~은 아니다 (부분 부정)</td></tr>
+        <tr><td class="vw-word">obvious</td><td class="vw-mean">명백한, 분명한</td></tr>
+        <tr><td class="vw-word">candidate</td><td class="vw-mean">후보(자)</td></tr>
+        <tr><td class="vw-word">domestic</td><td class="vw-mean">가축화된, 집에서 키우는</td></tr>
+        <tr><td class="vw-word">highlight</td><td class="vw-mean">강조하다, 부각시키다</td></tr>
+        <tr><td class="vw-word">breed</td><td class="vw-mean">품종</td></tr>
+        <tr><td class="vw-word">definitely</td><td class="vw-mean">분명히, 확실히</td></tr>
+        <tr><td class="vw-word">plausible</td><td class="vw-mean">그럴듯한, 가능성이 있어 보이는</td></tr>
+        <tr><td class="vw-word">hypothesis</td><td class="vw-mean">가설</td></tr>
+        <tr><td class="vw-word">investigate</td><td class="vw-mean">조사하다, 연구하다</td></tr>
+        <tr><td class="vw-word">jungle fowl</td><td class="vw-mean">야생 닭 (가축 닭의 조상)</td></tr>
+        <tr><td class="vw-word">roost</td><td class="vw-mean">(새가 횃대에서) 자다, 쉬다</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p9 -->
+
+<!-- ══════════════ P010 ══════════════ -->
+<div class="sec" id="p10">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 051 · #번 010 · #문항코드 26007-0046</div>
+    <div class="p-title">Electoral Systems Typology</div>
+    <div class="p-title-ko">선거 제도의 유형 분류 체계 · 빈칸 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">inevitably, the world of electoral systems is crowded and complex and becoming more so all the time: one country's electoral system is never the same as another's (although in some cases the differences are quite small).</p>
+        <p class="plain-sent">Given the range of variations {among the different electoral systems}, this makes life quite difficult for the analyst seeking to produce an acceptable typology.</p>
+        <p class="plain-sent">One option might be to simply base a classification of the systems in terms of their outputs, that is, with reference to the process of <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> {where one distinguishes between those systems {which have 'proportional' outcomes} and those {with 'non-proportional' outcomes}}.</p>
+        <p class="plain-sent">The essence of proportional systems is to ensure that the number of seats {each party wins} reflects as closely as possible the number of votes {it has received}.</p>
+        <p class="plain-sent">In non-proportional systems, by contrast, greater importance is attached to ensuring that one party has a clear majority of seats over its competitors, thereby (hopefully) increasing the prospect of a strong and stable government.</p>
+<div class="plain-fn">* typology: 유형 분류 체계</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 (Blank Completion)</div>
+      <div class="q-stem">...with reference to the process of <span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:200px;">&nbsp;</span> where one distinguishes between those systems which have 'proportional' outcomes and those with 'non-proportional' outcomes.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> balancing political rights</div>
+        <div class="choice"><span class="cn">②</span> ensuring political fairness</div>
+        <div class="choice"><span class="cn">③</span> translating votes into seats</div>
+        <div class="choice"><span class="cn">④</span> managing public opinions</div>
+        <div class="choice"><span class="cn">⑤</span> conveying power to voters</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">③ translating votes into seats</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> 비례 제도: "the number of <u>seats</u> each party wins reflects ... the number of <u>votes</u>" / 비비례 제도: "one party has a clear majority of <u>seats</u> over its competitors" → 두 제도 모두 "votes(득표)를 seats(의석)로 변환하는 과정"으로 분류됨<br><br>
+        <strong>빈칸 내용:</strong> "the process of <u>translating votes into seats</u>" — votes → seats 변환 과정이 바로 두 제도를 비교·분류하는 기준<br><br>
+        <strong>오답:</strong> ①② "정치적 권리 균형·공정성" — 글에서 직접 언급 없음 / ④ "여론 관리" — 무관 / ⑤ "유권자에게 권력 이전" — 논점 이탈
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="vw">inevitably<span class="tt">불가피하게</span></span>, the world of <span class="vw">electoral<span class="tt">선거의</span></span> systems is <span class="vw">crowded<span class="tt">복잡한</span></span> and complex and becoming more so all the time: one country's <span class="vw">electoral<span class="tt">선거의</span></span> system is never the same as another's (although in some cases the differences are quite small).</div>
+        <div class="sp-ko">불가피하게, / 선거 제도의 세계는 복잡하고 갈수록 더욱 그렇게 되고 있다: / 한 나라의 선거 제도는 다른 나라의 것과 결코 동일하지 않다 / (비록 일부 경우 차이가 매우 작지만).</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Given the <span class="vw">range<span class="tt">범위</span></span> of <span class="vw">variation<span class="tt">변형</span></span>s {among the different <span class="vw">electoral<span class="tt">선거의</span></span> systems}</span>, this makes life quite difficult for the <span class="vw">analyst<span class="tt">분석가</span></span> <span class="gr">seeking to produce an <span class="vw">acceptable<span class="tt">수용 가능한</span></span> <span class="vw">typology<span class="tt">유형 분류 체계</span></span></span>.</div>
+        <div class="sp-ko">다양한 선거 제도들 사이의 변형의 범위를 감안할 때, / 이것은 수용 가능한 유형 분류 체계를 만들려는 분석가에게 / 꽤 어려운 일이 된다. <span class="sp-note">★ Given ~(분사구문 관용): "~을 감안할 때" / seeking to ~(현재분사구): the analyst를 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">One option might be to simply base a <span class="vw">classification<span class="tt">분류</span></span> of the systems <span class="vw">in terms of<span class="tt">~의 측면에서</span></span> their outputs, that is, <span class="vw">with reference to<span class="tt">~을 기준으로</span></span> the process of <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class="gr">{where one <span class="vw">distinguish<span class="tt">구별하다</span></span>es between those systems {which have '<span class="vw">proportional<span class="tt">비례적인</span></span>' outcomes} and those {with 'non-proportional' outcomes}}</span>.</div>
+        <div class="sp-ko">한 가지 선택지는 제도들의 산출 결과, / 즉 _______________ 과정을 기준으로 제도들의 분류를 단순히 기반으로 하는 것일 수 있는데, / '비례적' 결과를 갖는 제도들과 '비비례적' 결과를 갖는 제도들을 구별하는 곳이다. <span class="sp-note">★ that is(즉) = 앞 내용 재진술 / where(관계부사): the process를 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The <span class="vw">essence<span class="tt">본질</span></span> of <span class="vw">proportional<span class="tt">비례적인</span></span> systems is to <span class="vw">ensure<span class="tt">보장하다</span></span> <span class="gr">[that the number of seats {each <span class="vw">party<span class="tt">정당</span></span> wins} reflects as closely as possible the number of votes {it has received}]</span>.</div>
+        <div class="sp-ko">비례 제도의 본질은 / 각 정당이 획득한 의석 수가 / 가능한 한 해당 정당이 받은 득표 수를 밀접하게 반영하도록 보장하는 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In non-<span class="vw">proportional<span class="tt">비례적인</span></span> systems, by contrast, greater importance is attached to ensuring <span class="gr">[that one <span class="vw">party<span class="tt">정당</span></span> has a clear <span class="vw">majority<span class="tt">다수</span></span> of seats over its competitors]</span>, <span class="gr">thereby (hopefully) increasing the <span class="vw">prospect<span class="tt">전망</span></span> of a strong and stable government</span>.</div>
+        <div class="sp-ko">반대로, 비비례 제도에서는 한 정당이 경쟁자들보다 명확한 다수 의석을 차지하도록 보장하는 것에 더 큰 중요성이 부여되며, / 그렇게 함으로써 (바라건대) 강하고 안정적인 정부에 대한 전망을 높인다. <span class="sp-note">★ importance is attached to -ing: "~하는 것에 중요성이 부여된다" (수동태) / thereby -ing: 결과의 분사구문</span></div>
+      </div>
+      <div class="fn">* typology: 유형 분류 체계</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① Given + 명사(구) (분사구문 관용)</strong> — "Given the range of variations ~": "~을 감안할 때". 문두에서 조건/배경을 제시</p>
+      <p><strong>② importance is attached to -ing (수동태)</strong> — "~하는 것에 중요성이 부여되다": "greater importance is attached to ensuring that ~"</p>
+      <p><strong>③ thereby + -ing (결과의 분사구문)</strong> — "그렇게 함으로써 ~하다": "thereby increasing the prospect of a strong government"</p>
+      <p><strong>④ in terms of / with reference to</strong> — 유사 의미: "~의 측면에서 / ~을 기준으로" (that is로 연결되어 재진술)</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      The methodological challenge of creating a <strong>t<span style="border-bottom:2px solid var(--ink);">ypology</span></strong> of diverse electoral systems based on political outputs, specifically by comparing proportional and non-proportional outputs via vote-to-seat translation.
+      <div class="topic-ko">다양한 선거 제도들을 정치적 산출 결과, 특히 득표-의석 변환을 통해 비례·비비례 결과를 비교함으로써 <strong>유형 분류 체계</strong>를 만드는 방법론적 과제.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Inevitability of Complexity: The world of elections is "crowded and complex." Typological Challenge: Because systems vary so much, creating an "acceptable typology" (classification) is nearly impossible.</td><td class="fw-ko">선거 제도의 세계는 복잡 다양하여 수용 가능한 유형 분류 체계를 만드는 것이 거의 불가능하다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>Focus on "Outputs": Instead of looking at every detail, classify systems by how votes are translated into seats.</td><td class="fw-ko">산출 결과(득표→의석 변환)에 초점을 맞추어 비례 vs 비비례 제도로 분류하는 방법이 제시된다.</td></tr>
+        <tr><td><span class="step-badge">③ 부연</span></td><td>⚫ Model A - "Proportional"(Representation): Each party's seats should "reflect as closely as possible" the percentage of votes received.<br>⚫ Model B - "Non-proportional"(Stability): Prioritizes a "clear majority" for one party to ensure a "strong and stable government."<br>The choice between systems is a trade-off between "Proportional" vs. "Non-proportional."</td><td class="fw-ko">비례 제도(대표성)는 득표율 ≈ 의석률이고, 비비례 제도(안정성)는 한 정당의 과반수 의석으로 강한 정부를 추구한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">inevitably</td><td class="vw-mean">불가피하게</td></tr>
+        <tr><td class="vw-word">electoral</td><td class="vw-mean">선거의</td></tr>
+        <tr><td class="vw-word">crowded</td><td class="vw-mean">복잡한, 다양한 (것들이 가득 찬)</td></tr>
+        <tr><td class="vw-word">range</td><td class="vw-mean">범위, 다양성</td></tr>
+        <tr><td class="vw-word">variation</td><td class="vw-mean">변형, 차이</td></tr>
+        <tr><td class="vw-word">analyst</td><td class="vw-mean">분석가</td></tr>
+        <tr><td class="vw-word">seek to</td><td class="vw-mean">~하려고 하다, ~하고자 하다</td></tr>
+        <tr><td class="vw-word">acceptable</td><td class="vw-mean">수용 가능한</td></tr>
+        <tr><td class="vw-word">classification</td><td class="vw-mean">분류</td></tr>
+        <tr><td class="vw-word">in terms of</td><td class="vw-mean">~의 측면에서, ~에 관하여</td></tr>
+        <tr><td class="vw-word">with reference to</td><td class="vw-mean">~에 관련하여, ~을 기준으로</td></tr>
+        <tr><td class="vw-word">distinguish</td><td class="vw-mean">구별하다</td></tr>
+        <tr><td class="vw-word">proportional</td><td class="vw-mean">비례적인</td></tr>
+        <tr><td class="vw-word">essence</td><td class="vw-mean">본질, 핵심</td></tr>
+        <tr><td class="vw-word">ensure</td><td class="vw-mean">보장하다</td></tr>
+        <tr><td class="vw-word">party</td><td class="vw-mean">(정치) 정당</td></tr>
+        <tr><td class="vw-word">majority</td><td class="vw-mean">다수, 과반수</td></tr>
+        <tr><td class="vw-word">prospect</td><td class="vw-mean">전망, 가능성</td></tr>
+        <tr><td class="vw-word">typology</td><td class="vw-mean">유형 분류 체계</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p10 -->
+
+<!-- ══════════════ P011 ══════════════ -->
+<div class="sec" id="p11">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 052 · #번 011 · #문항코드 26007-0047</div>
+    <div class="p-title">Melody as an Abstract Prototype</div>
+    <div class="p-title-ko">멜로디는 추상적 원형 — 음고의 상대적 패턴 · 빈칸 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">Melodies are defined not by the absolute value of each pitch, but by the pattern or relation of successive pitches across time; most people have no trouble recognizeing a melody {that is played in a higher or lower key than they've heard it in before}.</p>
+        <p class="plain-sent">In fact, many melodies do not have a "correct" starting pitch; they just float freely in space, starting anywhere. "Happy Birthday" is an example of this.</p>
+        <p class="plain-sent">One way to think about a melody, then, is as an abstract prototype {that is derived from specific combinations of key, tempo, instrumentation, and so on}.</p>
+        <p class="plain-sent">A cognitive psychologist would say that a melody is an auditory object {that maintains its identity in spite of transformations}, just as a chair maintains its identity when you move it to the other room, turn it upside down, or paint it red.</p>
+        <p class="plain-sent">So, for example, if you hear a song {played louder than you are accustomed to}, you still identify it as the same song.</p>
+        <p class="plain-sent">The same holds for changes in the absolute pitch values of the song, which can be changed so long as <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+<div class="plain-fn">* prototype: 원형</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 (Blank Completion)</div>
+      <div class="q-stem">...which can be changed so long as <span style="border-bottom:2px solid var(--ink);display:inline-block;min-width:200px;">&nbsp;</span>.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> the volume remains constant throughout the song</div>
+        <div class="choice"><span class="cn">②</span> there is no change in the instruments being played</div>
+        <div class="choice"><span class="cn">③</span> the tempo is not modified from the original version</div>
+        <div class="choice"><span class="cn">④</span> the relative distances between them remain the same</div>
+        <div class="choice"><span class="cn">⑤</span> there are predictable rhythmic patterns for the drums</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">④ the relative distances between them remain the same</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> "Melodies are defined not by the <u>absolute value</u> of each pitch, but by the <u>pattern or relation</u> of successive pitches" → 음고들 간의 '상대적 관계(패턴)'가 멜로디의 정의<br><br>
+        <strong>논리:</strong> 절대 음고가 바뀌어도 음고 간 <u>상대적 거리(relative distances)</u>가 유지되는 한 = 같은 패턴 = 같은 멜로디 → ④ "the relative distances between them remain the same"<br><br>
+        <strong>오답:</strong> ①볼륨 / ②악기 / ③템포 → 모두 멜로디 정의와 관련 없음 (음고의 상대적 관계가 핵심) / ⑤리듬 패턴 → 무관
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Melodies are <span class="vw">define<span class="tt">정의하다</span></span>d <span class="gr">not by the <span class="vw">absolute<span class="tt">절대적인</span></span> value of each <span class="vw">pitch<span class="tt">음고</span></span>, but by the pattern or relation of <span class="vw">successive<span class="tt">연속적인</span></span> <span class="vw">pitch<span class="tt">음고</span></span>es across time</span>; most people have no trouble <span class="vw">recognize<span class="tt">인식하다</span></span>ing a melody <span class="gr">{that is played in a higher or lower key than they've heard it in before}</span>.</div>
+        <div class="sp-ko">멜로디는 각 음고의 절대적 값이 아니라, / 시간에 걸친 연속적 음고들의 패턴이나 관계로 정의된다; / 대부분의 사람들은 이전에 들었던 것보다 높거나 낮은 조성으로 연주되는 멜로디를 / 인식하는 데 어려움이 없다. <span class="sp-note">★ not A but B: "A가 아니라 B" / have no trouble -ing: "~하는 데 어려움이 없다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In fact, many melodies do not have a "correct" starting <span class="vw">pitch<span class="tt">음고</span></span>; they just <span class="vw">float<span class="tt">자유롭게 떠다니다</span></span> freely in space, starting anywhere. "Happy Birthday" is an example of this.</div>
+        <div class="sp-ko">사실, 많은 멜로디들은 "정확한" 시작 음고가 없다; / 그것들은 그냥 공간에서 자유롭게 떠다니며 어디서든 시작할 수 있다. / "Happy Birthday"가 이것의 예이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">One way to think about a melody, then, is as an <span class="vw">abstract<span class="tt">추상적인</span></span> <span class="vw">prototype<span class="tt">원형</span></span> <span class="gr">{that is <span class="vw">derive<span class="tt">도출되다</span></span>d from specific combinations of key, tempo, <span class="vw">instrumentation<span class="tt">악기 편성</span></span>, and so on}</span>.</div>
+        <div class="sp-ko">그렇다면 멜로디를 생각하는 한 가지 방법은, / 조성, 템포, 악기 편성 등의 특정 조합에서 파생된 / 추상적인 원형으로 보는 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A <span class="vw">cognitive<span class="tt">인지적인</span></span> <span class="vw">psychologist<span class="tt">심리학자</span></span> would say <span class="gr">[that a melody is an auditory object {that maintains its <span class="vw">identity<span class="tt">동일성</span></span> in spite of <span class="vw">transformation<span class="tt">변형</span></span>s}]</span>, <span class="gr">just as a chair maintains its <span class="vw">identity<span class="tt">동일성</span></span> when you move it to the other room, turn it upside down, or paint it red</span>.</div>
+        <div class="sp-ko">인지 심리학자는 / 멜로디는 변형에도 불구하고 동일성을 유지하는 청각적 대상이라고 말할 것인데, / 마치 의자가 다른 방으로 옮겨지거나, 뒤집히거나, 빨갛게 칠해져도 동일성을 유지하는 것과 같다. <span class="sp-note">★ just as ~: "~와 마찬가지로" (비유) / in spite of: "~에도 불구하고"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">So, for example, if you hear a song <span class="gr">{played louder than you are <span class="vw">accustomed<span class="tt">익숙한</span></span> to}</span>, you still <span class="vw">identify<span class="tt">인식하다</span></span> it as the same song.</div>
+        <div class="sp-ko">예를 들어, 당신이 익숙한 것보다 더 크게 연주되는 노래를 들어도 / 여전히 같은 노래로 인식한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The same holds for changes in the <span class="vw">absolute<span class="tt">절대적인</span></span> <span class="vw">pitch<span class="tt">음고</span></span> values of the song, which can be changed so long as <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">같은 원리가 노래의 절대적 음고 값의 변화에도 적용되는데, / _______________ 한, 음고 값은 변경될 수 있다. <span class="sp-note">★ so long as = as long as: "~하는 한"</span></div>
+      </div>
+      <div class="fn">* prototype: 원형</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① not A but B</strong> — "A가 아니라 B": "not by the absolute value ... but by the pattern or relation". 멜로디 정의의 핵심</p>
+      <p><strong>② have no trouble -ing</strong> — "~하는 데 어려움이 없다": "have no trouble recognizing a melody"</p>
+      <p><strong>③ just as S+V (비유)</strong> — "~와 마찬가지로": "just as a chair maintains its identity when ~"</p>
+      <p><strong>④ so long as = as long as</strong> — "~하는 한": 조건의 부사절 "so long as the relative distances remain the same"</p>
+      <p><strong>⑤ in spite of (= despite)</strong> — "~에도 불구하고": "in spite of transformations"</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      Much like a physical object retains its essence despite being moved or altered, a melody is an abstract <strong>p<span style="border-bottom:2px solid var(--ink);">rototype</span></strong> defined by the structural patterns of successive pitches across time.
+      <div class="topic-ko">물리적 물체가 이동되거나 변형되어도 본질을 유지하듯, 멜로디는 시간에 걸친 연속적 음고들의 구조적 패턴으로 정의되는 추상적 <strong>원형</strong>이다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Definition of Melody: Defined by the relational pattern of pitches over time, not their absolute values. Recognition remains stable across different keys.</td><td class="fw-ko">멜로디는 절대 음고 값이 아닌 시간에 걸친 음고들의 관계 패턴으로 정의되며, 다른 조성에서도 인식이 안정적이다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>A melody is an abstract prototype derived from, but independent of specific key, tempo, or instruments. Cognitive psychology treats melodies as auditory objects, maintaining identity through transformations.</td><td class="fw-ko">멜로디는 특정 조성·템포·악기에서 파생되지만 독립적인 추상적 원형이며, 인지 심리학에서는 변형에도 동일성을 유지하는 청각적 대상으로 다룬다.</td></tr>
+        <tr><td><span class="step-badge">③ Elaboration</span></td><td>Identity is maintained via relative distance. (∴ Louder volume or pitch shifts do not change the "song.")</td><td class="fw-ko">동일성은 음고 간 상대적 거리를 통해 유지되므로, 볼륨이나 음고 이동이 있어도 노래는 동일하게 인식된다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">define</td><td class="vw-mean">정의하다</td></tr>
+        <tr><td class="vw-word">absolute</td><td class="vw-mean">절대적인</td></tr>
+        <tr><td class="vw-word">pitch</td><td class="vw-mean">음고, 음의 높낮이</td></tr>
+        <tr><td class="vw-word">successive</td><td class="vw-mean">연속적인</td></tr>
+        <tr><td class="vw-word">recognize</td><td class="vw-mean">인식하다</td></tr>
+        <tr><td class="vw-word">float</td><td class="vw-mean">(공간에서) 자유롭게 떠다니다</td></tr>
+        <tr><td class="vw-word">abstract</td><td class="vw-mean">추상적인</td></tr>
+        <tr><td class="vw-word">derive</td><td class="vw-mean">도출되다, 파생되다</td></tr>
+        <tr><td class="vw-word">instrumentation</td><td class="vw-mean">악기 편성</td></tr>
+        <tr><td class="vw-word">cognitive</td><td class="vw-mean">인지적인</td></tr>
+        <tr><td class="vw-word">psychologist</td><td class="vw-mean">심리학자</td></tr>
+        <tr><td class="vw-word">identity</td><td class="vw-mean">동일성, 정체성</td></tr>
+        <tr><td class="vw-word">transformation</td><td class="vw-mean">변형, 전환</td></tr>
+        <tr><td class="vw-word">accustomed</td><td class="vw-mean">익숙한</td></tr>
+        <tr><td class="vw-word">identify</td><td class="vw-mean">확인하다, 인식하다</td></tr>
+        <tr><td class="vw-word">prototype</td><td class="vw-mean">원형</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p11 -->
+
+<!-- ══════════════ P012 ══════════════ -->
+<div class="sec" id="p12">
+  <div class="p-header">
+    <div class="p-code">#강 04 · #쪽 053 · #번 012 · #문항코드 26007-0048</div>
+    <div class="p-title">De Correspondent & Active Readers</div>
+    <div class="p-title-ko">독자 참여형 저널리즘 — De Correspondent · 밑줄 어휘 추론</div>
+  </div>
+  <div class="card plain-passage-card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-passage-box">
+        <p class="plain-sent">The Dutch news site De Correspondent was born with the idea of incorporateing active readers from the start.</p>
+        <p class="plain-sent">Jay Rosen, the NYU professor {who became an adviser to the organisation}, explained how the journalists were expected to have a radically different relationship with the reader than in traditional media.</p>
+        <p class="plain-sent">'expectations are that writers will continuously share what they are working on with the people {who follow them and read their stuff}.</p>
+        <p class="plain-sent">They will pose questions and post call-outs as they launch new projects: what they want to find out, the expertise {they are going to need to do this right}, any sort of help {they want from readers}.</p>
+        <p class="plain-sent">Sometimes .</p>
+        <p class="plain-sent">Writers also manage the discussion threads — which are not called comments but contributions — in order to highlight the best additions and pull useful material into the next version of an ongoing story.'</p>
+        <p class="plain-sent">Some of these crowdsourcing techniques have been used by journalists on more mainstream papers, notably David Fahrenthold of the Washington Post.</p>
+<div class="plain-fn">* crowdsourcing: 크라우드소싱(대중을 통해 돈과 자원을 모으는 모금 방식)</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 문항 — 밑줄 친 <em>readers are the project</em>가 다음 글에서 의미하는 바로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">밑줄 어휘 추론 (Underlined Expression Meaning)</div>
+      <div class="q-stem">밑줄 친 <em>readers are the project</em>가 다음 글에서 의미하는 바로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> readers are selected as the topic of many stories</div>
+        <div class="choice"><span class="cn">②</span> readers financially support independent journalism</div>
+        <div class="choice"><span class="cn">③</span> readers provide tips and examples for writing articles</div>
+        <div class="choice"><span class="cn">④</span> readers actively check the credibility of published data</div>
+        <div class="choice"><span class="cn">⑤</span> readers actively help shape the content and direction of stories</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤ readers actively help shape the content and direction of stories</span></div>
+      <div class="ans-exp">
+        <strong>"readers are the project"의 의미:</strong> 독자가 단순히 완성된 기사를 받아 읽는 수동적 존재가 아니라, 기사 프로젝트 자체를 구성하는 능동적 참여자임.<br><br>
+        <strong>근거 ①:</strong> "They will pose questions and post call-outs ... <u>any sort of help they want from readers</u>" = 독자의 직접 참여<br>
+        <strong>근거 ②:</strong> "Writers manage discussion threads ... <u>highlight the best additions and pull useful material into the next version</u>" = 독자 기여가 기사 내용과 방향을 결정 → <strong>⑤</strong><br><br>
+        <strong>오답:</strong> ③은 "tips and examples만 제공" → 너무 좁음(기사 방향까지 결정하는 능동성 미반영) / ①②④는 본문 내용과 무관
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The Dutch news site De Correspondent was born with the idea of <span class="vw">incorporate<span class="tt">통합하다</span></span>ing active readers from the start.</div>
+        <div class="sp-ko">네덜란드 뉴스 사이트 De Correspondent는 / 처음부터 능동적인 독자들을 통합한다는 아이디어로 탄생했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Jay Rosen, the NYU professor <span class="gr">{who became an <span class="vw">adviser<span class="tt">조언자</span></span> to the organisation}</span>, explained <span class="gr">[how the <span class="vw">journalist<span class="tt">기자</span></span>s were expected to have a <span class="vw">radically<span class="tt">근본적으로</span></span> different relationship with the reader than in traditional media]</span>.</div>
+        <div class="sp-ko">그 조직의 고문이 된 NYU 교수 Jay Rosen은 / 기자들이 전통적인 미디어에서보다 독자들과 근본적으로 다른 관계를 가질 것으로 기대되는지 설명했다. <span class="sp-note">★ who became ~: 관계절 삽입 / explained how ~: 간접의문문</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">'<span class="vw">expectation<span class="tt">기대</span></span>s are <span class="gr">[that writers will continuously share [what they are working on with the people {who follow them and read their stuff}]]</span>.</div>
+        <div class="sp-ko">기대는 / 기자들이 자신들의 팔로워이자 독자인 사람들에게 / 자신들이 작업 중인 것을 지속적으로 공유할 것이라는 것이다. <span class="sp-note">★ what they are working on: 관계대명사 what절 / who follow ~: 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They will <span class="vw">pose<span class="tt">제기하다</span></span> questions and post <span class="vw">call-out<span class="tt">도움 요청 공지</span></span>s as they(= writers) launch new projects: what they want to find out, the <span class="vw">expertise<span class="tt">전문 지식</span></span> <span class="gr">{they are going to need to do this right}</span>, any sort of help <span class="gr">{they want from readers}</span>.</div>
+        <div class="sp-ko">그들은 새 프로젝트를 시작할 때 질문을 제기하고 도움 요청 공지를 게시할 것이다: / 알고 싶은 것, / 이것을 제대로 하기 위해 필요한 전문 지식, / 독자들에게 원하는 어떤 종류의 도움이든.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Sometimes <em style="border-bottom:2.5px solid var(--ink);font-style:normal;">readers are the project</em>.</div>
+        <div class="sp-ko">때로는 <u><strong>독자들이 프로젝트 자체이다</strong></u>. <span class="sp-note">★ 밑줄 어휘: readers are the project</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Writers also manage the discussion <span class="vw">thread<span class="tt">스레드</span></span>s — <span class="gr">which are not called comments but <span class="vw">contribution<span class="tt">기여</span></span>s</span> — <span class="gr">in order to <span class="vw">highlight<span class="tt">부각시키다</span></span> the best <span class="vw">addition<span class="tt">기여분</span></span>s and pull useful material into the next version of an <span class="vw">ongoing<span class="tt">진행 중인</span></span> story</span>.'</div>
+        <div class="sp-ko">기자들은 또한 토론 스레드를 관리하는데 — 댓글이 아니라 '기여'라고 불리는 — / 최고의 기여분들을 부각시키고 유용한 자료를 진행 중인 기사의 다음 버전에 끌어넣기 위해서이다. <span class="sp-note">★ which are not A but B (삽입절) / in order to V: 목적의 부사구</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Some of these <span class="vw">crowdsourcing<span class="tt">크라우드소싱</span></span> techniques have been used by <span class="vw">journalist<span class="tt">기자</span></span>s on more <span class="vw">mainstream<span class="tt">주류의</span></span> papers, notably David Fahrenthold of the Washington Post.</div>
+        <div class="sp-ko">이런 크라우드소싱 기법들 중 일부는 / 더 주류 신문의 기자들, / 특히 워싱턴 포스트의 David Fahrenthold에 의해 사용되어 왔다.</div>
+      </div>
+      <div class="fn">* crowdsourcing: 크라우드소싱(대중을 통해 돈과 자원을 모으는 모금 방식)</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① explained how S+V (간접의문문)</strong> — "~인지 설명했다": 의문사 how + 주어 + 동사 어순 유지</p>
+      <p><strong>② what they are working on (관계대명사 what절)</strong> — "그들이 작업 중인 것" = the thing(s) that they are working on</p>
+      <p><strong>③ which are not called comments but contributions (삽입절)</strong> — not A but B 구조: "댓글이 아니라 기여라고 불리는"</p>
+      <p><strong>④ in order to V (목적의 부사구)</strong> — "~하기 위해": "in order to highlight the best additions and pull useful material"</p>
+      <p><strong>⑤ have been used (현재완료 수동)</strong> — "사용되어 왔다" (현재까지 지속성)</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      The Dutch news site De Correspondent pioneered a collaborative journalism model that redefines the traditional relationship between reporters and audiences by <strong>i<span style="border-bottom:2px solid var(--ink);">ncorporating</span></strong> readers as active contributors throughout the entire editorial process.
+      <div class="topic-ko">네덜란드 뉴스 사이트 De Correspondent는 독자들을 전체 편집 과정에 걸쳐 능동적 기여자로 <strong>통합함</strong>으로써 기자와 독자 간의 전통적 관계를 재정의하는 협업 저널리즘 모델을 개척했다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary (One Sentence)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>De Correspondent's founding mission: active reader integration. Jay Rosen: the shift from "traditional" to "radically different" reader relations.</td><td class="fw-ko">De Correspondent의 창립 미션은 처음부터 능동적 독자를 통합하는 것이며, Jay Rosen은 전통적 미디어와 근본적으로 다른 독자 관계를 설명한다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>- the "Process-as-Product" stage: sharing work-in-progress and posing open questions.<br>- Details the "Call-out" phase: identifying needed expertise and asking for direct help.<br>- the shift from "Comments" to "Contributions" to improve ongoing stories.</td><td class="fw-ko">작업 공유 → 전문 지식 요청 → '댓글'이 아닌 '기여'로의 전환이 진행 중인 기사를 개선하는 과정으로 전개된다.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span></td><td>Cross-Industry Proof: Connects these niche techniques to mainstream success (e.g., David Fahrenthold/Washington Post).</td><td class="fw-ko">이 기법들이 주류 언론(워싱턴 포스트)에도 채택됨으로써 그 유효성이 입증된다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- VOCAB -->
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻 / 설명</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">incorporate</td><td class="vw-mean">통합하다, 포함시키다</td></tr>
+        <tr><td class="vw-word">adviser</td><td class="vw-mean">조언자, 고문</td></tr>
+        <tr><td class="vw-word">journalist</td><td class="vw-mean">기자, 저널리스트</td></tr>
+        <tr><td class="vw-word">radically</td><td class="vw-mean">근본적으로, 급진적으로</td></tr>
+        <tr><td class="vw-word">expectation</td><td class="vw-mean">기대, 예상</td></tr>
+        <tr><td class="vw-word">pose</td><td class="vw-mean">(질문을) 제기하다</td></tr>
+        <tr><td class="vw-word">call-out</td><td class="vw-mean">도움 요청 공지</td></tr>
+        <tr><td class="vw-word">expertise</td><td class="vw-mean">전문 지식</td></tr>
+        <tr><td class="vw-word">thread</td><td class="vw-mean">스레드, 댓글 흐름</td></tr>
+        <tr><td class="vw-word">contribution</td><td class="vw-mean">기여, 기고</td></tr>
+        <tr><td class="vw-word">highlight</td><td class="vw-mean">부각시키다, 강조하다</td></tr>
+        <tr><td class="vw-word">addition</td><td class="vw-mean">추가된 것, 기여분</td></tr>
+        <tr><td class="vw-word">ongoing</td><td class="vw-mean">진행 중인</td></tr>
+        <tr><td class="vw-word">mainstream</td><td class="vw-mean">주류의</td></tr>
+        <tr><td class="vw-word">crowdsourcing</td><td class="vw-mean">크라우드소싱(대중을 통해 돈과 자원을 모으는 방식)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p12 -->
+
+</main>
+
+<script>
+const ids = ['home','p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t){t.classList.add('on');}
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
