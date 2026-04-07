@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 1학기 중간고사 대비 · 빈칸 유형 (4~6번)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">2026 1학기 중간고사 대비</div>
+      <div class="hdr-sub">빈칸 위치: 앞부분 주제 문형 (4~6번) — 진하 전용 학습 자료</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p4')">04번</button>
+      <button class="nb" onclick="show('p5')">05번</button>
+      <button class="nb" onclick="show('p6')">06번</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">2026 1학기 중간고사 대비 · 빈칸 유형</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">특징: 지문의 가장 앞부분(1~2문장)에 빈칸이 위치하여 글의 주제나 핵심 주장을 요약하는 문형입니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p4')"><div class="toc-en">#04 Driving and Mobile Phones</div><div class="toc-ko">운전 중 휴대 전화 통화 시 방해 요소</div></a>
+    <a class="toc-card" onclick="show('p5')"><div class="toc-en">#05 Economics of Bundling</div><div class="toc-ko">상품 및 서비스 묶음 판매의 경제학</div></a>
+    <a class="toc-card" onclick="show('p6')"><div class="toc-en">#06 Refining Hypotheses</div><div class="toc-ko">연구 가설 수정을 위한 개념 세분화</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p4">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">Driving and Mobile Phones</div>
+    <div class="p-title-ko">운전 중 휴대 전화 통화 시 방해 요소</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">One might ask why having a conversation on a mobile phone while driving is so much more disruptive than, for example, having a conversation with a passenger in the car.</p>
+      <p class="plain-sent">A likely reason is the <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> when having a mobile phone conversation.</p>
+      <p class="plain-sent">A passenger in the car will pick up from non-verbal cues that the driver needs to concentrate on the main task of driving at times when the latter becomes tricky.</p>
+      <p class="plain-sent">A remote interlocutor is much less likely to pick up these cues and therefore will continue to make cognitively demanding conversation at a time when the secondary task needs to be shut down to devote resources to the main driving task.</p>
+      <p class="plain-sent">A cognitively demanding conversation, especially one over which the driver has little or no control in terms of dynamically adjusting his or her allocation of cognitive resources, appears to interfere with computation of speeds, distances and widths as required by the driving task, probably as a result of diminished attention to sensory inputs.</p>
+      <p class="plain-sent">Use of a mobile phone also demands other secondary tasks, such as inputting of a telephone number on the keypad, which would also tend to interfere with the main driving task.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> influence of background noise</div>
+        <div class="choice"><span class="cn">②</span> loss of control over the situation</div>
+        <div class="choice"><span class="cn">③</span> dependency on network reliability</div>
+        <div class="choice"><span class="cn">④</span> inhibition of immediate interaction</div>
+        <div class="choice"><span class="cn">⑤</span> difficulty in interpreting verbal cues</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">② loss of control over the situation</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 운전 중 '조수석 사람과의 대화'와 '휴대폰 통화'를 완벽하게 대조(Contrast)하는 글입니다. 조수석에 앉은 동승자는 운전자가 위험하거나 집중해야 할 때 비언어적 신호(표정, 긴장 등)를 눈치채고 스스로 대화를 멈출 수 있습니다.<br><br>
+        하지만 원격 대화자(전화 너머의 사람)는 이 신호를 볼 수 없어 <strong>인지적으로 부담되는 대화를 계속 던집니다.</strong> 즉, 운전자 입장에서는 통화 중일 때 대화의 흐름이나 상황을 자신 마음대로 조절할 수 없는 <strong>'상황 통제력 상실(loss of control)'</strong> 상태에 빠지게 됩니다. 본문에서도 "driver has little or no control"이라고 직접적인 힌트를 주었죠! 따라서 ②번이 정답입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">One might ask / why having a conversation on a mobile phone while driving / is so much more <span class="vw">disruptive<span class="tt">방해가 되는</span></span> than, for example, having a conversation with a <span class="vw">passenger<span class="tt">동승자</span></span> in the car.</div>
+        <div class="sp-ko">운전 중 휴대 전화로 대화하는 것이 / 예를 들어 차 안 동승자와 대화하는 것보다 / 왜 훨씬 더 방해가 되는지 물을지도 모른다. <span class="sp-note">★ why (의문사) + having a ~ (주어) + is (동사) : 간접의문문 명사절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A likely reason is the <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> / when having a mobile phone conversation.</div>
+        <div class="sp-ko">그럴듯한 이유 하나는 휴대 전화로 통화할 때의 <span class="ans">상황에 대한 통제력 상실</span>이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A <span class="vw">passenger<span class="tt">동승자</span></span> in the car will <span class="vw">pick up<span class="tt">알아채다</span></span> from <span class="vw">non-verbal<span class="tt">비언어적인</span></span> <span class="vw">cue<span class="tt">신호, 단서</span></span>s <span class="gr">[that the driver needs to <span class="vw">concentrate on<span class="tt">~에 집중하다</span></span> the main task of driving / at times when the latter becomes <span class="vw">tricky<span class="tt">까다로운</span></span>]</span>.</div>
+        <div class="sp-ko">차 안의 동승자는 후자(운전 과업)가 까다로워질 때 / 운전자가 운전이라는 주요 과업에 집중할 필요가 있다는 것을 / 비언어적 신호로부터 으레 알아챈다. <span class="sp-note">★ pick up의 목적어는 that절. from non-verbal cues가 중간에 삽입됨 / the latter = the main task of driving</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A remote <span class="vw">interlocutor<span class="tt">대화자</span></span> <span class="gr">is much less likely to pick up these cues</span> and <span class="gr">therefore will continue to make <span class="vw">cognitively<span class="tt">인지적으로</span></span> <span class="vw">demanding<span class="tt">부담이 되는</span></span> conversation / at a time {when the <span class="vw">secondary<span class="tt">부수적인</span></span> task needs to be shut down / to <span class="vw">devote to<span class="tt">~에 쏟다</span></span> resources to the main driving task}</span>.</div>
+        <div class="sp-ko">원격 대화자는 이러한 신호를 알아차릴 가능성이 훨씬 더 적으며, / 따라서 주요 운전 과업에 자원을 쏟도록 부수적인 과업이 종료될 필요가 있을 때 / 인지적으로 부담이 되는 대화를 으레 계속할 것이다. <span class="sp-note">★ is ~와 will continue ~가 and로 병렬 연결 / {when ~}은 a time을 수식하는 관계부사절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A <span class="vw">cognitively<span class="tt">인지적으로</span></span> <span class="vw">demanding<span class="tt">부담이 되는</span></span> conversation, especially one <span class="gr">{over which the driver has little or no control / <span class="vw">in terms of<span class="tt">~의 면에서</span></span> dynamically adjusting his or her <span class="vw">allocation<span class="tt">배분</span></span> of cognitive resources}</span>, appears to <span class="vw">interfere with<span class="tt">~을 방해하다</span></span> <span class="vw">computation<span class="tt">계산</span></span> of speeds, distances and widths / as required by the driving task, / probably as a result of <span class="vw">diminished<span class="tt">감소된</span></span> attention to sensory inputs.</div>
+        <div class="sp-ko">인지적으로 부담이 되는 대화, / 특히 운전자가 자신의 인지 자원의 배분을 역동적으로 조정하는 면에서 통제력이 거의 또는 전혀 없는 대화는, / 아마도 감각 입력에 대한 주의 감소의 결과로 / 운전 과업에 필요한 속도, 거리 및 폭 계산에 방해가 되는 것으로 보인다. <span class="sp-note">★ one = a conversation / over which ~: 전치사+관계대명사(수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Use of a mobile phone also demands other <span class="vw">secondary<span class="tt">부차적인</span></span> tasks, such as inputting of a telephone number on the keypad, <span class="gr">which would also tend to <span class="vw">interfere with<span class="tt">~을 방해하다</span></span> the main driving task</span>.</div>
+        <div class="sp-ko">또한 휴대 전화를 사용하면 키패드에 전화번호를 입력하는 것과 같은 다른 부수적인 과업이 필요한데, / 이는 또한 주요 운전 과업에 방해가 되는 경향이 있을 것이다. <span class="sp-note">★ 계속적 용법 관계대명사 which</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 전치사 + 관계대명사 구조:</strong> "one {over which the driver has little or no control}". 운전자는 그 대화(one)에 대해 통제권을 갖지 못한다(have no control over it)에서 파생된 구조로, 뒤에 완전한 절이 옵니다.</p>
+      <p><strong>② 동사구 병렬 구조:</strong> "A remote interlocutor [is much less likely to ~] and [therefore will continue to ~]". 하나의 주어에 두 개의 동사구가 대등하게 연결되어 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      Why mobile phone conversations are disruptive to driving: The loss of situational control compared to passenger conversations.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(운전 중 휴대폰 통화가 방해되는 이유: 동승자와의 대화에 비해 상황 통제력을 상실하기 때문)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Questioning why phone calls are more disruptive than passenger talks.</td>
+          <td>운전 중 휴대폰 통화가 동승자와의 대화보다 더 방해되는 이유 제기.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Comparison</span></td>
+          <td>Passengers notice driving difficulty and stop talking; remote callers do not.</td>
+          <td>동승자는 상황을 보고 말을 멈추지만, 전화 너머의 사람은 멈추지 않음.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span></td>
+          <td>The driver loses control over the cognitive load, which interferes with vital driving computations.</td>
+          <td>인지적 부담에 대한 통제력을 잃어 안전 운전에 필요한 계산과 인지가 방해받음.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">disruptive</td><td class="vw-mean">방해가 되는, 지장을 주는</td></tr>
+        <tr><td class="vw-word">passenger</td><td class="vw-mean">동승자, 승객</td></tr>
+        <tr><td class="vw-word">non-verbal</td><td class="vw-mean">비언어적인</td></tr>
+        <tr><td class="vw-word">cue</td><td class="vw-mean">신호, 단서</td></tr>
+        <tr><td class="vw-word">tricky</td><td class="vw-mean">까다로운, 다루기 힘든</td></tr>
+        <tr><td class="vw-word">interlocutor</td><td class="vw-mean">대화자, 대화 상대</td></tr>
+        <tr><td class="vw-word">cognitively</td><td class="vw-mean">인지적으로</td></tr>
+        <tr><td class="vw-word">demanding</td><td class="vw-mean">부담이 되는, 힘든, 요구가 많은</td></tr>
+        <tr><td class="vw-word">secondary</td><td class="vw-mean">부수적인, 부차적인</td></tr>
+        <tr><td class="vw-word">devote A to B</td><td class="vw-mean">A를 B에 쏟다, 바치다</td></tr>
+        <tr><td class="vw-word">allocation</td><td class="vw-mean">배분, 할당</td></tr>
+        <tr><td class="vw-word">interfere with</td><td class="vw-mean">~을 방해하다</td></tr>
+        <tr><td class="vw-word">computation</td><td class="vw-mean">계산</td></tr>
+        <tr><td class="vw-word">diminished</td><td class="vw-mean">감소된</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p5">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">Economics of Bundling</div>
+    <div class="p-title-ko">상품 및 서비스 묶음 판매의 경제학</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Firms often bundle goods or services for convenience or marketing purposes.</p>
+      <p class="plain-sent">Shoe vendors could sell lefts and rights separately but nearly all consumers would rather buy the bundle.</p>
+      <p class="plain-sent">Bundling can <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> when consumers have imperfectly correlated preferences for related goods.</p>
+      <p class="plain-sent">For example, cable television services usually offer a wide range of programming, including channels that specialize in sports, food, drama, and news.</p>
+      <p class="plain-sent">Cable services could allow their customers to purchase channels "a la carte" — sports fans could purchase just the sports channels, and so forth.</p>
+      <p class="plain-sent">But cable services instead set a single bundled price that is not too much more than individual a la carte prices.</p>
+      <p class="plain-sent">(For example, the price for the "sports + food + drama + news" bundle is not much more than the price the service would charge for the sports package alone.)</p>
+      <p class="plain-sent">Since the cable service has essentially zero marginal cost of selling the bundle, this practice helps increase its profits.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> also help sellers extract higher profits</div>
+        <div class="choice"><span class="cn">②</span> lead to more efficient resource allocation</div>
+        <div class="choice"><span class="cn">③</span> nonetheless increase confusion for customers</div>
+        <div class="choice"><span class="cn">④</span> sometimes create dissatisfaction with bundled products</div>
+        <div class="choice"><span class="cn">⑤</span> facilitate better matching of products to consumer needs</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">① also help sellers extract higher profits</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 글의 첫 문장에서 기업들이 편리함과 마케팅 목적으로 묶음 판매(bundling)를 한다고 던졌습니다. 그리고 케이블 방송의 예시가 이어집니다. <br><br>
+        소비자가 원하는 채널만 따로 골라 살 수 있게(a la carte) 하는 대신 여러 채널을 묶어 파는데, 이 묶음 가격을 개별 채널 가격과 크게 차이 나지 않게 설정합니다. 소비자는 '어? 몇 천 원만 더 내면 다 볼 수 있네?' 하고 묶음을 사게 되죠. 방송사 입장에서는 채널을 하나 더 열어주는 데 드는 비용(한계 비용)이 거의 0원(zero marginal cost)이므로 묶음 판매가 결국 <strong>'기업의 수익 증가(increase its profits)'</strong>로 이어집니다.<br><br>
+        따라서 묶음 판매는 소비자뿐만 아니라 판매자에게도 <strong>'더 높은 수익을 얻는 데 도움을 준다'</strong>는 ①번이 정답입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Firms often <span class="vw">bundle<span class="tt">묶음으로 제공하다</span></span> goods or services for <span class="vw">convenience<span class="tt">편의성</span></span> or marketing purposes.</div>
+        <div class="sp-ko">기업은 편의성이나 마케팅 목적으로 상품이나 서비스를 자주 묶음으로 제공한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Shoe <span class="vw">vendor<span class="tt">판매 회사</span></span>s could sell lefts and rights separately / but nearly all consumers would rather buy the bundle.</div>
+        <div class="sp-ko">신발 판매 회사는 왼발과 오른발을 따로 판매할 수도 있겠지만, / 거의 모든 소비자들은 (오히려) 묶음을 구매하고 싶어 할 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Bundling can <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> / when consumers have imperfectly correlated preferences for related goods.</div>
+        <div class="sp-ko">묶음 제공은 / 소비자들이 관련 상품들에 대해 불완전하게 상관된 선호도를 가질 때 / <span class="ans">판매자가 더 높은 수익을 얻는 데에도 도움이 될</span> 수 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, cable television services usually offer a wide range of programming, including channels that <span class="vw">specialize in<span class="tt">~을 전문으로 하다</span></span> sports, food, drama, and news.</div>
+        <div class="sp-ko">예를 들어, 유선방송 사업체는 일반적으로 스포츠, 음식, 드라마, 그리고 뉴스를 전문으로 하는 채널을 포함하여 / 다양한 프로그램을 제공한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Cable services could allow their customers to purchase channels "<span class="vw">a la carte<span class="tt">따로 골라</span></span>" / — sports fans could purchase just the sports channels, and so forth.</div>
+        <div class="sp-ko">유선방송 사업체는 고객들에게 채널을 '따로 골라' 구매하는 것을 허용할 수도 있을 것인데, / 즉, 스포츠 팬은 스포츠 채널만 구매할 수 있고, 기타 등등 이런 식이다. <span class="sp-note">★ allow + 목적어 + to V 구조</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But cable services instead set a single bundled price <span class="gr">that is not too much more than individual a la carte prices</span>.</div>
+        <div class="sp-ko">하지만 유선방송 사업체는 대신에 / 개별로 따로 골라 사는 가격보다 지나치게 더 높지는 않은 / 단일 묶음 제공 가격을 책정한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">(For example, the price for the "sports + food + drama + news" bundle is not much more than the price <span class="gr">[the service would charge for the sports package alone]</span>.)</div>
+        <div class="sp-ko">(예를 들어, '스포츠+음식+드라마+뉴스' 묶음의 가격은 / 그 사업체가 스포츠 패키지에 대해서만 청구할 가격보다 훨씬 더 높지는 않다.) <span class="sp-note">★ price 뒤에 목적격 관계대명사(which/that) 생략</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Since the cable service has <span class="vw">essentially<span class="tt">본질적으로</span></span> zero <span class="vw">marginal cost<span class="tt">한계 비용</span></span> of selling the bundle, this <span class="vw">practice<span class="tt">관행</span></span> helps increase its <span class="vw">profit<span class="tt">수익</span></span>s.</div>
+        <div class="sp-ko">유선방송 사업체는 묶음 판매에 따른 한계 비용이 본질적으로 제로이므로 / 이러한 관행이 수익 증대에 도움이 된다.</div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① allow + 목적어 + to부정사:</strong> "allow their customers to purchase". 목적어가 ~하는 것을 허용하다, 가능하게 하다라는 5형식 구조입니다.</p>
+      <p><strong>② 목적격 관계대명사 생략:</strong> "not much more than the price [the service would charge for the sports package alone]". the price 뒤에 관계대명사가 생략되어 뒤의 절이 명사를 수식하고 있습니다. (charge의 목적어가 비어있음)</p>
+      <p><strong>③ help + 동사원형:</strong> "helps increase its profits". help 동사는 뒤에 목적어로 to부정사뿐만 아니라 동사원형(원형부정사)을 바로 취할 수 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      Bundling as a strategy for businesses to increase profits with near-zero marginal costs.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(한계 비용이 거의 0인 상태에서 기업의 수익을 늘리기 위한 전략으로서의 묶음 판매)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Firms use product bundling for convenience and marketing, which increases profits.</td>
+          <td>기업은 편의와 마케팅 목적으로 상품을 묶어 팔며 이는 이익 증대로 이어짐.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Example</span></td>
+          <td>Cable TV services offer bundled packages slightly higher than the price of a single channel.</td>
+          <td>케이블 방송사는 단일 채널보다 약간 더 비싼 가격에 전체 묶음 상품을 판매함.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span></td>
+          <td>Because the marginal cost of providing extra channels is essentially zero, this strategy maximizes revenue.</td>
+          <td>추가 채널 제공의 한계비용이 0이므로, 묶음 판매 전략은 기업의 수익을 극대화함.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">bundle</td><td class="vw-mean">묶음으로 제공하다; 묶음</td></tr>
+        <tr><td class="vw-word">convenience</td><td class="vw-mean">편의성</td></tr>
+        <tr><td class="vw-word">vendor</td><td class="vw-mean">판매 회사, 상인</td></tr>
+        <tr><td class="vw-word">specialize in</td><td class="vw-mean">~을 전문으로 하다</td></tr>
+        <tr><td class="vw-word">a la carte</td><td class="vw-mean">따로 골라, 단품으로</td></tr>
+        <tr><td class="vw-word">essentially</td><td class="vw-mean">본질적으로, 기본적으로</td></tr>
+        <tr><td class="vw-word">marginal cost</td><td class="vw-mean">한계 비용(생산물 한 단위를 추가 생산할 때 필요한 총비용의 증가분)</td></tr>
+        <tr><td class="vw-word">practice</td><td class="vw-mean">관행, 실행</td></tr>
+        <tr><td class="vw-word">profit</td><td class="vw-mean">수익, 이윤</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p6">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">Refining Hypotheses</div>
+    <div class="p-title-ko">연구 가설 수정을 위한 개념 세분화</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">In addition to changing a hypothesis by being more specific about which amounts of one variable had what effect, you can change a hypothesis by being more specific about <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+      <p class="plain-sent">Thus, if your hypothesis involves a general construct, you may be able to improve your hypothesis by breaking that multidimensional construct down into its individual dimensions and then making hypotheses involving those individual components.</p>
+      <p class="plain-sent">For example, rather than hypothesizing that love will increase over time, you might hypothesize that certain aspects of love (commitment, intimacy) will increase over time, whereas other parts (passionate love) will not.</p>
+      <p class="plain-sent">Similarly, rather than saying that stress will interfere with memory, you might try to find what part of memory is most affected by stress.</p>
+      <p class="plain-sent">Is it encoding, rehearsal, organization, or retrieval?</p>
+      <p class="plain-sent">The component strategy has paid off for social psychologists who have broken down prejudice into its conscious and unconscious dimensions and for personality psychologists who have broken down global (overall) self-esteem into different types (body self-esteem, academic self-esteem, social self-esteem, etc.).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> which aspect of a variable had what effect</div>
+        <div class="choice"><span class="cn">②</span> what other variables have the same impact</div>
+        <div class="choice"><span class="cn">③</span> the role of sample size in identifying key variables</div>
+        <div class="choice"><span class="cn">④</span> what methodology was used to measure a variable</div>
+        <div class="choice"><span class="cn">⑤</span> the cultural and historical background of a variable</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">① which aspect of a variable had what effect</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 연구 가설을 더 좋게 개선(수정)하는 방법에 대한 글입니다. 두 번째 문장이 주제를 완벽히 요약하고 있습니다. '일반적이고 다차원적인 구성 개념(multidimensional construct)을 개별 구성 요소(individual components)로 쪼개어 가설을 만들라'고 하죠.<br><br>
+        그 예시로 '사랑'이라는 변수를 통째로 보지 않고 헌신, 친밀감, 열정적 사랑이라는 <strong>측면(aspects/parts)</strong>으로 나누고, '기억'이라는 변수를 부호화, 되뇌기, 인출 등으로 나누어 연구합니다.<br><br>
+        따라서 가설을 구체화하는 두 번째 방법은, 어떤 변수가 단순히 얼마나 영향을 주느냐가 아니라 변수의 <strong>'어떤 측면이 어떤 영향을 미쳤는지'</strong>를 구체화하는 것입니다. 그러므로 ①번이 정답입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In addition to changing a hypothesis by being more specific about which amounts of one variable had what effect, / you can change a hypothesis by being more specific about <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">한 변수의 어느 정도의 양이 무슨 영향을 미쳤는지를 더 구체화함으로써 가설을 변경하는 것과 아울러, / 여러분은 <span class="ans">한 변수의 어느 측면이 무슨 영향을 미쳤는지</span>를 더 구체화함으로써 가설을 변경할 수 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Thus, <span class="gr">[if your hypothesis <span class="vw">involve<span class="tt">포함하다</span></span>s a general <span class="vw">construct<span class="tt">구성 개념</span></span>]</span>, you may be able to improve your hypothesis / by <span class="gr">[<span class="vw">break down into<span class="tt">~을 ...으로 나누다</span></span>ing that <span class="vw">multidimensional<span class="tt">다차원적인</span></span> <span class="vw">construct<span class="tt">구성 개념</span></span> down into its individual <span class="vw">dimension<span class="tt">차원</span></span>s]</span> and then <span class="gr">[making hypotheses {involving those individual <span class="vw">component<span class="tt">구성 요소</span></span>s}]</span>.</div>
+        <div class="sp-ko">그러므로 만약 여러분의 가설이 일반적인 개념을 포함한다면, / 그 다차원적인 개념을 개별적인 차원으로 나눈 다음 그 개별 구성 요소와 관련된 가설들을 세움으로써 / 여러분의 가설을 개선할 수 있을지도 모른다. <span class="sp-note">★ by ~ing and then ~ing 구조. by 전치사에 breaking과 making이 병렬 연결됨</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, rather than hypothesizing that love will increase over time, / you might hypothesize that certain <span class="vw">aspect<span class="tt">측면</span></span>s of love (<span class="vw">commitment<span class="tt">헌신</span></span>, <span class="vw">intimacy<span class="tt">친밀감</span></span>) will increase over time, / whereas other parts (passionate love) will not.</div>
+        <div class="sp-ko">예를 들어, 사랑은 시간이 지남에 따라 더 커질 것이라는 가설을 세우기보다는, / 사랑의 특정 측면들(헌신, 친밀감)은 시간이 지남에 따라 더 커지지만 / 반면에 다른 부분들(열정적인 사랑)은 그렇지 않을 것이라는 가설을 세울 수도 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Similarly, rather than saying that stress will <span class="vw">interfere with<span class="tt">~을 방해하다</span></span> memory, / you might try to find what part of memory is most affected by stress.</div>
+        <div class="sp-ko">마찬가지로, 스트레스가 기억력을 방해한다고 말하기보다는, / 기억의 어떤 부분이 스트레스의 영향을 가장 많이 받는지 찾아보려고 할 수도 있을 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Is it <span class="vw">encoding<span class="tt">부호화</span></span>, <span class="vw">rehearsal<span class="tt">되뇌기</span></span>, organization, or <span class="vw">retrieval<span class="tt">인출</span></span>?</div>
+        <div class="sp-ko">그것(가장 큰 영향을 받는 부분)이 부호화, 되뇌기, 조직화, 또는 인출인가?</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The component strategy has paid off / for social psychologists <span class="gr">who have broken down <span class="vw">prejudice<span class="tt">편견</span></span> into its <span class="vw">conscious<span class="tt">의식적인</span></span> and unconscious dimensions</span> / and for personality psychologists <span class="gr">who have broken down global (overall) self-esteem into different types</span> (body self-esteem, academic self-esteem, social self-esteem, etc.).</div>
+        <div class="sp-ko">구성 요소 전략은 성과를 거두었다 / 편견을 의식과 무의식 차원으로 세분화한 사회 심리학자들과 / 전반적인(전체적인) 자존감을 여러 유형(신체적 자존감, 학업적 자존감, 사회적 자존감 등)으로 세분화한 성격 심리학자들에게. <span class="sp-note">★ for psychologists (who ~) and for psychologists (who ~) 형태의 병렬 구조</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① by -ing and then -ing:</strong> "improve your hypothesis by [breaking ...] and then [making ...]". 전치사 by의 목적어로 두 개의 동명사구(breaking, making)가 and로 대등하게 병렬 연결되었습니다. 영작이나 어법 문제에서 making의 형태가 잘 출제됩니다.</p>
+      <p><strong>② 의문형용사 which/what:</strong> "which amounts of one variable had what effect". 여기서 which와 what은 뒤에 오는 명사(amounts, effect)를 수식하는 의문형용사로 쓰여 간접의문문 명사절을 이끌고 있습니다.</p>
+      <p><strong>③ 현재분사 후치수식:</strong> "hypotheses {involving those individual components}". involving이 앞의 명사 hypotheses를 꾸며주는 현재분사 구문입니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      Improving scientific hypotheses by breaking down general variables into specific components or dimensions.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(일반적인 변수를 구체적인 구성 요소나 차원으로 세분화하여 과학적 가설을 개선하기)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Hypotheses can be improved by specifying which particular aspect of a variable causes an effect.</td>
+          <td>변수의 어느 측면이 영향을 미치는지 구체화함으로써 가설을 수정할 수 있다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Strategy</span></td>
+          <td>Break down general multidimensional constructs into individual components.</td>
+          <td>일반적이고 다차원적인 구성 개념을 개별 구성 요소와 차원으로 분해하라.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Examples</span></td>
+          <td>Love (intimacy/passion), Memory (encoding/retrieval), Prejudice, and Self-Esteem.</td>
+          <td>사랑, 기억력, 편견, 자존감을 하위 요소로 세분화하여 성공적인 연구 결과를 얻은 사례 제시.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">hypothesis</td><td class="vw-mean">가설 (pl. hypotheses)</td></tr>
+        <tr><td class="vw-word">variable</td><td class="vw-mean">변수</td></tr>
+        <tr><td class="vw-word">construct</td><td class="vw-mean">(구성) 개념</td></tr>
+        <tr><td class="vw-word">multidimensional</td><td class="vw-mean">다차원적인</td></tr>
+        <tr><td class="vw-word">dimension</td><td class="vw-mean">차원</td></tr>
+        <tr><td class="vw-word">component</td><td class="vw-mean">구성 요소</td></tr>
+        <tr><td class="vw-word">aspect</td><td class="vw-mean">측면</td></tr>
+        <tr><td class="vw-word">commitment</td><td class="vw-mean">헌신</td></tr>
+        <tr><td class="vw-word">intimacy</td><td class="vw-mean">친밀감</td></tr>
+        <tr><td class="vw-word">interfere with</td><td class="vw-mean">~을 방해하다</td></tr>
+        <tr><td class="vw-word">encoding</td><td class="vw-mean">부호화(기억의 첫 단계)</td></tr>
+        <tr><td class="vw-word">rehearsal</td><td class="vw-mean">되뇌기, 시연</td></tr>
+        <tr><td class="vw-word">retrieval</td><td class="vw-mean">(기억한 내용의) 인출, 상기</td></tr>
+        <tr><td class="vw-word">prejudice</td><td class="vw-mean">편견</td></tr>
+        <tr><td class="vw-word">conscious</td><td class="vw-mean">의식의, 의식적인</td></tr>
+        <tr><td class="vw-word">break down into</td><td class="vw-mean">~을 ...으로 나누다, 세분화하다</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p4','p5','p6'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

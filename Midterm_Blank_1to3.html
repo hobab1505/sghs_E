@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 1학기 중간고사 대비 · 빈칸 유형 (1~3번)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">2026 1학기 중간고사 대비</div>
+      <div class="hdr-sub">빈칸 위치: 앞부분 주제 문형 (1~3번) — 진하 전용 학습 자료</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">01번</button>
+      <button class="nb" onclick="show('p2')">02번</button>
+      <button class="nb" onclick="show('p3')">03번</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">2026 1학기 중간고사 대비 · 빈칸 유형</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">특징: 지문의 가장 앞부분(1~2문장)에 빈칸이 위치하여 글의 주제나 핵심 주장을 요약하는 문형입니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')"><div class="toc-en">#01 Categorization without Typicality</div><div class="toc-ko">전형성에 의존하지 않는 범주 판단</div></a>
+    <a class="toc-card" onclick="show('p2')"><div class="toc-en">#02 Incentives Undermine Motivation</div><div class="toc-ko">유인책이 내재적 동기에 미치는 영향</div></a>
+    <a class="toc-card" onclick="show('p3')"><div class="toc-en">#03 Replication in Science</div><div class="toc-ko">과학 이론 발전에서 반복 실험의 역할</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">Categorization without Typicality</div>
+    <div class="p-title-ko">전형성에 의존하지 않는 범주 판단</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">How are category judgments made when they don't rely on <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>?</p>
+      <p class="plain-sent">As an approach to this question, let's think through an example. Consider a lemon. Paint the lemon with red and white stripes. Is it still a lemon? Most people say that it is.</p>
+      <p class="plain-sent">Now, inject the lemon with sugar water, so it has a sweet taste. Then, run over the lemon with a truck, so that it's flat as a pancake.</p>
+      <p class="plain-sent">What have we got at this point? Do we have a striped, artificially sweet, flattened lemon? Or do we have a non-lemon?</p>
+      <p class="plain-sent">Most people still accept this poor, abused fruit as a lemon, but consider what this judgment involves.</p>
+      <p class="plain-sent">We've taken steps to make this object more and more distant from the prototype and also very different from any specific lemon you've ever encountered.</p>
+      <p class="plain-sent">But this seems not to shake your faith that the object remains a lemon.</p>
+      <p class="plain-sent">To be sure, we have a not-easily-recognized lemon, an exceptional lemon, but it's still a lemon.</p>
+      <p class="plain-sent">Apparently, something can be a lemon with virtually no resemblance to other lemons.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> tradition</div>
+        <div class="choice"><span class="cn">②</span> typicality</div>
+        <div class="choice"><span class="cn">③</span> rationality</div>
+        <div class="choice"><span class="cn">④</span> functionality</div>
+        <div class="choice"><span class="cn">⑤</span> classification</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">② typicality</span> [cite: 2453]</div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 글의 첫 문장에서 묻고 있는 질문에 대한 해답이 예시에 담겨 있습니다. 레몬에 줄무늬를 칠하고(색상 변화), 달콤하게 만들고(맛 변화), 트럭으로 밟아 찌그러뜨려도(형태 변화) 사람들은 여전히 그것을 '레몬'으로 인식합니다[cite: 2444, 2445, 2447]. <br><br>
+        즉, 어떠한 물체가 원형(prototype)에서 점점 더 멀어지게 되어 <strong>전형적인 형태를 취하지 않아도</strong> 여전히 그 물체로 판단될 수 있다는 것을 보여줍니다[cite: 2453]. 따라서 빈칸에 들어갈 말은 범주 판단 시 의존하지 않아도 되는 <strong>'전형성(typicality)'</strong>이 가장 적절합니다[cite: 2453].
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">How are <span class="vw">category<span class="tt">범주</span></span> judgments made / when they don't rely on <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>?</div>
+        <div class="sp-ko"><span class="ans">전형성(typicality)</span>에 의존하지 '않을' 때 범주 판단은 어떻게 이루어지는가? [cite: 2443]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As an approach to this question, / let's <span class="vw">think through<span class="tt">충분히 생각하다</span></span> an example. Consider a lemon.</div>
+        <div class="sp-ko">이 질문에 대한 접근 방법으로 / 한 가지 예에 대해 충분히 생각해 보자. 레몬을 생각해 보자. [cite: 2443, 2444]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Paint the lemon with red and white stripes. Is it still a lemon? Most people say that it is.</div>
+        <div class="sp-ko">레몬에 빨간색과 흰색 줄무늬를 칠해 보라. 그것은 여전히 레몬인가? 대부분의 사람은 그렇다고 말한다. [cite: 2444]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Now, <span class="vw">inject<span class="tt">주입하다</span></span> the lemon with sugar water, <span class="gr">so it has a sweet taste</span>. Then, run over the lemon with a truck, <span class="gr">so that it's flat as a pancake</span>.</div>
+        <div class="sp-ko">이제 레몬에 달콤한 맛이 나도록 설탕물을 주입하라. / 그런 후 팬케이크처럼 편평해지도록 트럭으로 레몬 위를 달려 보라. [cite: 2445] <span class="sp-note">★ so (that) S+V: 그 결과 ~하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">What have we got at this point? Do we have a striped, <span class="vw">artificially<span class="tt">인위적으로</span></span> sweet, flattened lemon? Or do we have a non-lemon?</div>
+        <div class="sp-ko">이 시점에서 우리는 무엇을 얻었는가? 줄무늬가 있으며, 인위적으로 달콤하고, 편평해진 레몬인가? 아니면 우리는 레몬이 아닌 것을 얻었는가? [cite: 2446]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Most people still accept this poor, <span class="vw">abused<span class="tt">학대받은</span></span> fruit as a lemon, but consider <span class="gr">what this judgment involves</span>.</div>
+        <div class="sp-ko">대부분의 사람은 여전히 이 가엾고 학대받은 과일을 레몬으로 인정하지만, / 이러한 판단이 무엇을 포함하는지 생각해 보라. [cite: 2447] <span class="sp-note">★ 간접의문문: what(의문사) + this judgment(주어) + involves(동사)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We've taken steps to make this <span class="vw">object<span class="tt">물체</span></span> more and more <span class="vw">distant<span class="tt">먼</span></span> from the prototype and also very different from any specific lemon <span class="gr">(which) you've ever <span class="vw">encounter<span class="tt">접하다</span></span>ed</span>.</div>
+        <div class="sp-ko">우리는 이 물체를 (레몬의) 원형으로부터 점점 더 멀어지게 하고, 또한 여러분이 이제껏 접해본 어떤 특정한 레몬과도 매우 다르게 만드는 조치를 취했다. [cite: 2448]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But this seems not to shake your faith <span class="gr">[that the object remains a lemon]</span>.</div>
+        <div class="sp-ko">하지만 이것이 / 그 물체가 여전히 레몬이라는 여러분의 믿음을 / 흔들지는 않는 것 같다. [cite: 2449]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">To be sure, we have a not-easily-recognized lemon, an <span class="vw">exceptional<span class="tt">예외적인</span></span> lemon, but it's still a lemon.</div>
+        <div class="sp-ko">분명히, 우리는 쉽게 알아볼 수 없는 레몬, 즉 예외적인 레몬을 가지고 있지만, / 그것은 여전히 레몬이다. [cite: 2450]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Apparently<span class="tt">보아하니</span></span>, something can be a lemon with <span class="vw">virtually<span class="tt">사실상</span></span> no <span class="vw">resemblance<span class="tt">닮음</span></span> to other lemons.</div>
+        <div class="sp-ko">보아하니 / 어떤 것이 다른 레몬과 거의 닮지 않아도 레몬일 수 있는 것 같다. [cite: 2451]</div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 동격의 that:</strong> "your faith [that the object remains a lemon]". 여기서 that절은 your faith의 구체적 내용을 설명하는 동격절입니다[cite: 2455, 2456]. (관계대명사 위치와 헷갈리지 마세요!)</p>
+      <p><strong>② 목적격 관계대명사 생략:</strong> "any specific lemon (which) you've ever encountered". encountered의 목적어가 비어 있으므로 관계대명사가 생략된 구조입니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      Category judgments do not strictly rely on typicality or resemblance to a prototype.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(범주 판단은 전형성이나 원형과의 유사성에 엄격히 의존하지 않는다.)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Questioning how category judgments work without typicality.</td>
+          <td>전형성에 의존하지 않을 때 범주 판단이 어떻게 이루어지는가 의문을 제기함.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Development</span></td>
+          <td>The lemon example: modifying color, taste, and shape drastically.</td>
+          <td>레몬의 색, 맛, 형태를 극단적으로 변형시키는 예시 제시.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span></td>
+          <td>People still categorize the object as a lemon, proving categorization doesn't strictly require typicality.</td>
+          <td>사람들은 여전히 그것을 레몬으로 분류하며, 이는 분류에 반드시 전형성이 필요치 않음을 증명함.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">category</td><td class="vw-mean">범주, 구분 [cite: 2458]</td></tr>
+        <tr><td class="vw-word">think through</td><td class="vw-mean">~에 대해 충분히 생각하다 [cite: 2478]</td></tr>
+        <tr><td class="vw-word">inject</td><td class="vw-mean">주입하다 [cite: 2479]</td></tr>
+        <tr><td class="vw-word">artificially</td><td class="vw-mean">인위적으로, 인공적으로 [cite: 2480]</td></tr>
+        <tr><td class="vw-word">abuse</td><td class="vw-mean">학대하다, 혹사하다 [cite: 2481]</td></tr>
+        <tr><td class="vw-word">object</td><td class="vw-mean">물체 [cite: 2482]</td></tr>
+        <tr><td class="vw-word">distant</td><td class="vw-mean">멀리 있는 [cite: 2483]</td></tr>
+        <tr><td class="vw-word">encounter</td><td class="vw-mean">접하다, 우연히 만나다 [cite: 2484]</td></tr>
+        <tr><td class="vw-word">exceptional</td><td class="vw-mean">예외적인 [cite: 2485]</td></tr>
+        <tr><td class="vw-word">apparently</td><td class="vw-mean">보아하니, 외관상으로는 [cite: 2486]</td></tr>
+        <tr><td class="vw-word">virtually</td><td class="vw-mean">거의, 사실상 [cite: 2487]</td></tr>
+        <tr><td class="vw-word">resemblance</td><td class="vw-mean">닮음, 비슷함 [cite: 2488]</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">Incentives Undermine Motivation</div>
+    <div class="p-title-ko">유인책이 내재적 동기에 미치는 영향</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">There's a reason so many of the studies that found that <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> were conducted with children.</p>
+      <p class="plain-sent">Children are busy figuring out their likes and dislikes. When I ask my eight-year-old if he likes a subject at school, he needs to think about it — he doesn't intuitively know the answer the way you might.</p>
+      <p class="plain-sent">Children are relatively new to a world that's largely controlled by adults, so many of the activities that occupy their days need explanation.</p>
+      <p class="plain-sent">They might ask themselves, "Am I drawing because I like to draw or because my teacher made me draw?" or "Does this food taste good to me or am I eating it because otherwise I won't get dessert?"</p>
+      <p class="plain-sent">Incentives give them the clues to start piecing together their likes and dislikes.</p>
+      <p class="plain-sent">And if you're a child, and an adult is willing to pay you to do something, that's a clue that you wouldn't otherwise enjoy doing it.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> it pays to trust our intuition</div>
+        <div class="choice"><span class="cn">②</span> we act in our own self-interests</div>
+        <div class="choice"><span class="cn">③</span> incentives undermine motivation</div>
+        <div class="choice"><span class="cn">④</span> old preferences can last a lifetime</div>
+        <div class="choice"><span class="cn">⑤</span> rewards work better than punishment</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">③ incentives undermine motivation</span> [cite: 2462]</div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 아이들은 어렸을 때 자신이 좋아하는 것과 싫어하는 것을 알아내는 과정을 거칩니다[cite: 2471]. 만약 어떤 행동을 할 때 어른이 '보상(돈, 디저트 등)'을 주면, 아이는 "아, 이걸 주지 않으면 내가 굳이 이 일을 즐겁게 하지 않겠구나"라는 **단서(clue)**로 인식하게 됩니다[cite: 2469, 2471].<br><br>
+        결국 어른이 제시한 '유인책(incentive)'이 아이가 그 일을 자발적으로 하려는 동기를 떨어뜨리는 결과를 초래합니다[cite: 2471]. 따라서 빈칸에는 <strong>'유인책이 동기를 저해한다(incentives undermine motivation)'</strong>가 들어가야 합니다[cite: 2472].
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">There's a reason / so many of the studies <span class="gr">that found that <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span> / were <span class="vw">conduct<span class="tt">수행하다</span></span>ed with children.</div>
+        <div class="sp-ko"><span class="ans">유인책이 동기를 저해한다</span>는 것을 발견한 연구들의 정말 많은 것들이 / 아이들을 대상으로 수행된 데에는 이유가 있다. [cite: 2463]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Children are busy <span class="vw">figure out<span class="tt">알아내다</span></span>ing their likes and <span class="vw">dislike<span class="tt">싫어하는 것</span></span>s.</div>
+        <div class="sp-ko">아이들은 자신이 좋아하는 것과 싫어하는 것을 알아내느라 바쁘다. [cite: 2464] <span class="sp-note">★ be busy -ing: ~하느라 바쁘다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">When I ask my eight-year-old <span class="gr">if he likes a subject at school</span>, he needs to think about it / — he doesn't <span class="vw">intuitively<span class="tt">직관적으로</span></span> know the answer the way you might.</div>
+        <div class="sp-ko">내가 8살짜리 아들에게 특정한 학교 과목을 좋아하는지 물어보면, 그는 그것에 대해 생각해야 하고, / 여러분이 알 수도 있는 것처럼 직관적으로 답을 알지 못한다. [cite: 2464] <span class="sp-note">★ if = whether (~인지 아닌지) / the way = as (~처럼)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Children are <span class="vw">relatively<span class="tt">비교적</span></span> new to a world <span class="gr">that's largely controlled by adults</span>, / so many of the activities that <span class="vw">occupy<span class="tt">차지하다</span></span> their days / need explanation.</div>
+        <div class="sp-ko">아이들은 주로 어른들에 의해 통제되는 세상에 비교적 익숙하지 않기 때문에, / 그들의 하루를 차지하는 활동 중 많은 것이 / 설명을 필요로 한다. [cite: 2465]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They might ask themselves, "Am I drawing because I like to draw / or because my teacher made me draw?" or "Does this food taste good to me / or am I eating it because otherwise I won't get dessert?"</div>
+        <div class="sp-ko">그들은 "내가 그림 그리는 것을 좋아해서 그림을 그리고 있는 건가, / 아니면 선생님이 그림을 그리게 시켜서 그림을 그리고 있는 건가?" 또는 "이 음식이 내 입맛에 맞는 건가, / 아니면 이 음식을 먹지 않으면 디저트를 못 먹기 때문에 먹고 있는 건가?"라고 자신에게 물어볼 수도 있다. [cite: 2466, 2467]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Incentive<span class="tt">유인책</span></span>s give them the <span class="vw">clue<span class="tt">단서</span></span>s to start <span class="vw">piece together<span class="tt">종합하여 이해하다</span></span>ing their likes and dislikes.</div>
+        <div class="sp-ko">유인책은 그들에게 / 자신이 좋아하는 것과 싫어하는 것을 종합하여 이해하기 시작할 / 단서를 제공한다. [cite: 2468]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">And <span class="gr">[if you're a child, and an adult is willing to pay you to do something]</span>, that's a clue <span class="gr">[that you wouldn't otherwise enjoy doing it]</span>.</div>
+        <div class="sp-ko">그리고 만약 여러분이 아이인데, 한 어른이 여러분에게 기꺼이 돈을 주며 무언가를 하게 한다면, / 그것은 그렇지 않으면 여러분이 그것을 하는 것을 즐기지 않을 것이라는 / 단서이다. [cite: 2469]</div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 조건의 부사절과 동격절:</strong> "And [if you're a child, and an adult is willing to pay you to do something], that's a clue [that you wouldn't otherwise enjoy doing it]." 첫 번째 []는 조건의 부사절입니다. 두 번째 []는 a clue와 구체적인 내용을 설명하는 동격 관계를 이룹니다[cite: 2474, 2475].</p>
+      <p><strong>② 가정의 의미를 담은 otherwise:</strong> "wouldn't otherwise enjoy doing it"에서 otherwise는 '만약 그렇게 보상을 주지 않는다면'이라는 가정의 의미를 내포하고 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The negative impact of incentives on intrinsic motivation in children.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(유인책이 아이들의 내재적 동기에 미치는 부정적 영향)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Studies showing incentives undermine motivation often focus on children.</td>
+          <td>유인책이 동기를 저해한다는 연구들이 주로 아이들을 대상으로 진행되는 이유를 제기.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Development</span></td>
+          <td>Children are still figuring out what they genuinely like versus what adults make them do.</td>
+          <td>아이들은 자신이 정말 좋아하는 것과 어른의 통제로 하는 것을 구분해가는 과정에 있음.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span></td>
+          <td>Incentives act as a clue to the child that the task is not inherently enjoyable.</td>
+          <td>보상(유인책)은 그 행동이 본래 즐거운 일이 아니라는 단서로 작용하여 동기를 저하시킴.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">conduct</td><td class="vw-mean">수행하다, 실시하다 [cite: 2477]</td></tr>
+        <tr><td class="vw-word">dislike</td><td class="vw-mean">싫어하는 것, 혐오 [cite: 2490]</td></tr>
+        <tr><td class="vw-word">relatively</td><td class="vw-mean">비교적 [cite: 2491]</td></tr>
+        <tr><td class="vw-word">incentive</td><td class="vw-mean">유인책 [cite: 2492]</td></tr>
+        <tr><td class="vw-word">figure out</td><td class="vw-mean">~을 알아내다 [cite: 2493]</td></tr>
+        <tr><td class="vw-word">intuitively</td><td class="vw-mean">직관적으로 [cite: 2494]</td></tr>
+        <tr><td class="vw-word">occupy</td><td class="vw-mean">차지하다 [cite: 2495]</td></tr>
+        <tr><td class="vw-word">clue</td><td class="vw-mean">단서 [cite: 2496]</td></tr>
+        <tr><td class="vw-word">piece together</td><td class="vw-mean">~을 종합하여 이해하다 [cite: 2497]</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">Replication in Science</div>
+    <div class="p-title-ko">과학 이론 발전에서 반복 실험의 역할</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The primary goal of replication is to determine the extent to which an observed relationship generalizes across different tests of the research hypothesis.</p>
+      <p class="plain-sent">However, just because a finding does not generalize does not mean it is not interesting or important.</p>
+      <p class="plain-sent">Indeed, science proceeds by <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+      <p class="plain-sent">Few relationships hold in all settings and for all people. Scientific theories are modified over time as more information about their limitations is discovered.</p>
+      <p class="plain-sent">As an example, one of the interesting questions in research investigating the effects of exposure to violent material on aggression concerns the fact that although it is well known that the viewing of violence tends to increase aggression on average, this does not happen for all people.</p>
+      <p class="plain-sent">So it is extremely important to conduct participant replications to determine which people will, and which will not, be influenced by exposure to violent material.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> developing specialized knowledge designed for specific groups</div>
+        <div class="choice"><span class="cn">②</span> emphasizing the discovery of a hypothesis that can be generalized</div>
+        <div class="choice"><span class="cn">③</span> generating numerous hypotheses across different fields of research</div>
+        <div class="choice"><span class="cn">④</span> discovering limiting conditions for previously demonstrated relationships</div>
+        <div class="choice"><span class="cn">⑤</span> helping the human population adapt to limits imposed by the environment</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">④ discovering limiting conditions for previously demonstrated relationships</span> [cite: 2502]</div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 과학에서 반복 실험(replication)을 하는 이유는 단순히 이전 결과가 똑같이 나오는지 확인하기 위해서만이 아닙니다. 관찰된 관계가 모든 환경과 사람에게 100% 적용되는 경우는 거의 없기 때문이죠[cite: 2511]. <br><br>
+        지문의 예시를 보면, 폭력적인 영상에 노출되었을 때 평균적으로 공격성이 증가한다고 알려져 있지만, **'어떤 사람에게는 영향을 미치고, 어떤 사람에게는 미치지 않는지'** 제한된 범위의 예외를 알아내는 것이 반복 실험의 목표라고 합니다[cite: 2508, 2509, 2511]. <br><br>
+        결국 과학 이론은 그 한계에 대한 정보가 지속적으로 발견되면서 발전하고 수정되는 것이므로 [cite: 2511], 정답은 <strong>'이전에 입증된 관계에 대한 제한 조건을 발견함'</strong>을 의미하는 ④번입니다[cite: 2512].
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The <span class="vw">primary<span class="tt">주요한</span></span> goal of <span class="vw">replication<span class="tt">반복 실험</span></span> is <span class="gr">[to <span class="vw">determine<span class="tt">알아내다</span></span> the <span class="vw">extent<span class="tt">정도</span></span> {to which an observed relationship <span class="vw">generalize<span class="tt">일반화하다</span></span>s across different tests of the research <span class="vw">hypothesis<span class="tt">가설</span></span>}]</span>.</div>
+        <div class="sp-ko">반복 실험의 주요 목표는 / 관찰된 관계가 연구 가설에 대한 여러 다양한 실험에 걸쳐 일반화하는 정도를 알아내는 것이다. [cite: 2504] <span class="sp-note">★ [to determine ~]는 주격 보어 역할의 to부정사구. {to which~}는 the extent 수식 관계절 [cite: 2514, 2515]</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, just because a finding does not <span class="vw">generalize<span class="tt">일반화하다</span></span> / does not mean it is not interesting or important.</div>
+        <div class="sp-ko">그러나 어떤 연구 결과가 일반화하지 않는다고 해서 / 그것이 흥미롭지 않거나 중요하지 않다는 의미는 아니다. [cite: 2505]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Indeed, science <span class="vw">proceed<span class="tt">나아가다</span></span>s by <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">실제로, 과학은 <span class="ans">이전에 입증된 관계에 대한 제한 조건을 발견함으로써</span> 나아간다. [cite: 2506]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Few relationships hold in all settings and for all people. Scientific theories are <span class="vw">modify<span class="tt">수정하다</span></span>ied over time / as more information about their limitations is discovered.</div>
+        <div class="sp-ko">모든 환경에서 그리고 모든 사람에게 적용되는 관계는 거의 없다. / 시간이 지나면서 그 한계에 대한 더 많은 정보가 발견되면서 과학 이론은 수정된다. [cite: 2506, 2507] <span class="sp-note">★ Few + 명사: ~하는 명사는 거의 없다 (부정)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As an example, one of the interesting questions in research <span class="vw">investigate<span class="tt">조사하다</span></span>ing the effects of <span class="vw">exposure to<span class="tt">~을 접함</span></span> violent material on <span class="vw">aggression<span class="tt">공격성</span></span> / concerns the fact that / although it is well known that the viewing of violence tends to increase <span class="vw">aggression<span class="tt">공격성</span></span> on average, this does not happen for all people.</div>
+        <div class="sp-ko">예를 들어, 폭력적인 자료를 접하는 것이 공격성에 미치는 영향을 조사하는 연구에서 흥미로운 문제 중 하나는 / 폭력을 보는 것이 평균적으로 공격성을 높이는 경향이 있다는 것은 잘 알려져 있지만, 모든 사람에게 이런 현상이 일어나는 것은 아니라는 사실에 관한 것이다. [cite: 2508]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">So it is extremely important to <span class="vw">conduct<span class="tt">실시하다</span></span> participant <span class="vw">replication<span class="tt">반복 실험</span></span>s / to <span class="vw">determine<span class="tt">알아내다</span></span> which people will, and which will not, be influenced by <span class="vw">exposure to<span class="tt">~을 접함</span></span> violent material.</div>
+        <div class="sp-ko">따라서 / 폭력적인 자료를 접하면 어떤 사람이 영향을 받고 어떤 사람이 영향을 받지 않을지 알아내기 위해 / 참가자 반복 실험을 실시하는 것이 매우 중요하다. [cite: 2509]</div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① extent to which + 완전한 문장:</strong> "the extent {to which an observed relationship generalizes...}" 구조에서 to which 뒤에는 주어(an observed relationship)와 자동사(generalizes)가 갖춰진 완전한 문장이 옵니다. 전치사 + 관계대명사 구조에 유의하세요[cite: 2514, 2515].</p>
+      <p><strong>② just because ~ does not mean ...:</strong> "단지 ~라고 해서 ...를 의미하는 것은 아니다". just because 절 자체가 주어 역할을 수행하는 독특한 구문입니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The role of replication in discovering limiting conditions of scientific theories.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(과학 이론의 제한 조건을 발견하는 데 있어 반복 실험의 역할)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Replication tests how far an observed relationship can be generalized.</td>
+          <td>반복 실험의 목표는 관찰된 관계가 얼마나 일반화될 수 있는지 파악하는 것임.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Development</span></td>
+          <td>Science progresses by finding the limiting conditions where theories do not apply.</td>
+          <td>모든 사람에게 통하는 이론은 거의 없으며, 예외와 한계를 발견할 때 과학이 발전함.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Example</span></td>
+          <td>Replication helps identify exactly which groups are affected by violent media and which are not.</td>
+          <td>폭력성 연구의 예처럼 반복 실험을 통해 영향을 받는 사람과 그렇지 않은 사람의 경계를 명확히 규명할 수 있음.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">determine</td><td class="vw-mean">알아내다, 결정하다 [cite: 2517]</td></tr>
+        <tr><td class="vw-word">primary</td><td class="vw-mean">주요한 [cite: 2518]</td></tr>
+        <tr><td class="vw-word">extent</td><td class="vw-mean">정도, 범위 [cite: 2519]</td></tr>
+        <tr><td class="vw-word">generalize</td><td class="vw-mean">일반화하다, 보편화하다 [cite: 2520]</td></tr>
+        <tr><td class="vw-word">hypothesis</td><td class="vw-mean">가설 (pl. hypotheses) [cite: 2521]</td></tr>
+        <tr><td class="vw-word">proceed</td><td class="vw-mean">나아가다 [cite: 2522]</td></tr>
+        <tr><td class="vw-word">modify</td><td class="vw-mean">수정하다 [cite: 2523]</td></tr>
+        <tr><td class="vw-word">investigate</td><td class="vw-mean">조사하다 [cite: 2524]</td></tr>
+        <tr><td class="vw-word">exposure to</td><td class="vw-mean">~을 접하게 함, 직접 체험(하게)함 [cite: 2525]</td></tr>
+        <tr><td class="vw-word">aggression</td><td class="vw-mean">공격성 [cite: 2526]</td></tr>
+        <tr><td class="vw-word">conduct</td><td class="vw-mean">실시하다 [cite: 2526]</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p1','p2','p3'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

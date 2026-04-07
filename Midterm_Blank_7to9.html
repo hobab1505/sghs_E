@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 1학기 중간고사 대비 · 빈칸 유형 (7~9번)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">2026 1학기 중간고사 대비</div>
+      <div class="hdr-sub">빈칸 위치: 앞부분 주제 문형 (7~9번) — 진하 전용 학습 자료</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p7')">07번</button>
+      <button class="nb" onclick="show('p8')">08번</button>
+      <button class="nb" onclick="show('p9')">09번</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">2026 1학기 중간고사 대비 · 빈칸 유형</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">특징: 지문의 앞부분(1~2문장)에 빈칸이 위치하여 글의 핵심 주제를 요약하는 문형입니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p7')"><div class="toc-en">#07 Accuracy of Oral Cultures</div><div class="toc-ko">구전 문화의 정보 전달의 정확성</div></a>
+    <a class="toc-card" onclick="show('p8')"><div class="toc-en">#08 Emotions as Adaptations</div><div class="toc-ko">이로운 적응 기제로서의 감정</div></a>
+    <a class="toc-card" onclick="show('p9')"><div class="toc-en">#09 US Farm Homesteads</div><div class="toc-ko">미국 자영 농지의 인위적 분배 방식</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p7">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">Accuracy of Oral Cultures</div>
+    <div class="p-title-ko">구전 문화의 정보 전달의 정확성</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">We tend to underestimate the <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> of oral cultures.</p>
+      <p class="plain-sent">We're all familiar with the children's game in which a message is whispered from one person to another until it goes around a room.</p>
+      <p class="plain-sent">The message invariably gets distorted — sometimes with hilarious results — when the original message and the final message are compared.</p>
+      <p class="plain-sent">But this is misleading. When it is important, oral cultures can accurately transmit information across long distances and through generations.</p>
+      <p class="plain-sent">For example, American author Alex Haley was able to discover an oral record of his ancestors in Africa, and his search is described in the 1976 book, Roots: The Saga of an American Family.</p>
+      <p class="plain-sent">Similarly, the Odyssey and Iliad were originally heroic oral histories of Greek culture that were only written down many centuries after they were composed.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> creativity</div>
+        <div class="choice"><span class="cn">②</span> subtleness</div>
+        <div class="choice"><span class="cn">③</span> immediacy</div>
+        <div class="choice"><span class="cn">④</span> complexity</div>
+        <div class="choice"><span class="cn">⑤</span> effectiveness</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤ effectiveness</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 글의 초반에 '귓속말 전달 게임'이 등장하죠? 말이 전달될수록 내용이 왜곡(distorted)된다는 것을 우리는 당연하게 생각합니다. 하지만 글쓴이는 곧바로 "But this is misleading(하지만 이는 오해의 소지가 있다)"이라고 반박합니다. <br><br>
+        실제로는 중요한 정보일 경우, 아프리카의 조상 기록(Roots)이나 호머의 일리아드처럼 <strong>장거리와 여러 세대에 걸쳐 아주 '정확하게(accurately)' 정보가 전달</strong>될 수 있다는 내용입니다. 따라서 우리는 구전 문화가 생각보다 정확하게 작동한다는 <strong>'유효성(effectiveness)'</strong>을 과소평가하고 있다는 ⑤번이 정답이 됩니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">We tend to <span class="vw">underestimate<span class="tt">과소평가하다</span></span> the <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> of <span class="vw">oral<span class="tt">구전의, 입의</span></span> cultures.</div>
+        <div class="sp-ko">우리는 구전 문화의 <span class="ans">유효성(effectiveness)</span>을 과소평가하는 경향이 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We're all <span class="vw">familiar with<span class="tt">~에 익숙한</span></span> the children's game <span class="gr">[in which a message is <span class="vw">whisper<span class="tt">속삭이다</span></span>ed from one person to another / {until it goes around a room}]</span>.</div>
+        <div class="sp-ko">우리는 모두 한 사람이 다른 사람에게 메시지를 속삭여 / 그것이 방 안을 한 바퀴 돌 때까지 전달하는 / 어린이 놀이를 잘 알고 있다. <span class="sp-note">★ in which + 완전한 문장 / until ~: 시간의 부사절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The message <span class="vw">invariably<span class="tt">항상, 변함없이</span></span> <span class="gr">gets <span class="vw">distorted<span class="tt">왜곡된</span></span></span> — sometimes with <span class="vw">hilarious<span class="tt">아주 재미있는</span></span> results — / when the original message and the final message are compared.</div>
+        <div class="sp-ko">원래의 메시지와 마지막 메시지가 비교될 때, / 메시지는 항상 왜곡되고, 때로는 아주 재미있는 결과를 낳는다. <span class="sp-note">★ get + p.p: 수동태 (~되다)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But this is <span class="vw">misleading<span class="tt">오해의 소지가 있는</span></span>. When it is important, oral cultures can <span class="vw">accurately<span class="tt">정확하게</span></span> <span class="vw">transmit<span class="tt">전달하다</span></span> information / across long distances and through <span class="vw">generation<span class="tt">세대</span></span>s.</div>
+        <div class="sp-ko">하지만 이는 오해의 소지가 있다. 중요한 경우, 구전 문화는 먼 거리를 가로지르고 여러 세대에 걸쳐 / 정보를 정확하게 전달할 수 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, American author Alex Haley was able to discover an oral record of his <span class="vw">ancestor<span class="tt">조상</span></span>s in Africa, / and his search is described in the 1976 book, Roots: The Saga of an American Family.</div>
+        <div class="sp-ko">예를 들어, 미국 작가 Alex Haley는 아프리카에서 자신의 조상에 대한 구전 기록을 발견할 수 있었고, / 그의 탐색은 1976년 출간된 책 Roots: The Saga of an American Family에 묘사되어 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Similarly, the Odyssey and Iliad were originally <span class="vw">heroic<span class="tt">영웅에 관한</span></span> oral histories of Greek culture / <span class="gr">that were only written down many centuries after they were <span class="vw">compose<span class="tt">짓다, 작곡하다</span></span>d</span>.</div>
+        <div class="sp-ko">마찬가지로, Odyssey와 Iliad는 원래 그리스 문화권의 영웅에 관한 구전 역사로서, / 지어진 지 수 세기가 지난 후에야 비로소 기록되었다. <span class="sp-note">★ that: oral histories를 수식하는 주격 관계대명사</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 전치사 + 관계대명사 구조:</strong> "the children's game [in which a message is whispered...]". 선행사가 game이므로 in the game의 전치사 in이 관계대명사 앞으로 이동한 형태입니다. 뒤에는 수동태(is whispered)로 완전한 문장이 옵니다.</p>
+      <p><strong>② get + p.p (수동태):</strong> "gets distorted"는 be동사 대신 get을 사용하여 동작의 변화나 결과를 강조하는 수동태 표현입니다. '왜곡되게 되다'로 해석합니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The accuracy and effectiveness of information transmission in oral cultures.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(구전 문화에서의 정보 전달의 정확성과 유효성)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>We underestimate the effectiveness of oral transmission due to things like the children's whisper game.</td>
+          <td>우리는 귓속말 게임 같은 오해로 인해 구전 문화의 유효성을 과소평가한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Refutation</span></td>
+          <td>However, when information is important, oral cultures transmit it accurately over time and space.</td>
+          <td>그러나 중요한 정보일 경우 구전 문화는 시공간을 초월하여 매우 정확하게 이를 전달한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Evidence</span></td>
+          <td>Historical examples include Alex Haley's tracing of his ancestors and the ancient Greek epics (Odyssey/Iliad).</td>
+          <td>이에 대한 역사적 증거로 Alex Haley의 아프리카 조상 탐색과 그리스 서사시(오디세이)가 있다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">underestimate</td><td class="vw-mean">과소평가하다</td></tr>
+        <tr><td class="vw-word">familiar</td><td class="vw-mean">잘 아는, 익숙한, 친숙한</td></tr>
+        <tr><td class="vw-word">whisper</td><td class="vw-mean">속삭이다</td></tr>
+        <tr><td class="vw-word">invariably</td><td class="vw-mean">항상, 변함없이</td></tr>
+        <tr><td class="vw-word">distorted</td><td class="vw-mean">왜곡된</td></tr>
+        <tr><td class="vw-word">hilarious</td><td class="vw-mean">아주 재미있는</td></tr>
+        <tr><td class="vw-word">misleading</td><td class="vw-mean">오해의 소지가 있는</td></tr>
+        <tr><td class="vw-word">transmit</td><td class="vw-mean">전달하다</td></tr>
+        <tr><td class="vw-word">ancestor</td><td class="vw-mean">조상</td></tr>
+        <tr><td class="vw-word">heroic</td><td class="vw-mean">영웅에 관한</td></tr>
+        <tr><td class="vw-word">accurately</td><td class="vw-mean">정확하게</td></tr>
+        <tr><td class="vw-word">compose</td><td class="vw-mean">(시·글을) 짓다, 작곡하다</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p8">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">Emotions as Adaptations</div>
+    <div class="p-title-ko">이로운 적응 기제로서의 감정</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Emotions meet the criteria of being <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+      <p class="plain-sent">Take, for example, two animals squaring off in a fight over food.</p>
+      <p class="plain-sent">As they prepare to lock horns, literally or figuratively, their intense feelings prompt a repertoire of bodily reactions.</p>
+      <p class="plain-sent">When an animal's back arches and its hair stands on end, it appears larger and stronger.</p>
+      <p class="plain-sent">When it bares its teeth, frowns its brows, makes fierce noises, or displays its horns, it signals to the other animal that fighting such a strong adversary may not be worth it.</p>
+      <p class="plain-sent">These signals — displays of aggression — directly improve the chances that the other animal will withdraw, thus preventing violence and avoiding potential injury or death.</p>
+      <p class="plain-sent">Sending these signals benefits the species, as does the ability to interpret these messages. It's a win-win.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> selfish tendencies</div>
+        <div class="choice"><span class="cn">②</span> injurious responses</div>
+        <div class="choice"><span class="cn">③</span> aggressive instincts</div>
+        <div class="choice"><span class="cn">④</span> information sources</div>
+        <div class="choice"><span class="cn">⑤</span> advantageous adaptations</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤ advantageous adaptations</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 생물학 지문에서 '감정'의 역할에 대해 설명합니다. 동물이 먹이를 두고 싸울 때, 화나고 공격적인 '감정'이 털을 곤두세우고 이빨을 드러내게 만듭니다.<br><br>
+        이런 무시무시한 신호를 통해 서로 기 싸움만 하고 진짜 피 터지게 싸우는 것은 피할 수 있죠(preventing violence and avoiding potential injury). 결국 감정적 신호가 불필요한 죽음을 막아주기 때문에 종(species) 전체에 이득이 되는 윈윈(win-win) 전략입니다. <br><br>
+        즉, 감정은 동물이 생존하기 위해 발달시킨 <strong>'이로운 적응(advantageous adaptations)'</strong>이라는 것이 글의 핵심입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Emotions meet the <span class="vw">criterion<span class="tt">기준</span></span>s of being <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">감정은 <span class="ans">이로운 적응(advantageous adaptations)</span>이 되는 기준을 충족시킨다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Take, for example, two animals <span class="vw">square off<span class="tt">싸울 자세를 취하다</span></span>ing in a fight over food.</div>
+        <div class="sp-ko">먹이를 두고 다툼에서 싸울 자세를 취하는 두 동물을 예로 들어 보자. <span class="sp-note">★ squaring off~ 분사구가 two animals를 후치 수식함</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As they <span class="vw">prepare<span class="tt">준비하다</span></span> to <span class="vw">lock horns<span class="tt">다투다</span></span>, <span class="vw">literally<span class="tt">말 그대로</span></span> or <span class="vw">figuratively<span class="tt">비유적으로</span></span>, / their <span class="vw">intense<span class="tt">강렬한</span></span> feelings <span class="vw">prompt<span class="tt">촉발하다</span></span> a <span class="vw">repertoire<span class="tt">모든 것</span></span> of bodily reactions.</div>
+        <div class="sp-ko">말 그대로든, 비유적으로든, 그것들이 서로 뿔을 맞댈(다툴) 준비를 할 때, / 그것들의 강렬한 감정은 할 수 있는 모든 신체 반응을 촉발한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">When an animal's back <span class="vw">arch<span class="tt">활처럼 구부러지다</span></span>es and its hair stands on end, / it appears larger and stronger.</div>
+        <div class="sp-ko">동물의 등이 활처럼 구부러지고 털이 쭈뼛 서 있을 때, / 그것은 더 크고 더 강해 보인다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">[When it <span class="vw">bare<span class="tt">드러내다</span></span>s its teeth, <span class="vw">frown<span class="tt">눈살을 찌푸리다</span></span>s its <span class="vw">brows<span class="tt">눈썹</span></span>, makes <span class="vw">fierce<span class="tt">격렬한</span></span> noises, or displays its <span class="vw">horn<span class="tt">뿔</span></span>s]</span>, / it signals to the other animal <span class="gr">[that fighting such a strong <span class="vw">adversary<span class="tt">적, 상대</span></span> may not be worth it]</span>.</div>
+        <div class="sp-ko">이빨을 드러내거나, 눈썹을 찌푸리거나, 격렬한 소리를 내거나, 뿔을 과시할 때, / 그 동물은 그렇게 강한 적과 싸우는 것은 그만한 가치가 없을지도 모른다는 신호를 상대방에게 보내는 것이다. <span class="sp-note">★ 병렬구조 유의 / that절은 signals의 목적어 역할을 하는 명사절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">These signals — displays of <span class="vw">aggression<span class="tt">공격성</span></span> — directly improve the chances that the other animal will <span class="vw">withdraw<span class="tt">물러나다</span></span>, / <span class="gr">thus preventing violence and avoiding potential injury or death</span>.</div>
+        <div class="sp-ko">이러한 신호는, 공격성의 표시인데, / 상대방이 물러날 가능성을 직접적으로 높여서, 폭력을 예방하고 잠재적인 부상이나 죽음을 피할 수 있게 할 것이다. <span class="sp-note">★ thus preventing~: 결과를 나타내는 분사구문 병렬 (preventing and avoiding)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Sending these signals benefits the species, / <span class="gr">as does the ability to <span class="vw">interpret<span class="tt">해석하다</span></span> these messages</span>. It's a win-win.</div>
+        <div class="sp-ko">이러한 신호를 보내는 것은 이러한 메시지를 해석하는 능력과 마찬가지로 / 종에게 이익이 된다. 그것은 서로에게 유리하다. <span class="sp-note">★ as + 조동사(does) + 주어(the ability) 도치 구문</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 동사구의 병렬 연결:</strong> "When it [bares...], [frowns...], [makes...], or [displays...]". 접속사 When 절 안에 4개의 동사구가 콤마(,)와 or로 나란히 연결된 형태입니다. 동사의 수 일치(s)에 주의하세요.</p>
+      <p><strong>② as를 이용한 도치 구문:</strong> "as does the ability to interpret these messages" (이러한 메시지를 해석하는 능력이 그러하듯이). 앞 문장의 동사(benefits)를 대신 받는 대동사 does가 주어 앞으로 도치되었습니다. (as benefits the ability~와 같은 의미입니다).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      Emotions act as advantageous adaptations that prevent physical conflict and ensure species survival.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(감정은 물리적 갈등을 예방하고 종의 생존을 보장하는 이로운 적응 기제로 작용함)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Emotions meet the criteria for being advantageous adaptations.</td>
+          <td>감정은 생존과 번식에 유리한 '이로운 적응'의 기준을 충족한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Example</span></td>
+          <td>Intense emotions cause animals to display fierce bodily reactions (e.g., baring teeth, arching back) before fighting.</td>
+          <td>동물들은 싸우기 전 강렬한 감정으로 인해 이빨을 드러내는 등 격렬한 신체 반응을 보인다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span></td>
+          <td>These aggressive displays prompt the opponent to withdraw, thereby preventing injury and benefiting both sides.</td>
+          <td>이러한 감정적 위협 신호는 상대방을 물러나게 하여 실제 부상을 막아주므로 종에게 유익하다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">criterion</td><td class="vw-mean">기준 (pl. criteria)</td></tr>
+        <tr><td class="vw-word">square off</td><td class="vw-mean">싸울 자세를 취하다</td></tr>
+        <tr><td class="vw-word">prepare</td><td class="vw-mean">준비하다, 대비하다</td></tr>
+        <tr><td class="vw-word">lock horns</td><td class="vw-mean">뿔을 맞대다, 다투다</td></tr>
+        <tr><td class="vw-word">literally</td><td class="vw-mean">말 그대로</td></tr>
+        <tr><td class="vw-word">figuratively</td><td class="vw-mean">비유적으로</td></tr>
+        <tr><td class="vw-word">intense</td><td class="vw-mean">강렬한</td></tr>
+        <tr><td class="vw-word">prompt</td><td class="vw-mean">(어떤 일이 일어나도록) 촉발하다, 자극하다</td></tr>
+        <tr><td class="vw-word">repertoire</td><td class="vw-mean">(한 사람이 할 수 있는) 모든 것</td></tr>
+        <tr><td class="vw-word">arch</td><td class="vw-mean">(몸이) 활처럼 구부러지다</td></tr>
+        <tr><td class="vw-word">bare</td><td class="vw-mean">드러내다, 노출시키다</td></tr>
+        <tr><td class="vw-word">frown</td><td class="vw-mean">(눈살을) 찌푸리다</td></tr>
+        <tr><td class="vw-word">brows</td><td class="vw-mean">눈썹</td></tr>
+        <tr><td class="vw-word">fierce</td><td class="vw-mean">격렬한</td></tr>
+        <tr><td class="vw-word">horn</td><td class="vw-mean">뿔</td></tr>
+        <tr><td class="vw-word">adversary</td><td class="vw-mean">적, 상대방</td></tr>
+        <tr><td class="vw-word">aggression</td><td class="vw-mean">공격성</td></tr>
+        <tr><td class="vw-word">withdraw</td><td class="vw-mean">물러나다</td></tr>
+        <tr><td class="vw-word">interpret</td><td class="vw-mean">해석하다</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p9">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">US Farm Homesteads</div>
+    <div class="p-title-ko">미국 자영 농지의 인위적 분배 방식</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The distribution of US farm homesteads granted to pioneer settlers is a classic case of <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+      <p class="plain-sent">Properties were allocated based on surveys with regular north-south and east-west boundaries, regardless of the lay of the land.</p>
+      <p class="plain-sent">This meant boundaries of homesteads were unrelated to boundaries of watersheds. Some homesteads were high and dry.</p>
+      <p class="plain-sent">Others were lower and wetter, but subject to flooding.</p>
+      <p class="plain-sent">Downstream landowners could not control erosion and runoff from upstream properties.</p>
+      <p class="plain-sent">Thus, an uphill landowner's effects on the environment could harm another landowner downhill, but the lower landowner had no options.</p>
+      <p class="plain-sent">These nineteenth-century decisions have consequences to this day.</p>
+      <p class="plain-sent">For example, one of the most challenging problems for Austin College's Sneed grassland restoration is erosive flash-flood runoff from poorly managed upstream properties.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> shifting boundaries depending on the interests of pioneers</div>
+        <div class="choice"><span class="cn">②</span> land boundaries reflecting the boundaries along the waterways</div>
+        <div class="choice"><span class="cn">③</span> conflicts between the natives and the pioneers over the boundaries</div>
+        <div class="choice"><span class="cn">④</span> ineffective setting of boundaries according to natural boundaries</div>
+        <div class="choice"><span class="cn">⑤</span> artificial boundaries not matching natural boundaries</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤ artificial boundaries not matching natural boundaries</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 미국 개척 시대에 땅(자영 농지)을 사람들에게 나누어 줄 때 어떻게 했는지에 대한 이야기입니다. 산맥이나 강의 흐름(유역) 등 '자연적인 지형(the lay of the land)'을 무시하고, 자를 대고 그린 것처럼 바둑판 모양의 '인위적인 직선 경계'로 땅을 쪼갰습니다. <br><br>
+        그 결과, 상류에 있는 땅 주인이 흙을 쓸려 내려가게 하면, 하류에 있는 땅 주인은 속수무책으로 홍수와 침식 피해를 입게 되는 심각한 부작용이 생겼죠. <br><br>
+        따라서 이 지문은 미국의 토지 분배가 <strong>'자연 경계와 일치하지 않는 인위적 경계'</strong>의 전형적 사례임을 비판하는 글이므로 ⑤번이 완벽한 정답입니다!
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The <span class="vw">distribution<span class="tt">분배</span></span> of US farm <span class="vw">homestead<span class="tt">자영 농지</span></span>s <span class="gr">[<span class="vw">grant<span class="tt">지급하다</span></span>ed to <span class="vw">pioneer<span class="tt">개척자</span></span> settlers]</span> is a classic case of <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">개척 정착민에게 지급된 미국 농가 자영 농지의 분배는 <span class="ans">자연 경계와 일치하지 않는 인위적 경계</span>의 전형적인 사례이다. <span class="sp-note">★ granted ~: 과거분사구가 앞의 homesteads 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Property<span class="tt">토지</span></span>ies were <span class="vw">allocate<span class="tt">할당하다</span></span>d based on <span class="vw">survey<span class="tt">측량</span></span>s / with <span class="vw">regular<span class="tt">변의 길이가 같은</span></span> north-south and east-west <span class="vw">boundary<span class="tt">경계</span></span>ies, / <span class="vw">regardless of<span class="tt">~에 상관없이</span></span> the <span class="vw">lay of the land<span class="tt">지형</span></span>.</div>
+        <div class="sp-ko">토지는 지형과 상관없이 / 변의 길이가 같은 남북 및 동서의 경계를 가진 측량치를 근거로 / 할당되었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This meant / boundaries of homesteads were unrelated to boundaries of <span class="vw">watershed<span class="tt">유역</span></span>s. Some homesteads were high and dry.</div>
+        <div class="sp-ko">이는 자영 농지의 경계가 유역의 경계와 관련이 없었다는 것을 의미했다. 일부 자영 농지는 높고 건조했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Others were lower and wetter, but <span class="vw">subject to<span class="tt">입기 쉬운</span></span> flooding.</div>
+        <div class="sp-ko">다른 자영 농지는 더 낮고 더 습했지만 홍수의 피해를 입기 쉬웠다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Downstream landowners could not control <span class="vw">erosion<span class="tt">침식</span></span> and <span class="vw">runoff<span class="tt">유수</span></span> from upstream properties.</div>
+        <div class="sp-ko">하류의 토지 소유자는 상류 토지에서 발생하는 침식과 유수(流水)를 제어할 수 없었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Thus, an uphill landowner's effects on the environment could harm another landowner downhill, / but the lower landowner had no options.</div>
+        <div class="sp-ko">따라서, 고지대의 토지 소유자가 환경에 미치는 영향은 저지대의 다른 토지 소유자에게 피해를 줄 수 있었지만, / 저지대의 토지 소유자는 선택의 여지가 없었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">These nineteenth-century decisions have <span class="vw">consequence<span class="tt">영향, 결과</span></span>s to this day.</div>
+        <div class="sp-ko">이러한 19세기의 결정은 오늘날까지도 영향을 미치고 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, one of the most challenging problems for Austin College's Sneed grassland <span class="vw">restoration<span class="tt">복원</span></span> / is erosive <span class="vw">flash-flood<span class="tt">돌발 홍수</span></span> runoff from poorly managed upstream properties.</div>
+        <div class="sp-ko">예를 들어, Austin College의 Sneed 초원 복원 프로젝트에서 가장 어려운 문제 중 하나는 / 부실하게 관리된 상류의 토지로부터 오는 침식성 돌발 홍수에 의한 유수(流水)이다.</div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 분사구의 명사 수식:</strong> "US farm homesteads [granted to pioneer settlers]" 그리고 "artificial boundaries [not matching natural boundaries]". 각각 과거분사(granted)와 현재분사(matching)가 명사를 뒤에서 수식합니다. 수동의 의미면 p.p, 능동의 의미면 -ing를 취합니다.</p>
+      <p><strong>② be subject to 명사:</strong> "Others were lower... but (they were) subject to flooding". '~의 영향을 받기 쉬운', '~에 노출된'이라는 의미의 관용구입니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The negative consequences of distributing US farm homesteads using artificial boundaries rather than natural watersheds.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(자연 유역이 아닌 인위적인 경계를 사용하여 미국 농지를 분배한 것의 부정적 결과)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>US homestead distribution is an example of artificial boundaries ignoring natural topography.</td>
+          <td>미국 자영 농지의 분배는 지형을 무시한 인위적 경계의 전형적 사례임.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Problem</span></td>
+          <td>Because boundaries didn't match watersheds, downhill owners suffered from erosion and runoff caused by uphill owners.</td>
+          <td>자연 유역과 경계가 달랐기 때문에 하류 토지 주인이 상류 주인의 유수/침식에 속수무책으로 당함.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span></td>
+          <td>This 19th-century policy still causes significant environmental and management issues today.</td>
+          <td>이러한 잘못된 19세기 정책 결정이 오늘날 초원 복원 문제 등 현대 환경에도 심각한 악영향을 줌.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">distribution</td><td class="vw-mean">분배, 배급</td></tr>
+        <tr><td class="vw-word">grant</td><td class="vw-mean">지급하다, 수여하다</td></tr>
+        <tr><td class="vw-word">pioneer</td><td class="vw-mean">개척자의; 개척자</td></tr>
+        <tr><td class="vw-word">allocate</td><td class="vw-mean">할당하다</td></tr>
+        <tr><td class="vw-word">property</td><td class="vw-mean">토지, 소유지, 재산</td></tr>
+        <tr><td class="vw-word">survey</td><td class="vw-mean">측량치, 측량</td></tr>
+        <tr><td class="vw-word">regular</td><td class="vw-mean">등변의(변의 길이가 같은)</td></tr>
+        <tr><td class="vw-word">boundary</td><td class="vw-mean">경계</td></tr>
+        <tr><td class="vw-word">regardless of</td><td class="vw-mean">~에 상관없이</td></tr>
+        <tr><td class="vw-word">lay of the land</td><td class="vw-mean">지형, 형세</td></tr>
+        <tr><td class="vw-word">subject to</td><td class="vw-mean">(피해 등을) 입기 쉬운</td></tr>
+        <tr><td class="vw-word">erosion</td><td class="vw-mean">침식, 부식</td></tr>
+        <tr><td class="vw-word">consequence</td><td class="vw-mean">(보통 복수로) 영향(력)</td></tr>
+        <tr><td class="vw-word">restoration</td><td class="vw-mean">복원, 부활</td></tr>
+        <tr><td class="vw-word">flash-flood</td><td class="vw-mean">(호우 등으로 인한) 돌발 홍수</td></tr>
+        <tr><td class="vw-word">homestead</td><td class="vw-mean">(미국 정부가 정착민에게 지급한) 자영 농지</td></tr>
+        <tr><td class="vw-word">watershed</td><td class="vw-mean">(강의) 유역</td></tr>
+        <tr><td class="vw-word">runoff</td><td class="vw-mean">(땅속으로 흡수되지 않고 흐르는) 유수</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p7','p8','p9'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
