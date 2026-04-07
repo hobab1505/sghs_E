@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · 2강 (7~9번) | 2026 심화영어독해 II</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · 2강 완전 분석</div>
+      <div class="hdr-sub">2026 심화영어독해 II — 학교 선생님 필기 완벽 반영 (진하 전용)</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p7')">07번</button>
+      <button class="nb" onclick="show('p8')">08번</button>
+      <button class="nb" onclick="show('p9')">09번</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">Focus Framework · 2강 (7번~9번)</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">단어 툴팁, 일타강사 해설, 구문 분석이 모두 100% 반영되었습니다. 상단 버튼을 눌러 이동하세요.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p7')"><div class="toc-en">#007 Patience in Science</div><div class="toc-ko">과학적 진보와 인내심</div></a>
+    <a class="toc-card" onclick="show('p8')"><div class="toc-en">#008 Non-contingent Nature of Algorithms</div><div class="toc-ko">알고리즘의 비우발성과 예측 가능성</div></a>
+    <a class="toc-card" onclick="show('p9')"><div class="toc-en">#009 Reflection on the Nature of Pleasure</div><div class="toc-ko">쾌락의 본질에 대한 성찰</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p7">
+  <div class="p-header">
+    <div class="p-code">#강 02 · #쪽 024 · #번 007 · #문항코드 26007-0019</div>
+    <div class="p-title">Patience in Science</div>
+    <div class="p-title-ko">과학적 진보와 인내심 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The scientific process is invariably non-linear and can be long and drawn out, with hypotheses sitting on the shelf until the time has come to dust them down, if that ever finally arrives.</p>
+      <p class="plain-sent">Sometimes you sit waiting for the tide to come in, but it never actually does.</p>
+      <p class="plain-sent">For every new theory and paper, there are many that fell by the wayside for lack of time, funding or data.</p>
+      <p class="plain-sent">Like the music industry, the hits are few and far between and don't always come when or from where you expect.</p>
+      <p class="plain-sent">It's important not to be discouraged by this: the fact that not every idea comes to fruition isn't a good reason to have fewer of them.</p>
+      <p class="plain-sent">Scientific breakthroughs ultimately depend on people working away without the immediate reward of achieving anything tangible: trying things that don't work (but might still be useful) and devising bits of a solution that won't be relevant until some undefined point in the future.</p>
+      <p class="plain-sent">Such <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> is the bedrock on which progress is eventually achieved stitched together from all those loose bits of fabric that could so easily have been discarded.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> honesty</div>
+        <div class="choice"><span class="cn">②</span> patience</div>
+        <div class="choice"><span class="cn">③</span> precision</div>
+        <div class="choice"><span class="cn">④</span> risk-taking</div>
+        <div class="choice"><span class="cn">⑤</span> collaboration</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">② patience</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 과학적 진보가 마치 음악 산업의 '히트곡'처럼 아주 드물고 예측하기 어렵다는 비유를 사용한 글입니다. 2강_7-9(유인물_필기용).pdf]<br><br>
+        과학 연구는 당장의 보상(immediate reward) 없이 쓸모없어 보이는 작은 해결책들을 고안해 내는 기나긴 과정입니다. 수많은 가설이 버려지거나 먼지를 뒤집어쓴 채 선반에 방치되죠. 그러나 언젠가 이런 버려질 뻔했던 천 조각(loose bits of fabric)들이 모여 '비약적 발전(breakthrough)'이라는 결과물로 꿰매어집니다. 2강_7-9(유인물_필기용).pdf]<br><br>
+        따라서 실패에 좌절하지 않고, 당장의 보상 없이도 묵묵히 연구를 계속해 나가는 이러한 태도는 바로 <strong>'인내심(patience)'</strong>입니다. 그러므로 ②번이 완벽한 정답이 됩니다. 2강_7-9(유인물_필기용).pdf]
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 필기 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The scientific process is <span class="vw">invariably<span class="tt">언제나, 예외 없이</span></span> <span class="vw">non-linear<span class="tt">비선형적인</span></span> and can be long and drawn out, / <span class="gr">with <span class="vw">hypothesis<span class="tt">가설</span></span>es sitting on the shelf / until the time has come to <span class="vw">dust down<span class="tt">~을 털다</span></span> them down</span>, / if <span class="gr">that(=the time)</span> ever finally arrives.</div>
+        <div class="sp-ko">과학적 과정은 예외 없이 비선형적이며 길고 지연될 수 있는데, / (가설의 먼지를 털어낼) 마침내 그 시간이 오기라도 한다면, / 가설 먼지를 털어낼(다시 꺼내볼) 시간이 올 때까지 선반 위에 놓여 있기도 한다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ with + 명사(hypotheses) + 분사(sitting): ~가 ...한 채로 (부대상황)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Sometimes you sit waiting for the tide to come in, but <span class="gr">it(=the tide)</span> never actually <span class="gr">does(=come in)</span>.</div>
+        <div class="sp-ko">때때로 당신은 조류가 밀려오기를(기회가 오기를) 앉아서 기다리지만, / 그것(조류)은 실제로는 결코 오지 않는다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ 대동사 does가 앞의 come in을 대신함 / 비유: The tide = opportunity that may never come</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For every new theory and paper, / there are many <span class="gr">that <span class="vw">fall by the wayside<span class="tt">도중에 실패하다</span></span> for lack of time, funding, or data</span>.</div>
+        <div class="sp-ko">모든 새로운 이론과 논문 이면에는 / 시간, 자금, 또는 데이터의 부족으로 인해 도중에 실패한(진전을 못 본) 많은 것들(이론과 논문들)이 존재한다. 2강_7-9(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Like the music industry, / the hits are <span class="vw">few and far between<span class="tt">아주 드문</span></span> / and don't always come <span class="gr">when or from where you expect</span>.</div>
+        <div class="sp-ko">음악 산업과 마찬가지로, / 히트작은 아주 드물며 / 당신이 기대하는 시기나 장소에서 항상 나오는 것은 아니다. 2강_7-9(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It's important not to be discouraged by this: / the fact <span class="gr">[that not every idea <span class="vw">come to fruition<span class="tt">결실을 보다</span></span>]</span> isn't a good reason to have fewer of <span class="gr">them(ideas)</span>.</div>
+        <div class="sp-ko">이것에 낙담하지 않는 것이 중요하다: / 모든 아이디어가 결실을 맺는 것은 아니라는 사실이 / 아이디어를 덜 가져야 할 좋은 이유가 되지는 않는다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ that은 the fact를 수식하는 동격의 접속사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Scientific <span class="vw">breakthrough<span class="tt">비약적 발전</span></span>s ultimately depend on people working away / without the <span class="vw">immediate<span class="tt">즉각적인</span></span> reward of achieving anything <span class="vw">tangible<span class="tt">유형의, 명백한</span></span> : / trying things <span class="gr">{that don't work (but might still be useful)}</span> / and <span class="vw">devise<span class="tt">고안하다</span></span>ing bits of a solution <span class="gr">(that won't be <span class="vw">relevant<span class="tt">유의미한, 관련된</span></span> until some undefined point in the future)</span>.</div>
+        <div class="sp-ko">과학적 비약적 발전은 궁극적으로 눈에 보이는(유형의) 어떤 것을 성취하는 즉각적인 보상 없이 묵묵히 일하는 사람들에게 달려 있다: / 즉, 효과가 없는 (하지만 여전히 유용할지도 모르는) 것들을 시도하고, / 미래의 어떤 불확실한 시점까지는 유의미하지 않을 해결책의 조각들을 고안해 내는 것에 의존한다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ trying ~ and devising ~ : 분사구 병렬 연결</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Such <span class="ans">patience</span> is the <span class="vw">bedrock<span class="tt">기반</span></span> <span class="gr">{on which progress is eventually achieved}</span> / stitched together from all those loose bits of <span class="vw">fabric<span class="tt">직물</span></span> <span class="gr">(that could so easily have been <span class="vw">discard<span class="tt">버리다</span></span>ed)</span>.</div>
+        <div class="sp-ko">그러한 <span class="ans">인내심</span>이 결국 진보가 성취되는 기반이며, / 이는 아주 쉽게 버려질 수도 있었던 그 모든 헐거운 직물 조각들(해결책의 파편들)로부터 꿰매어 맞춰진 것이다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ on which + 완전한 절 (bedrock 수식) / could have p.p: ~할 수도 있었다 (과거 사실에 대한 추측)</span></div>
+      </div>
+    </div>
+    
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① with 부대상황:</strong> "with hypotheses sitting on the shelf". 전치사 with 뒤에 목적어(hypotheses)와 현재분사(sitting)가 와서 가설이 선반 위에 놓인 채로(능동)라는 의미를 만듭니다. 2강_7-9(유인물_필기용).pdf]</p>
+      <p><strong>② 전치사 + 관계대명사 구조:</strong> "the bedrock [on which progress is eventually achieved]". 기반(bedrock) '위에서(on)' 진보가 성취된다는 뜻이므로 on which가 쓰였습니다. 뒤에는 수동태로 완전한 문장이 이어집니다. 2강_7-9(유인물_필기용).pdf]</p>
+      <p><strong>③ 조동사 + have p.p:</strong> "fabric [that could so easily have been discarded]". 아주 쉽게 '버려질 수도 있었다'는 과거에 대한 가능성이나 추측을 나타내며, 수동태형인 have been p.p가 사용되었습니다. 2강_7-9(유인물_필기용).pdf]</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      Scientific progress is fundamentally grounded in patience — the willingness to persist without immediate reward and to tolerate repeated failure.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(과학적 진보는 즉각적인 보상 없이 지속하고 반복적인 실패를 견뎌내는 의지인 '인내심'에 근본적으로 바탕을 둔다.)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Intro</span></td>
+          <td>Science is non-linear, long, and uncertain. The shelf = ideas waiting. The tide = opportunity that may never come.</td>
+          <td>과학은 비선형적이고 길며 불확실하다. 선반 위 가설이나 밀려오지 않는 조류처럼 불확실성을 보여줌. 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev</span></td>
+          <td>Most ideas fail due to lack of time, funding, or data. Analogy of Music Industry: Success is rare. Scientists should not be discouraged.</td>
+          <td>음악 산업의 히트곡처럼 과학적 성공도 드물다. 대부분의 아이디어는 실패하지만 낙담해서는 안 된다. 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Thesis/Concl</span></td>
+          <td>Breakthroughs depend on working without immediate reward. Patience as the Foundation. Stitched fabric = progress as a patchwork.</td>
+          <td>비약적 발전은 당장의 보상 없이 묵묵히 일하는 '인내심(기반)'에 달려 있으며, 버려질 뻔한 직물 조각들로 꿰매어진 결과물이다. 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary (선생님 필기 완벽 반영)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미 & 파생어/유의어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">invariably</td><td class="vw-mean">언제나, 예외 없이 (always, without fail) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">non-linear</td><td class="vw-mean">비선형적인 (linear 직선 모양의) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">hypothesis</td><td class="vw-mean">가설 (theory, theorem / pl. hypotheses) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">dust down</td><td class="vw-mean">먼지를 털다 (dust off) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">fall by the wayside</td><td class="vw-mean">도중에 실패하다, 진전을 못 보다 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">few and far between</td><td class="vw-mean">아주 드문 (scarce, rare, unusual, scattered) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">come to fruition</td><td class="vw-mean">결실을 보다 (fruition 성과, 결실) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">breakthrough</td><td class="vw-mean">비약적 발전, 돌파구 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">devise</td><td class="vw-mean">고안하다 (invent, conceive, come up with) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">discard</td><td class="vw-mean">버리다, 폐기하다 (do away with, abandon) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">tangible</td><td class="vw-mean">유형의, 실체가 있는 (real, substantial / intangible 무형의) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">bedrock</td><td class="vw-mean">(튼튼한) 기반 (base, foundation, core) 2강_7-9(유인물_필기용).pdf]</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p8">
+  <div class="p-header">
+    <div class="p-code">#강 02 · #쪽 025 · #번 008 · #문항코드 26007-0020</div>
+    <div class="p-title">Non-contingent Nature of Algorithms</div>
+    <div class="p-title-ko">알고리즘의 비우발성과 예측 가능성 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Contingency implies selection and uncertainty. It means that there are a number of possible options to choose from, and our decisions could always be different.</p>
+      <p class="plain-sent">However, algorithms by definition do not know uncertainty; they do not choose between possibilities, nor are they creative, being designed to follow the instructions that program their behavior.</p>
+      <p class="plain-sent">In this sense, algorithms are not contingent which is why they can operate so efficiently and reliably.</p>
+      <p class="plain-sent">Just like traditional machines, we expect algorithms to be neither unpredictable nor idiosyncratic, even when they deliver information.</p>
+      <p class="plain-sent">Different watches should all indicate the same time to all users, if they work properly.</p>
+      <p class="plain-sent">As von Foerster observed, if the outcome of a traditional machine becomes unpredictable, we do not think that it is creative or original we think that it is broken.</p>
+      <p class="plain-sent">We do not care about the moods nor the perspectives of machines, only about their results.</p>
+      <p class="plain-sent">We repair them precisely <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> to process complex data</div>
+        <div class="choice"><span class="cn">②</span> to restore their predictability</div>
+        <div class="choice"><span class="cn">③</span> to make the most of uncertainty</div>
+        <div class="choice"><span class="cn">④</span> to allow flexibility in handling unpredictability</div>
+        <div class="choice"><span class="cn">⑤</span> to increase the number of options</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">② to restore their predictability</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 알고리즘(기계)과 인간의 가장 큰 차이점인 <strong>'우발성(contingency, 예측 불가능성)'</strong>에 대한 글입니다. 2강_7-9(유인물_필기용).pdf]<br><br>
+        우발성은 불확실성과 다양한 선택지를 의미하지만, 알고리즘은 오직 프로그래밍된 대로만 움직이므로 우발성이 전혀 없습니다(not contingent). 선생님의 '시계 비유(Analogy of watches)'를 보세요. 정상적인 시계라면 사용자 기분과 상관없이 무조건 똑같은 시간을 알려주어야 하죠. 기계의 결과가 예측할 수 없게 되면 우리는 그걸 '창의적'이라고 칭찬하지 않고 <strong>'고장 났다(broken)'</strong>고 생각합니다. 2강_7-9(유인물_필기용).pdf]<br><br>
+        기계가 고장 났으니, 우리가 기계를 수리하는 목적은 당연히 <strong>'기계의 예측 가능성을 복구하기 위해서(to restore their predictability)'</strong>입니다. 따라서 ②번이 정답이 됩니다! 2강_7-9(유인물_필기용).pdf]
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 필기 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Contingency<span class="tt">우발성</span></span> <span class="vw">imply<span class="tt">내포하다</span></span>ies selection and <span class="vw">uncertainty<span class="tt">불확실성</span></span>. It means that there are a number of possible options to choose from, and our decisions could always be different.</div>
+        <div class="sp-ko">우발성은 선택과 불확실성을 내포한다. 그것은 선택할 수 있는 여러 가지 가능한 선택지가 있으며, 우리의 결정이 항상 다를 수 있다는 것을 의미한다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ Intro: Contingency involves selection, uncertainty.</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, algorithms <span class="vw">by definition<span class="tt">정의상</span></span> do not know uncertainty; / <span class="gr">they(= algorithms) do not choose between possibilities, nor are they creative</span>, / being designed to follow the <span class="vw">instruction<span class="tt">지시, 명령</span></span>s <span class="gr">[that program their(= algorithms') behavior]</span>.</div>
+        <div class="sp-ko">그러나, 알고리즘은 정의상 불확실성을 알지 못한다; / 그것들(알고리즘)은 가능성 사이에서 선택하지도 않고, 창의적이지도 않으며, / 자신들의 행동을 프로그램하는 지시(명령)를 따르도록 설계되어 있다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ 부정어 nor + 동사 + 주어 도치구문 / being designed~ 분사구문</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In this sense, algorithms are not contingent / <span class="gr">which is why</span> they can operate so efficiently and reliably.</div>
+        <div class="sp-ko">이런 의미에서, 알고리즘은 우발적이지 않으며, / 그것이 바로 그것들이 그렇게 효율적이고 신뢰할 수 있게 작동할 수 있는 이유이다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ which is why + 결과: 그것이 바로 ~한 이유이다.</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Just like traditional machines, we expect algorithms to be <span class="gr">neither</span> unpredictable <span class="gr">nor</span> <span class="vw">idiosyncratic<span class="tt">특이한</span></span>, / even when they(= algorithms) deliver information.</div>
+        <div class="sp-ko">전통적인 기계와 마찬가지로, 우리는 알고리즘이 정보를 전달할 때조차 / 예측 불가능하거나 특이할 것이라고 기대하지 않는다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ neither A nor B: A도 B도 아닌</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Different watches should all <span class="vw">indicate<span class="tt">가리키다</span></span> the same time to all users, if they(= watches) work properly.</div>
+        <div class="sp-ko">서로 다른 시계라 할지라도 제대로 작동한다면 모든 사용자에게 모두 같은 시간을 가리켜야 한다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ Analogy (watches): Like traditional machines, algorithms are expected to produce consistent outputs.</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As von Foerster <span class="vw">observe<span class="tt">논평하다</span></span>d, if the outcome of a traditional machine becomes unpredictable, / we do not think that it(= a traditional machine) is creative or <span class="vw">original<span class="tt">독창적인</span></span> / we think that it is broken.</div>
+        <div class="sp-ko">von Foerster가 논평했듯이, 전통적인 기계의 결과가 예측할 수 없게 되면, / 우리는 그것이 창의적이거나 독창적이라고 생각하지 않고 / 그것이 고장 났다고 생각한다. 2강_7-9(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We do not care about the moods nor the <span class="vw">perspective<span class="tt">관점</span></span>s of machines, only about their(= machine) results.</div>
+        <div class="sp-ko">우리는 기계의 기분이나 관점에는 신경 쓰지 않고, 오직 그것의 결과에만 신경 쓴다. 2강_7-9(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We repair them <span class="vw">precisely<span class="tt">바로, 정확히</span></span> <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">우리는 <span class="ans">그것들의 예측 가능성을 복원하기 위해</span> 바로 그것들을 수리한다. 2강_7-9(유인물_필기용).pdf]</div>
+      </div>
+    </div>
+    
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 부정어구 도치 (nor):</strong> "they do not choose between possibilities, <strong>nor are they</strong> creative". 부정어 nor가 문장 맨 앞으로 오면서 뒤에 주어(they)와 동사(are)가 도치되었습니다. '~도 또한 아니다'로 해석합니다. 2강_7-9(유인물_필기용).pdf]</p>
+      <p><strong>② which is why:</strong> "which is why they can operate so efficiently". 관계대명사 which가 앞 문장 전체(algorithms are not contingent)를 선행사로 받고 있으며, why 뒤에는 그로 인한 '결과'가 옵니다. (because로 쓰면 안 됩니다!) 2강_7-9(유인물_필기용).pdf]</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      Algorithms are fundamentally non-contingent, and it is precisely this absence of uncertainty that accounts for their efficiency and reliability.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(알고리즘은 근본적으로 비우발적이며, 그 효율성과 신뢰성을 설명해 주는 것은 바로 이러한 불확실성의 부재이다.)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Intro</span></td>
+          <td>Definition of Contingency: Contingency involves selection, uncertainty, and the possibility that decisions could always be different.</td>
+          <td>우발성은 선택, 불확실성, 그리고 결정이 달라질 수 있는 가능성을 수반함. 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev 1</span></td>
+          <td>Contrast: Algorithms are non-contingent: they lack uncertainty, choice, and creativity. Claim: The absence of contingency is what makes algorithms efficient.</td>
+          <td>알고리즘은 우발성이 결여되어 있으며, 이 불확실성의 부재가 알고리즘을 효율적이고 신뢰할 수 있게 만듦. 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Dev 2</span></td>
+          <td>Analogy (watches): Like traditional machines, algorithms are expected to produce consistent, uniform outputs.</td>
+          <td>시계 비유: 정상적인 시계가 늘 같은 시간을 보여주듯, 알고리즘도 동일한 결과를 도출해야 함. 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>An unpredictable machine is broken, not creative. We care only about machines' results; we repair them to restore predictability.</td>
+          <td>예측할 수 없는 기계는 창의적인 게 아니라 고장난 것. 우리는 기계의 예측 가능성을 복구하기 위해 수리함. 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary (선생님 필기 완벽 반영)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미 & 파생어/유의어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">imply</td><td class="vw-mean">내포하다, 함축하다 (involve, entail, signify) <br><span style="color:var(--accent); font-size:0.8em;">* apply 적용하다 / comply 따르다 / multiply 증가하다 / implicate 연루시키다 / explicate 설명하다</span> 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">uncertainty</td><td class="vw-mean">불확실성 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">by definition</td><td class="vw-mean">정의상, 당연히 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">instruction</td><td class="vw-mean">(컴퓨터의 작동) 명령, 지시 (instruct 지시하다 order, direct) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">indicate</td><td class="vw-mean">가리키다, 나타내다 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">observe</td><td class="vw-mean">(논평·의견을) 말하다 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">original</td><td class="vw-mean">독창적인 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">perspective</td><td class="vw-mean">관점, 균형감 (viewpoint, outlook, attitude) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">precisely</td><td class="vw-mean">바로, 정확히 (exactly, correctly) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">contingency</td><td class="vw-mean">우발성, 우연성 (possibility, uncertainty) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">idiosyncratic</td><td class="vw-mean">특이한, 색다른 (unusual, peculiar, distinctive) 2강_7-9(유인물_필기용).pdf]</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p9">
+  <div class="p-header">
+    <div class="p-code">#강 02 · #쪽 026 · #번 009 · #문항코드 26007-0021</div>
+    <div class="p-title">Reflection on the Nature of Pleasure</div>
+    <div class="p-title-ko">쾌락의 본질에 대한 성찰 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Pleasure as conscious enjoyment of our sensory endowment, enhanced by the capacity both to anticipate and to remember it, heightens enjoyment in the moment of listening to music, eating good food, dancing, swimming, sunbathing, and so variously on.</p>
+      <p class="plain-sent">Enjoyment 'in the moment' is the greater for not being subjected to intellectual analysis as it occurs; obviously, we do better to leave it to unfold as purely itself.</p>
+      <p class="plain-sent">But it is equally obvious that <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> is not irrelevant to their best enjoyment.</p>
+      <p class="plain-sent">The pleasure of a half-hour listening to music is the greater because the music was chosen, the quality of sound reproduction is good, anticipation and expectation were engaged, and one prepared oneself to listen.</p>
+      <p class="plain-sent">Think of the informative contrast here, how pain or discomfort is exacerbated by fearful anticipation; the tense dental patient who has been dreading the drill for days has a worse time than a relaxed patient.</p>
+      <p class="plain-sent">The key to seeing pleasure as a good is to see how it fits into an overall conception of the life worth living; this is how the ill consequences of certain types of pleasures-of-the-moment discount them as options.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> reliance on inborn traits to maximize pleasure</div>
+        <div class="choice"><span class="cn">②</span> reflection on the nature and sources of pleasure</div>
+        <div class="choice"><span class="cn">③</span> academic exploration of the elements of pleasure</div>
+        <div class="choice"><span class="cn">④</span> the prioritization of experiencing non-sensory pleasures</div>
+        <div class="choice"><span class="cn">⑤</span> the pursuit of long-term happiness over temporary pleasures</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">② reflection on the nature and sources of pleasure</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 쾌락(즐거움)을 단순히 느끼는 것에서 나아가, 쾌락을 기대하고 성찰하는 것이 즐거움을 배가시킨다는 내용입니다. 2강_7-9(유인물_필기용).pdf]<br><br>
+        본문 두 번째 문장에서 순간의 즐거움을 지적으로 분석하지 말고 그냥 내버려 두라고 했지만, 세 번째 문장에서 반전(But)이 일어납니다. 음악을 듣기 위해 <strong>미리 곡을 선택하고 준비하며 기대하는(anticipation and expectation) 행위</strong>가 음악 듣기의 쾌락을 더 크게 만든다고 하죠. 반대로 치과 치료를 두려워하며 미리 걱정(fearful anticipation)하면 고통이 더 악화됩니다. 2강_7-9(유인물_필기용).pdf]<br><br>
+        따라서 쾌락이 발생하기 전이나 후에 <strong>'쾌락의 본질과 출처에 대해 성찰(생각/기대)하는 것'</strong>이 쾌락을 즐기는 것과 무관하지 않다(not irrelevant)는 맥락이 되어야 하므로 ②번이 정답입니다! 2강_7-9(유인물_필기용).pdf]
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 필기 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Pleasure <span class="gr">{as <span class="vw">conscious<span class="tt">의식적인</span></span> enjoyment of our <span class="vw">sensory<span class="tt">감각의</span></span> <span class="vw">endowment<span class="tt">자질, 능력</span></span>, enhanced by the <span class="vw">capacity<span class="tt">능력</span></span> both to <span class="vw">anticipate<span class="tt">예상하다</span></span> and to remember it(= pleasure)}</span>, / <span class="vw">heighten<span class="tt">높이다</span></span>s enjoyment in the moment / of listening to music, eating good food, dancing, swimming, sunbathing, and so variously on.</div>
+        <div class="sp-ko">우리의 타고난 감각적 능력의 의식적 즐거움으로서의 쾌락은, 그것(쾌락)을 예상하고 기억하는 두 가지 능력에 의해 향상되어, / 음악 감상, 좋은 음식 먹기, 춤, 수영, 일광욕 등 다양한 순간의 즐거움을 높여준다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ Intro: Pleasure is deepened by our capacity to anticipate and remember it.</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Enjoyment 'in the moment' is the greater / for not <span class="vw">be subjected to<span class="tt">~을 받다, 당하다</span></span> intellectual analysis as it occurs;</div>
+        <div class="sp-ko">'순간의' 즐거움은 그것이 일어날 때 지적인 분석을 받지 않는다면 더 커진다. 2강_7-9(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">obviously, we do better to leave it(= enjoyment) / to <span class="vw">unfold<span class="tt">펼쳐지다</span></span> as purely itself.</div>
+        <div class="sp-ko">분명히, 우리는 그것(즐거움)이 순수하게 그 자체로 전개되도록(펼쳐지도록) 내버려 두는 것이 더 낫다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ Dev 1: In-the-moment enjoyment is best when left free from intellectual analysis.</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But it is equally obvious <span class="gr">[that <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> is not irrelevant to their best enjoyment]</span>.</div>
+        <div class="sp-ko">하지만 <span class="ans">쾌락의 본질과 출처에 대한 성찰</span>이 그것의 최고의 즐거움과 무관하지 않다는 것(not irrelevant = relevant) 역시 똑같이 명백하다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ it 가주어 that 진주어 / not irrelevant 이중부정 주의</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The pleasure of a half-hour listening to music is the greater / because the music was chosen, the quality of sound reproduction is good, anticipation and expectation were engaged, and one prepared oneself to listen.</div>
+        <div class="sp-ko">30분간 음악을 듣는 즐거움은 음악이 이미 선택되었고, 소리 재생 품질이 좋으며, 예상과 기대가 관여되었고, 사람이 들을 준비를 했기 때문에 더 커진다. 2강_7-9(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Think of the informative contrast here, / how pain or <span class="vw">discomfort<span class="tt">불편함</span></span> is <span class="vw">exacerbate<span class="tt">악화시키다</span></span>d by fearful anticipation;</div>
+        <div class="sp-ko">여기서 유익한 대조를 생각해 보라, 즉 고통이나 불편함이 두려운 예상에 의해 어떻게 악화되는지를. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ Anticipation works in the opposite direction for pain.</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">the <span class="vw">tense<span class="tt">긴장한</span></span> dental patient <span class="gr">who has been <span class="vw">dread<span class="tt">두려워하다</span></span>ing the drill for days</span> / has a worse time than a relaxed patient.</div>
+        <div class="sp-ko">며칠 동안 치과 드릴을 두려워해 온 긴장한 치과 환자는 편안한 환자보다 더 끔찍한 시간을 보낸다. 2강_7-9(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The key to seeing pleasure as a good / is to see how it(= pleasure) fits into an overall <span class="vw">conception<span class="tt">개념</span></span> of the life worth living;</div>
+        <div class="sp-ko">쾌락을 선으로 보는 핵심은 / 그것(쾌락)이 살 가치가 있는 삶의 전반적인 개념에 어떻게 들어맞는지를 보는 것이다. 2강_7-9(유인물_필기용).pdf] <span class="sp-note">★ Conclusion: Pleasure is truly good only when it fits into a broader conception of a life worth living.</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">this is how the ill consequences of certain types of pleasure-of-the-moment / <span class="vw">discount<span class="tt">고려하지 않다, 무시하다</span></span> them(= certain types of pleasure-of-the-moment) as options.</div>
+        <div class="sp-ko">이것이 특정한 종류의 '순간의 쾌락'이 가져오는 나쁜 결과들이 그것들을 선택지에서 제외하는(무시하는) 방식이다. 2강_7-9(유인물_필기용).pdf]</div>
+      </div>
+    </div>
+    
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 이중 부정 (not irrelevant):</strong> "reflection... is <strong>not irrelevant</strong> to their best enjoyment". 무관하지 않다는 것은 곧 <strong>연관이 있다(relevant)</strong>는 뜻입니다. 선생님이 강조한 핵심 논리 포인트입니다. 2강_7-9(유인물_필기용).pdf]</p>
+      <p><strong>② 동명사의 수동태:</strong> "for not <strong>being subjected</strong> to intellectual analysis". 지적인 분석을 '가하는' 것이 아니라 분석을 '받는' 입장이므로 being p.p 수동태형 동명사가 쓰였고, 동명사의 부정어 not은 그 앞에 옵니다. 2강_7-9(유인물_필기용).pdf]</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      True pleasure is not mere sensation but a reflective experience whose value lies in its place within a well-lived life.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(진정한 쾌락은 단순한 감각이 아니라 훌륭한 삶 속에 자리할 때 가치가 있는 성찰적 경험이다.)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Intro</span></td>
+          <td>Pleasure is more than a momentary sensation; it is deepened by our capacity to anticipate and remember it.</td>
+          <td>쾌락은 순간적 감각 이상이며, 기대하고 기억하는 능력으로 인해 더 깊어짐. 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev 1</span></td>
+          <td>In-the-moment enjoyment is best when left free from intellectual analysis.</td>
+          <td>순간의 즐거움은 지적 분석에서 벗어날 때(그 자체로 즐길 때) 가장 좋다. 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Dev 2</span></td>
+          <td>Nevertheless, reflection on the nature and sources of pleasure is relevant to maximizing it. Preparation and anticipation make pleasure richer.</td>
+          <td>하지만 쾌락의 본질에 대한 성찰 역시 쾌락을 극대화하는 것과 연관이 있다. 미리 기대하고 준비하면 즐거움이 더 커짐(반대로 고통은 더 악화됨). 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>Pleasure is truly good only when it fits into a broader conception of a life worth living.</td>
+          <td>쾌락은 가치 있는 삶이라는 더 넓은 개념에 들어맞을 때에만 진정으로 선(good)이다. 2강_7-9(유인물_필기용).pdf]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary (선생님 필기 완벽 반영)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미 & 파생어/유의어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">conscious</td><td class="vw-mean">의식적인 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">sensory</td><td class="vw-mean">감각의 (cf. sensible 현명한 / sensitive 민감한) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">capacity</td><td class="vw-mean">능력 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">anticipate</td><td class="vw-mean">예상하다, 기대하다 (expect, await / anticipation 기대) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">heighten</td><td class="vw-mean">높이다 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">be subjected to</td><td class="vw-mean">~을 받다, 당하다 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">unfold</td><td class="vw-mean">전개되다, 펼쳐지다 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">discomfort</td><td class="vw-mean">불편함; 마음을 불편하게 하다 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">tense</td><td class="vw-mean">긴장한; 긴장시키다 (strained, uneasy, stressful) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">dread</td><td class="vw-mean">(몹시) 두려워하다 (fear, be anxious about) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">conception</td><td class="vw-mean">개념, 구상 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">discount</td><td class="vw-mean">고려하지 않다, 무시하다 (dismiss, ignore, overlook) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">endowment</td><td class="vw-mean">(타고난) 능력, 자질 (talent, natural gift) 2강_7-9(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">exacerbate</td><td class="vw-mean">악화시키다 (aggravate, make worse, worsen) 2강_7-9(유인물_필기용).pdf]</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p7','p8','p9'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

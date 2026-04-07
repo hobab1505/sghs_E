@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · 2강 (1~3번) | 2026 심화영어독해 II</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · 2강 완전 분석</div>
+      <div class="hdr-sub">2026 심화영어독해 II — 학교 선생님 필기 완벽 반영 (진하 전용)</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">01번</button>
+      <button class="nb" onclick="show('p2')">02번</button>
+      <button class="nb" onclick="show('p3')">03번</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">Focus Framework · 2강 (1번~3번)</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">단어 툴팁, 일타강사 해설, 구문 분석이 모두 100% 반영되었습니다. 상단 버튼을 눌러 이동하세요.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')"><div class="toc-en">#001 Benefits of Simplifying Observer's Job</div><div class="toc-ko">관찰자 평가 작업을 단순화하는 것의 이점</div></a>
+    <a class="toc-card" onclick="show('p2')"><div class="toc-en">#002 Difficulty of Defining Instinct</div><div class="toc-ko">'본능'을 정의하기 어려운 이유</div></a>
+    <a class="toc-card" onclick="show('p3')"><div class="toc-en">#003 False Memory by TV Coverage</div><div class="toc-ko">TV 보도로 인한 기억의 왜곡과 거짓 기억</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">#강 02 · #쪽 018 · #번 001 · #문항코드 26007-0013</div>
+    <div class="p-title">Benefits of Simplifying Observer's Job</div>
+    <div class="p-title-ko">관찰자 평가 작업을 단순화하는 것의 이점 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">To illustrate the benefits of <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> the observer's job, consider psychologist William Ickes's research on "everyday mind reading."</p>
+      <p class="plain-sent">One way he studies such mind reading is by having two strangers interact.</p>
+      <p class="plain-sent">He tapes the interaction and then has each participant view the tape.</p>
+      <p class="plain-sent">Participants are to stop the tape at different points and say what they are thinking.</p>
+      <p class="plain-sent">Then, participants see the tape again and are to stop it at different points and write down what their interaction partner was thinking at that point.</p>
+      <p class="plain-sent">Observers rate the degree to which the participant's guess about what the partner was thinking matches what the partner was actually thinking.</p>
+      <p class="plain-sent">Ickes could have had observers make their judgments on a 0 (not at all) to 100 (completely) scale.</p>
+      <p class="plain-sent">However, he had observers use a 3-point scale with "0" being "essentially different content," "1" being "similar, but not the same, content," and "2" being "essentially the same content."</p>
+      <p class="plain-sent">By using fewer categories, raters found the job of rating easier and were able to make reliable ratings.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> simplifying</div>
+        <div class="choice"><span class="cn">②</span> automating</div>
+        <div class="choice"><span class="cn">③</span> appreciating</div>
+        <div class="choice"><span class="cn">④</span> documenting</div>
+        <div class="choice"><span class="cn">⑤</span> differentiating</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">① simplifying</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 실험 지문의 전형적인 '수미상관(처음과 끝이 연결됨)' 구조입니다. 첫 문장에 뚫린 빈칸의 단서는 항상 마지막 결론에 숨어 있죠.<br><br>
+        심리학자 Ickes의 실험에서 관찰자(Observers)들은 두 사람의 생각이 얼마나 일치하는지 평가(rate)해야 합니다. 이때 0점에서 100점까지의 복잡한 척도 대신 <strong>단 3점 척도(0, 1, 2)</strong>를 사용하게 했습니다. 그 결과 마지막 문장에서 <em>"더 적은 범주(fewer categories)를 사용함으로써 평가 작업이 더 쉬워지고(easier) 신뢰할 수 있게(reliable) 되었다"</em>고 명시했습니다. <br><br>
+        복잡한 점수 체계를 줄여서 작업을 쉽게 만들었다는 것은 곧 작업을 <strong>'단순화(simplifying)'</strong>했다는 의미이므로 ①번이 정답입니다!
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 필기 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">To <span class="vw">illustrate<span class="tt">설명하다 (demonstrate, clarify, exemplify)</span></span> the benefits of <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> the <span class="vw">observer<span class="tt">관찰자</span></span>'s job, / consider psychologist William Ickes's research on "everyday <span class="vw">mind reading<span class="tt">독심술</span></span>."</div>
+        <div class="sp-ko">관찰자의 작업을 <span class="ans">단순화하는 것(simplifying)</span>의 이점을 설명하기 위해, / 심리학자 William Ickes의 "일상적인 독심술"에 관한 연구를 고려해 보라. <span class="sp-note">★ Intro: the benefits of simplifying the observer's job</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">One way <span class="gr">{he studies such mind reading}</span> is by having two strangers <span class="vw">interact<span class="tt">상호작용하다 (collaborate, communicate)</span></span>.</div>
+        <div class="sp-ko">그가 그러한 독심술을 연구하는 한 가지 방법은 두 명의 낯선 사람이 상호작용하게 하는 것이다. <span class="sp-note">★ 사역동사 have + 목적어(two strangers) + 목적격보어(동사원형 interact)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">He tapes the interaction and then <span class="gr">has each participant view the tape</span>.</div>
+        <div class="sp-ko">그는 그 상호작용을 녹화하고, 그런 다음 각 참가자가 그 테이프를 보게 한다. <span class="sp-note">★ 사역동사 has + 목적어 + 동사원형(view)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Participants <span class="gr">are to stop</span> the tape at different points and say <span class="gr">[what they are thinking]</span>.</div>
+        <div class="sp-ko">참가자들은 여러 지점에서 테이프를 멈추고 자신들이 무슨 생각을 하고 있는지 말해야 한다. <span class="sp-note">★ be to 부정사: 예정, 의무 (~해야 한다) / what 명사절 (say의 목적어)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Then, participants see the tape again and <span class="gr">are to stop</span> it (=the tape) at different points and write down <span class="gr">[what their interaction partner was thinking at that point]</span>.</div>
+        <div class="sp-ko">그런 다음, 참가자들은 테이프를 다시 보고 여러 지점에서 그것을 멈춘 후 그 시점에 상호작용 파트너가 무슨 생각을 하고 있었는지 적어야 한다. <span class="sp-note">★ be to 부정사 (의무) 병렬 구조</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Observers <span class="vw">rate<span class="tt">평가하다</span></span> the degree <span class="gr">(to which the participant's guess about [what the partner was thinking] matches [what the partner was actually thinking])</span>.</div>
+        <div class="sp-ko">관찰자들은 파트너가 무슨 생각을 하고 있었는지에 대한 참가자의 추측이 파트너가 실제로 생각하고 있었던 것과 일치하는 정도를 평가한다. <span class="sp-note">★ to which + 완전한 문장 (the degree 수식) / match 뒤에 목적어(what 절) 옴</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Ickes <span class="gr">could have had</span> observers make their <span class="vw">judgment<span class="tt">판단</span></span>s on a 0 (not at all) to 100 (completely) <span class="vw">scale<span class="tt">척도</span></span>.</div>
+        <div class="sp-ko">Ickes는 관찰자들에게 0점(전혀 아님)에서 100점(완전히)의 척도로 판단을 내리게 할 수도 있었을 것이다. <span class="sp-note">★ could have p.p: ~할 수도 있었을 것이다 (과거 사실에 대한 반대/아쉬움)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, he <span class="gr">had observers use</span> a 3-point scale / with "0" being "essentially different <span class="vw">content<span class="tt">내용물</span></span>," "1" being "similar, but not the same, content," and "2" being "essentially the same content."</div>
+        <div class="sp-ko">하지만, 그는 관찰자들에게 "0"은 "본질적으로 다른 내용", "1"은 "비슷하지만 같지 않은 내용", 그리고 "2"는 "본질적으로 같은 내용"으로 하여 3점 척도를 사용하게 했다. <span class="sp-note">★ with + 명사 + 분사(being) 구문: ~가 ...인 채로</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">By using fewer categories, raters found the job of rating easier and were able to make <span class="vw">reliable<span class="tt">믿을 수 있는 (trustworthy)</span></span> ratings.</div>
+        <div class="sp-ko">더 적은 범주를 사용함으로써, 평가자들은 평가하는 작업이 더 쉽다는 것을 알게 되었고 신뢰할 수 있는 평가를 내릴 수 있었다. <span class="sp-note">★ Conclusion: Using fewer categories -> rating easier and more reliable -> simplifying!</span></div>
+      </div>
+    </div>
+    
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 사역동사 have의 반복:</strong> 이 짧은 지문에 "having two strangers interact", "has each participant view", "had observers use" 등 사역동사 have + 목적어 + 동사원형 패턴이 반복해서 등장합니다. 어법 문제 1순위 타겟입니다.</p>
+      <p><strong>② be to 용법 (의무):</strong> "Participants are to stop~". be동사 뒤에 to부정사가 와서 '~할 예정이다, ~해야 한다(의무)'를 나타내는 be to 용법이 쓰였습니다.</p>
+      <p><strong>③ 전치사 + 관계대명사 (to which):</strong> "the degree (to which ~ matches ~)". 선행사 the degree를 뒤에서 꾸며줄 때 전치사 to가 앞으로 나와 to which가 되었습니다. 뒷문장은 주어(guess)와 타동사(matches) 및 목적어(what 절)를 모두 갖춘 완전한 절입니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The benefits of simplifying the observer's rating task
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(관찰자의 평가 작업을 단순화하는 것의 이점: 더 적은 범주가 평가를 쉽게 하고 신뢰할 수 있게 함)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Introducing the goal: to illustrate why simplifying an observer's job is useful.</td>
+          <td>관찰자 작업을 단순화하는 것이 유용한 이유를 설명하기 위함.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev 1</span></td>
+          <td>Two strangers interact and the interaction is videotaped. Each participant watches the tape and stops it to report their own thoughts.</td>
+          <td>두 낯선 사람의 상호작용을 녹화하고, 각자 자신의 생각을 기록함.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Dev 2</span></td>
+          <td>Participants watch the tape again, stop it, and write down what they think their partner was thinking. Observers then evaluate the match.</td>
+          <td>파트너의 생각을 추측해 적게 하고, 관찰자가 두 생각의 일치도를 평가함.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>Ickes uses a 3-point scale instead of a 0-100 scale. With fewer categories, raters found the task easier and reliable.</td>
+          <td>복잡한 0-100점 대신 3점 척도를 사용하자 평가가 쉽고 신뢰도가 높아짐.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary (선생님 필기 완벽 반영)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미 & 파생어/유의어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">illustrate</td><td class="vw-mean">설명하다, 분명히 보여주다 (demonstrate, clarify, exemplify)</td></tr>
+        <tr><td class="vw-word">observer</td><td class="vw-mean">관찰자 (cf. observation 관찰 / observance 규칙 준수, 기념)</td></tr>
+        <tr><td class="vw-word">mind reading</td><td class="vw-mean">독심술</td></tr>
+        <tr><td class="vw-word">interact</td><td class="vw-mean">상호작용하다, 교류하다 (collaborate, communicate, relate)<br><span style="color:var(--accent); font-size:0.8em;">* act 행동하다 / coact 함께 일하다 / counteract 방해하다 / enact 법제정하다</span></td></tr>
+        <tr><td class="vw-word">rate</td><td class="vw-mean">평가하다, 등급을 매기다; 요금, 비율 (interest rate 금리 / exchange rate 환율)</td></tr>
+        <tr><td class="vw-word">judgment</td><td class="vw-mean">판단, 재판</td></tr>
+        <tr><td class="vw-word">scale</td><td class="vw-mean">척도, 규모; (가파른 곳을) 오르다</td></tr>
+        <tr><td class="vw-word">content</td><td class="vw-mean">내용물, 콘텐츠; 만족하는 (cf. contend 싸우다, 논쟁하다)</td></tr>
+        <tr><td class="vw-word">reliable</td><td class="vw-mean">믿을 수 있는 (dependable, trustworthy, tried and true)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">#강 02 · #쪽 019 · #번 002 · #문항코드 26007-0014</div>
+    <div class="p-title">Difficulty of Defining Instinct</div>
+    <div class="p-title-ko">'본능'을 정의하기 어려운 이유 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Instinct is the most difficult of the motivation words to define. At the everyday level it is used often.</p>
+      <p class="plain-sent">For example, a sports commentator might say, 'He made that pass instinctively.'</p>
+      <p class="plain-sent">This means that the pass was made easily, automatically, with great skill and with a seemingly intuitive knowledge of the state of the game.</p>
+      <p class="plain-sent">However, at a technical level the word refers to behaviours that are built in, <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>, and are specific to a species.</p>
+      <p class="plain-sent">So, a spider builds a web instinctively and a bird's mating display might be instinctive.</p>
+      <p class="plain-sent">It is unlikely, though, that there is any equivalent instinctive behaviour in human beings.</p>
+      <p class="plain-sent">Some people might argue that a mother's reaction to her newly born child is instinctive, but certainly not all mothers react in the same way and even when they do, they express it in myriad forms.</p>
+      <p class="plain-sent">In general, instinct has been found to be a not very useful construct in giving accounts of the 'why' of behaviour.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> clearly emerge early in life</div>
+        <div class="choice"><span class="cn">②</span> always appear in a similar form</div>
+        <div class="choice"><span class="cn">③</span> rapidly protect the body from danger</div>
+        <div class="choice"><span class="cn">④</span> reliably serve important survival functions</div>
+        <div class="choice"><span class="cn">⑤</span> naturally occur regardless of external interaction</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">② always appear in a similar form</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 일상생활에서 쓰는 '본능적(instinctive)'이라는 말과, 생물학/전문적(technical level)으로 쓰는 '본능'의 정의가 다름을 설명하는 글입니다.<br><br>
+        전문적 수준에서 동물의 본능은 선천적(built in)이고 종에 특유(specific to a species)해야 합니다. 빈칸에 들어갈 특징을 찾으려면 뒷문장 인간의 예시를 보면 됩니다. "인간 어머니의 모성애를 본능이라 주장할지 모르나, 모든 어머니가 <strong>똑같은 방식(in the same way)</strong>으로 반응하지 않으며 무수히 <strong>다양한 형태(myriad forms)</strong>로 표현한다." <br><br>
+        인간 행동은 똑같은 형태로 나타나지 않아서 본능이라 보기 어렵다는 논리이므로, 역으로 동물의 진짜 본능은 <strong>'항상 비슷한 형태로 나타난다(always appear in a similar form)'</strong>는 조건이 있어야 합니다. 따라서 ②번이 정답입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 필기 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Instinct<span class="tt">본능</span></span> is the most difficult of the <span class="vw">motivation<span class="tt">동기</span></span> words to <span class="vw">define<span class="tt">정의하다</span></span>. At the everyday level it is used often.</div>
+        <div class="sp-ko">본능은 정의하기 가장 어려운 동기 관련 단어이다. 일상적인 수준에서는 그것(본능)이 자주 사용된다. <span class="sp-note">★ Intro: definition problem (정의의 어려움 제기)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, a sports <span class="vw">commentator<span class="tt">해설자</span></span> might say, 'He made that pass instinctively.'</div>
+        <div class="sp-ko">예를 들어, 스포츠 해설자는 '그는 본능적으로 그 패스를 했다'라고 말할지도 모른다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This means that the pass was made easily, automatically, with great skill and with a seemingly <span class="vw">intuitive<span class="tt">직관적인</span></span> knowledge of the state of the game.</div>
+        <div class="sp-ko">이것은 그 패스가 쉽고, 자동적으로, 뛰어난 기술과 겉보기에 직관적인 경기 상황 지식을 바탕으로 이루어졌음을 의미한다. <span class="sp-note">★ Everyday usage: smooth, skilled, intuitive performance</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, at a <span class="vw">technical<span class="tt">전문적인</span></span> level the word refers to behaviours <span class="gr">that are built in, <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>, and are specific to a species</span>.</div>
+        <div class="sp-ko">하지만, 전문적인 수준에서 그 단어는 선천적으로 내재되어 있고, <span class="ans">항상 비슷한 형태로 나타나며</span>, 특정 종에 특유한 행동을 지칭한다. <span class="sp-note">★ Technical definition: innate, stereotyped, species-specific</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">So, a spider builds a web instinctively and a bird's <span class="vw">mating<span class="tt">짝짓기</span></span> display might be instinctive.</div>
+        <div class="sp-ko">그래서 거미는 본능적으로 거미줄을 치고 새의 짝짓기 과시는 본능적일 수 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">It is unlikely, though, that</span> there is any <span class="vw">equivalent<span class="tt">동등한, 대등한</span></span> instinctive behaviour in human beings.</div>
+        <div class="sp-ko">하지만 인간에게는 그와 동등한 본능적 행동이 있을 것 같지 않다. <span class="sp-note">★ It(가주어) ~ that(진주어) 구문</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Some people might <span class="vw">argue<span class="tt">주장하다</span></span> that a mother's <span class="vw">reaction<span class="tt">반응</span></span> to her newly born child is instinctive, / but certainly not all mothers react in the same way / and even when they <span class="gr">do (=react)</span>, they express it in <span class="vw">myriad<span class="tt">무수히 많은</span></span> forms.</div>
+        <div class="sp-ko">어떤 사람들은 갓 태어난 아이에 대한 어머니의 반응이 본능적이라고 주장할지 모르지만, / 확실히 모든 어머니가 같은 방식으로 반응하는 것은 아니며, / 심지어 그들(어머니들)이 반응할 때조차도 그것을 무수히 다양한 형태로 표현한다. <span class="sp-note">★ 대동사 do (=react) / myriad forms (다양한 형태 = 항상 같은 형태가 아님)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In general, instinct has been found to be a not very useful <span class="vw">construct<span class="tt">개념</span></span> / in giving <span class="vw">account<span class="tt">설명</span></span>s of the 'why' of behaviour.</div>
+        <div class="sp-ko">일반적으로 본능은 행동의 '이유'를 설명하는 데 그다지 유용하지 않은 (구성) 개념인 것으로 밝혀졌다. <span class="sp-note">★ Conclusion: "Instinct" does not help much in explaining why behavior occurs.</span></div>
+      </div>
+    </div>
+    
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 관계대명사 주격절의 병렬 연결:</strong> "...behaviours [that are built in, (that) always appear in a similar form, and (that) are specific to a species]". 관계대명사 that절 안에서 동사 3개(are, appear, are)가 and로 병렬 연결되어 선행사 behaviours를 수식하고 있습니다.</p>
+      <p><strong>② 대동사 do:</strong> "even when they do". 여기서 do는 앞서 나온 일반동사 react(반응하다)를 대신 받는 대동사입니다. (are로 쓰면 오답!)</p>
+      <p><strong>③ giving accounts of:</strong> "~에 대한 설명을 하다"라는 숙어 표현입니다. account가 명사로 쓰일 때 설명, 계좌, 계정 등 뜻이 다양한데 여기서는 '설명'의 뜻입니다.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      "Instinct" is hard to define because it is broad in daily speech, but strict in technical use; it offers little insight into why people behave the way they do.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(본능은 일상어로는 폭넓지만 전문 용어로는 엄격하여 정의하기 어려우며, 인간 행동의 원인을 설명하는 데 큰 통찰을 주지 못한다.)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Intro</span></td>
+          <td>Definition problem: "Instinct" is the most difficult motivation word to define.</td>
+          <td>'본능'은 정의하기 가장 어려운 동기 관련 단어이다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Evidence 1</span></td>
+          <td>Everyday usage treats "instinct" as smooth, skilled performance, but it refers to innate, stereotyped, and species-specific behavior in technical use.</td>
+          <td>일상에서는 직관적이고 능숙한 행동을 뜻하나, 전문 용어로는 선천적이고 항상 같은 형태를 띠며 종에 특유한 행동을 뜻한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Evidence 2</span></td>
+          <td>Human case: Human behaviors typically fail the technical criteria such as uniformity and species-typical fixed form.</td>
+          <td>인간의 행동(모성애 등)은 획일성과 고정된 형태라는 전문적 기준을 충족하지 못한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>"Instinct" does not help much in explaining why behavior occurs.</td>
+          <td>따라서 '본능'은 인간 행동의 이유를 설명하는 유용한 개념이 되지 못한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary (선생님 필기 완벽 반영)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미 & 파생어/유의어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">instinct</td><td class="vw-mean">본능, 직감 (inclination, intuition, impulse) / instinctive 본능에 따른</td></tr>
+        <tr><td class="vw-word">motivation</td><td class="vw-mean">이유, 동기 (motivate 동기를 주다 / motive 동기)</td></tr>
+        <tr><td class="vw-word">define</td><td class="vw-mean">정의하다, 규정하다 (definition 정의 / definite 명확한)</td></tr>
+        <tr><td class="vw-word">commentator</td><td class="vw-mean">해설자, 아나운서 (comment 논평, 비평하다 / commentary 논평, 회고록)</td></tr>
+        <tr><td class="vw-word">intuitive</td><td class="vw-mean">직관적인 (intrinsic, innate, instinctive, spontaneous)</td></tr>
+        <tr><td class="vw-word">technical</td><td class="vw-mean">전문적인, 과학 기술의</td></tr>
+        <tr><td class="vw-word">equivalent</td><td class="vw-mean">동등한, 대등한 (correspond to ~에 해당하다) <br><span style="color:var(--accent); font-size:0.8em;">* equal 같은 / equity 공평 / equation 방정식 / equilibrium 평형</span></td></tr>
+        <tr><td class="vw-word">myriad</td><td class="vw-mean">무수함, 무수히 많은 (multitude, innumerable)</td></tr>
+        <tr><td class="vw-word">construct</td><td class="vw-mean">개념, 구성 개념</td></tr>
+        <tr><td class="vw-word">account</td><td class="vw-mean">설명, 계좌; 간주하다, 여기다</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">#강 02 · #쪽 020 · #번 003 · #문항코드 26007-0015</div>
+    <div class="p-title">False Memory by TV Coverage</div>
+    <div class="p-title-ko">TV 보도로 인한 기억의 왜곡과 거짓 기억 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">An indication of the power of TV to "capture" people's memory is provided by the results of a study by James Ost and coworkers, who approached people in an English shopping center and asked if they would be willing to participate in a study examining how well people can remember tragic events.</p>
+      <p class="plain-sent">The target event involved Princess Diana and her companion Dodi Fayed, whose deaths in a car crash in Paris on August 31, 1997, were widely covered on British television.</p>
+      <p class="plain-sent">Participants were asked to respond to the following statement: "Have you seen the paparazzi's video-recording of the car crash in which Diana, Princess of Wales, and Dodi Fayed lost their lives?"</p>
+      <p class="plain-sent">Of the 45 people who responded to this question, 20 said they had seen the film.</p>
+      <p class="plain-sent">This was, however, impossible, because no such film exists. The car crash was reported on TV, but not actually shown.</p>
+      <p class="plain-sent"><span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> apparently caused some people to remember something - seeing the film - that didn't actually occur.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> Shock from watching the film on TV</div>
+        <div class="choice"><span class="cn">②</span> Memory distortion caused by fake news</div>
+        <div class="choice"><span class="cn">③</span> Exposure to similar events after this one</div>
+        <div class="choice"><span class="cn">④</span> The extensive media coverage of this event</div>
+        <div class="choice"><span class="cn">⑤</span> The confusion caused by multiple media sources</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">④ The extensive media coverage of this event</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> TV 방송이 사람들의 기억을 '사로잡아(capture)' 왜곡시킬 수 있다는 연구 결과입니다.<br><br>
+        다이애나 비의 자동차 사고 당시, 뉴스에서 그 사고를 대대적으로 보도하긴 했지만 <strong>실제 충돌 영상(비디오)은 존재하지 않았습니다.</strong> 그럼에도 45명 중 20명이나 '그 비디오를 본 적 있다'고 대답했죠(거짓 기억). <br><br>
+        존재하지도 않는 영상을 보았다고 착각하게 만든 원인은 무엇일까요? 바로 지문 앞부분에 나온 <em>"were widely covered on British television (영국 TV에서 널리 보도되었다)"</em> 때문입니다. TV에서 지겹도록 들은 이야기를 영상으로 본 것처럼 뇌가 착각한 것이죠. 따라서 <strong>'이 사건에 대한 광범위한 미디어 보도'</strong>를 뜻하는 ④번이 정답입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 필기 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">An <span class="vw">indication<span class="tt">표시, 징후</span></span> of the power of TV to "<span class="vw">capture<span class="tt">포착하다, 사로잡다</span></span>" people's memory / is provided by the results of a study by James Ost and coworkers, / <span class="gr">who approached people in an English shopping center / and asked <span class="vw">if<span class="tt">~인지 (whether)</span></span> they would be willing to participate in a study / (examining how well people can remember <span class="vw">tragic<span class="tt">비극적인</span></span> events)</span>.</div>
+        <div class="sp-ko">사람들의 기억을 "사로잡는" TV의 힘에 대한 증거(표시)는 James Ost와 동료들의 연구 결과에서 제공되는데, / 이들은 영국의 한 쇼핑센터에서 사람들에게 다가가 / 사람들이 비극적인 사건들을 얼마나 잘 기억할 수 있는지를 조사하는 연구에 기꺼이 참여할 의사가 있는지 물었다. <span class="sp-note">★ who(계속적 용법 관계대명사) / examining은 앞의 a study를 수식하는 현재분사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The <span class="vw">target<span class="tt">목표, 대상</span></span> event involved Princess Diana and her <span class="vw">companion<span class="tt">동행인</span></span> Dodi Fayed, / <span class="gr">whose deaths in a car crash in Paris on August 31, 1997, / were widely covered on British television</span>.</div>
+        <div class="sp-ko">목표가 된 사건은 다이애나 비와 그녀의 동행인 Dodi Fayed와 관련된 것이었는데, / 1997년 8월 31일 파리에서의 자동차 충돌 사고로 인한 그들의 죽음은 영국 TV에 널리 보도되었다. <span class="sp-note">★ whose: 소유격 관계대명사 (Princess Diana and Dodi Fayed의 죽음)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Participants were asked to respond to the following <span class="vw">statement<span class="tt">진술</span></span>: / "Have you seen the paparazzi's video-recording of the car crash / <span class="gr">in which Diana, Princess of Wales, and Dodi Fayed lost their lives</span>?"</div>
+        <div class="sp-ko">참가자들은 다음과 같은 진술에 답하도록 요청받았다: / "웨일즈의 공주 다이애나와 Dodi Fayed가 목숨을 잃은 그 자동차 충돌 사고의 파파라치 녹화 영상을 본 적이 있습니까?" <span class="sp-note">★ in which: 전치사+관계대명사. 뒤에 완전한 문장(lost their lives)이 옴</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Of the 45 people who responded to this question, / 20 said <span class="gr">(that) they had seen</span> the film.</div>
+        <div class="sp-ko">이 질문에 응답한 45명의 사람 중에서 / 20명은 그 영상을 본 적이 있다고 말했다. <span class="sp-note">★ had seen (과거완료): 말했던 시점(과거)보다 영상을 본 것이 더 이전이므로</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This was, however, impossible, / because no such film exists. The car crash was reported on TV, but not actually shown.</div>
+        <div class="sp-ko">하지만, 이것은 불가능한 일이었는데, 그런 영상은 존재하지 않기 때문이다. 자동차 충돌 사고는 TV에 보도되긴 했지만, 실제로 보이지는 않았다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> / apparently caused some people to remember something / - seeing the film - / that didn't actually occur.</div>
+        <div class="sp-ko"><span class="ans">이 사건에 대한 광범위한 미디어 보도</span>는 / 분명히 일부 사람들이 실제로 일어나지 않은 일, / 즉 그 영상을 보았다는 것을 기억하게 만들었다. <span class="sp-note">★ cause + 목적어 + to V 구문</span></div>
+      </div>
+    </div>
+    
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 소유격 관계대명사 whose:</strong> "...and her companion Dodi Fayed, [whose deaths... were widely covered]". 선행사인 Dodi Fayed (및 다이애나)의 '죽음(deaths)'이라는 소유 관계를 나타내므로 whose가 쓰였습니다. (and their deaths로 바꿀 수 있음)</p>
+      <p><strong>② 전치사 + 관계대명사 (in which):</strong> "the car crash [in which Diana... lost their lives]". 선행사가 car crash이므로 in the car crash에서 in이 앞으로 이동한 것입니다. 뒤에 주어와 동사(목적어)를 갖춘 완전한 절이 옵니다.</p>
+      <p><strong>③ 간접의문문과 접속사 if:</strong> "asked if they would be willing to~"에서 if는 만약~라면이 아니라 '인지 아닌지(=whether)'를 뜻하는 명사절 접속사입니다. (ask의 목적어)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      TV coverage can "capture" people's memory and lead to false memories of details that never happened.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(TV 보도는 사람들의 기억을 '사로잡아' 결코 일어나지 않은 세부사항에 대한 거짓 기억을 유발할 수 있다.)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Intro</span></td>
+          <td>Study context: Ost and colleagues recruited shoppers in England for a study about memory for tragic events.</td>
+          <td>영국에서 비극적 사건에 대한 기억 연구를 위해 참가자들을 모집함.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev 1</span></td>
+          <td>Target Event: Diana and Dodi's 1997 crash. Key Question: "Did you see a paparazzi video of the crash?" Key Result: 20 of 45 people said they had seen the video.</td>
+          <td>TV에 많이 보도된 다이애나비 사고 영상(실제론 없음)을 봤냐는 질문에 절반 가까이가 봤다고 답함.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Dev 2</span></td>
+          <td>Reality check: No such crash video exists; TV reported the crash but did not show it.</td>
+          <td>사실 확인: TV가 보도는 했지만 그런 영상은 존재하지 않음.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>Reasoning: People remember "seeing the film" even though it did not occur due to media coverage.</td>
+          <td>광범위한 미디어 보도가 사람들에게 영상을 본 것 같은 '거짓 기억'을 심어줌.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary (선생님 필기 완벽 반영)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미 & 파생어/유의어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">indication</td><td class="vw-mean">표시, 징후 (sign, symptom, indicator / indicate 나타내다)</td></tr>
+        <tr><td class="vw-word">capture</td><td class="vw-mean">(기억을) 강하게 사로잡다, 포착하다</td></tr>
+        <tr><td class="vw-word">tragic</td><td class="vw-mean">비극적인 (tragedy 비극 disaster, calamity)</td></tr>
+        <tr><td class="vw-word">target</td><td class="vw-mean">목표, 대상; 겨냥하다</td></tr>
+        <tr><td class="vw-word">companion</td><td class="vw-mean">동행, 친구, 한 쌍의 한 짝</td></tr>
+        <tr><td class="vw-word">statement</td><td class="vw-mean">진술, 성명서 (comment, remark, declaration)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p1','p2','p3'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

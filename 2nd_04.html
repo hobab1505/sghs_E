@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 1학기 중간고사 대비 · 빈칸 유형 (10~12번)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">2026 1학기 중간고사 대비</div>
+      <div class="hdr-sub">빈칸 및 함축 의미 추론 (10~12번) — 진하 전용 학습 자료</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p10')">10번</button>
+      <button class="nb" onclick="show('p11')">11번</button>
+      <button class="nb" onclick="show('p12')">12번</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">2026 1학기 중간고사 대비 · 빈칸 유형 (10~12번)</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">단어 툴팁, 일타강사 해설, 구문 분석이 모두 100% 반영되었습니다. 마지막까지 집중해 보세요!</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p10')"><div class="toc-en">#10 The Limits of Idealization</div><div class="toc-ko">과학적 모델의 이상화와 그 한계</div></a>
+    <a class="toc-card" onclick="show('p11')"><div class="toc-en">#11 The Root of Regret</div><div class="toc-ko">후회의 근원: 큰 세계와 작은 세계의 혼동</div></a>
+    <a class="toc-card" onclick="show('p12')"><div class="toc-en">#12 From Actor to Author</div><div class="toc-ko">자서전적 기억의 발달: 배우에서 작가로</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p10">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">The Limits of Idealization</div>
+    <div class="p-title-ko">과학적 모델의 이상화와 그 한계</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The sciences do make extensive use of idealizations.</p>
+      <p class="plain-sent">The ideal gas law describes the relationship of pressure, volume, and temperature of gases under conditions that never perfectly obtain.</p>
+      <p class="plain-sent">In particular, it makes simplifying assumptions about the molecules making up gases for example, that they do not attract or repel one another and do not themselves take up volume.</p>
+      <p class="plain-sent">The molecules of real gases are not like this, but their behavior is nonetheless close enough to ideal ones that the gas law is useful.</p>
+      <p class="plain-sent">Indeed, there are philosophers of science who argue that this is the best way to think about scientific theories in general; they are best regarded as models that are <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+      <p class="plain-sent">Even on such views, however, the theories are still meant to be descriptive.</p>
+      <p class="plain-sent">They are to be used to make predictions and offer explanations about the behavior of gases or whatever phenomena are at issue in real situations.</p>
+      <p class="plain-sent">There are, accordingly, constraints as to how idealized they can be.</p>
+      <p class="plain-sent">They cannot be so far removed from real world systems as to be worthless in describing actual phenomena with acceptable degrees of accuracy.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> intuitively so obvious as to require no further elaboration</div>
+        <div class="choice"><span class="cn">②</span> constantly refined to eliminate all simplifying assumptions</div>
+        <div class="choice"><span class="cn">③</span> universally applicable only when all specific conditions are met</div>
+        <div class="choice"><span class="cn">④</span> potentially overturned by the emergence of a new set of conditions</div>
+        <div class="choice"><span class="cn">⑤</span> precisely accurate only under conditions that are never entirely realized</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤ precisely accurate only under conditions that are never entirely realized</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 과학 이론에서 '이상화(idealization)'가 어떻게 사용되는지 설명하는 지문입니다. 2강_10-12(유인물_필기용).pdf]<br><br>
+        이상 기체 법칙(The ideal gas law)을 예로 들어봅시다. 분자들이 서로 밀거나 당기지도 않고, 부피도 차지하지 않는다는 비현실적인 '가정'을 세웁니다. 실제 세상에서는 결코 이런 조건이 완벽하게 성립(never perfectly obtain)하지 않죠. 하지만 이 단순화된 모델이 <strong>현실과 충분히 비슷하기 때문에 유용</strong>하게 쓰입니다.<br><br>
+        과학 철학자들은 과학 이론이 본질적으로 이와 같다고 봅니다. 즉, 과학 이론들은 <strong>'현실에서는 절대 완전히 실현되지 않는 조건 하에서만 정확하게 맞아떨어지는 모델'</strong>이라는 뜻이죠. 따라서 정답은 ⑤번입니다. 하지만 본문 후반부에서 "그럼에도 불구하고 이 모델들은 여전히 현실의 현상을 설명할 수 있을 만큼은 적당히 정확해야 한다(한계가 있다)"며 결론을 내립니다. 2강_10-12(유인물_필기용).pdf]
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The sciences <span class="gr">do</span> make <span class="vw">extensive<span class="tt">광범위한</span></span> use of <span class="vw">idealization<span class="tt">이상화</span></span>s.</div>
+        <div class="sp-ko">과학은 참으로 광범위하게 이상화(idealization)를 사용한다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ do: 동사 make를 강조하는 조동사 (정말로 ~하다)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The ideal gas law describes the relationship of pressure, volume, and temperature of gases / under conditions <span class="gr">that never perfectly <span class="vw">obtain<span class="tt">성립하다, 적용되다</span></span></span>.</div>
+        <div class="sp-ko">이상 기체 법칙은 결코 완벽하게 성립(적용)하지 않는 조건하에서 / 기체의 압력, 부피, 온도의 관계를 설명한다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ that: conditions를 수식하는 주격 관계대명사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In particular, it makes <span class="gr">[simplifying <span class="vw">assumption<span class="tt">가정</span></span>s about the <span class="vw">molecule<span class="tt">분자</span></span>s {making up gases}]</span> / — for example, <span class="gr">[that they do not attract or <span class="vw">repel<span class="tt">밀어내다</span></span> one another / and do not themselves take up volume]</span>.</div>
+        <div class="sp-ko">특히, 그것(이상 기체 법칙)은 기체를 구성하는 분자들에 대해 단순화하는 가정을 한다. / — 예를 들어, 분자들은 서로 끌어당기거나 밀어내지 않으며 / 그 자체로 부피를 차지하지 않는다는 것이다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ making up ~: 현재분사구가 molecules 수식 / that: 앞의 simplifying assumptions와 동격</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The molecules of real gases are not like this, / but their behavior is nonetheless close enough to ideal ones / <span class="gr">that the gas law is useful</span>.</div>
+        <div class="sp-ko">실제 기체의 분자들은 이와 같지 않지만, / 그럼에도 불구하고 그것들의 행동이 이상적인 분자(ideal ones)의 행동에 충분히 가깝기 때문에 / 이 기체 법칙은 유용하다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ (so) close enough ~ that ... : 결과의 접속사 that (너무 ~해서 ...하다)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Indeed, there are philosophers of science <span class="gr">who argue that this is the best way to think about scientific theories in general</span>;</div>
+        <div class="sp-ko">실제로 이것이 일반적으로 과학 이론에 대해 생각하는 가장 좋은 방법이라고 주장하는 과학 철학자들이 있다; 2강_10-12(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">they(= scientific theories) are best regarded as models <span class="gr">that are <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>.</div>
+        <div class="sp-ko">그것들(과학 이론들)은 <span class="ans">결코 완전히 실현되지는 않는 조건하에서만 정확히 들어맞는</span> 모델로 간주하는 것이 가장 좋다. 2강_10-12(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Even on such views, however, the theories are still meant to be <span class="vw">descriptive<span class="tt">기술적인</span></span>.</div>
+        <div class="sp-ko">그러나 그러한 견해에서도, 그 이론들은 여전히 (현실을) 기술(설명)하도록 의도된 것이다. 2강_10-12(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They are to be used to make predictions and offer explanations / about the behavior of gases or <span class="gr">{<span class="vw">whatever<span class="tt">어떤 ~이든지</span></span> <span class="vw">phenomena<span class="tt">현상</span></span> are at issue in real situations}</span>.</div>
+        <div class="sp-ko">그것들은 기체의 행동이나 실제 상황에서 쟁점이 되는 어떤 현상이든 / 예측을 하고 설명을 제공하는 데 사용되어야 한다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ whatever + 명사(phenomena): 복합관계형용사절 (전치사 about의 목적어)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">There are, accordingly, <span class="vw">constraint<span class="tt">제약</span></span>s <span class="gr">as to [how idealized they can be]</span>.</div>
+        <div class="sp-ko">따라서 그것들이 얼마나 이상화될 수 있는지에 대한 제약이 존재한다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ as to: ~에 관하여 / how + 형용사 + 주어 + 동사 (간접의문문)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They cannot be <span class="gr">so</span> far <span class="vw">removed<span class="tt">떨어진</span></span> from real world systems / <span class="gr">as to</span> be worthless / in describing actual phenomena with acceptable degrees of <span class="vw">accuracy<span class="tt">정확도</span></span>.</div>
+        <div class="sp-ko">그것들은 현실 세계의 시스템과 너무 동떨어져 있어서 / 수용할 수 있는 정도의 정확성으로 실제 현상을 설명하는 데 무가치할 정도가 되어서는 안 된다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ so A as to B: 너무 A해서 B할 정도이다</span></div>
+      </div>
+    </div>
+    
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 복합관계형용사 whatever:</strong> "whatever phenomena are at issue". 여기서 whatever는 뒤에 명사(phenomena)를 달고 나와 "어떤 ~이든지"라는 뜻의 명사절을 이끌어 전치사 about의 목적어로 사용되었습니다. 2강_10-12(유인물_필기용).pdf]</p>
+      <p><strong>② so ~ as to 구문:</strong> "cannot be <strong>so</strong> far removed... <strong>as to</strong> be worthless". '너무나 ~해서 ...할 정도가 될 수 없다'는 결과를 나타내는 주요 표현입니다. 2강_10-12(유인물_필기용).pdf]</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The Power and Limits of Idealization: Why Scientific Models Must Stay Close to Reality
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(이상화의 힘과 한계: 과학적 모델이 현실에 가까워야 하는 이유)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Science extensively uses idealizations.</td>
+          <td>과학은 현상을 설명할 때 '이상화(idealization)'를 광범위하게 사용한다. 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Example</span></td>
+          <td>The ideal gas law: simplified assumptions about molecules. Real gases differ, but the model is close enough to be useful.</td>
+          <td>이상 기체 법칙은 분자에 대해 비현실적인 가정을 하지만 현실과 충분히 비슷해 유용하다. 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Thesis</span></td>
+          <td>Some philosophers argue that all scientific theories are best understood as idealized models that are never fully realized.</td>
+          <td>과학 철학자들은 과학 이론이 현실에 완전히 실현되지 않는 '이상화된 모델'이라고 간주한다. 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>Yet theories must still describe reality and generate predictions. Idealization has limits—models cannot be too far removed from reality.</td>
+          <td>하지만 이론은 현실을 설명하고 예측해야 하므로, 이상화가 현실과 너무 동떨어지면 가치가 없다는 제약이 있다. 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary (선생님 필기 완벽 반영)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미 & 파생어/유의어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">extensive</td><td class="vw-mean">광범위한 (vast, immense, enormous) (cf. intensive 집중적으로) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">idealization</td><td class="vw-mean">이상화 (idealize 이상화하다) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">obtain</td><td class="vw-mean">성립하다, 적용되다 (본문에서의 뜻 주의!) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">assumption</td><td class="vw-mean">가정 (supposition, presumption) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">molecule</td><td class="vw-mean">분자 (molecular 분자의) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">descriptive</td><td class="vw-mean">기술적인 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">phenomenon</td><td class="vw-mean">현상 (pl. phenomena) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">constraint</td><td class="vw-mean">제약, 제한 (restriction, restraint / constrain 강요하다, 제한하다) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">removed</td><td class="vw-mean">떨어진, 다른 (distant, remote, disconnected) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">accuracy</td><td class="vw-mean">정확도 (accurate 정확한 / inaccurate 부정확한) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">repel</td><td class="vw-mean">밀어내다 (push away, drive back / repulsion 혐오, 척력) 2강_10-12(유인물_필기용).pdf]</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p11">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 빈칸추론</div>
+    <div class="p-title">The Root of Regret</div>
+    <div class="p-title-ko">후회의 근원: 큰 세계와 작은 세계의 혼동</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">What is true is that regret happens when we <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+      <p class="plain-sent">In a small world, where all choices, consequences, and probabilities are known, we can be certain about how much we would have won if only we had picked a different horse in a race or chosen different numbers in the lottery.</p>
+      <p class="plain-sent">However, in a large world, where not all choices, consequences, and probabilities are known, we can never truly compare the choices we made with those we didn't make.</p>
+      <p class="plain-sent">We can never know what would have happened if we had taken another job, or married another person, or moved to another city because those scenarios don't play out without us.</p>
+      <p class="plain-sent">So, when we conjure up regrets about what might have been, we are comparing what we know to what we don't know.</p>
+      <p class="plain-sent">What's worse is that, much like the upward social comparisons we make on social media, we torture ourselves with how the realities of our situation stack up against an imagined ideal.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">다음 빈칸에 들어갈 말로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> start addressing large-world problems to improve our quality of life</div>
+        <div class="choice"><span class="cn">②</span> begin to prioritize small-world problems over large-world problems</div>
+        <div class="choice"><span class="cn">③</span> underestimate how much large-world problems can affect us</div>
+        <div class="choice"><span class="cn">④</span> create detailed scenarios to deal with small-world problems</div>
+        <div class="choice"><span class="cn">⑤</span> view a large-world problem like a small-world problem</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤ view a large-world problem like a small-world problem</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 우리 인간이 어떨 때 <strong>'후회(Regret)'</strong>를 하는지 파고드는 심리학적 지문입니다. 2강_10-12(유인물_필기용).pdf]<br><br>
+        모든 결과를 뻔히 알 수 있는 <strong>'작은 세계(경마, 복권)'</strong>에서는 내가 다른 선택을 했으면 얼마를 벌었을지 확실히 계산할 수 있죠. 하지만 우리가 실제로 살아가는 세상은 수많은 변수가 얽힌 <strong>'큰 세계(large world)'</strong>입니다. 우리가 다른 직업을 택했거나 다른 사람과 결혼했다면 어떻게 되었을지(what would have happened) 알 방법이 전혀 없습니다. 왜냐하면 가지 않은 길에 대한 시나리오는 존재하지 않으니까요. 2강_10-12(유인물_필기용).pdf]<br><br>
+        결국, <strong>'우리가 모르는 미지의 대안(상상 속의 완벽한 이상향)'을 이미 알고 있는 현실과 비교할 때</strong> 후회가 생깁니다. 즉, 결과를 알 수 없는 큰 세계의 문제를 결과를 뻔히 아는 작은 세계의 문제처럼 여길 때 발생하는 오류이므로 ⑤번이 정답입니다. 2강_10-12(유인물_필기용).pdf]
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 필기 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">What is true is that regret happens when we <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</div>
+        <div class="sp-ko">사실인 것은, 후회는 우리가 <span class="ans">큰 세계(large-world)의 문제를 작은 세계(small-world)의 문제처럼 바라볼 때</span> 일어난다는 점이다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ Thesis: The Root of Regret. 알 수 없는 상황(큰 세계)을 뻔히 아는 상황(작은 세계)처럼 취급할 때 발생함.</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In a small world, <span class="gr">where all choices, <span class="vw">consequence<span class="tt">결과</span></span>s, and <span class="vw">probability<span class="tt">확률</span></span>ies are known</span>, / we can be certain about <span class="gr">[how much we would have won / if only we had picked a different horse in a race or chosen different numbers in the lottery]</span>.</div>
+        <div class="sp-ko">모든 선택, 결과, 그리고 확률이 알려진 작은 세계에서, / 우리는 경마에서 다른 말을 선택했거나 복권에서 다른 번호를 골랐더라면 얼마나 (돈을) 땄을지에 대해 확신할 수 있다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ 가정법 과거완료 (if S had p.p, S 조동사과거 have p.p)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, in a large world, <span class="gr">where not all choices, consequences, and probabilities are known</span>, / we can never truly compare the choices (we made) with <span class="gr">those(= the choices)</span> (we didn't make).</div>
+        <div class="sp-ko">하지만, 모든 선택, 결과, 확률이 다 알려지지는 않은 큰 세계에서는, / 우리가 한 선택을 우리가 하지 않은 선택(those)과 결코 진정으로 비교할 수 없다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ compare A with B / those는 the choices를 지칭하는 대명사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We can never know <span class="gr">[what would have happened if we had taken another job, or married another person, or moved to another city]</span> / because those scenarios don't <span class="vw">play out<span class="tt">상황이 전개되다</span></span> without us.</div>
+        <div class="sp-ko">우리가 다른 직업을 택했거나, 다른 사람과 결혼했거나, 다른 도시로 이사했다면 어떤 일이 일어났을지 결코 알 수 없는데, / 왜냐하면 그런 시나리오들은 우리 없이는 전개되지 않기 때문이다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ Unchosen paths don't exist without us (가지 않은 길은 알 수 없음)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">So, when we <span class="vw">conjure up<span class="tt">~을 떠올리다</span></span> regrets about <span class="gr">[what might have been]</span>, / we are comparing <span class="gr">[what we know]</span> to <span class="gr">[what we don't know]</span>.</div>
+        <div class="sp-ko">그래서 우리가 일어났을지도 모르는 일(what might have been)에 대한 후회를 떠올릴 때, / 우리는 우리가 아는 것을 우리가 알지 못하는 것과 비교하고 있는 것이다. 2강_10-12(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">What's worse is that, / much like the <span class="vw">upward<span class="tt">상향의</span></span> social comparisons (we make on social media), / we <span class="vw">torture<span class="tt">몹시 괴롭히다</span></span> ourselves / with <span class="gr">[how the realities of our situation <span class="vw">stack up against<span class="tt">~과 비교되다</span></span> an imagined ideal]</span>.</div>
+        <div class="sp-ko">더 나쁜 것은, / 소셜 미디어에서 우리가 하는 상향식 사회적 비교(나보다 잘난 사람과 비교)와 마찬가지로, / 우리 상황의 현실이 상상 속의 이상(ideal)과 어떻게 비교되는지를 가지고 / 우리 자신을 몹시 괴롭힌다는 것이다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ Amplification: Like social media comparisons, regret is self-torture against an imagined ideal.</span></div>
+      </div>
+    </div>
+    
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 가정법 과거완료:</strong> "we would have won if only we had picked...". 과거 사실의 반대를 가정할 때 쓰는 형태입니다. (If 주어 + had p.p, 주어 + 조동사과거형 + have p.p). 2강_10-12(유인물_필기용).pdf]</p>
+      <p><strong>② 관계대명사 what 명사절:</strong> 지문 후반부에 "what might have been", "what we know", "what we don't know" 등 what이 이끄는 명사절이 대거 등장합니다. "~하는 것"으로 해석되며 각각 전치사의 목적어 역할을 하고 있습니다. 2강_10-12(유인물_필기용).pdf]</p>
+      <p><strong>③ 간접의문문 명사절:</strong> "with [how the realities of our situation stack up against an imagined ideal]". 의문사(how) + 주어(the realities) + 동사(stack up) 구조로 전치사 with의 목적어입니다. 2강_10-12(유인물_필기용).pdf]</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      Regret is a cognitive distortion that arises from comparing known outcomes with inherently unknowable alternatives.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(후회란, 이미 알고 있는 결과와 본질적으로 알 수 없는 대안을 비교할 때 발생하는 인지적 왜곡이다.)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Thesis</span></td>
+          <td>Regret = treating a large-world problem as a small-world one.</td>
+          <td>후회는 '큰 세계의 문제'를 '작은 세계의 문제'로 취급할 때 발생한다. 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Contrast</span></td>
+          <td>Small world: all variables known → comparison is valid. Large world: variables unknown → comparison is impossible.</td>
+          <td>작은 세계(복권)는 변수를 다 알기 때문에 비교가 유효하지만, 큰 세계(인생)는 변수를 몰라서 비교 자체가 불가능하다. 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Elaboration</span></td>
+          <td>Unchosen paths don't exist without us. Regret = comparing what we know to what we don't know.</td>
+          <td>선택하지 않은 길은 우리 없이는 존재하지 않으므로, 알 수 없는 상상(환상)과 현실을 비교하는 것이 후회다. 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Amplification</span></td>
+          <td>Like social media comparisons, regret is self-torture against an imagined ideal.</td>
+          <td>소셜 미디어에서의 비교처럼, 후회는 상상된 이상향을 상대로 벌이는 자기 고문이다. 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary (선생님 필기 완벽 반영)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미 & 파생어/유의어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">regret</td><td class="vw-mean">후회 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">consequence</td><td class="vw-mean">결과 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">probability</td><td class="vw-mean">확률, 개연성 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">play out</td><td class="vw-mean">(상황 등이) 전개되다, 진행되다 (enact, happen) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">upward</td><td class="vw-mean">상향의 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">conjure up</td><td class="vw-mean">~을 떠올리다 (imagine, envision) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">torture</td><td class="vw-mean">몹시 괴롭히다 (torment, afflict) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">stack up against</td><td class="vw-mean">~과 비교되다 (compare to) 2강_10-12(유인물_필기용).pdf]</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p12">
+  <div class="p-header">
+    <div class="p-code">중간고사 대비 · 밑줄 의미 추론</div>
+    <div class="p-title">From Actor to Author</div>
+    <div class="p-title-ko">자서전적 기억의 발달: 배우에서 작가로</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The emotional tenor of our conversations may be particularly important in a child's early years.</p>
+      <p class="plain-sent">Indeed, family dialogues from decades past may still be influencing your mental health today.</p>
+      <p class="plain-sent">To understand why, we need a quick primer on the development of our autobiographical memories.</p>
+      <p class="plain-sent">In the first few years of life, most children can remember only the slimmest pieces of their experiences the feel of sand on the beach and the prick of a needle in a doctor's surgery.</p>
+      <p class="plain-sent">These may get more detailed as the child learns more and more vocabulary, but they are largely disconnected from each other; they remain isolated sketches of single events.</p>
+      <p class="plain-sent">It is only after years of development that the child can slot their recollections into a narrative that has a coherent structure.</p>
+      <p class="plain-sent">By the end of adolescence, that narrative may adopt the form of a novel.</p>
+      <p class="plain-sent">The teen will start to recognise key events as turning points, with new 'chapters' that represent new eras.</p>
+      <p class="plain-sent">The psychologist Dan McAdams at Northwestern University in Illinois describes this as <span class="plain-bk">the transition from 'actor' to 'author'</span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">밑줄 의미 추론</div>
+      <div class="q-stem">밑줄 친 부분이 다음 글에서 의미하는 바로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> shifting from living through isolated events to forming an organized life narrative</div>
+        <div class="choice"><span class="cn">②</span> moving from pretending normality to finding ways to improve mental health</div>
+        <div class="choice"><span class="cn">③</span> revising one's memories to rationalize the mistakes of one's childhood</div>
+        <div class="choice"><span class="cn">④</span> breaking free from parental direction to design one's own life path</div>
+        <div class="choice"><span class="cn">⑤</span> constructing fictional narratives from personal experiences</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">① shifting from living through isolated events to forming an organized life narrative</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 유년기의 단편적인 기억들이 어떻게 응집력 있는 '자서전(autobiography)'으로 발달하는지 설명하는 심리학 지문입니다. 2강_10-12(유인물_필기용).pdf]<br><br>
+        어릴 때 아이들은 모래의 촉감, 주사기의 따끔함처럼 서로 연결되지 않은 <strong>'단일 사건의 고립된 스케치(isolated sketches of single events)'</strong>만을 기억합니다. 이것은 그저 겪는 대로 반응하는 <strong>'배우(actor)'</strong>의 단계죠. 그러나 청소년기가 되면 이 조각난 기억들을 끼워 맞춰서 조리 있는 구조를 가진 <strong>'내러티브(narrative)'</strong>, 즉 소설의 형태로 만들게 됩니다. 새로운 챕터와 전환점을 인식하며 전체 이야기를 꿰어맞추는 <strong>'작가(author)'</strong>가 되는 것이죠. 2강_10-12(유인물_필기용).pdf]<br><br>
+        따라서 '배우에서 작가로의 전환'은 <strong>'고립된 사건들을 겪어나가는 것에서 구조화된 삶의 내러티브를 형성하는 것으로의 전환'</strong>을 의미하므로 ①번이 완벽한 정답입니다! 2강_10-12(유인물_필기용).pdf]
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 및 필기 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The emotional <span class="vw">tenor<span class="tt">성격, 성질</span></span> of our conversations may be particularly important in a child's early years.</div>
+        <div class="sp-ko">우리 대화의 감정적 성격(기조)은 아이의 어린 시절에 특히 중요할 수 있다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ Intro: Early family conversations have lasting effects on mental health.</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Indeed, family <span class="vw">dialogue<span class="tt">대화</span></span>s from decades past may still be influencing your mental health today.</div>
+        <div class="sp-ko">실제로, 수십 년 전의 가족 대화가 오늘날 여러분의 정신 건강에 여전히 영향을 미치고 있을지도 모른다. 2강_10-12(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">To understand why, we need a quick <span class="vw">primer<span class="tt">입문서</span></span> / on the development of our <span class="vw">autobiographical<span class="tt">자서전적인</span></span> memories.</div>
+        <div class="sp-ko">그 이유를 이해하려면 우리는 자서전적 기억의 발달에 관한 간단한 입문서(안내서)가 필요하다. 2강_10-12(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In the first few years of life, most children can remember only the slimmest pieces of their experiences / — the feel of sand on the beach / and the <span class="vw">prick<span class="tt">따끔함</span></span> of a needle in a doctor's <span class="vw">surgery<span class="tt">진료실</span></span>.</div>
+        <div class="sp-ko">생후 첫 몇 년 동안, 대부분의 어린이는 자신의 경험 중 아주 얄팍한 조각들, / 즉 해변의 모래 감촉과 의사 진료실에서의 주삿바늘의 따끔함 정도만 기억할 수 있다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ Early childhood: only sensory fragments (초기 아동기: 오직 감각적 파편들만 기억)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">These(= the slimmest pieces)</span> may get more detailed / as the child learns more and more vocabulary, / but they are largely disconnected from each other;</div>
+        <div class="sp-ko">이러한 것들(기억의 조각들)은 아이가 점점 더 많은 어휘를 배우면서 더 상세해질 수도 있지만, / 그것들은 대개 서로 단절되어 있다; 2강_10-12(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">they remain <span class="vw">isolated<span class="tt">고립된</span></span> sketches of single events.</div>
+        <div class="sp-ko">그것들은 단일 사건들의 고립된 스케치(묘사)로 남아 있다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ Vocabulary grows richer but still disconnected memories</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">It is only after years of development that</span> the child can <span class="vw">slot<span class="tt">넣다, 끼우다</span></span> their <span class="vw">recollection<span class="tt">기억</span></span>s / into a <span class="vw">narrative<span class="tt">서사</span></span> <span class="gr">{that has a <span class="vw">coherent<span class="tt">조리 있는</span></span> structure}</span>.</div>
+        <div class="sp-ko">아이가 자신의 기억들을 조리 있는(일관된) 구조를 가진 내러티브(서사)에 끼워 넣을 수 있는 것은 바로 수년간의 발달을 거친 후이다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ It is ~ that 강조구문 / Later childhood: memories form a coherent narrative.</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">By the end of <span class="vw">adolescence<span class="tt">청소년기</span></span>, / that narrative may adopt the form of a novel.</div>
+        <div class="sp-ko">청소년기가 끝날 무렵에는, / 그 서사가 소설의 형태를 취할 수도 있다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ Adolescence: life story takes the form of a novel</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The teen will start to recognise key events as turning points, / with new '<span class="vw">chapter<span class="tt">장, 시기</span></span>s' <span class="gr">{that represent new <span class="vw">era<span class="tt">시대</span></span>s}</span>.</div>
+        <div class="sp-ko">십 대는 새로운 시대를 나타내는 새로운 '장'과 함께 / 주요 사건을 전환점(turning point)으로 인식하기 시작할 것이다. 2강_10-12(유인물_필기용).pdf]</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The psychologist Dan McAdams at Northwestern University in Illinois / describes this as the <span class="vw">transition<span class="tt">전환</span></span> from 'actor' to 'author'.</div>
+        <div class="sp-ko">일리노이주 Northwestern 대학의 심리학자 Dan McAdams는 / 이것을 '배우'에서 '작가'로의 전환이라고 묘사한다. 2강_10-12(유인물_필기용).pdf] <span class="sp-note">★ Conclusion: McAdams describes this as the transition from an "actor(someone who experiences events)" to an "author(someone who constructs a meaningful life story)"</span></div>
+      </div>
+    </div>
+    
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① It is ~ that 강조구문:</strong> "It is [only after years of development] that the child can slot...". 부사구인 only after years of development 전체를 강조하여 '수년이 지나고 나서야 비로소 ~하다'라고 강하게 해석합니다. 내신 빈출 어법입니다. 2강_10-12(유인물_필기용).pdf]</p>
+      <p><strong>② 주격 관계대명사 that:</strong> "a narrative [that has a coherent structure]". 선행사인 a narrative를 꾸며주는 주격 관계대명사 절입니다. 2강_10-12(유인물_필기용).pdf]</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      From Actor to Author: How We Build Our Autobiographical Memory
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(배우에서 작가로: 자서전적 기억을 구축하는 방법)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Early family conversations have lasting effects on mental health. Understanding this requires knowing how memory develops.</td>
+          <td>유년기 가족 대화는 정신 건강에 지속적인 영향을 줌. 이를 이해하려면 기억의 발달 과정을 알아야 함. 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Development 1</span></td>
+          <td>Early childhood: only sensory fragments. Vocabulary grows richer but memories remain disconnected.</td>
+          <td>유년기: 오직 감각적 파편만 기억. 어휘력이 늘어도 기억은 단절되고 고립된 사건들로 남음(배우 단계). 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Development 2</span></td>
+          <td>Later childhood: memories form a coherent narrative. Adolescence: life story takes the form of a novel.</td>
+          <td>아동기 후반: 기억들이 일관된 내러티브를 형성. 청소년기: 삶의 이야기가 소설(챕터, 전환점)의 형태를 띰(작가 단계). 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>McAdams: the shift from "actor" to "author"</td>
+          <td>McAdams는 이를 단순히 겪는 '배우'에서 의미 있는 이야기를 쓰는 '작가'로의 전환이라 묘사함. 2강_10-12(유인물_필기용).pdf]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary (선생님 필기 완벽 반영)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미 & 파생어/유의어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">dialogue</td><td class="vw-mean">대화 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">primer</td><td class="vw-mean">입문서 (handbook, manual) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">autobiographical</td><td class="vw-mean">자서전적인 (autobiography 자서전) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">doctor's surgery</td><td class="vw-mean">진료실, 개인 병원 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">isolated</td><td class="vw-mean">고립된, 유리된 (removed, segregated, separated) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">slot</td><td class="vw-mean">넣다, 끼우다 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">recollection</td><td class="vw-mean">기억 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">narrative</td><td class="vw-mean">서사, 이야기 (story, tale, narration) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">adolescence</td><td class="vw-mean">청소년기 (puberty) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">chapter</td><td class="vw-mean">(개인 삶의 특정) 시기, 장 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">era</td><td class="vw-mean">(인생의) 한 시기, 시대 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">transition</td><td class="vw-mean">전환 (change, transformation, shift) 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">tenor</td><td class="vw-mean">성격, 성질 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">prick</td><td class="vw-mean">따끔함 2강_10-12(유인물_필기용).pdf]</td></tr>
+        <tr><td class="vw-word">coherent</td><td class="vw-mean">조리 있는, 일관된 (consistent, organized, logical) 2강_10-12(유인물_필기용).pdf]</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p10','p11','p12'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
