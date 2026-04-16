@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · 1강 완전 분석 (1~3번)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · 1강 완전 분석 (1~3번)</div>
+      <div class="hdr-sub">2026 심화영어독해 II — 선생님 필기 원본 100% 반영 (진하 전용)</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">01번</button>
+      <button class="nb" onclick="show('p2')">02번</button>
+      <button class="nb" onclick="show('p3')">03번</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">Focus Framework · 1강 (1번~3번)</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">단어 툴팁, 선생님 필기, 구문 분석이 실제 데이터 기반으로 100% 복원되었습니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')"><div class="toc-en">#001 Universality of Facial Expressions</div><div class="toc-ko">감정 표현의 보편성과 환경적 맥락의 상호작용</div></a>
+    <a class="toc-card" onclick="show('p2')"><div class="toc-en">#002 The Impact of Unpredictable Changes</div><div class="toc-ko">동적 변화가 사용자 경험에 미치는 부정적 영향</div></a>
+    <a class="toc-card" onclick="show('p3')"><div class="toc-en">#003 Interface Metaphors</div><div class="toc-ko">인터페이스 은유의 근본적인 역할과 한계</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">#강 01 · #쪽 006 · #번 001 · #문항코드 26007-0001</div>
+    <div class="p-title">Universality of Facial Expressions</div>
+    <div class="p-title-ko">감정 표현의 보편성과 환경적 맥락의 상호작용</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Research on the universality of facial expressions suggests that the socialization of affect involves interactions between situational variables and a finite repertoire of human emotions whose meanings are at least roughly synonymous among all members of the species.</p>
+      <p class="plain-sent">At the same time, Izard's formulation of "affective-cognitive structures" shows that emotions are in reality not separable from the particular circumstances that are associated with them.</p>
+      <p class="plain-sent">The fact that it is possible to construct a list of "basic," universally recognizable emotions derives not only from a species-specific repertoire of facial expressions, but perhaps more fundamentally from a larger set of human expressive behaviors, including laughter and crying as well as bodily movements and postures.</p>
+      <p class="plain-sent">These behaviors, for which a universal capacity exists, are also, without exception, carried out in particular circumstances.</p>
+      <p class="plain-sent">As elements in the human communicative function, they create the necessity of response from the environment while also being shaped by the environment.</p>
+      <p class="plain-sent">To use Lewis's terms, the reality of emotional expression transforms "state" into "experience."</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Research on the <span class="vw">universality<span class="tt">보편성</span></span> of facial expressions suggests <span class="gr">[that the socialization of <span class="vw">affect<span class="tt">정서, 감정</span></span> involves interactions between situational <span class="vw">variable<span class="tt">변수</span></span>s and a <span class="vw">finite<span class="tt">유한한</span></span> <span class="vw">repertoire<span class="tt">목록, 레퍼토리</span></span> of human emotions whose meanings are at least roughly synonymous among all members of the species.]</span></div>
+        <div class="sp-ko">얼굴 표정의 보편성에 대한 연구는 정서의 사회화가 상황적 변수와, 그 의미가 모든 종의 구성원들 사이에서 적어도 대략적으로는 같은 의미를 가지는 유한한 인간 감정 목록 간의 상호작용을 포함한다는 것을 시사한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">At the same time, Izard's <span class="vw">formulation<span class="tt">개념화, 공식화</span></span> of "affective-cognitive structures" shows <span class="gr">[that emotions are in reality not <span class="vw">separable<span class="tt">분리할 수 있는</span></span> from the particular circumstances that are associated with them.]</span></div>
+        <div class="sp-ko">동시에, "정서-인지 구조"에 대한 Izard의 개념화는 감정이 실제로는 그것들과 관련된 특정 상황과 분리될 수 없음을 보여준다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The fact <span class="gr">[that it is possible / to construct a list of "basic," universally <span class="vw">recognizable<span class="tt">인식 가능한</span></span> emotions]</span> <span class="vw">derive from<span class="tt">~에서 비롯되다</span></span>s not only from a <span class="vw">species-specific<span class="tt">종 특유의</span></span> repertoire of facial expressions, but perhaps more fundamentally from a larger set of human expressive behaviors, including laughter and crying as well as bodily movements and <span class="vw">posture<span class="tt">자세</span></span>s.</div>
+        <div class="sp-ko">보편적으로 인식 가능한 "기본적인" 감정 목록을 구성하는 것이 가능하다는 사실은 종 특유의 얼굴 표정 목록뿐만 아니라, 아마도 더 근본적으로는 신체 움직임과 자세뿐만 아니라 웃음과 울음을 포함하는 더 큰 일련의 인간 표현 행동에서 비롯된다. <span class="sp-note">★ The fact 뒤의 that은 동격 접속사 / derives from 동사 주의</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">These behaviors, for which a universal capacity exists, are also, without <span class="vw">exception<span class="tt">예외</span></span>, carried out in particular circumstances.</div>
+        <div class="sp-ko">보편적인 능력이 존재하는 이러한 행동들은 또한 예외 없이 특정한 상황에서 수행된다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As elements in the human communicative function, they create the necessity of response from the environment / while also being shaped by the environment. To use Lewis's terms, the reality of emotional expression <span class="vw">transform<span class="tt">바꾸다, 변형시키다</span></span>s "state" into "experience."</div>
+        <div class="sp-ko">인간의 의사소통 기능의 요소로서, 그것들은 환경으로부터의 반응의 필요성을 만들어내는 동시에 환경에 의해 형성되기도 한다. Lewis의 용어를 빌리자면, 감정 표현의 현실은 "상태"를 "경험"으로 바꾼다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The universal emotions are always shaped by and enacted within particular circumstances.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(인간의 보편적 감정은 항상 특정한 환경적 맥락 내에서 형성되고 발현된다.)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Intro</span></td>
+          <td>Research suggests facial expressions and emotions are universal across the human species.</td>
+          <td>인간의 얼굴 표정과 감정의 목록은 종 전체에 걸쳐 보편적이다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev</span></td>
+          <td>However, emotions cannot be separated from the specific "circumstances" (context) in which they occur.</td>
+          <td>하지만 감정은 그것이 발생하는 구체적인 "상황(환경)"과 분리될 수 없다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Reinforcement</span></td>
+          <td>While we have a biological repertoire (laughter, crying, posture), these behaviors are always triggered by and shaped by the environment.</td>
+          <td>웃음, 울음 등 생물학적 레퍼토리를 지니고 있지만, 이 행동들은 항상 환경에 의해 유발되고 형성된다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Synthesis</span></td>
+          <td>The merging of universal expression and specific context transforms a raw internal "state" into a meaningful "experience."</td>
+          <td>보편적 표현과 특정 상황의 결합은 단순한 내적 '상태'를 의미 있는 '경험'으로 바꾼다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">universality</td><td class="vw-mean">보편성</td></tr>
+        <tr><td class="vw-word">affect</td><td class="vw-mean">정서, 감정 (cf. effect 효과/영향)</td></tr>
+        <tr><td class="vw-word">variable</td><td class="vw-mean">변수</td></tr>
+        <tr><td class="vw-word">finite</td><td class="vw-mean">유한한</td></tr>
+        <tr><td class="vw-word">repertoire</td><td class="vw-mean">목록, 레퍼토리</td></tr>
+        <tr><td class="vw-word">formulation</td><td class="vw-mean">공식화, 개념화</td></tr>
+        <tr><td class="vw-word">separable</td><td class="vw-mean">분리할 수 있는</td></tr>
+        <tr><td class="vw-word">recognizable</td><td class="vw-mean">인식 가능한</td></tr>
+        <tr><td class="vw-word">derive from</td><td class="vw-mean">~에서 유래하다, 비롯되다</td></tr>
+        <tr><td class="vw-word">species-specific</td><td class="vw-mean">종 특유의</td></tr>
+        <tr><td class="vw-word">posture</td><td class="vw-mean">자세</td></tr>
+        <tr><td class="vw-word">exception</td><td class="vw-mean">예외</td></tr>
+        <tr><td class="vw-word">transform</td><td class="vw-mean">변형시키다, 바꾸다</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">#강 01 · #쪽 007 · #번 002 · #문항코드 26007-0002</div>
+    <div class="p-title">The Impact of Unpredictable Changes</div>
+    <div class="p-title-ko">동적 변화가 사용자 경험에 미치는 부정적 영향</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Changes are often useful people want to see new emails, better search results, and new news stories but they can also cause problems.</p>
+      <p class="plain-sent">As an example, dynamic menus were developed to help people access menu items faster by bubbling common items to the top of the menu.</p>
+      <p class="plain-sent">Rather than decreasing access time, research revealed dynamic menus actually slow their users down because commonly sought items no longer appear where they are expected.</p>
+      <p class="plain-sent">As another example, some researchers tried to help people search better by giving them lists of relevant sentences that were dynamically reranked based on implicit feedback gathered during the search process.</p>
+      <p class="plain-sent">To the researchers' surprise, people did not enjoy the search experience as much or perform as well as they did when the sentence list was static.</p>
+      <p class="plain-sent">Similarly, a large-scale analysis of query logs revealed that when people repeat queries they are significantly less likely to click on a result they've clicked before if the result's rank has changed, and significantly slower to click when they do.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Changes are often useful people want to see new emails, better search results, and new news stories but they can also cause problems.</div>
+        <div class="sp-ko">변화는 종종 유용하지만(사람들은 새로운 이메일, 더 나은 검색 결과, 새로운 뉴스 기사를 보고 싶어 한다), 문제를 일으킬 수도 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As an example, <span class="vw">dynamic<span class="tt">역동적인</span></span> menus were developed to help people access menu items faster / by <span class="vw">bubble<span class="tt">위로 끌어올리다</span></span>ing common items to the top of the menu.</div>
+        <div class="sp-ko">예를 들어, 동적 메뉴는 자주 사용하는 항목을 메뉴 상단으로 끌어올림으로써 사람들이 메뉴 항목에 더 빨리 접근할 수 있도록 돕기 위해 개발되었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Rather than <span class="vw">decrease<span class="tt">줄이다</span></span>ing access time, research <span class="vw">reveal<span class="tt">밝히다</span></span>ed / dynamic menus actually slow their users down / because commonly sought items no longer appear where (they are) expected.</div>
+        <div class="sp-ko">접근 시간을 줄이기보다는, 연구에 따르면 동적 메뉴는 실제로 사용자의 속도를 늦추는 것으로 나타났는데, 이는 일반적으로 찾는 항목이 더 이상 예상되는 곳에 나타나지 않기 때문이다. <span class="sp-note">★ expected 앞의 생략구문 주의</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As another example, some researchers tried to help people search better / by giving them lists of <span class="vw">relevant<span class="tt">관련 있는</span></span> sentences that were dynamically <span class="vw">rerank<span class="tt">순위를 다시 매기다</span></span>ed / based on <span class="vw">implicit<span class="tt">암묵적인</span></span> feedback gathered during the search process.</div>
+        <div class="sp-ko">또 다른 예로, 일부 연구자들은 검색 과정에서 수집된 암묵적 피드백을 기반으로 동적으로 순위가 재조정된 관련 문장 목록을 제공함으로써 사람들이 더 잘 검색하도록 도우려 했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">To the researchers' surprise, people did not / enjoy the search experience as much or perform as well / as they did / when the sentence list was <span class="vw">static<span class="tt">정적인, 고정된</span></span>.</div>
+        <div class="sp-ko">연구자들의 예상과 달리, 사람들은 문장 목록이 정적일(고정되어 있을) 때만큼 검색 경험을 즐기거나 수행을 잘 해내지 못했다. <span class="sp-note">★ as much ... as they did 원급 비교구문</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Similarly, a large-scale <span class="vw">analysis<span class="tt">분석</span></span> of <span class="vw">query<span class="tt">검색어, 질문</span></span> logs revealed / that when people repeat queries / they are / <span class="vw">significantly<span class="tt">상당히</span></span> less likely to click on a result they've clicked before if the result's rank has changed, and / significantly slower to click / when they do (= click).</div>
+        <div class="sp-ko">마찬가지로, 검색어 로그에 대한 대규모 분석에 따르면 사람들이 검색어를 반복할 때 결과의 순위가 변경된 경우 이전에 클릭한 결과를 클릭할 가능성이 상당히 낮으며, 클릭하더라도 클릭하는 속도가 상당히 느린 것으로 나타났다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The impact of unpredictable changes on user experience
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(예측 불가능한 변화가 사용자 경험에 미치는 부정적 영향)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Claim</span></td>
+          <td>Changes are often useful, but they can also cause problems.</td>
+          <td>변화는 유용하기도 하지만 종종 문제를 일으킨다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Example 1</span></td>
+          <td>Dynamic menus, intended to increase efficiency, actually reduced users' speed because items appeared in unpredictable locations.</td>
+          <td>효율성을 위해 도입된 동적 메뉴는 항목 위치가 매번 바뀌어 오히려 사용자 속도를 저하시켰다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Example 2</span></td>
+          <td>Researchers continuously reordered search results, but this reduced satisfaction and performance compared to static lists.</td>
+          <td>검색 결과를 실시간으로 재정렬하자, 고정된 목록일 때보다 만족도와 수행 능력이 떨어졌다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">dynamic</td><td class="vw-mean">역동적인, 끊임없이 변하는</td></tr>
+        <tr><td class="vw-word">bubble</td><td class="vw-mean">위로 끌어올리다, 거품이 일다</td></tr>
+        <tr><td class="vw-word">decrease</td><td class="vw-mean">줄이다, 감소하다</td></tr>
+        <tr><td class="vw-word">reveal</td><td class="vw-mean">밝히다, 드러내다</td></tr>
+        <tr><td class="vw-word">relevant</td><td class="vw-mean">관련 있는, 적절한</td></tr>
+        <tr><td class="vw-word">rerank</td><td class="vw-mean">순위를 다시 매기다</td></tr>
+        <tr><td class="vw-word">analysis</td><td class="vw-mean">분석</td></tr>
+        <tr><td class="vw-word">significantly</td><td class="vw-mean">상당히, 크게</td></tr>
+        <tr><td class="vw-word">implicit</td><td class="vw-mean">암묵적인, 내포된</td></tr>
+        <tr><td class="vw-word">static</td><td class="vw-mean">정적인, 고정된</td></tr>
+        <tr><td class="vw-word">query</td><td class="vw-mean">검색어, 질문</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">#강 01 · #쪽 008 · #번 003 · #문항코드 26007-0003</div>
+    <div class="p-title">Interface Metaphors</div>
+    <div class="p-title-ko">인터페이스 은유의 근본적인 역할과 한계</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Verbal metaphors help make our language more colorful and expressive.</p>
+      <p class="plain-sent">They influence how we think about something, but they do not change the thing itself.</p>
+      <p class="plain-sent">Interface metaphors play a more fundamental role in how we experience and interact with the technological world, affecting function as well as feeling.</p>
+      <p class="plain-sent">The metaphor that is chosen for an interface shapes how it can be used.</p>
+      <p class="plain-sent">When we put computer "files" into "folders," these metaphoric constructs help us think about the way information is organized in our machine, but they also constrain what we can do with it.</p>
+      <p class="plain-sent">Interface metaphors also influence the feel of the experience, the emotional and aesthetic response we have to our interactions with and via the machine.</p>
+      <p class="plain-sent">The desktop metaphor calls to mind office work: secretaries, bosses, quarterly plans, and cubicles.</p>
+      <p class="plain-sent">It was developed in the late 1970s and early 1980s, when office work was seen as the primary use for personal computers.</p>
+      <p class="plain-sent">The desktop image certainly is appropriate for that setting. However, it is less appropriate when we use the computer as an entertainment center or as the locus of our social life.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> provide clear visual and functional cues</div>
+        <div class="choice"><span class="cn">②</span> evolve with all the technological changes</div>
+        <div class="choice"><span class="cn">③</span> reflect real-world tools as literally as possible</div>
+        <div class="choice"><span class="cn">④</span> fit both the feel and function of the application</div>
+        <div class="choice"><span class="cn">⑤</span> improve usability through emotional connections</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 해설</div>
+      <div class="ans-num">정답: <span class="ans">④ fit both the feel and function of the application</span></div>
+      <div class="ans-exp">인터페이스 메타포(예: 바탕화면, 폴더)는 단순한 언어적 비유를 넘어 우리가 기계와 상호작용하는 느낌(feel)과 기능(function)을 제한하고 결정짓는 근본적인 역할을 합니다. 과거의 '사무용 책상' 메타포가 오늘날 엔터테인먼트용으로는 덜 적합하듯, 인터페이스 메타포는 애플리케이션의 <strong>'느낌과 기능 모두에 부합해야 한다'</strong>는 것이 글의 결론입니다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Verbal<span class="tt">언어적인</span></span> <span class="vw">metaphor<span class="tt">은유, 비유</span></span>s help make our language more colorful and <span class="vw">expressive<span class="tt">표현력이 있는</span></span>.</div>
+        <div class="sp-ko">언어적 은유는 우리 언어를 더 다채롭고 표현력 있게 만드는 데 도움이 된다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They influence / how we think about something, / but they do not change the thing itself.</div>
+        <div class="sp-ko">그것들은 우리가 무언가에 대해 생각하는 방식에 영향을 주지만, 대상 그 자체를 바꾸지는 않는다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Interface<span class="tt">인터페이스, 접점</span></span> metaphors play a more <span class="vw">fundamental<span class="tt">근본적인</span></span> role in / how we experience and interact with the technological world, / affecting function as well as feeling.</div>
+        <div class="sp-ko">인터페이스 은유는 느낌뿐만 아니라 기능에도 영향을 미치며, 우리가 기술 세계를 경험하고 상호작용하는 방식에 훨씬 더 근본적인 역할을 한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The metaphor that is chosen for an interface // shapes <span class="gr">[how it (= interface) can be used]</span>.</div>
+        <div class="sp-ko">인터페이스를 위해 선택된 은유는 그것이 사용될 수 있는 방식을 형성한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">When we put computer "files" into "folders," these metaphoric <span class="vw">construct<span class="tt">구성 개념</span></span>s help us think about the way (that/ in which) information is organized in our machine, but they (these metaphoric construct files, folders) also <span class="vw">constrain<span class="tt">제한하다, 억제하다</span></span> what we can do with it (=information).</div>
+        <div class="sp-ko">우리가 컴퓨터 "파일"을 "폴더"에 넣을 때, 이러한 은유적 구성 개념은 정보가 컴퓨터에서 조직되는 방식에 대해 생각하도록 돕지만, 그것들은 또한 우리가 정보로 할 수 있는 것을 제한하기도 한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Interface metaphors also influence the feel of the experience, the emotional and <span class="vw">aesthetic<span class="tt">심미적인</span></span> response (that) we have to (have O to..에 대해 가지는) / our interactions with and via the machine.</div>
+        <div class="sp-ko">인터페이스 은유는 경험의 느낌, 즉 우리가 기계와의 그리고 기계를 통한 상호작용에 대해 가지는 감정적이고 심미적인 반응에도 영향을 미친다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The desktop metaphor calls to mind office work: <span class="vw">secretary<span class="tt">비서</span></span>ies, bosses, <span class="vw">quarterly<span class="tt">분기별의</span></span> plans, and <span class="vw">cubicle<span class="tt">칸막이 공간</span></span>s.</div>
+        <div class="sp-ko">바탕화면(데스크톱) 은유는 사무실 업무, 즉 비서, 상사, 분기별 계획, 그리고 칸막이 공간을 떠올리게 한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It (=desktop metaphor) was developed in the late 1970s and early 1980s, / when office work was seen as the primary use for personal computers.</div>
+        <div class="sp-ko">그것은 사무 업무가 개인용 컴퓨터의 주요 용도로 여겨졌던 1970년대 후반과 1980년대 초반에 개발되었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The desktop image certainly is <span class="vw">appropriate<span class="tt">적절한</span></span> for that setting. However, it (the desktop image) is less appropriate/ when we use the computer/ as an entertainment center or as the <span class="vw">locus<span class="tt">중심지, 장소</span></span> of our social life.</div>
+        <div class="sp-ko">바탕화면 이미지는 그 설정에 확실히 적절하다. 하지만 우리가 컴퓨터를 엔터테인먼트 센터나 사회생활의 중심지로 사용할 때는 덜 적합하다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The fundamental role and limits of interface metaphors
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(인터페이스 은유의 근본적인 역할과 한계)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Verbal metaphors make language more vivid, but interface metaphors play a fundamental role in shaping how we use technology.</td>
+          <td>일반적 언어 은유와 달리, 인터페이스 은유는 우리가 기술을 사용하고 경험하는 방식을 근본적으로 형성한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev 1</span></td>
+          <td>The choice of an interface metaphor both helps users understand information and limits what they can do with it.</td>
+          <td>파일, 폴더 같은 은유는 정보를 조직하는 데 도움을 주지만 반대로 우리가 할 수 있는 행동을 제한하기도 한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Dev 2</span></td>
+          <td>Interface metaphors affect emotional/aesthetic interactions. Ex) The desktop metaphor fits office work but is less suitable for social or entertainment use.</td>
+          <td>은유는 감정적 느낌에도 영향을 미친다. 사무실 책상 은유는 과거엔 적절했지만 오늘날 소셜이나 오락용으로는 덜 적합하다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">verbal</td><td class="vw-mean">언어적인, 구두의</td></tr>
+        <tr><td class="vw-word">expressive</td><td class="vw-mean">표현력이 있는, 의미심장한</td></tr>
+        <tr><td class="vw-word">interface</td><td class="vw-mean">인터페이스, 접점</td></tr>
+        <tr><td class="vw-word">fundamental</td><td class="vw-mean">근본적인, 핵심적인</td></tr>
+        <tr><td class="vw-word">construct</td><td class="vw-mean">구성 개념, 건축물</td></tr>
+        <tr><td class="vw-word">constrain</td><td class="vw-mean">제한하다, 억제하다</td></tr>
+        <tr><td class="vw-word">aesthetic</td><td class="vw-mean">심미적인, 미학의</td></tr>
+        <tr><td class="vw-word">secretary</td><td class="vw-mean">비서</td></tr>
+        <tr><td class="vw-word">quarterly</td><td class="vw-mean">분기별의</td></tr>
+        <tr><td class="vw-word">appropriate</td><td class="vw-mean">적절한</td></tr>
+        <tr><td class="vw-word">metaphor</td><td class="vw-mean">은유, 비유</td></tr>
+        <tr><td class="vw-word">cubicle</td><td class="vw-mean">좁은 방, 칸막이 공간</td></tr>
+        <tr><td class="vw-word">locus</td><td class="vw-mean">중심지, 장소</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p1','p2','p3','p4'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

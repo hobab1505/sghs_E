@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · 1강 완전 분석 (4~6번)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · 1강 완전 분석 (4~6번)</div>
+      <div class="hdr-sub">2026 심화영어독해 II — 100% 실제 데이터 기반 복원 (진하 전용)</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p4')">04번</button>
+      <button class="nb" onclick="show('p5')">05번</button>
+      <button class="nb" onclick="show('p6')">06번</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">Focus Framework · 1강 (4번~6번)</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">단어 툴팁, 일타강사 해설, 구문 분석이 100% 완성되어 반영되었습니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p4')"><div class="toc-en">#004 The Impact of News Framing</div><div class="toc-ko">뉴스 프레이밍이 여론에 미치는 영향</div></a>
+    <a class="toc-card" onclick="show('p5')"><div class="toc-en">#005 The Limit of Knowledge</div><div class="toc-ko">미래 예측에 있어서 지식의 한계</div></a>
+    <a class="toc-card" onclick="show('p6')"><div class="toc-en">#006 The Importance of True Acceptance</div><div class="toc-ko">어려운 상황에 대한 진정한 수용의 중요성</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p4">
+  <div class="p-header">
+    <div class="p-code">#강 01 · #쪽 009 · #번 004 · #문항코드 26007-0004</div>
+    <div class="p-title">The Impact of News Framing</div>
+    <div class="p-title-ko">뉴스 프레이밍이 여론에 미치는 영향 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Many news media studies use experimental designs to see whether citizens' opinions are influenced by different news content.</p>
+      <p class="plain-sent">For example, in one study, researchers created newspaper stories to frame the death penalty in different ways.</p>
+      <p class="plain-sent">One story constructed the death penalty as an affront to moral values (the morality frame), whereas another story emphasized that the policy was fundamentally flawed because innocent people might be executed (the innocence frame).</p>
+      <p class="plain-sent">Some subjects read the story with the morality frame, and others read the one with the innocence frame.</p>
+      <p class="plain-sent">Subjects then completed a questionnaire that asked them to list the important factors they considered when determining their opinion on the death penalty.</p>
+      <p class="plain-sent">It was found that subjects exposed to the innocence frame were more likely to mention innocence-related considerations as important factors in determining their attitudes toward the death penalty than subjects presented with the morality frame.</p>
+      <p class="plain-sent">Thus, <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> the death penalty was often framed negatively in news media</div>
+        <div class="choice"><span class="cn">②</span> the media's frame reflected intention, not the reality of the event</div>
+        <div class="choice"><span class="cn">③</span> the subjects' attitudes towards the news were unrelated to their morality</div>
+        <div class="choice"><span class="cn">④</span> the readers' belief system had a significant impact on their choice of news</div>
+        <div class="choice"><span class="cn">⑤</span> the news frames shaped the ingredients of the subjects' death penalty attitudes</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤ the news frames shaped the ingredients of the subjects' death penalty attitudes</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 뉴스 미디어가 동일한 사건(사형 제도)에 대해 '도덕성(morality)'과 '무고함(innocence)'이라는 서로 다른 프레임(구조화된 틀)을 제공했을 때, 이를 읽은 실험 참가자들의 의견이 어떻게 달라지는지 묻는 지문입니다.<br><br>
+        무고함 프레임의 기사를 읽은 사람은 자신의 태도를 결정할 때 무고함과 관련된 요소들을 더 많이 언급했습니다. 즉, 뉴스 기사가 어떤 프레임으로 쓰였느냐에 따라 독자의 생각과 태도를 구성하는 내용물(ingredients)이 달라진다는 것이죠.<br><br>
+        따라서 결론을 나타내는 빈칸에는 <strong>'뉴스 프레임이 대상자들의 사형제도에 대한 태도를 구성하는 요소를 형성했다'</strong>는 ⑤번이 가장 적절합니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Many news media studies use experimental designs / to see <span class="vw">whether<span class="tt">~인지 아닌지</span></span> citizens' opinions are influenced by different news content.</div>
+        <div class="sp-ko">많은 뉴스 미디어 연구들은 시민들의 의견이 다양한 뉴스 콘텐츠에 의해 영향을 받는지를 확인하기 위해 실험적 설계를 사용한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, in one study, researchers created newspaper stories to frame the <span class="vw">death penalty<span class="tt">사형 제도</span></span> in different ways.</div>
+        <div class="sp-ko">예를 들어, 한 연구에서 연구자들은 사형 제도를 다른 방식으로 프레임(구조화)하기 위해 신문 기사를 만들었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">One story <span class="vw">construct<span class="tt">구성하다</span></span>ed the death penalty / as an <span class="vw">affront<span class="tt">모욕, 상처</span></span> to moral values (the morality frame), / whereas another story <span class="vw">emphasize<span class="tt">강조하다</span></span>d that the <span class="vw">policy<span class="tt">정책</span></span> was <span class="vw">fundamentally<span class="tt">근본적으로</span></span> <span class="vw">flawed<span class="tt">결함이 있는</span></span> / because <span class="vw">innocent<span class="tt">무고한</span></span> people might be <span class="vw">execute<span class="tt">처형하다</span></span>d (the innocence frame).</div>
+        <div class="sp-ko">한 기사는 사형 제도를 도덕적 가치에 대한 모욕으로 구성한(도덕성 프레임) 반면, 다른 기사는 무고한 사람들이 처형될 수 있기 때문에 그 정책이 근본적으로 결함이 있다고 강조했다(무고함 프레임). <span class="sp-note">★ whereas: ~인 반면에 (대조)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Some subjects read the story with the morality frame, and others read the one (=the story) with the innocence frame.</div>
+        <div class="sp-ko">일부 실험 대상자들은 도덕성 프레임이 있는 기사를 읽었고, 다른 대상자들은 무고함 프레임이 있는 기사를 읽었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Subjects then completed a <span class="vw">questionnaire<span class="tt">설문지</span></span> <span class="gr">that asked them(=subjects) to list the important factors (that) they considered / when <span class="vw">determine<span class="tt">결정하다</span></span>ing their opinion on the death penalty</span>.</div>
+        <div class="sp-ko">그런 다음 실험 대상자들은 사형제도에 대한 자신의 의견을 결정할 때 고려한 중요한 요소들을 나열하도록 요구하는 설문지를 작성했다. <span class="sp-note">★ that: questionnaire를 수식하는 주격 관계대명사 / ask + 목적어 + to V</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It was found // that subjects <span class="vw">be exposed to<span class="tt">~에 노출되다</span></span> the innocence frame were more likely to <span class="vw">mention<span class="tt">언급하다</span></span> innocence-related considerations as important factors in determining their attitudes toward the death penalty / than subjects presented with the morality frame.</div>
+        <div class="sp-ko">무고함 프레임에 노출된 대상자들은 도덕성 프레임이 제시된 대상자들보다 사형제도에 대한 태도를 결정하는 데 있어 무고함과 관련된 고려사항을 중요한 요소로 언급할 가능성이 더 높다는 것이 발견되었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Thus, <span class="ans">the news frames shaped the ingredients of the subjects' death penalty attitudes.</span></div>
+        <div class="sp-ko">따라서, 뉴스 프레임은 실험 대상자들의 사형제도에 대한 태도의 구성요소들을 형성했다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The impact of news framing on public opinion.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(뉴스 프레이밍이 여론에 미치는 영향)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Many media studies use experiments to examine whether different news content influences public opinion.</td>
+          <td>많은 미디어 연구들은 다양한 뉴스 콘텐츠가 여론에 미치는 영향을 실험을 통해 확인한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev 1 (Research Design)</span></td>
+          <td>Researchers created differently framed newspaper stories about the death penalty: one emphasizing moral values (morality frame) and the other stressing the risk of executing innocent people (innocence frame).</td>
+          <td>사형 제도에 대해 도덕성 프레임과 무고함 프레임이라는 서로 다른 방식의 기사를 작성했다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Dev 2 (Procedure)</span></td>
+          <td>Participants read one of the framed stories and then listed the key factors shaping their attitudes.</td>
+          <td>참가자들은 기사를 읽고 자신의 태도를 결정한 주요 요소를 나열했다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Result</span></td>
+          <td>Those exposed to the innocence frame were more likely to cite innocence-related concerns than those who read the morality frame.</td>
+          <td>무고함 프레임 기사를 읽은 사람들은 태도 결정에 있어 무고함 관련 사항을 훨씬 더 많이 언급했다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">⑤ Conclusion</span></td>
+          <td>Thus, the way an issue is framed in the news shapes the considerations people use when forming their opinions.</td>
+          <td>따라서 뉴스의 프레임 방식은 사람들의 태도와 의견을 구성하는 요소를 직접적으로 형성한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">death penalty</td><td class="vw-mean">사형(제도)</td></tr>
+        <tr><td class="vw-word">construct</td><td class="vw-mean">구성하다, 건설하다</td></tr>
+        <tr><td class="vw-word">emphasize</td><td class="vw-mean">강조하다</td></tr>
+        <tr><td class="vw-word">policy</td><td class="vw-mean">정책</td></tr>
+        <tr><td class="vw-word">fundamentally</td><td class="vw-mean">근본적으로</td></tr>
+        <tr><td class="vw-word">flawed</td><td class="vw-mean">결함이 있는</td></tr>
+        <tr><td class="vw-word">innocent</td><td class="vw-mean">무고한, 결백한</td></tr>
+        <tr><td class="vw-word">execute</td><td class="vw-mean">처형하다, 실행하다</td></tr>
+        <tr><td class="vw-word">questionnaire</td><td class="vw-mean">설문지</td></tr>
+        <tr><td class="vw-word">determine</td><td class="vw-mean">결정하다</td></tr>
+        <tr><td class="vw-word">be exposed to</td><td class="vw-mean">~에 노출되다</td></tr>
+        <tr><td class="vw-word">mention</td><td class="vw-mean">언급하다</td></tr>
+        <tr><td class="vw-word">affront</td><td class="vw-mean">모욕, 상처</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p5">
+  <div class="p-header">
+    <div class="p-code">#강 01 · #쪽 010 · #번 005 · #문항코드 26007-0005</div>
+    <div class="p-title">The Limit of Knowledge</div>
+    <div class="p-title-ko">미래 예측에 있어서 지식의 한계 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The knowledge problem is most evident / when we discuss our ability to <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+      <p class="plain-sent">Most people would say that they "know" the Sun will rise tomorrow. However, can we call this a certainty?</p>
+      <p class="plain-sent">It seems very likely, but it has also been predicted that the time will come when the Sun runs out of fuel, swells massively, and consumes the Earth.</p>
+      <p class="plain-sent">We don't know if this prediction is true, but it is consistent with our best understanding and we cannot rule it out.</p>
+      <p class="plain-sent">It is also possible that the Earth will explode due to some internal process with its molten core, which we had not anticipated.</p>
+      <p class="plain-sent">A massive comet that our telescopes have not observed may crash into the Earth and destroy the planet.</p>
+      <p class="plain-sent">These examples seem a bit extreme, but consider the 230,000 people who died in the tsunami in Sumatra in 2004, which resulted from an undersea megathrust earthquake that had not been anticipated.</p>
+      <p class="plain-sent">The most reasonable prediction on that day was that it would be an average day, like so many days before it, not that a massive wave was going to destroy many thousands of lives; tragically, such was the case.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> reach consensus when perspectives clash</div>
+        <div class="choice"><span class="cn">②</span> predict that which has not yet been observed</div>
+        <div class="choice"><span class="cn">③</span> account for biases in the information we gather</div>
+        <div class="choice"><span class="cn">④</span> identify patterns in data that require deep insight</div>
+        <div class="choice"><span class="cn">⑤</span> solve problems that require integrating knowledge</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">② predict that which has not yet been observed</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 우리가 가진 지식으로 완벽하게 미래를 예측하는 것이 불가능하다는 것을 역설하는 지문입니다.<br><br>
+        우리는 내일 아침 해가 뜬다는 사실을 '안다(know)'고 생각하지만, 아주 먼 미래에 태양이 폭발하거나 예상치 못한 혜성이 지구에 충돌하는 변수는 완벽히 배제할 수 없습니다. 2004년 수마트라 쓰나미도 수십만 명이 죽을 것이라곤 아무도 예측하지 못했죠.<br><br>
+        결국, 우리가 겪는 '지식의 문제'란 아직 관찰되지 않은 변수들 때문에 완벽한 예측이 불가능하다는 데 있습니다. 따라서 빈칸에 들어갈 말은 <strong>'우리가 아직 관찰되지 않은 것을 예측하는 능력에 대해 논의할 때'</strong> 지식의 한계가 가장 뚜렷하다는 ②번이 정답입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The knowledge problem is most <span class="vw">evident<span class="tt">명백한</span></span> / when we discuss our ability to <span class="ans"><span class="vw">predict<span class="tt">예측하다</span></span> that which has not yet been observed</span>.</div>
+        <div class="sp-ko">우리가 아직 관찰되지 않은 것을 예측하는 능력에 대해 논의할 때 지식의 문제는 가장 명백해진다. <span class="sp-note">★ that which = the thing which (~하는 것)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Most people would say / that they "know" the Sun will rise tomorrow. However, can we call this a certainty?</div>
+        <div class="sp-ko">대부분의 사람들은 내일 해가 뜰 것이라는 것을 "안다"고 말할 것이다. 하지만, 우리가 이것을 확실성이라고 부를 수 있을까?</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It seems very likely, but it has also been predicted / that the time will come when the Sun runs out of fuel, <span class="vw">swell<span class="tt">부풀어 오르다</span></span>s <span class="vw">massively<span class="tt">거대하게</span></span>, and <span class="vw">consume<span class="tt">집어삼키다, 소멸시키다</span></span>s the Earth.</div>
+        <div class="sp-ko">매우 그럴 가능성이 높아 보이지만, 태양이 연료가 고갈되어 거대하게 부풀어 오르고 지구를 집어삼킬 때가 올 것이라고 예측되기도 했다. <span class="sp-note">★ when: the time을 수식하는 관계부사절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We don't know / if this prediction is true, but it is <span class="vw">consistent<span class="tt">일치하는, 일관된</span></span> with our best understanding and we cannot rule it out.</div>
+        <div class="sp-ko">우리는 이 예측이 사실인지 알 수 없지만, 그것은 우리의 최선의 이해와 일치하며 우리는 그것을 배제할 수 없다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It is also possible / that the Earth will <span class="vw">explode<span class="tt">폭발하다</span></span> due to some internal process with its <span class="vw">molten core<span class="tt">녹은 핵</span></span>, which we had not <span class="vw">anticipate<span class="tt">예상하다</span></span>d.</div>
+        <div class="sp-ko">또한 우리가 예상하지 못했던 녹은 핵과 관련된 어떤 내부 과정으로 인해 지구가 폭발할 가능성도 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A massive <span class="vw">comet<span class="tt">혜성</span></span> that our <span class="vw">telescope<span class="tt">망원경</span></span>s have not observed may crash into the Earth and destroy the planet.</div>
+        <div class="sp-ko">우리 망원경으로 관찰하지 못한 거대한 혜성이 지구에 충돌하여 행성을 파괴할지도 모른다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">These examples seem a bit <span class="vw">extreme<span class="tt">극단적인</span></span>, but consider the 230,000 people who died in the tsunami in Sumatra in 2004, which resulted from an undersea <span class="vw">megathrust<span class="tt">거대 단층 지진</span></span> earthquake that had not been anticipated.</div>
+        <div class="sp-ko">이러한 예들이 약간 극단적으로 보일 수 있지만, 예상치 못했던 해저 거대 단층 지진으로 인해 2004년 수마트라 쓰나미로 사망한 23만 명의 사람들을 생각해 보라.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The most reasonable prediction on that day was that it would be an average day, like so many days before it, not that a massive wave was going to destroy many thousands of lives; tragically, such was the case.</div>
+        <div class="sp-ko">그날 가장 합리적인 예측은 그 이전의 수많은 날들처럼 평범한 하루가 될 것이라는 것이었지, 거대한 파도가 수만 명의 생명을 앗아갈 것이라는 것은 아니었다. 비극적이게도, 사실은 그러했다(예상치 못한 재난이 발생했다).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The limitation of knowledge in predicting the future.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(미래 예측에 있어서 지식의 한계)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>The knowledge problem becomes most apparent when we consider our ability to predict the future.</td>
+          <td>지식의 문제는 우리가 미래를 예측하는 능력을 논할 때 가장 명백해진다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev 1 (common assumption)</span></td>
+          <td>Although people assume they know that predictable events will occur, such events are never absolutely certain because unexpected possibilities always remain.</td>
+          <td>사람들은 예측 가능한 사건이 일어날 것이라 확신하지만, 예상치 못한 가능성(태양 소멸, 지구 폭발 등)이 항상 존재하기에 절대적으로 확실한 것은 없다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Dev 2 (real case)</span></td>
+          <td>The 2004 tsunami in Sumatra illustrates how an ordinary day can suddenly turn into a catastrophe.</td>
+          <td>2004년 수마트라 쓰나미는 평범해 보였던 하루가 어떻게 갑자기 대재앙으로 바뀔 수 있는지를 보여주는 실제 사례이다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>Therefore, our predictions about the future, no matter how reasonable, can never be completely certain.</td>
+          <td>그러므로 미래에 대한 우리의 예측은 아무리 합리적이더라도 결코 완벽하게 확실할 수 없다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">evident</td><td class="vw-mean">명백한, 눈에 띄는</td></tr>
+        <tr><td class="vw-word">predict</td><td class="vw-mean">예측하다</td></tr>
+        <tr><td class="vw-word">swell</td><td class="vw-mean">부풀어 오르다</td></tr>
+        <tr><td class="vw-word">massively</td><td class="vw-mean">거대하게, 엄청나게</td></tr>
+        <tr><td class="vw-word">consume</td><td class="vw-mean">집어삼키다, 소멸시키다, 소비하다</td></tr>
+        <tr><td class="vw-word">consistent</td><td class="vw-mean">일치하는, 일관된</td></tr>
+        <tr><td class="vw-word">explode</td><td class="vw-mean">폭발하다</td></tr>
+        <tr><td class="vw-word">anticipate</td><td class="vw-mean">예상하다, 기대하다</td></tr>
+        <tr><td class="vw-word">comet</td><td class="vw-mean">혜성</td></tr>
+        <tr><td class="vw-word">telescope</td><td class="vw-mean">망원경</td></tr>
+        <tr><td class="vw-word">extreme</td><td class="vw-mean">극단적인</td></tr>
+        <tr><td class="vw-word">molten core</td><td class="vw-mean">녹은 핵</td></tr>
+        <tr><td class="vw-word">megathrust</td><td class="vw-mean">거대 단층 지진</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p6">
+  <div class="p-header">
+    <div class="p-code">#강 01 · #쪽 011 · #번 006 · #문항코드 26007-0006</div>
+    <div class="p-title">The Importance of True Acceptance</div>
+    <div class="p-title-ko">어려운 상황에 대한 진정한 수용의 중요성 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Accepting or being at peace with things isn't easy. It takes time, patience and a fair dose of courage.</p>
+      <p class="plain-sent">True acceptance isn't about trying to make something go away, as in, 'If I accept this then it will go away'.</p>
+      <p class="plain-sent">That's a good way to get dispirited when the problem, the thing, doesn't go away.</p>
+      <p class="plain-sent">Using acceptance to make something go away is actually non-acceptance masquerading as acceptance in order to get rid of that towards which you have a negative attitude.</p>
+      <p class="plain-sent">Rather than getting dispirited we would be better to notice what happens when we fight with a situation or experience.</p>
+      <p class="plain-sent">It escalates! We could then wonder what would happen if we stopped fighting with it.</p>
+      <p class="plain-sent">Through true acceptance, the impact of such experiences starts to diminish and in their own time these experiences impact us less often.</p>
+      <p class="plain-sent">It's as if we've been visited by a stray dog that keeps coming back because we keep feeding it, but soon it loses interest and goes away when it is not being fed.</p>
+      <p class="plain-sent"><span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> Acceptance works only if it makes the problem go away.</div>
+        <div class="choice"><span class="cn">②</span> Focusing on problems causes them to persist in our lives.</div>
+        <div class="choice"><span class="cn">③</span> Seeking attention is a way for individuals to be comfortable.</div>
+        <div class="choice"><span class="cn">④</span> We perform better when we receive recognition for our effort.</div>
+        <div class="choice"><span class="cn">⑤</span> Pursuing popularity keeps people coming back into social circles.</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">② Focusing on problems causes them to persist in our lives.</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 힘든 상황이나 문제를 다루는 '진정한 수용(True acceptance)'에 대한 지문입니다.<br><br>
+        문제를 없애버리기 위해 억지로 수용하는 척하는 것은 가짜 수용(non-acceptance)이며, 우리가 상황과 싸우려 할수록 오히려 문제는 더 악화(escalates)된다고 설명합니다. 이를 먹이를 주면 계속 찾아오는 **'떠돌이 개(stray dog)'**에 비유했습니다.<br><br>
+        개에게 주는 '먹이'는 바로 우리가 문제에 쏟는 '관심(Attention)'입니다. 먹이(관심)를 주지 않고 진정으로 내버려 둘 때(수용할 때) 문제는 스스로 사라지게 되죠. 따라서 빈칸에 들어갈 결론은 **'문제에 집중하는 것(관심을 주는 것)이 우리 삶에 문제를 지속하게 만든다'**는 ②번이 정답입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Accepting or being at peace with / <span class="vw">things<span class="tt">상황, 일</span></span> isn't easy. It takes time, <span class="vw">patience<span class="tt">인내</span></span> and a <span class="vw">fair<span class="tt">상당한</span></span> <span class="vw">dose<span class="tt">약, 분량</span></span> of <span class="vw">courage<span class="tt">용기</span></span>.</div>
+        <div class="sp-ko">상황을 받아들이거나 평화롭게 지내는 것은 쉽지 않다. 그것은 시간, 인내, 그리고 상당한 양의 용기를 필요로 한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">True <span class="vw">acceptance<span class="tt">수용</span></span> / isn't about trying to make something go away, as in, 'If I accept this then it will go away'.</div>
+        <div class="sp-ko">진정한 수용은 '내가 이것을 받아들이면 그것이 사라질 거야'와 같이 무언가를 사라지게 하려고 노력하는 것이 아니다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">That's a good way to get <span class="vw">dispirited<span class="tt">낙담한</span></span> / when the problem, the thing, doesn't go away.</div>
+        <div class="sp-ko">그것은 그 문제, 그 일(상황)이 사라지지 않을 때 낙담하게 되는 좋은(쉬운) 방법이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Using acceptance / to make something go away // is actually non-acceptance <span class="vw">masquerade as<span class="tt">~로 위장하다</span></span>ing as acceptance / in order to get rid of that (= things) / towards which you have a negative attitude.</div>
+        <div class="sp-ko">무언가를 사라지게 하기 위해 수용을 사용하는 것은 사실 부정적인 태도를 가지고 있는 대상(that)을 제거하기 위해 수용으로 위장한 비수용(받아들이지 않음)이다. <span class="sp-note">★ masquerading as: 앞의 명사를 꾸며주는 현재분사구</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Rather than getting dispirited / we would be better to notice / what happens when we fight with a situation or experience.</div>
+        <div class="sp-ko">낙담하기보다는 우리가 상황이나 경험과 싸울 때 무슨 일이 일어나는지 주목하는 것이 더 나을 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It <span class="vw">escalate<span class="tt">악화되다, 상승하다</span></span>s! We could then wonder what would happen / if we stopped fighting with it (= a situation or experience).</div>
+        <div class="sp-ko">그것은 악화된다! 그러면 우리는 만약 우리가 그것과 싸우는 것을 멈춘다면 무슨 일이 일어날지 궁금해할 수 있다. <span class="sp-note">★ 가정법 과거 문장: 현재 사실에 대한 가정을 나타냄</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Through true acceptance, the impact of such experiences starts to <span class="vw">diminish<span class="tt">줄어들다</span></span> and <span class="vw">in one's own time<span class="tt">각자의 속도로, 때가 되면</span></span> these experiences impact us less often.</div>
+        <div class="sp-ko">진정한 수용을 통해, 그러한 경험들의 영향력은 줄어들기 시작하고, 때가 되면 이러한 경험들은 우리에게 덜 자주 영향을 미치게 된다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It's as if we've been visited by a <span class="vw">stray<span class="tt">길 잃은</span></span> dog that keeps coming back because we keep feeding it, but soon it loses interest and goes away when it is not being fed.</div>
+        <div class="sp-ko">마치 우리가 계속 먹이를 주어서 계속 돌아오는 떠돌이 개가 찾아온 것과 같지만, 곧 먹이를 주지 않으면 그것은 흥미를 잃고 떠나버린다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="ans">Focusing on problems causes them to persist in our lives.</span> (Attention is the food that keeps it coming back.)</div>
+        <div class="sp-ko">문제에 집중하는 것은 그것들이 우리 삶에 지속되도록 만든다. (관심은 그것이 계속 돌아오게 만드는 먹이이다.)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The importance of true acceptance: Focusing on problems causes them to persist in our lives.
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(진정한 수용의 중요성: 문제에 집중하는 것은 오히려 문제를 지속하게 만든다.)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Accepting situations and maintaining inner peace is challenging, requiring time, patience, and courage.</td>
+          <td>상황을 받아들이고 내면의 평화를 유지하는 것은 도전적이며, 시간과 인내, 용기가 필요하다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Development</span></td>
+          <td>True acceptance does not mean trying to make problems disappear; instead, it involves allowing experiences without resisting or attempting to control them.</td>
+          <td>진정한 수용이란 문제를 억지로 사라지게 하려는 것이 아니다. 오히려 통제하거나 저항하지 않고 경험을 허용하는 것이다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span></td>
+          <td>When we genuinely accept situations, their negative impact diminishes over time, allowing us to respond with greater calm and less emotional escalation.</td>
+          <td>진정으로 수용할 때 그것의 부정적 영향력은 점차 줄어들며, 감정적 악화 없이 침착하게 반응할 수 있게 된다 (관심을 끄면 문제는 떠난다).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">things</td><td class="vw-mean">상황, 일</td></tr>
+        <tr><td class="vw-word">patience</td><td class="vw-mean">인내</td></tr>
+        <tr><td class="vw-word">fair</td><td class="vw-mean">상당한, 꽤 많은</td></tr>
+        <tr><td class="vw-word">dose</td><td class="vw-mean">약, 분량</td></tr>
+        <tr><td class="vw-word">courage</td><td class="vw-mean">용기</td></tr>
+        <tr><td class="vw-word">acceptance</td><td class="vw-mean">수용</td></tr>
+        <tr><td class="vw-word">dispirited</td><td class="vw-mean">낙담한, 기가 꺾인</td></tr>
+        <tr><td class="vw-word">escalate</td><td class="vw-mean">악화되다, 상승하다</td></tr>
+        <tr><td class="vw-word">diminish</td><td class="vw-mean">줄어들다, 약해지다</td></tr>
+        <tr><td class="vw-word">in one's own time</td><td class="vw-mean">각자의 속도로, 때가 되면</td></tr>
+        <tr><td class="vw-word">masquerade as</td><td class="vw-mean">~로 위장하다</td></tr>
+        <tr><td class="vw-word">stray</td><td class="vw-mean">길 잃은</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p1','p2','p3','p4','p5','p6'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

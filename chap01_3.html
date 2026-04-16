@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · 1강 완전 분석 (7~9번)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#7c3d12;--accent2:#b05a1e;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;padding:7px 12px;color:var(--ink2);}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:13px;padding:16px 20px;background:var(--orange-bg);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-top:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;font-size:.9rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);}
+.step-badge{background:var(--accent2);color:#fff;font-size:.62rem;padding:2px 8px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · 1강 완전 분석 (7~9번)</div>
+      <div class="hdr-sub">2026 심화영어독해 II — 선생님 필기 원본 100% 반영 (진하 전용)</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p7')">07번</button>
+      <button class="nb" onclick="show('p8')">08번</button>
+      <button class="nb" onclick="show('p9')">09번</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">Focus Framework · 1강 (7번~9번)</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">기존과 동일한 CSS 디자인, 단어 툴팁, 일타강사 해설, 구문 분석이 모두 적용되었습니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p7')"><div class="toc-en">#007 Evaluating Coincidences</div><div class="toc-ko">우연의 일치를 평가하는 방법과 그 흔함</div></a>
+    <a class="toc-card" onclick="show('p8')"><div class="toc-en">#008 Image Scanning in Visual Mental Imagery</div><div class="toc-ko">시각적 심상에서의 이미지 스캐닝과 거리의 속성</div></a>
+    <a class="toc-card" onclick="show('p9')"><div class="toc-en">#009 Social Media as an E-Commerce Platform</div><div class="toc-ko">전자상거래 플랫폼으로서의 소셜 미디어의 진화</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p7">
+  <div class="p-header">
+    <div class="p-code">#강 01 · #쪽 012 · #번 007 · #문항코드 26007-0007</div>
+    <div class="p-title">Evaluating Coincidences</div>
+    <div class="p-title-ko">우연의 일치를 평가하는 방법과 그 흔함 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">There are two classic problems that give us mathematically proper ways to evaluate coincidences.</p>
+      <p class="plain-sent">One is a counterintuitive poser: the birthday problem, which tells us that in any group of twenty-three people the odds are better than even that two people in the group will have the same birthday.</p>
+      <p class="plain-sent">The other is the monkey problem, which asks: if given a large enough amount of time, could a monkey, randomly hitting the keys of a computer keyboard, write the first line of a Shakespeare sonnet?</p>
+      <p class="plain-sent">These two problems, along with [the law of large numbers], [the theory of hidden variables], and [the law of truly large numbers], give us a reasonable understanding of why coincidences happen far more frequently than we expect.</p>
+      <p class="plain-sent">This last law, the law of truly large numbers, is a philosophical adage.</p>
+      <p class="plain-sent">In a nutshell, it tells us that if there is any likelihood that something could happen, no matter how small, it's bound to happen at some time.</p>
+      <p class="plain-sent">It's not a theorem that can be proven.</p>
+      <p class="plain-sent">After all, I used the phrase "bound to happen," which is as ambiguous as any phrase can be.</p>
+      <p class="plain-sent">But it gives a sense of <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> why certain events seem unlikely</div>
+        <div class="choice"><span class="cn">②</span> just how common coincidences are</div>
+        <div class="choice"><span class="cn">③</span> the limits to certain event probability</div>
+        <div class="choice"><span class="cn">④</span> what the randomness of chaos can provide</div>
+        <div class="choice"><span class="cn">⑤</span> the extent of denial in events being truly random</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">② just how common coincidences are</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 우연의 일치(coincidences)를 평가하는 여러 고전적 문제와 법칙에 대한 글입니다. 아무리 일어날 확률이 희박해 보이는 일이라도, 시도 횟수나 시간이 엄청나게 많아지면 결국 <strong>'반드시 일어나게 되어 있다(bound to happen)'</strong>는 것이 핵심입니다. 따라서 우리가 생각하는 기적 같은 우연의 일치도 수학적/철학적 관점에서는 생각보다 꽤 자주 발생합니다. 결론적으로 이러한 논의들은 <strong>'우연의 일치가 실제로 얼마나 흔한 일인지'</strong>를 이해하게 해준다는 ②번이 정답입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">There are two <span class="vw">classic<span class="tt">전형적인, 고전적인</span></span> problems that give us <span class="vw">mathematically<span class="tt">수학적으로</span></span> proper ways to <span class="vw">evaluate<span class="tt">평가하다</span></span> <span class="vw">coincidence<span class="tt">우연의 일치</span></span>s.</div>
+        <div class="sp-ko">우리에게 우연의 일치를 평가하는 수학적으로 적절한 방법을 제공하는 두 가지 전형적인 문제가 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">One is a <span class="vw">counterintuitive<span class="tt">직관에 반하는</span></span> <span class="vw">poser<span class="tt">어려운 문제, 난제</span></span>: the birthday problem, / which tells us that in any group of twenty-three people the <span class="vw">odds<span class="tt">확률</span></span> are <span class="vw">better than even<span class="tt">반반(50%)보다 높은</span></span> / that two people in the group will have the same birthday.</div>
+        <div class="sp-ko">하나는 직관에 반하는 난제인 '생일 문제'인데, / 이것은 23명으로 구성된 어떤 집단에서든 / 두 사람이 같은 생일을 가질 확률이 반반(50%)보다 높다는 것을 우리에게 말해준다. <span class="sp-note">★ which: 계속적 용법 관계대명사 / that: odds를 수식하는 동격절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The other is the monkey problem, which asks: / if given a large enough amount of time, / could a monkey, <span class="vw">randomly<span class="tt">무작위로</span></span> hitting the keys of a computer keyboard, / write the first line of a Shakespeare sonnet?</div>
+        <div class="sp-ko">다른 하나는 원숭이 문제인데, 다음과 같이 묻는다: / 만약 충분히 많은 시간이 주어진다면, / 컴퓨터 키보드의 키를 무작위로 누르는 원숭이가 / 셰익스피어 소네트의 첫 줄을 쓸 수 있을까?</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">These two problems, along with [the law of large numbers], [the theory of hidden <span class="vw">variable<span class="tt">변수</span></span>s], and [the law of truly large numbers], // give us a <span class="vw">reasonable<span class="tt">합리적인</span></span> understanding of / why coincidences happen far more frequently than we expect.</div>
+        <div class="sp-ko">이 두 문제는, [대수의 법칙], [숨은 변수 이론], 그리고 [진정으로 큰 수의 법칙]과 함께 // 우연의 일치가 우리가 기대하는 것보다 훨씬 더 자주 일어나는 이유에 대한 합리적인 이해를 제공한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This last law, the law of truly large numbers, is a <span class="vw">philosophical<span class="tt">철학적인</span></span> <span class="vw">adage<span class="tt">격언, 속담</span></span>.</div>
+        <div class="sp-ko">이 마지막 법칙, 즉 '진정으로 큰 수의 법칙'은 철학적인 격언이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In a nutshell, it tells us / that if there is any <span class="vw">likelihood<span class="tt">가능성, 확률</span></span> that something could happen, no matter how small, / it's bound to happen at some time.</div>
+        <div class="sp-ko">간단히 말해서, 그것은 아무리 작더라도 무언가가 일어날 가능성이 조금이라도 있다면 / 그것은 언젠가 반드시 일어나게 되어 있다는 것을 우리에게 말해준다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It's not a <span class="vw">theorem<span class="tt">정리, 법칙</span></span> that can be proven.</div>
+        <div class="sp-ko">그것은 증명될 수 있는 수학적 정리(법칙)가 아니다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">After all, I used the phrase "bound to happen," / which is as ambiguous as any phrase can be.</div>
+        <div class="sp-ko">어쨌든, 나는 "반드시 일어난다"라는 문구를 사용했는데, / 이는 어떤 문구 못지않게 모호한 표현이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But it gives a sense of <span class="ans">just how common coincidences are</span>.</div>
+        <div class="sp-ko">하지만 그것은 우연의 일치가 실제로 얼마나 흔한지에 대한 감을 제공한다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The evaluation of coincidences and their commonality
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(우연의 일치에 대한 평가와 그것이 얼마나 흔한지에 대하여)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span></td>
+          <td>Evaluating Coincidences</td>
+          <td>수학적으로 우연의 일치를 평가하는 것은 어려울 수 있지만, 두 가지 고전적인 문제가 통찰력을 제공한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev 1</span></td>
+          <td>Two Problems</td>
+          <td>생일 문제는 무리에서 생일이 같을 확률이 직관보다 높음을 보여주고, 원숭이 문제는 무작위 사건도 시간이 충분하면 일어날 수 있음을 보여준다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Dev 2</span></td>
+          <td>Philosophical Adage</td>
+          <td>'진정으로 큰 수의 법칙'은 확률이 0이 아닌 사건은 언젠가 반드시 발생한다고 말하며, 우연의 일치의 불가피성을 강조한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>Ambiguity and Commonality</td>
+          <td>"반드시 일어난다"는 말은 모호하지만, 우연의 일치가 놀라울 정도로 흔하며 비범한 것으로 여겨져선 안 됨을 전달한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">classic</td><td class="vw-mean">전형적인, 고전적인</td></tr>
+        <tr><td class="vw-word">mathematically</td><td class="vw-mean">수학적으로</td></tr>
+        <tr><td class="vw-word">evaluate</td><td class="vw-mean">평가하다</td></tr>
+        <tr><td class="vw-word">coincidence</td><td class="vw-mean">우연의 일치</td></tr>
+        <tr><td class="vw-word">counterintuitive</td><td class="vw-mean">직관에 반하는</td></tr>
+        <tr><td class="vw-word">odds</td><td class="vw-mean">확률, 승산</td></tr>
+        <tr><td class="vw-word">better than even</td><td class="vw-mean">반반(50%)보다 높은</td></tr>
+        <tr><td class="vw-word">randomly</td><td class="vw-mean">무작위로</td></tr>
+        <tr><td class="vw-word">variable</td><td class="vw-mean">변수</td></tr>
+        <tr><td class="vw-word">reasonable</td><td class="vw-mean">합리적인, 타당한</td></tr>
+        <tr><td class="vw-word">philosophical</td><td class="vw-mean">철학적인</td></tr>
+        <tr><td class="vw-word">likelihood</td><td class="vw-mean">가능성, 확률</td></tr>
+        <tr><td class="vw-word">poser</td><td class="vw-mean">어려운 문제, 난제</td></tr>
+        <tr><td class="vw-word">adage</td><td class="vw-mean">격언, 속담</td></tr>
+        <tr><td class="vw-word">theorem</td><td class="vw-mean">(수학적) 정리, 법칙</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p8">
+  <div class="p-header">
+    <div class="p-code">#강 01 · #쪽 013 · #번 008 · #문항코드 26007-0008</div>
+    <div class="p-title">Image Scanning in Visual Mental Imagery</div>
+    <div class="p-title-ko">시각적 심상에서의 이미지 스캐닝과 거리의 속성 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The phrase "image scanning" refers to the cognitive processes that operate on visual mental images when a person moves his or her attention across imagined objects.</p>
+      <p class="plain-sent">The first image scanning paradigm was designed to investigate the spatial properties of images.</p>
+      <p class="plain-sent">In the original experiment, participants memorized drawings of elongated objects (such as a tower).</p>
+      <p class="plain-sent">They were then asked to visualize one of the objects and to focus at one of its ends (for example, the bottom of the tower).</p>
+      <p class="plain-sent">Lastly, participants heard the name of a feature on the object (e.g., a flag), and they had to look for it.</p>
+      <p class="plain-sent">Participants were not instructed to scan their image, but were simply told to focus on the original location until the probe was delivered, and then to focus on the named part or feature.</p>
+      <p class="plain-sent">They pressed one button when they had focused on the named part, and another button if they failed to find it.</p>
+      <p class="plain-sent">The critical finding was that response times increased linearly with increasing distances from the focus point to the named part of the object.</p>
+      <p class="plain-sent">This finding was taken as evidence that distance, as traversed by image scanning, <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> becomes more authentic in a virtual world</div>
+        <div class="choice"><span class="cn">②</span> is computed in a non-spatial, symbolic manner</div>
+        <div class="choice"><span class="cn">③</span> is genuinely represented in visual mental images</div>
+        <div class="choice"><span class="cn">④</span> becomes a non-spatial format that lacks continuity</div>
+        <div class="choice"><span class="cn">⑤</span> loses measurement precision when mentally reversed</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">③ is genuinely represented in visual mental images</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 우리 머릿속에 떠올리는 마음속 이미지(심상)가 실제로 공간적인 속성(거리 등)을 띠고 있는지를 확인하는 심리학 실험입니다. 실험 결과, 머릿속에서 집중하고 있던 한 지점(탑의 밑바닥)으로부터 찾아야 할 지점(깃발)이 <strong>'멀리 떨어져 있을수록' 반응을 보이는 데 시간이 더 오래 걸렸습니다.</strong> 즉, 거리가 멀면 시선을 이동하는 데 시간이 걸리는 실제 물리적 세상처럼, 우리 머릿속 이미지 안에서도 거리가 작용한다는 증거입니다. 따라서 빈칸에는 <strong>'거리가 시각적 심상에 진정으로 표현된다'</strong>는 ③번이 가장 적절합니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The phrase "image scanning" refers to the <span class="vw">cognitive<span class="tt">인지적인</span></span> processes that <span class="vw">operate<span class="tt">작동하다</span></span> on visual <span class="vw">mental image<span class="tt">심상 (마음속 이미지)</span></span>s / when a person moves his or her attention across imagined objects.</div>
+        <div class="sp-ko">"이미지 스캐닝"이라는 문구는 사람이 상상된 물체 위로 주의를 이동할 때 / 시각적 심상에 작용하는 인지 과정을 의미한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The first image scanning <span class="vw">paradigm<span class="tt">패러다임, 체계</span></span> was designed / to <span class="vw">investigate<span class="tt">조사하다</span></span> the <span class="vw">spatial<span class="tt">공간적인</span></span> <span class="vw">property<span class="tt">속성, 특성</span></span>ies of images.</div>
+        <div class="sp-ko">최초의 이미지 스캐닝 패러다임은 / 이미지의 공간적 속성을 조사하기 위해 설계되었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In the original <span class="vw">experiment<span class="tt">실험</span></span>, participants memorized drawings of <span class="vw">elongated<span class="tt">길쭉한</span></span> objects (such as a tower).</div>
+        <div class="sp-ko">원래의 실험에서 참가자들은 (탑과 같은) 길쭉한 물체의 그림을 암기했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They were then asked to <span class="vw">visualize<span class="tt">시각화하다, 상상하다</span></span> one of the objects / and to focus at one of its ends (for example, the bottom of the tower).</div>
+        <div class="sp-ko">그런 다음 그들은 그 물체 중 하나를 마음속에 그리고(시각화하고) / 그것의 한쪽 끝(예를 들어, 탑의 맨 아래)에 집중하도록 요구받았다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Lastly, participants heard the name of a <span class="vw">feature<span class="tt">특징, 부위</span></span> on the object (e.g., a flag), / and they had to look for it.</div>
+        <div class="sp-ko">마지막으로, 참가자들은 물체의 한 부분(예를 들어, 깃발)의 이름을 들었고, / 그들은 그것을 찾아야 했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Participants were not <span class="vw">instruct<span class="tt">지시하다</span></span>ed to scan their image, / but were simply told <span class="gr">[ to focus on the original location / until the <span class="vw">probe<span class="tt">탐색 자극 (조사)</span></span> was delivered, / and then to focus on the named part or feature.]</span></div>
+        <div class="sp-ko">참가자들은 이미지를 스캔하라는 지시를 받지 않았고, / 단지 탐색 자극이 주어질 때까지 원래의 위치에 집중한 다음, / 이름이 불린 부위나 특징에 집중하라는 말만 들었다. <span class="sp-note">★ not A but B: A가 아니라 B인 / to focus ~ and then to focus ~ 병렬 구조</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They pressed one button / when they had focused on the named part, / and another button if they failed to find it.</div>
+        <div class="sp-ko">그들은 명명된 부위에 집중했을 때 한 버튼을 눌렀고, / 그것을 찾는 데 실패하면 다른 버튼을 눌렀다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The <span class="vw">critical<span class="tt">중대한, 결정적인</span></span> finding was / that response times increased <span class="vw">linearly<span class="tt">선형적으로 (비례하여)</span></span> with increasing distances / from the focus point to the named part of the object.</div>
+        <div class="sp-ko">결정적인 발견은 / 초점 지점부터 물체의 명명된 부위까지의 거리가 증가함에 따라 / 반응 시간도 선형적으로(비례하여) 증가했다는 점이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This finding was taken as <span class="vw">evidence<span class="tt">증거</span></span> / that distance, as <span class="vw">traverse<span class="tt">가로지르다, 횡단하다</span></span>d by image scanning, / <span class="ans">is genuinely represented in visual mental images</span>.</div>
+        <div class="sp-ko">이 발견은 / 이미지 스캐닝에 의해 횡단되는 거리가 / <span class="ans">시각적 심상에 진정으로 표현된다(실제 공간처럼 존재한다)</span>는 증거로 여겨졌다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      Spatial properties in visual mental imagery
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(시각적 심상에서의 공간적 속성)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Intro</span></td>
+          <td>Definition of Image Scanning</td>
+          <td>"이미지 스캐닝"은 상상된 대상의 부위나 특징을 찾기 위해 시각적 심상을 가로질러 주의가 이동하는 인지 과정을 뜻한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev</span></td>
+          <td>Paradigm and Experiment</td>
+          <td>최초의 패러다임 실험에서, 참가자들은 길쭉한 물체를 외우고 한쪽 끝에 집중한 뒤 명명된 특정 부위를 식별했으며, 이때의 반응 시간이 측정되었다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span></td>
+          <td>Conclusion / Experimental Result</td>
+          <td>실험 결과, 거리에 비례하여 반응 시간이 선형적으로 증가했으며, 이는 인식된 거리(공간)가 시각적 심상 안에 진정으로 보존되어 있음을 나타낸다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">cognitive</td><td class="vw-mean">인지의, 인지적인</td></tr>
+        <tr><td class="vw-word">operate</td><td class="vw-mean">작동하다, 작용하다</td></tr>
+        <tr><td class="vw-word">mental image</td><td class="vw-mean">심상, 마음속에 그리는 이미지</td></tr>
+        <tr><td class="vw-word">paradigm</td><td class="vw-mean">패러다임, 체계, 인식의 틀</td></tr>
+        <tr><td class="vw-word">investigate</td><td class="vw-mean">조사하다</td></tr>
+        <tr><td class="vw-word">spatial</td><td class="vw-mean">공간적인, 공간의</td></tr>
+        <tr><td class="vw-word">property</td><td class="vw-mean">속성, 특성, 재산</td></tr>
+        <tr><td class="vw-word">experiment</td><td class="vw-mean">실험</td></tr>
+        <tr><td class="vw-word">visualize</td><td class="vw-mean">시각화하다, 마음속에 그리다</td></tr>
+        <tr><td class="vw-word">feature</td><td class="vw-mean">특징, 부위</td></tr>
+        <tr><td class="vw-word">instruct</td><td class="vw-mean">지시하다</td></tr>
+        <tr><td class="vw-word">critical</td><td class="vw-mean">중대한, 결정적인, 비판적인</td></tr>
+        <tr><td class="vw-word">linearly</td><td class="vw-mean">선형적으로, 비례하여</td></tr>
+        <tr><td class="vw-word">evidence</td><td class="vw-mean">증거</td></tr>
+        <tr><td class="vw-word">elongated</td><td class="vw-mean">길쭉한, 가늘고 긴</td></tr>
+        <tr><td class="vw-word">probe</td><td class="vw-mean">탐색 자극, 탐색침, 조사</td></tr>
+        <tr><td class="vw-word">traverse</td><td class="vw-mean">가로지르다, 횡단하다</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p9">
+  <div class="p-header">
+    <div class="p-code">#강 01 · #쪽 014 · #번 009 · #문항코드 26007-0009</div>
+    <div class="p-title">Social Media as an E-Commerce Platform</div>
+    <div class="p-title-ko">전자상거래 플랫폼으로서의 소셜 미디어의 진화 · 빈칸 추론</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Social media's <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> is a significant milestone that enabled it to become a platform for organizations.</p>
+      <p class="plain-sent">Social media was initially and mainly used for communication with friends and family.</p>
+      <p class="plain-sent">But with the popularity of some platforms, social media has turned into a vital tool for businesses seeking to sell their products online.</p>
+      <p class="plain-sent">Social media is now used by businesses to promote their products and offerings as well as provide a direct shopping option for buyers.</p>
+      <p class="plain-sent">Influencer marketing is another way that social media has evolved into a platform for businesses.</p>
+      <p class="plain-sent">Influencers are those users who have a sizable social media following and are recognized as authorities or thought leaders in their specialized field.</p>
+      <p class="plain-sent">Influencer marketing allows businesses to reach the users' followers, who are more likely to trust suggestions from people they follow on social media.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block">
+      <div class="q-type">빈칸 추론</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> decline in popularity among younger users</div>
+        <div class="choice"><span class="cn">②</span> transformation into an e-commerce platform</div>
+        <div class="choice"><span class="cn">③</span> return to its original purpose of social bonding</div>
+        <div class="choice"><span class="cn">④</span> change in user privacy settings across platforms</div>
+        <div class="choice"><span class="cn">⑤</span> replacement of traditional media like TV and radio</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 및 일타강사 해설</div>
+      <div class="ans-num">정답: <span class="ans">② transformation into an e-commerce platform</span></div>
+      <div class="ans-exp">
+        <strong>💡 일타강사 팁:</strong> 과거에는 친구나 가족과 소통하기 위한 수단이었던 소셜 미디어가, 오늘날 기업들이 제품을 홍보하고 직접 쇼핑 옵션을 제공하는 <strong>비즈니스 판매 도구</strong>로 진화했다는 내용입니다. 전문 분야의 오피니언 리더들을 활용하는 '인플루언서 마케팅'도 이러한 상업적 진화의 일환입니다. 따라서 빈칸에 들어갈 소셜 미디어의 가장 큰 변화는 <strong>'전자상거래 플랫폼으로의 변모'</strong>를 의미하는 ②번이 완벽한 정답입니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 100% 원문 반영 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Social media's <span class="ans">transformation into an e-commerce platform</span> / is a <span class="vw">significant<span class="tt">중대한, 의미 있는</span></span> <span class="vw">milestone<span class="tt">획기적인 사건, 이정표</span></span> <span class="gr">that enabled it (= social media) to become a platform for organizations</span>.</div>
+        <div class="sp-ko">소셜 미디어의 전자상거래 플랫폼으로의 변모는 / 그것(소셜 미디어)이 조직을 위한 플랫폼이 될 수 있게 해 준 중대한 이정표(획기적 사건)이다. <span class="sp-note">★ enable + 목적어 + to V : ~가 ...하는 것을 가능하게 하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Social media was <span class="vw">initially<span class="tt">처음에</span></span> and mainly used / for communication with friends and family.</div>
+        <div class="sp-ko">소셜 미디어는 처음에는, 그리고 주로 친구 및 가족과의 의사소통을 위해 사용되었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But with the popularity of some platforms, / social media has turned into a <span class="vw">vital<span class="tt">필수적인, 중요한</span></span> tool for businesses / seeking to sell their products online.</div>
+        <div class="sp-ko">하지만 일부 플랫폼의 인기와 함께, / 소셜 미디어는 온라인으로 제품을 판매하고자 하는 기업들에게 필수적인 도구로 변모했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Social media is now used by businesses / to promote their products and offerings / as well as provide a direct shopping option for buyers.</div>
+        <div class="sp-ko">이제 기업들은 제품과 제공품을 홍보할 뿐만 아니라 / 구매자에게 직접 쇼핑 옵션을 제공하기 위해 소셜 미디어를 사용한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Influencer marketing is another way / <span class="gr">that social media has <span class="vw">evolve<span class="tt">진화하다, 발달하다</span></span>d into a platform for businesses</span>.</div>
+        <div class="sp-ko">인플루언서 마케팅은 / 소셜 미디어가 기업을 위한 플랫폼으로 진화한 또 다른 방식이다. <span class="sp-note">★ that: 앞의 way를 꾸며주는 관계부사 대용의 동격/관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Influencers are those users / <span class="gr">who have a <span class="vw">sizable<span class="tt">꽤 큰, 꽤 많은</span></span> social media following / and are recognized as <span class="vw">authority<span class="tt">권위자</span></span>ies or <span class="vw">thought leader<span class="tt">오피니언 리더, 사상적 지도자</span></span>s in their <span class="vw">specialized<span class="tt">전문적인</span></span> field</span>.</div>
+        <div class="sp-ko">인플루언서란 꽤 많은 소셜 미디어 팔로워를 보유하고 있으며 / 자신들의 전문 분야에서 권위자나 사상적 리더로 인정받는 사용자들이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Influencer marketing allows businesses to reach the users' followers, / <span class="gr">who are more likely to trust suggestions / from people they follow on social media</span>.</div>
+        <div class="sp-ko">인플루언서 마케팅은 기업들이 그 사용자(인플루언서)의 팔로워들에게 다가갈 수 있게 해 주는데, / 이들(팔로워)은 소셜 미디어에서 자신이 팔로우하는 사람들의 제안을 더 신뢰할 가능성이 높다. <span class="sp-note">★ who: 앞의 followers를 부연 설명하는 계속적 용법의 관계대명사</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      The transformation of social media into an e-commerce platform
+      <br><span style="font-size:0.8rem; color:var(--ink3);">(전자상거래 플랫폼으로의 소셜 미디어의 변모)</span>
+    </div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Intro</span></td>
+          <td>Social Media as an E-Commerce Platform</td>
+          <td>소셜 미디어가 친구와 가족 간의 소통 도구에서 조직과 기업을 위한 플랫폼으로 진화한 것은 역할에 있어 큰 변화이다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Dev 1</span></td>
+          <td>Platform for Product Sales (S1)</td>
+          <td>이제 기업들은 제품을 홍보하고 직접 쇼핑 옵션을 제공하기 위해 소셜 미디어를 적극 활용한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Dev 2</span></td>
+          <td>Emergence of Influencers and Effectiveness of Influencer Marketing (S2)</td>
+          <td>기업은 잠재 고객에게 도달하기 위해 인플루언서를 활용하며, 이는 팔로워의 신뢰를 바탕으로 전자상거래 플랫폼으로서의 소셜 미디어의 효율성을 높인다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Focus Vocabulary</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">significant</td><td class="vw-mean">중대한, 의미 있는</td></tr>
+        <tr><td class="vw-word">initially</td><td class="vw-mean">처음에, 초기에</td></tr>
+        <tr><td class="vw-word">vital</td><td class="vw-mean">필수적인, 매우 중요한</td></tr>
+        <tr><td class="vw-word">evolve</td><td class="vw-mean">진화하다, 발달하다</td></tr>
+        <tr><td class="vw-word">sizable</td><td class="vw-mean">꽤 큰, 꽤 많은</td></tr>
+        <tr><td class="vw-word">authority</td><td class="vw-mean">권위자, 당국</td></tr>
+        <tr><td class="vw-word">thought leader</td><td class="vw-mean">사상적 지도자, 오피니언 리더</td></tr>
+        <tr><td class="vw-word">specialized</td><td class="vw-mean">전문적인, 전문화된</td></tr>
+        <tr><td class="vw-word">milestone</td><td class="vw-mean">획기적인 사건, 중요한 단계(이정표)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p7','p8','p9'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
