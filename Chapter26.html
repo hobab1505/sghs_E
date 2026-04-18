@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · Chapter 26 완전 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#4f46e5;--accent2:#4338ca;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;--purple-bg:linear-gradient(135deg, #7c3aed, #4f46e5);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--purple-bg);color:#fefcf8;padding:24px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.65rem;opacity:.8;margin-bottom:5px;font-weight:700;letter-spacing:.05em;}
+.p-title{font-family:'Noto Sans KR',sans-serif;font-size:1.45rem;font-weight:700;}
+.p-title-ko{font-size:.85rem;opacity:.8;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:6px 10px;border-radius:6px;margin-top:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f5f3ff;border:1px solid rgba(99,102,241,.3);border-radius:6px;padding:16px 20px;}
+.gr-note-ttl{font-weight:700;color:var(--accent);font-size:.85rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-top:16px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:10px;}
+.choices{display:flex;flex-direction:column;gap:10px;}
+.choice{font-size:.87rem;padding:0;color:var(--ink2);line-height:1.6;}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:16px;padding:12px 16px;background:var(--orange-bg);border-radius:6px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:4px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;}
+.ans-num{font-weight:700; color:var(--ink); margin-bottom:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent);padding:15px 20px;font-size:.95rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:10px;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;}
+.step-badge{background:var(--accent);color:#fff;font-size:.62rem;padding:3px 10px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+.kw-pill {display:inline-block; background:var(--border); color:var(--ink2); font-size:0.75rem; padding:3px 10px; border-radius:12px; margin-right:6px; margin-top:6px;}
+.blank-ul {color:#7c3aed; font-weight:700; text-decoration:underline; text-decoration-color:#7c3aed; text-underline-offset:3px;}
+.mi-box {background:#f0fdf4; border:1px solid rgba(16,185,129,.3); border-radius:6px; padding:16px 20px; margin-top:16px;}
+.mi-title {font-weight:700; color:var(--green); font-size:.85rem; margin-bottom:8px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · Chapter 26</div>
+      <div class="hdr-sub">Language, Literature, Art</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p0')">기출 (9월 모평)</button>
+      <button class="nb" onclick="show('p1')">01번 (예술작품의 맥락)</button>
+      <button class="nb" onclick="show('p2')">02번 (의사소통 신호)</button>
+      <button class="nb" onclick="show('p3')">03번 (소설과 공감)</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Noto Sans KR',sans-serif;font-size:1.7rem;margin-bottom:8px;font-weight:700;">Chapter 26 · 언어, 문학, 예술</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">선생님 메모 100% 반영: 구문 분석, 문맥상 의미, 어휘 해설 및 <b>빈칸 보라색 밑줄</b>이 완벽하게 복원되었습니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p0')"><div class="toc-en">📖 기출(2026 9월 모평): 문학과 장르 소설의 차이</div><div class="toc-ko">등장인물의 연속성과 변화</div></a>
+    <a class="toc-card" onclick="show('p1')"><div class="toc-en">🎨 1번: 맥락이 예술작품 감상에 미치는 영향</div><div class="toc-ko">작업실과 전시장의 예술작품 차이</div></a>
+    <a class="toc-card" onclick="show('p2')"><div class="toc-en">🗣️ 2번: 의사소통적 신호와 문화적 맥락</div><div class="toc-ko">의도성(Intentionality)에 따른 신호의 해석</div></a>
+    <a class="toc-card" onclick="show('p3')"><div class="toc-en">📚 3번: 소설 읽기와 공감 능력</div><div class="toc-ko">문학이 타인의 감정을 이해하는 데 미치는 영향</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p0">
+  <div class="p-header">
+    <div class="p-code">Chapter 26 · 기출(2026학년도 9월 모평)</div>
+    <div class="p-title">📖 Character Continuity and Change</div>
+    <div class="p-title-ko">순수 문학과 장르 소설/만화에서 등장인물의 연속성과 변화</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">In most fiction, characters' lives are limited to the individual work.</p>
+      <p class="plain-sent">Readers may disagree on the characteristics and traits of fictional figures, and in drama there is room for different interpretations of characters.</p>
+      <p class="plain-sent">However, it is less common for characters in literary fiction to reappear in subsequent works than in genre fiction, where series featuring the same central characters are common.</p>
+      <p class="plain-sent">This is even more pronounced in comics, which are typically serialized in newspaper strips or comic books.</p>
+      <p class="plain-sent">Thus characters introduced in the 1930s, like Superman and Batman, may still enjoy new adventures decades later.</p>
+      <p class="plain-sent">During these characters' long histories, they change in various ways for a variety of reasons.</p>
+      <p class="plain-sent">If a character is created by a single author, like Sherlock Holmes, the character's core traits may change little from story to story, but readers learn more about him with each successive story.</p>
+      <p class="plain-sent">On the other hand, if characters are the work of several hands over decades, they may change considerably.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block" style="margin-top:0;">
+      <div class="q-type">요약문 완성</div>
+      <div class="q-stem">While characters in most literary fiction hardly ever <span class="blank-ul">(A) reappear</span> in successive works, those in genre fiction and comics often do so, and may undergo <span class="blank-ul">(B) changes / transformations</span> in their traits especially when written about by different authors over time.</div>
+      <div class="ans-box">
+        <div class="ans-lbl">요약문 해석</div>
+        <div class="ans-exp">
+          대부분의 순수 문학에서 등장인물들은 후속 작품에 거의 <strong>(A) 다시 등장하지(reappear)</strong> 않지만, 장르 소설이나 만화의 등장인물들은 종종 그렇게 하며, 특히 시간이 지남에 따라 여러 다른 작가들에 의해 쓰일 때 그들의 특성에 <strong>(B) 변화(changes)</strong>를 겪을 수 있다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In most fiction, characters' lives are limited to the individual work.</div>
+        <div class="sp-ko">대부분의 소설에서, 등장인물의 삶은 개별 작품에 국한된다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Readers may disagree on the characteristics and traits of <span class="vw">fictional<span class="tt">허구적인</span></span> figures, and in <span class="vw">drama<span class="tt">희곡, 연극</span></span> there is room for different interpretations of characters.</div>
+        <div class="sp-ko">독자들은 허구적 인물의 특성과 특질에 대해 동의하지 않을 수 있고, 희곡에서는 등장인물에 대한 다양한 해석의 여지가 있다.
+          <span class="sp-note">📝 [선생님 메모] drama: theatrical drama를 뜻하는 것이고, 굳이 이 내용을 언급한 것은 literary fiction에서의 character가 작품의 서사안에서만 완성됨을 강조하기 위 한 것으로 보면 됨.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, it is less common for characters in <span class="vw">literary fiction<span class="tt">순수 문학</span></span> to <span class="vw">reappear<span class="tt">다시 나타나다</span></span> in <span class="vw">subsequent<span class="tt">그 다음의, 후속의</span></span> works than in genre fiction, where series featuring the same central characters are common.</div>
+        <div class="sp-ko">그러나, 동일한 중심인물을 특징으로 하는 시리즈가 흔한 장르 소설에서보다 순수 문학의 등장인물들이 후속 작품에 다시 등장하는 것은 덜 흔하다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This is even more <span class="vw">pronounced<span class="tt">확연한, 두드러진</span></span> in comics, which are typically <span class="vw">serialized<span class="tt">연재되다</span></span> in newspaper strips or comic books.</div>
+        <div class="sp-ko">이것은 만화에서 훨씬 더 확연하게 나타나는데, 만화는 보통 신문 연재만화나 만화책으로 연재된다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Thus characters introduced in the 1930s, like Superman and Batman, may still enjoy new adventures decades later.</div>
+        <div class="sp-ko">따라서 슈퍼맨이나 배트맨처럼 1930년대에 소개된 등장인물들은 수십 년 후에도 여전히 새로운 모험을 즐길 수 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">During these characters' long histories, they change in various ways for a variety of reasons.</div>
+        <div class="sp-ko">이러한 등장인물들의 긴 역사 동안, 그들은 다양한 이유로 여러 가지 방식으로 변한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">If a character is created by a single author, like Sherlock Holmes, the character's core traits may change little from story to story, but readers learn more about him with each <span class="vw">successive<span class="tt">연속적인, 다음의</span></span> story.</div>
+        <div class="sp-ko">만약 셜록 홈즈처럼 어떤 등장인물이 단일 작가에 의해 창조된다면, 그 등장인물의 핵심 특성은 이야기마다 거의 변하지 않을 수 있지만, 독자들은 각각의 연속되는 이야기를 통해 그에 대해 더 많이 알게 된다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">On the other hand, if characters are the work of several hands over decades, they may change <span class="vw">considerably<span class="tt">상당히</span></span>.</div>
+        <div class="sp-ko">반면에, 등장인물들이 수십 년에 걸쳐 여러 사람의 손을 거친 작품이라면, 그들은 상당히 변할 수 있다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic, Text Structure & Main Idea</div>
+    <div class="topic-box">
+      <strong>* topic:</strong> character <span class="blank-ul">continuity</span> and <span class="blank-ul">change</span> in literary fiction vs. genre fiction/comics
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Contrast</span></td>
+          <td>literary fiction vs. genre fiction/comics<br>- LF: characters <span class="blank-ul">limited</span> to individual works<br>- GF: <span class="blank-ul">recurring</span> characters</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Further Distinction</span></td>
+          <td>single-author characters: <span class="blank-ul">consistent</span> traits<br>vs.<br>multi-author characters: significant <span class="blank-ul">changes</span> over time</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mi-box">
+      <div class="mi-title">* main idea</div>
+      While characters in most literary fiction hardly ever <span class="blank-ul">reappear</span>, those in genre fiction and comics often do so, and may undergo <span class="blank-ul">changes</span> especially when written about by different authors over time.
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">Chapter 26 · 1번 실전 문제</div>
+    <div class="p-title">🎨 The Role of Context in Experiencing Artworks</div>
+    <div class="p-title-ko">맥락이 예술작품 감상에 미치는 영향: 작업실과 전시장</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">In the context of a studio visit, the viewer might notice several clipped newspaper articles pinned to the wall, a wax-coated hotplate, walls with paint marks, resin-drizzled floors and several sculptures barely visible through their plastic wrap.</p>
+      <p class="plain-sent">Such real-world clues offer the visitor a foothold onto the artist's oeuvre.</p>
+      <p class="plain-sent">The studio visitor imagines that the artist is currently a painter, who applies wax and resin and finds inspiration in particular articles.</p>
+      <p class="plain-sent">Similarly, guests experiencing artworks in some homes notice art positioned next to furnishings, family photographs displayed on the piano and coffee-table books stacked to demonstrate preferences.</p>
+      <p class="plain-sent">Together, these components affect particular experiences.</p>
+      <p class="plain-sent">Within the artist's studio or collector's home, residue from studio activities or the collector's personal belongings help to connect the artworks to the world.</p>
+      <p class="plain-sent">By contrast, artworks displayed in exhibitions feel comparatively isolated, practically clipped from the world where they originated.</p>
+      <p class="plain-sent">This could explain why aestheticians tend to treat artworks as singletons, rather than as members of some set.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block" style="margin-top:0;">
+      <div class="q-type">주제 추론</div>
+      <div class="q-stem">1. 다음 글의 주제를 완성하시오.</div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 가이드</div>
+        <div class="ans-exp">
+          본문은 예술가의 작업실이나 수집가의 집과 같이 주변 맥락(단서)이 풍부한 공간에서의 예술작품 감상과, 전시장의 고립된 공간에서의 예술작품 감상이 어떻게 다른지를 설명하고 있습니다. 주변의 일상적 요소(contextual clues)가 예술작품을 세상과 연결해 주는 역할을 한다는 것이 이 글의 핵심 주제입니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In the context of a studio visit, the viewer might notice several clipped newspaper articles pinned to the wall, a wax-coated hotplate, walls with paint marks, <span class="vw">resin-drizzled<span class="tt">수지가 흘러내린</span></span> floors and several sculptures barely visible through their plastic wrap.</div>
+        <div class="sp-ko">작업실 방문의 맥락에서, 관람객은 벽에 핀으로 꽂힌 오려낸 신문 기사들, 밀랍이 입혀진 핫플레이트, 물감 자국이 있는 벽, 수지가 흘러내린 바닥, 그리고 비닐 랩을 통해 간신히 보이는 몇몇 조각품들을 눈치챌지도 모른다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Such real-world clues offer the visitor a <span class="vw">foothold<span class="tt">발판, 기반</span></span> onto the artist's <span class="vw">oeuvre<span class="tt">예술 작품 (전체)</span></span>.</div>
+        <div class="sp-ko">그러한 현실 세계의 단서들은 방문객에게 예술가의 작품 세계에 대한 발판을 제공한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The studio visitor imagines that the artist is currently a painter, who applies wax and resin and finds inspiration in particular articles.</div>
+        <div class="sp-ko">작업실 방문객은 그 예술가가 현재 밀랍과 수지를 사용하고 특정 기사에서 영감을 찾는 화가라고 상상한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Similarly, guests experiencing artworks in some homes notice art positioned next to furnishings, family photographs displayed on the piano and coffee-table books stacked to demonstrate preferences.</div>
+        <div class="sp-ko">마찬가지로, 어떤 집에서 예술작품을 경험하는 손님들은 가구 옆에 놓인 예술작품, 피아노 위에 전시된 가족사진, 그리고 취향을 보여주기 위해 쌓여 있는 커피 테이블 책들을 알아차린다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Together, these components affect particular experiences.</div>
+        <div class="sp-ko">이러한 구성 요소들은 함께 특정 경험에 영향을 미친다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Within the artist's studio or collector's home, <span class="vw">residue<span class="tt">잔여물, 흔적</span></span> from studio activities or the collector's personal belongings help to connect the artworks to the world.</div>
+        <div class="sp-ko">예술가의 작업실이나 수집가의 집 안에서, 작업실 활동의 흔적이나 수집가의 개인 소지품은 예술작품을 세상과 연결하는 데 도움을 준다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">By contrast, artworks displayed in exhibitions feel comparatively <span class="vw">isolated<span class="tt">고립된</span></span>, practically clipped from the world <span class="gr">where</span> they originated.</div>
+        <div class="sp-ko">대조적으로, 전시장에 전시된 예술작품들은 비교적 고립된 느낌을 주며, 사실상 그것들이 비롯된 세상으로부터 잘려 나온 것 같다.
+          <span class="sp-note">📝 [선생님 메모] the world가 뒷문장에 from the world로 출처를 나타내는 부사구로 의미를 가지므로 관계부사 where을 사용함.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This could explain why <span class="vw">aesthetician<span class="tt">미학자</span></span>s tend to treat artworks as <span class="vw">singleton<span class="tt">단독 개체</span></span>s, rather than as members of some set.</div>
+        <div class="sp-ko">이것은 미학자들이 예술작품을 어떤 집합의 일원이라기보다는 단독 개체로 취급하는 경향이 있는 이유를 설명해 줄 수 있다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic, Text Structure & Main Idea</div>
+    <div class="topic-box">
+      <strong>* topic:</strong> The role of <span class="blank-ul">context</span> / surroundings in experiencing artworks
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Description</span></td>
+          <td>of artist's studio visit<br>: clues about artist's work and inspiration<br>Similar phenomenon in collector's homes showing owner's preferences</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Result</span></td>
+          <td>-> <span class="blank-ul">connecting</span> art to the world by affecting viewers' experiences</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Contrast</span></td>
+          <td>artworks in exhibitions<br>: <span class="blank-ul">isolated</span> from original context (= origins)</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Conclusion</span></td>
+          <td>Aestheticians view artworks as isolated individual objects</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mi-box">
+      <div class="mi-title">* main idea</div>
+      Artworks in studios or homes are connected to the world through surrounding <span class="blank-ul">contextual clues</span>, whereas artworks in exhibitions appear <span class="blank-ul">isolated</span>, leading aestheticians to treat them as standalone objects.
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">Chapter 26 · 2번 실전 문제</div>
+    <div class="p-title">🗣️ Communicative vs. Informative Signals</div>
+    <div class="p-title-ko">의사소통적 신호와 정보제공적 신호: 의도성에 따른 문화적 맥락의 차이</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Linguists typically distinguish between signals that are communicative and those that are informative, depending on whether the information is conveyed intentionally or not.</p>
+      <p class="plain-sent">① For example, a deliberate wink is distinguished from an involuntary blink by the communicative intention that lies behind it.</p>
+      <p class="plain-sent">② Yet in intercultural interaction, information conveyed unintentionally may actually be interpreted as intentional; for instance, in some cultures, showing the soles of one's shoes can communicate an insult and when somebody does that, it is typically assumed to have communicative intent.</p>
+      <p class="plain-sent">③ However, for someone from a cultural group where that convention does not exist, such behaviour would be unintentional and hence would not be communicative.</p>
+      <p class="plain-sent">④ So, most societies invest heavily in preserving their unique traditions such as language, rituals, and customs, as these are considered vital to maintaining cultural identity and continuity.</p>
+      <p class="plain-sent">⑤ In other words, a given piece of behaviour may be communicative to some of the participants and only informative to others.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block" style="margin-top:0;">
+      <div class="q-type">무관한 문장 찾기</div>
+      <div class="q-stem">2. 다음 글에서 전체 흐름과 관계 없는 문장은?</div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-exp">
+          정답: <span class="ans">④</span><br><br>
+          이 글은 행동이 '의도적(intentional)'인가 아니면 '비의도적(unintentional)'인가에 따라 의사소통적 신호와 정보제공적 신호가 구분되며, 이러한 해석이 문화마다 다를 수 있음을 설명하는 글입니다. 갑자기 <strong>전통 보존과 문화적 정체성 유지에 사회가 크게 투자한다</strong>는 ④번 내용은 이 글의 핵심인 '의도성과 문화적 차이로 인한 소통 해석의 문제'와 전혀 무관하므로 흐름에서 벗어납니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Linguists typically distinguish between signals that are communicative and those that are informative, depending on whether the information is <span class="vw">conveyed<span class="tt">전달된</span></span> intentionally or not.</div>
+        <div class="sp-ko">언어학자들은 정보가 의도적으로 전달되는지 아닌지에 따라 의사소통적인 신호와 (단지) 정보제공적인 신호를 일반적으로 구별한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">① For example, a <span class="vw">deliberate<span class="tt">의도적인, 고의의</span></span> wink is distinguished from an <span class="vw">involuntary<span class="tt">무의식적인, 자기도 모르게 하는</span></span> blink by the <span class="vw">communicative intention<span class="tt">의사소통적 의도</span></span> that lies behind it.</div>
+        <div class="sp-ko">예를 들어, 의도적인 윙크는 그 이면에 있는 의사소통적 의도에 의해 무의식적인 눈 깜박임과 구별된다.
+          <span class="sp-note">📝 [선생님 메모] intention/intent: 실제로 무엇을 하려는 구체적인 의도 => what the speaker meant<br>intentionality: 의도성 whether the act counts as intentional</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">② Yet in intercultural interaction, information conveyed unintentionally may actually be interpreted as intentional; for instance, in some cultures, showing the <span class="vw">sole<span class="tt">(신발) 밑창</span></span>s of one's shoes can communicate an insult and when somebody does that, it is typically assumed to have communicative intent.</div>
+        <div class="sp-ko">하지만 타문화 간의 상호작용에서 비의도적으로 전달된 정보가 실제로는 의도적인 것으로 해석될 수 있다. 예를 들어, 일부 문화에서는 신발 밑창을 보여주는 것이 모욕을 전달할 수 있으며, 누군가 그렇게 할 때 그것은 일반적으로 의사소통적 의도를 가진 것으로 간주된다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">③ However, for someone from a cultural group where that <span class="vw">convention<span class="tt">관습, 관례</span></span> does not exist, such behaviour would be unintentional and hence would not be communicative.</div>
+        <div class="sp-ko">그러나 그러한 관습이 존재하지 않는 문화 집단 출신의 사람에게는, 그러한 행동이 비의도적일 것이며 따라서 의사소통적이지 않을 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">④ So, most societies invest heavily in preserving their unique traditions such as language, rituals, and customs, as these are considered vital to maintaining cultural identity and continuity.</div>
+        <div class="sp-ko">그래서 대부분의 사회는 언어, 의식, 관습과 같은 그들의 고유한 전통을 보존하는 데 막대한 투자를 하는데, 왜냐하면 이것들이 문화적 정체성과 연속성을 유지하는 데 필수적이라고 여겨지기 때문이다.
+          <span class="sp-note">⭐ [무관한 문장] cultural preservation (문화 보존) 내용으로 글의 흐름과 맞지 않음.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑤ In other words, a given piece of behaviour may be communicative to some of the participants and only informative to others.</div>
+        <div class="sp-ko">다시 말해서, 주어진 어떤 행동은 참가자들 중 일부에게는 의사소통적일 수 있고 다른 사람들에게는 단지 정보제공적일 수 있다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic, Text Structure & Main Idea</div>
+    <div class="topic-box">
+      <strong>* topic:</strong> communicative <span class="blank-ul">signals</span> and <span class="blank-ul">culture</span>
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Definition</span></td>
+          <td>communicative vs. informative signals (<span class="blank-ul">intentional</span> vs. <span class="blank-ul">unintentional</span>)</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Problem</span></td>
+          <td>intercultural misinterpretation<br>→ <span class="blank-ul">Unintentional</span> behavior may be read as <span class="blank-ul">intentional</span></td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Conclusion</span></td>
+          <td>the same behavior can be <span class="blank-ul">communicative</span> for some and merely <span class="blank-ul">informative</span> for others.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mi-box">
+      <div class="mi-title">* main idea</div>
+      Whether a behavior is communicative or merely informative depends on <span class="blank-ul">cultural context</span> and the perceived <span class="blank-ul">intentionality</span> of the participants.
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">Chapter 26 · 3번 실전 문제</div>
+    <div class="p-title">📚 Fiction Reading Increases Empathy</div>
+    <div class="p-title-ko">소설 읽기와 공감 능력: 문학이 타인의 감정을 이해하는 데 미치는 영향</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Through stories we can explore the human condition and see how other people think.</p>
+      <p class="plain-sent">This can affirm our own beliefs and perceptions, but it also challenges them.</p>
+      <p class="plain-sent">Regardless of the language, there is something universal about what occurs in the brain at the point when we are processing narratives, triggering better self-awareness and empathy for others.</p>
+      <p class="plain-sent">Psychologists scanned people listening to narratives in English, Farsi, and Mandarin, and found the same patterns of brain activation when people found meaning in the stories.</p>
+      <p class="plain-sent">Other studies find that reading fiction significantly increases empathy toward others, including people of a different race or religion.</p>
+      <p class="plain-sent">And the more absorbed in a story a reader is, the more empathetically they behave in real life.</p>
+      <p class="plain-sent">For instance, if the researcher "accidentally" dropped his pens, those participants who had previously reported being "highly absorbed in the story" were about twice as likely to help pick up the pens.</p>
+      <p class="plain-sent">Another study concluded that literary fiction "uniquely engages the psychological processes needed to gain access to characters subjective experiences."</p>
+      <p class="plain-sent">That is to say, if you read novels, you can probably <span class="plain-bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block" style="margin-top:0;">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">3. 다음 빈 칸에 가장 알맞은 것을 고르시오.</div>
+      <div class="choices">
+        <div class="choice">① spot symbols that have hidden meanings</div>
+        <div class="choice">② find parts of yourself mirrored in fictional characters</div>
+        <div class="choice">③ boost your imagination and turn it into real-life creativity</div>
+        <div class="choice" style="font-weight:700; color:var(--ink);"><span class="cn">④</span> read emotions, vital skills for forming cooperative societies</div>
+        <div class="choice">⑤ analyze plot twists, an activity essential for engaged reading</div>
+      </div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-num">정답: <span class="ans">④ read emotions, vital skills for forming cooperative societies</span></div>
+        <div class="ans-exp">
+          본문은 '소설 읽기(reading fiction)'가 뇌의 공감 영역을 활성화시켜 <strong>타인에 대한 공감 능력(empathy)을 증가시키고, 등장인물의 주관적 경험에 접근하게 해준다</strong>고 설명합니다. 즉 소설을 읽으면 타인의 감정을 읽고 이해하는 데 도움이 된다는 논리이므로, 빈칸에는 '감정을 읽을 수 있으며, 이는 협력적인 사회를 형성하는 필수 기술이다'라는 ④번이 정답으로 가장 적절합니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Through stories we can explore the human condition and see how other people think.</div>
+        <div class="sp-ko">이야기를 통해 우리는 인간의 조건을 탐구하고 다른 사람들이 어떻게 생각하는지 볼 수 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This can <span class="vw">affirm<span class="tt">확인하다, 단언하다</span></span> our own beliefs and perceptions, but it also challenges them.</div>
+        <div class="sp-ko">이것은 우리 자신의 신념과 인식을 확인시켜 줄 수 있지만, 또한 그것들에 도전하기도 한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Regardless of the language, there is something universal about what occurs in the brain at the point when we are processing narratives, <span class="vw">triggering<span class="tt">촉발하면서</span></span> better self-awareness and empathy for others.</div>
+        <div class="sp-ko">언어에 관계없이, 우리가 서사를 처리하는 시점에 뇌에서 일어나는 일에는 보편적인 무언가가 있으며, 이는 더 나은 자기 인식과 타인에 대한 공감을 촉발한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Psychologists scanned people listening to narratives in English, Farsi, and Mandarin, and found the same patterns of brain activation when people found meaning in the stories.</div>
+        <div class="sp-ko">심리학자들은 영어, 페르시아어, 그리고 만다린(중국어)으로 된 서사를 듣는 사람들의 뇌를 스캔했고, 사람들이 이야기에서 의미를 찾았을 때 동일한 패턴의 뇌 활성화를 발견했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Other studies find that reading fiction significantly increases <span class="vw">empathy<span class="tt">공감</span></span> toward others, including people of a different race or religion.</div>
+        <div class="sp-ko">다른 연구들은 소설 읽기가 다른 인종이나 종교를 가진 사람들을 포함하여 타인에 대한 공감을 상당히 증가시킨다는 것을 발견했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">And the more <span class="vw">absorbed<span class="tt">몰두한, 흡수된</span></span> in a story a reader is, the more <span class="vw">empathetically<span class="tt">공감하여</span></span> they behave in real life.</div>
+        <div class="sp-ko">그리고 독자가 이야기에 더 몰입할수록, 그들은 실생활에서 더 공감적으로 행동한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For instance, if the researcher "accidentally" dropped his pens, those participants who had previously reported being "highly absorbed in the story" were about twice as likely to help pick up the pens.</div>
+        <div class="sp-ko">예를 들어, 연구자가 "실수로" 자신의 펜을 떨어뜨렸을 때, 이전에 "이야기에 매우 깊이 몰입했다"고 보고했던 참가자들은 펜을 주워줄 가능성이 약 두 배 더 높았다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Another study concluded that literary fiction "uniquely engages the psychological processes <span class="gr">needed to gain</span> access to characters subjective experiences."</div>
+        <div class="sp-ko">또 다른 연구는 순수 문학이 "등장인물의 주관적인 경험에 접근하는 데 필요한 심리적 과정에 독특하게 관여한다"고 결론지었다.
+          <span class="sp-note">📝 [선생님 메모] needed to gain- : 분사구문으로 풀어 쓰면 => that are needed to gain-</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">That is to say, if you read novels, you can probably <span class="ans">read emotions, vital skills for forming cooperative societies</span>.</div>
+        <div class="sp-ko">다시 말해서, 당신이 소설을 읽는다면, 당신은 아마도 협력적인 사회를 형성하는 데 필수적인 기술인 감정을 읽을 수 있을 것이다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic, Text Structure & Main Idea</div>
+    <div class="topic-box">
+      <strong>* topic:</strong> <span class="blank-ul">fiction</span> and <span class="blank-ul">empathy</span>
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Claim</span></td>
+          <td>Stories help us <span class="blank-ul">understand</span> others and develop empathy.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Evidence</span></td>
+          <td>- Brain scan studies show <span class="blank-ul">universal</span> neural patterns.<br>- Fiction reading increases <span class="blank-ul">empathy</span>.<br>- <span class="blank-ul">Absorption</span> leads to empathetic behavior.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Conclusion</span></td>
+          <td>Reading novels enhances <span class="blank-ul">emotional</span> reading skills.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mi-box">
+      <div class="mi-title">* main idea</div>
+      Reading fiction enhances <span class="blank-ul">empathy</span> and the ability to <span class="blank-ul">understand</span> others' emotions and perspectives.
+    </div>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p0','p1','p2','p3'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
