@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · Chapter 25 완전 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#4f46e5;--accent2:#4338ca;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;--purple-bg:linear-gradient(135deg, #7c3aed, #4f46e5);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--purple-bg);color:#fefcf8;padding:24px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.65rem;opacity:.8;margin-bottom:5px;font-weight:700;letter-spacing:.05em;}
+.p-title{font-family:'Noto Sans KR',sans-serif;font-size:1.45rem;font-weight:700;}
+.p-title-ko{font-size:.85rem;opacity:.8;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:6px 10px;border-radius:6px;margin-top:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f5f3ff;border:1px solid rgba(99,102,241,.3);border-radius:6px;padding:16px 20px;}
+.gr-note-ttl{font-weight:700;color:var(--accent);font-size:.85rem;margin-bottom:8px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-top:16px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:10px;}
+.choices{display:flex;flex-direction:column;gap:10px;}
+.choice{font-size:.87rem;padding:0;color:var(--ink2);line-height:1.6;}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:16px;padding:12px 16px;background:var(--orange-bg);border-radius:6px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:4px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;}
+.ans-num{font-weight:700; color:var(--ink); margin-bottom:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent);padding:15px 20px;font-size:.95rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:10px;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;}
+.step-badge{background:var(--accent);color:#fff;font-size:.62rem;padding:3px 10px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+.plain-bk {display:inline-block; border-bottom:1.5px solid var(--ink); min-width:200px; margin:0 5px; vertical-align:bottom;}
+.kw-pill {display:inline-block; background:var(--border); color:var(--ink2); font-size:0.75rem; padding:3px 10px; border-radius:12px; margin-right:6px; margin-top:6px;}
+.blank-ul {color:#7c3aed; font-weight:700; text-decoration:underline; text-decoration-color:#7c3aed; text-underline-offset:3px;}
+.mi-box {background:#f0fdf4; border:1px solid rgba(16,185,129,.3); border-radius:6px; padding:16px 20px; margin-top:16px;}
+.mi-title {font-weight:700; color:var(--green); font-size:.85rem; margin-bottom:8px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · Chapter 25</div>
+      <div class="hdr-sub">Education, etc.</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p0')">기출 (6월 모평)</button>
+      <button class="nb" onclick="show('p1')">01번 (효과적인 가르침)</button>
+      <button class="nb" onclick="show('p2')">02번 (부정적 언어)</button>
+      <button class="nb" onclick="show('p3')">03번 (기술의 자동화)</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Noto Sans KR',sans-serif;font-size:1.7rem;margin-bottom:8px;font-weight:700;">Chapter 25 · 교육 및 기타 주제</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">선생님 메모 100% 반영: 구문 분석, 문법 해설 및 <b>빈칸 보라색 밑줄</b>이 완벽하게 복원되었습니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p0')"><div class="toc-en">📖 기출(2026 6월 모평): 수업 토론에서의 필기</div><div class="toc-ko">토론 시 메모하기의 중요성과 유용성</div></a>
+    <a class="toc-card" onclick="show('p1')"><div class="toc-en">🏫 1번: 효과적인 가르침과 질서</div><div class="toc-ko">무질서를 질서로 바꾸는 교육의 본질</div></a>
+    <a class="toc-card" onclick="show('p2')"><div class="toc-en">🧠 2번: 부정적 단어와 아이들의 뇌</div><div class="toc-ko">부정적인 말이 아이들에게 미치는 강력한 영향</div></a>
+    <a class="toc-card" onclick="show('p3')"><div class="toc-en">🚗 3번: 의식적 인식의 회귀와 자동화 방해</div><div class="toc-ko">생각이 너무 많아지면 수행 능력이 떨어지는 이유</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p0">
+  <div class="p-header">
+    <div class="p-code">Chapter 25 · 기출(2026학년도 6월 모평)</div>
+    <div class="p-title">📖 The Importance of Note Taking in Discussions</div>
+    <div class="p-title-ko">수업 토론에서의 메모하기의 중요성</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The purpose of class discussions is to encourage you to be an active participant, not a passive recorder.</p>
+      <p class="plain-sent">Much of the emphasis in a discussion is on getting students involved in thinking, reacting, and responding.</p>
+      <p class="plain-sent">These are important intellectual activities in the learning process, for through them you are supposed to discover and express your opinions.</p>
+      <p class="plain-sent">Writing is an invaluable tool for accomplishing these tasks.</p>
+      <p class="plain-sent">Unfortunately, too many times, when class discussion begins, pens and pencils go down.</p>
+      <p class="plain-sent">Admittedly, it is considerably more difficult to take notes from discussions than from lectures, for, unlike lectures, discussions tend to be disorganized and difficult to follow.</p>
+      <p class="plain-sent">Also, students usually don't know how much of what other students are saying is important.</p>
+      <p class="plain-sent">And if you are an active participant, it is not easy to take notes and formulate what you want to say.</p>
+      <p class="plain-sent">But note taking in discussions is not only manageable, it is also <span class="plain-bk" style="min-width:100px;"></span>.</p>
+      <p class="plain-sent">Note taking helps to keep you active and alert; it allows you to impose some organization on the discussion; and it can prepare you to speak.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block" style="margin-top:0;">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">1. 다음 빈 칸에 들어갈 말을 쓰시오.</div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-num">정답: <span class="ans">important</span></div>
+        <div class="ans-exp">
+          본문은 토론 중에 메모하는 것이 어렵다는 점을 인정(Admittedly)하면서도, 마지막 부분에서 그것이 '관리 가능할(manageable) 뿐만 아니라 또한 <strong>중요하다(important)</strong>'고 강조하며 그 이유 3가지(적극성 유지, 체계 부여, 말하기 준비)를 덧붙이고 있습니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The purpose of class discussions is to encourage you to be an active participant, not a <span class="vw">passive<span class="tt">수동적인</span></span> recorder.</div>
+        <div class="sp-ko">수업 토론의 목적은 당신이 수동적인 기록자가 아니라 적극적인 참여자가 되도록 장려하는 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Much of the emphasis in a discussion is on getting students involved in thinking, reacting, and responding.</div>
+        <div class="sp-ko">토론에서 강조되는 많은 부분은 학생들이 생각하고, 반응하고, 응답하는 데 참여하게 하는 것에 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">These are important <span class="vw">intellectual<span class="tt">지적인</span></span> activities in the learning process, for through them you are supposed to discover and express your opinions.</div>
+        <div class="sp-ko">이것들은 학습 과정에서 중요한 지적 활동인데, 왜냐하면 그것들을 통해 당신은 당신의 의견을 발견하고 표현해야 하기 때문이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Writing is an <span class="vw">invaluable<span class="tt">매우 귀중한</span></span> tool for accomplishing these tasks.</div>
+        <div class="sp-ko">쓰기는 이러한 과제들을 성취하는 데 있어 매우 귀중한 도구이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Unfortunately, too many times, when class discussion begins, pens and pencils go down.</div>
+        <div class="sp-ko">불행히도, 수업 토론이 시작될 때 펜과 연필이 내려가는(필기를 멈추는) 경우가 너무 많다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Admittedly<span class="tt">인정하건대</span></span>, it is <span class="vw">considerably<span class="tt">상당히</span></span> more difficult to take notes from discussions than from lectures, for, unlike lectures, discussions tend to be <span class="vw">disorganized<span class="tt">두서없는, 체계가 없는</span></span> and difficult to follow.</div>
+        <div class="sp-ko">인정하건대, 토론에서 메모하는 것은 강의에서 메모하는 것보다 상당히 더 어려운데, 왜냐하면 강의와 달리 토론은 두서가 없고 따라가기 어려운 경향이 있기 때문이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Also, students usually don't know how much of what other students are saying is important.</div>
+        <div class="sp-ko">또한, 학생들은 대개 다른 학생들이 말하는 것 중 얼마나 많은 부분이 중요한지 모른다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">And if you are an active participant, it is not easy to take notes and <span class="vw">formulate<span class="tt">공들여 생각하다, 표현하다</span></span> what you want to say.</div>
+        <div class="sp-ko">그리고 만약 당신이 적극적인 참여자라면, 필기를 하면서 당신이 하고 싶은 말을 체계화하는 것은 쉽지 않다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But note taking in discussions is not only <span class="vw">manageable<span class="tt">관리할 수 있는, 해낼 수 있는</span></span>, it is also <span class="ans">important</span>.</div>
+        <div class="sp-ko">하지만 토론에서 메모하는 것은 해낼 수 있을 뿐만 아니라, 중요하기도 하다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Note taking helps to keep you active and alert; it allows you to <span class="vw">impose<span class="tt">부여하다, 강요하다</span></span> some organization on the discussion; and it can prepare you to speak.</div>
+        <div class="sp-ko">메모하는 것은 당신이 깨어있고 기민하게 유지하도록 돕고, 토론에 어떤 체계를 부여할 수 있게 해주며, 당신이 말할 준비를 하도록 도울 수 있다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic, Text Structure & Main Idea</div>
+    <div class="topic-box">
+      <strong>* topic:</strong> <span class="blank-ul">note taking</span> in discussions
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Claim</span></td>
+          <td>Discussion is for active participation.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Concession</span></td>
+          <td>Taking notes in discussions is difficult.<br>- disorganized and hard to follow<br>- unsure of what other students say is important<br>- hard to participate and take notes simultaneously</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Rebuttal</span></td>
+          <td>Note-taking is both <span class="blank-ul">manageable</span> and <span class="blank-ul">important</span>.<br>- keeps you active and alert<br>- helps impose organization on discussion<br>- prepares you to speak</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mi-box">
+      <div class="mi-title">* main idea</div>
+      <span class="blank-ul">Note taking</span> in discussions is important for <span class="blank-ul">active</span> participation and learning.
+    </div>
+    
+    <div class="card-lbl" style="margin-top:20px;">* Identify the key words that are repeatedly used</div>
+    <div class="keyword-list">
+      <span class="kw-pill">discussion</span><span class="kw-pill">note taking</span><span class="kw-pill">active</span>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">Chapter 25 · 1번 실전 문제</div>
+    <div class="p-title">🏫 The Requirement of Order in Effective Teaching</div>
+    <div class="p-title-ko">효과적인 가르침과 질서: 무질서를 질서로 바꾸는 교육의 본질</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Teaching reflects what society itself demands; it necessitates that disorder of students and teachers alike, of mind, behavior, and environment yield to its opposite.</p>
+      <p class="plain-sent">Effective teaching requires that, failing their own self-imposed order, students experience the imposition of some outer order so that inner order may develop.</p>
+      <p class="plain-sent">This means in practice, for instance, that the goals of classes and courses be clearly set, that they be explained and justified, that the manner of achieving them be clear, that the presentation of materials conducive to reaching them be appropriate, and that all activities be directed somehow to their attainment.</p>
+      <p class="plain-sent">It means, too, that students take up their own obligation to maintain the conditions under which learning occurs: quiet in their classrooms, respect for and courtesy toward others, civility of language and behavior, and the like.</p>
+      <p class="plain-sent">Above all, it implies structured industry study and activity that are oriented toward a goal and pursued with perseverance and method.</p>
+      <p class="plain-sent">That is, good teaching requires that teachers and students <span class="plain-bk" style="min-width:250px;"></span> so that learning can take place.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block" style="margin-top:0;">
+      <div class="q-type">빈칸 추론</div>
+      <div class="q-stem">1. 다음 빈 칸에 들어갈 말을 쓰시오.</div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-exp">
+          정답: <span class="ans">establish and maintain an ordered, goal-oriented learning environment</span><br><br>
+          본문은 무질서(disorder)를 질서(order)로 바꾸는 것이 교육의 본질이며, 교사는 외적인 질서(outer order)를, 학생은 내적인 질서(inner order)를 유지하기 위해 구조화된 노력(structured industry)을 추구해야 한다고 강조합니다. 따라서 훌륭한 가르침은 교사와 학생 모두가 <strong>'질서 있고 목표 지향적인 학습 환경을 구축하고 유지할'</strong> 것을 요구한다는 내용이 되어야 합니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Teaching reflects what society itself demands; it <span class="vw">necessitate<span class="tt">필요로 하다</span></span>s <span class="gr">that</span> disorder of students and teachers alike, of mind, behavior, and environment <span class="gr">yield</span> to its opposite.</div>
+        <div class="sp-ko">가르침은 사회 자체가 요구하는 것을 반영한다. 그것은 학생과 교사 모두의, 마음과 행동, 그리고 환경의 무질서가 그것의 정반대(질서)에 굴복할 것을(바뀔 것을) 필요로 한다.
+          <span class="sp-note">📝 [선생님 메모] require, necessitate 같이 요/주/제/명/충 동사 다음에 당위성의 의미를 지닌 that 절이 오면 (should) 동사원형의 형태로 사용됨. (yield 앞에 should 생략)</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Effective teaching requires <span class="gr">that</span>, <span class="gr">failing their own self-imposed order</span>, students <span class="gr">experience</span> the <span class="vw">imposition<span class="tt">도입, 부과</span></span> of some outer order so that inner order may develop.</div>
+        <div class="sp-ko">효과적인 가르침은 만약 그들 자신의 스스로 부여한 질서를 가지지 못한다면, 내적 질서가 발달할 수 있도록 학생들이 어떤 외적 질서의 부과를 경험할 것을 요구한다.
+          <span class="sp-note">📝 [선생님 메모] failing their own self-imposed order : In the absence of~ 의 의미. 혹은 분사구문으로 생각한다면 If they fail to have/maintain 으로 이해하시오.<br>📝 [선생님 메모] require 동사 뒤의 that절 이므로 experience 앞에도 should 생략됨.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This <span class="vw">mean<span class="tt">의미하다 (~해야 한다고)</span></span>s in practice, for instance, <span class="gr">that</span> the goals of classes and courses <span class="gr">be</span> clearly set, <span class="gr">that</span> they <span class="gr">be</span> explained and justified, <span class="gr">that</span> the manner of achieving them <span class="gr">be</span> clear, <span class="gr">that</span> the presentation of materials <span class="vw">conducive to<span class="tt">~에 도움이 되는</span></span> reaching them <span class="gr">be</span> appropriate, and <span class="gr">that</span> all activities <span class="gr">be</span> directed somehow to their <span class="vw">attainment<span class="tt">달성, 성취</span></span>.</div>
+        <div class="sp-ko">이것은 실제로는 예를 들어, 수업과 과정의 목표가 명확히 설정되어야 하고, 그것들이 설명되고 정당화되어야 하며, 그것들을 성취하는 방식이 명확해야 하고, 그것들에 도달하는 데 도움이 되는 자료의 제시가 적절해야 하며, 모든 활동이 어떻게든 그것들의 달성으로 향해져야 한다는 것을 의미한다.
+          <span class="sp-note">📝 [선생님 메모] mean은 일반적으로 '의미하다'이지만 뒷문장의 내용이 ~해야 함이라는 당위성을 갖고 있어서 should가 생략된 형태로 사용됨. (be, be, be, be, be 앞에 모두 should 생략)</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It means, too, <span class="gr">that</span> students <span class="gr">take up</span> their own <span class="vw">obligation<span class="tt">의무</span></span> to maintain the conditions under which learning occurs: quiet in their classrooms, respect for and <span class="vw">courtesy<span class="tt">예의</span></span> toward others, <span class="vw">civility<span class="tt">정중함, 예의바름</span></span> of language and behavior, and the like.</div>
+        <div class="sp-ko">그것은 또한 학생들이 학습이 일어나는 조건을 유지할 자신의 의무를 다해야 함을 의미한다: 교실에서의 정숙, 타인에 대한 존중과 예의, 언어와 행동의 정중함 등.
+          <span class="sp-note">📝 [선생님 메모] mean 동사 뒤의 that절이므로 take up 앞에도 should 생략됨.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Above all, it implies structured <span class="vw">industry<span class="tt">근면, 근면한 활동</span></span> — study and activity that are oriented toward a goal and pursued with <span class="vw">perseverance<span class="tt">인내</span></span> and method.</div>
+        <div class="sp-ko">무엇보다도, 그것은 구조화된 근면(노력) — 즉, 목표를 지향하고 인내와 방법론을 가지고 추구되는 공부와 활동 — 을 의미한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">That is, good teaching requires that teachers and students <span class="ans">establish and maintain an ordered, goal-oriented learning environment</span> so that learning can take place.</div>
+        <div class="sp-ko">즉, 훌륭한 가르침은 학습이 일어날 수 있도록 교사와 학생이 질서 있고 목표 지향적인 학습 환경을 구축하고 유지할 것을 요구한다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic, Text Structure & Main Idea</div>
+    
+    <div style="font-weight:700;">* Identify the key words.</div>
+    <div class="keyword-list" style="margin-bottom:16px;">
+      <span class="kw-pill">disorder</span><span class="kw-pill">(inner & outer) order</span><span class="kw-pill">teaching</span><span class="kw-pill">structured industry</span>
+    </div>
+
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Central Claim</span></td>
+          <td>Teaching demands that disorder yield to its opposite. (= order)</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Support 1</span></td>
+          <td>Teacher's role (outer order)<br>→ set goals, explain methods, provide materials</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Support 2</span></td>
+          <td>Student's role (inner order)<br>→ keep classroom conditions, show respect, use civil language</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Conclusion</span></td>
+          <td>Both must pursue structured industry (study oriented toward a goal with perseverance and method).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mi-box">
+      <div class="mi-title">* main idea</div>
+      Effective teaching requires both teachers and students to establish and maintain a(n) <span class="blank-ul">ordered</span>, goal-oriented learning environment.
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">Chapter 25 · 2번 실전 문제</div>
+    <div class="p-title">🧠 Bad Words Hit Harder: Language and Brain</div>
+    <div class="p-title-ko">부정적인 언어가 아이들의 뇌에 미치는 강력한 영향</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">When we lecture, scold, yell, or criticize, when we say something positive but in a sarcastic tone, or when we try to make our kids feel guilty, it activates their amygdala, triggering their stress response and putting them into a defensive, rigid, reactive state.</p>
+      <p class="plain-sent">Even more basic, when we say no or don't, it releases stress chemicals in our kids brains (and in ours) that are associated with fear and anger.</p>
+      <p class="plain-sent">Functional brain imaging research has shown that even seeing the word no on a screen for less than a second while you're lying in an MRI scanner will cause your brain to suddenly release dozens of stress-producing hormones and neurotransmitters.</p>
+      <p class="plain-sent">Conversely, positive words like yes, love, and peace activate systems in the prefrontal cortex that are related to emotional regulation.</p>
+      <p class="plain-sent">The problem is that negative words like no and don't have a more powerful effect on kids than positive words.</p>
+      <p class="plain-sent">For this reason, the researchers Suniya Luthar and John Gottman say that "bad is stronger than good" when it comes to communicating with children and teens.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block" style="margin-top:0;">
+      <div class="q-type">제목 추론</div>
+      <div class="q-stem">2. 다음 글의 제목으로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice">① Reasons Why Parenting Needs to Be Firm and Consistent</div>
+        <div class="choice">② The Benefits of Saying No: Why Kids Need Clear Boundaries</div>
+        <div class="choice">③ Common Pathways Through Which Children Filter Bad Language</div>
+        <div class="choice" style="font-weight:700; color:var(--ink);"><span class="cn">④</span> Bad Words Hit Harder: Language and Children's Brain Responses</div>
+        <div class="choice">⑤ Art of Parenting: How to Raise Intelligent Kids in the Age of Change</div>
+      </div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-num">정답: <span class="ans">④ Bad Words Hit Harder: Language and Children's Brain Responses</span></div>
+        <div class="ans-exp">
+          본문은 아이들에게 부정적인 말(no, don't 등)을 사용할 때 뇌에서 스트레스 호르몬이 방출되며 방어적 반응을 일으킨다는 신경과학적 사실을 다루고 있습니다. 긍정적인 단어보다 부정적인 단어가 아이들의 뇌에 더 강력한 영향을 미친다는 것이 핵심이므로, "나쁜 말이 더 강하게 때린다: 언어와 아이들의 뇌 반응"을 의미하는 ④번이 가장 적절한 제목입니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">When we lecture, scold, yell, or criticize, when we say something positive but in a <span class="vw">sarcastic<span class="tt">비꼬는, 빈정대는</span></span> tone, or when we try to make our kids feel guilty, it activates their <span class="vw">amygdala<span class="tt">(해부) 편도체</span></span>, triggering their stress response and putting them into a defensive, <span class="vw">rigid<span class="tt">경직된</span></span>, reactive state.</div>
+        <div class="sp-ko">우리가 잔소리하거나, 꾸짖거나, 소리치거나, 비판할 때, 긍정적인 말을 하지만 비꼬는 어조로 말할 때, 혹은 아이들이 죄책감을 느끼게 만들려 할 때, 그것은 아이들의 편도체를 활성화시켜 스트레스 반응을 촉발하고 그들을 방어적이고 경직되며 반응적인 상태로 몰아넣는다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Even more basic, when we say no or don't, it releases stress chemicals in our kids brains (and in ours) that are associated with fear and anger.</div>
+        <div class="sp-ko">훨씬 더 기본적인 차원에서, 우리가 안 돼 혹은 하지 마라고 말할 때, 그것은 두려움 및 분노와 관련된 스트레스 화학물질을 아이들의 뇌(그리고 우리의 뇌)에 방출한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Functional brain imaging research has shown that even seeing the word no on a screen for less than a second while you're lying in an MRI scanner will cause your brain to suddenly release dozens of stress-producing hormones and <span class="vw">neurotransmitter<span class="tt">신경전달물질</span></span>s.</div>
+        <div class="sp-ko">기능적 뇌 영상 연구는 MRI 스캐너에 누워있는 동안 1초도 안 되는 시간 동안 화면에서 '아니오'라는 단어를 보는 것만으로도 당신의 뇌가 수십 개의 스트레스 유발 호르몬과 신경 전달 물질을 갑자기 방출하게 만들 것이라는 것을 보여주었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Conversely, positive words like yes, love, and peace activate systems in the <span class="vw">prefrontal cortex<span class="tt">전전두엽 피질</span></span> that are related to emotional regulation.</div>
+        <div class="sp-ko">반대로, 예, 사랑, 평화와 같은 긍정적인 단어들은 감정 조절과 관련된 전전두엽 피질의 시스템을 활성화한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The problem is that negative words like no and don't have a more powerful effect on kids than positive words.</div>
+        <div class="sp-ko">문제는 '아니오'와 '하지마' 같은 부정적인 단어들이 긍정적인 단어들보다 아이들에게 더 강력한 영향을 미친다는 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For this reason, the researchers Suniya Luthar and John Gottman say that "bad is stronger than good" when it comes to communicating with children and teens.</div>
+        <div class="sp-ko">이러한 이유로 연구자 Suniya Luthar와 John Gottman은 어린이 및 십대들과 의사소통할 때 "나쁜 것이 좋은 것보다 더 강하다"고 말한다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic, Text Structure & Main Idea</div>
+    <div style="font-weight:700;">* Identify the key words.</div>
+    <div class="keyword-list" style="margin-bottom:16px;">
+      <span class="kw-pill">negative words</span><span class="kw-pill">positive words</span><span class="kw-pill">stress</span><span class="kw-pill">brain</span><span class="kw-pill">children</span>
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Claim</span></td>
+          <td>negative words trigger stress response</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Support 1</span></td>
+          <td>"no/don't" release stress chemicals</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Support 2</span></td>
+          <td>positive words help emotional regulation</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Conclusion</span></td>
+          <td>"bad is stronger than good"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mi-box">
+      <div class="mi-title">* main idea</div>
+      <span class="blank-ul">Negative</span> words have a stronger impact on children's brains than <span class="blank-ul">positive</span> words, triggering <span class="blank-ul">stress</span> and defensive reactions.
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">Chapter 25 · 3번 실전 문제</div>
+    <div class="p-title">🚗 The Disruption of Automatized Skills by Explicit Awareness</div>
+    <div class="p-title-ko">기술의 자동화: 생각이 너무 많아지면 수행 능력이 떨어지는 이유</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The experiences of learning to ride a bicycle or drive a car illustrate well how the "what" and "how" systems — those involved in object identification and practical action — might interact during development.</p>
+      <p class="plain-sent">( 1 ) When we learn to drive a car, we go through a first stage where each required action and sequence of actions — such as looking in the mirror, signaling with the blinker, pressing the clutch prior to shifting into gear, and so forth — are explicitly thought of and double-checked while monitoring our situation in the environment.</p>
+      <p class="plain-sent">( 2 ) Once learned and after a few hours of practice, the required actions for driving become second nature, transferable to almost any vehicle and performed without explicit thinking.</p>
+      <p class="plain-sent">( 3 ) Information appears to be perceived directly, the affordances of the road, the car, and the traffic implicitly detected.</p>
+      <p class="plain-sent"><strong>( 4 ) Actually, this sort of automatization of conscious learning can be jeopardized by the return of explicit awareness.</strong></p>
+      <p class="plain-sent">If you start to think too much about your driving, you actually increase your chances of having an accident.</p>
+      <p class="plain-sent">( 5 ) People in sport competitions confirm that self-consciousness is one's worst enemy: tennis, golf, or billiard players commonly report that they lose their "touch" by thinking too much about their moves.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="q-block" style="margin-top:0;">
+      <div class="q-type">문장 삽입</div>
+      <div class="q-stem">3. 주어진 문장이 들어가기에 가장 적절한 곳은?</div>
+      <div class="choices">
+        <div class="choice" style="font-style:italic;">"Actually, this sort of automatization of conscious learning can be jeopardized by the return of explicit awareness."</div>
+      </div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-num">정답: <span class="ans">( 4 )</span></div>
+        <div class="ans-exp">
+          (1)~(3)까지는 자전거나 운전을 배울 때 처음에는 의식적으로 행동하다가 점차 생각 없이 수행하는 '자동화(automatization)' 단계를 설명합니다. 하지만 주어진 문장은 "사실, 이러한 의식적 학습의 자동화는 명시적인 인식이 다시 돌아옴으로써 위험해질 수 있다"라고 화제를 전환합니다. 이 문장 바로 뒤인 (4)번 자리에 "운전에 대해 너무 많이 생각하기 시작하면 오히려 사고가 날 확률이 높아진다"는 예시가 이어지므로 문맥상 <strong>( 4 )</strong>가 가장 적합합니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The experiences of learning to ride a bicycle or drive a car illustrate well how the "what" and "how" systems — those involved in object identification and practical action — might interact during development.</div>
+        <div class="sp-ko">자전거나 자동차를 타는 법을 배우는 경험은 대상 식별과 관련된 "무엇" 시스템과 실질적인 행동과 관련된 "어떻게" 시스템이 발달 과정 동안 어떻게 상호작용할 수 있는지를 잘 보여준다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">When we learn to drive a car, we go through a first stage where each required action and sequence of actions — such as looking in the mirror, signaling with the blinker, pressing the clutch prior to shifting into gear, and so forth — are <span class="vw">explicitly<span class="tt">명시적으로, 뚜렷하게</span></span> thought of and double-checked while monitoring our situation in the environment.</div>
+        <div class="sp-ko">우리가 운전을 배울 때, 거울 보기, 깜빡이로 신호하기, 기어를 바꾸기 전에 클러치 밟기 등과 같은 각각의 필요한 행동과 일련의 행동들이 환경 속의 상황을 모니터링하는 동안 명시적으로 생각되어지고 재확인되는 첫 단계를 거친다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Once learned and after a few hours of practice, the required actions for driving become <span class="vw">second nature<span class="tt">제2의 천성, 아주 익숙한 것</span></span>, transferable to almost any vehicle and performed without explicit thinking.</div>
+        <div class="sp-ko">일단 배우고 몇 시간 연습하고 나면, 운전에 필요한 행동들은 거의 모든 차량에 적용 가능하며 명시적인 생각 없이 수행되는 제2의 천성(아주 익숙한 것)이 된다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Information appears to be perceived directly, the <span class="vw">affordance<span class="tt">행동 유도성, 제공하는 것</span></span>s of the road, the car, and the traffic <span class="vw">implicitly<span class="tt">암묵적으로</span></span> detected.</div>
+        <div class="sp-ko">정보는 직접적으로 인지되는 것처럼 보이고, 도로나 자동차, 교통이 주는 행동 유도성은 암묵적으로 감지된다.
+          <span class="sp-note">📝 [선생님 메모] affordance (개념은 찾아봅시다.): 특정 환경이나 사물이 인간(혹은 동물)에게 제공하는 특정한 행동의 가능성을 뜻함. 여기서는 도로 상황을 보자마자 본능적으로 어떻게 운전해야 할지 아는 감각을 의미.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">[삽입]</span> Actually, this sort of automatization of conscious learning can be <span class="vw">jeopardize<span class="tt">위험에 처하게 하다</span></span>d by the return of explicit awareness.</div>
+        <div class="sp-ko">[삽입] 사실, 의식적 학습의 이러한 자동화는 명시적인 인식이 다시 돌아옴으로써 위험해질 수 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">If you start to think too much about your driving, you actually increase your chances of having an accident.</div>
+        <div class="sp-ko">만약 당신이 당신의 운전에 대해 너무 많이 생각하기 시작한다면, 당신은 실제로 사고를 낼 확률을 증가시킨다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">People in sport competitions confirm that self-consciousness is one's worst enemy: tennis, golf, or billiard players commonly report that they lose their "touch" by thinking too much about their moves.</div>
+        <div class="sp-ko">스포츠 경기에 임하는 사람들은 자의식이 가장 나쁜 적임을 확인해 준다: 테니스, 골프, 당구 선수들은 보통 자신의 움직임에 대해 너무 많이 생각함으로써 그들의 "감각"을 잃는다고 보고한다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic, Text Structure & Main Idea</div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:160px;"><span class="step-badge">Stage 1</span><br>Conscious learning</td>
+          <td>Each action is explicitly monitored<br>Attention to sequence and environment</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Stage 2</span><br>Automatization</td>
+          <td>Perform without explicit thinking<br>Direct perception of affordances</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Key Transition</span><br>(General Principle)</td>
+          <td>Actually, this sort of automatization of conscious learning can be jeopardized by the return of explicit awareness.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Examples</span><br>of disruption</td>
+          <td>Thinking too much while driving -> higher risk of accidents<br>Self-conscious athletes lose their "touch"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mi-box">
+      <div class="mi-title">* main idea</div>
+      Skills first require <span class="blank-ul">conscious</span>, step-by-step control. With practice, they become <span class="blank-ul">automatized</span> and performed without explicit thinking. Returning to <span class="blank-ul">explicit awareness</span> disrupts smooth performance and may cause errors.
+    </div>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p0','p1','p2','p3'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
