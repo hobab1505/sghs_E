@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · Chapter 1(3) 완전 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#4f46e5;--accent2:#4338ca;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;--purple-bg:linear-gradient(135deg, #7c3aed, #4f46e5);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--purple-bg);color:#fefcf8;padding:24px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.65rem;opacity:.8;margin-bottom:5px;font-weight:700;letter-spacing:.05em;}
+.p-title{font-family:'Noto Sans KR',sans-serif;font-size:1.45rem;font-weight:700;}
+.p-title-ko{font-size:.85rem;opacity:.8;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:6px 10px;border-radius:6px;margin-top:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f5f3ff;border:1px solid rgba(99,102,241,.3);border-radius:6px;padding:16px 20px;}
+.gr-note.blue {background:#e0f2fe;border:1px solid rgba(14,165,233,.3);}
+.gr-note-ttl{font-weight:700;color:var(--accent);font-size:.85rem;margin-bottom:8px;}
+.gr-note-ttl.blue{color:#0369a1;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-top:16px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:10px;}
+.choices{display:flex;flex-direction:column;gap:10px;}
+.choice{font-size:.87rem;padding:0;color:var(--ink2);line-height:1.6;}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:16px;padding:12px 16px;background:var(--orange-bg);border-radius:6px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:4px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;}
+.ans-num{font-weight:700; color:var(--ink); margin-bottom:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent);padding:15px 20px;font-size:.95rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:10px;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;}
+.step-badge{background:var(--accent);color:#fff;font-size:.62rem;padding:3px 10px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+.kw-pill {display:inline-block; background:var(--border); color:var(--ink2); font-size:0.75rem; padding:3px 10px; border-radius:12px; margin-right:6px; margin-top:6px;}
+.blank-ul {color:#7c3aed; font-weight:700; text-decoration:underline; text-decoration-color:#7c3aed; text-underline-offset:3px;}
+.orig-ul {text-decoration:underline; text-decoration-color:var(--ink); text-underline-offset:3px;}
+.mi-box {background:#f0fdf4; border:1px solid rgba(16,185,129,.3); border-radius:6px; padding:16px 20px; margin-top:16px;}
+.mi-title {font-weight:700; color:var(--green); font-size:.85rem; margin-bottom:8px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · Chapter 1(3)</div>
+      <div class="hdr-sub">SGHS 비평적 읽기와 쓰기</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">1번 지문 (미기후 제어)</button>
+      <button class="nb" onclick="show('p3')">3번 지문 (DNA와 역사)</button>
+      <button class="nb" onclick="show('p4')">4번 지문 (비판적 사고)</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Noto Sans KR',sans-serif;font-size:1.7rem;margin-bottom:8px;font-weight:700;">Chapter 1(3) · 주제 파악</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">알파벳 힌트 빈칸 완성, 심층 개념 한글 번역, 구문 분석과 <b>문장 구조 분석 포인트</b>가 완벽하게 복원되었습니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')"><div class="toc-en">🌱 1번: 전략적 재배 기술</div><div class="toc-ko">미기후 환경에서의 국지적 온도 제어</div></a>
+    <a class="toc-card" onclick="show('p3')"><div class="toc-en">🧬 3번: 생물학적 역사의 기록으로서의 DNA</div><div class="toc-ko">자연선택이 새긴 인간의 이중적 유산</div></a>
+    <a class="toc-card" onclick="show('p4')"><div class="toc-en">🧠 4번: 비판적 사고를 방해하는 두려움</div><div class="toc-ko">생각이 우리의 오랜 믿음과 기반을 흔들기 때문</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(3) · 1번 지문</div>
+    <div class="p-title">🌱 Strategic Cultivation Techniques</div>
+    <div class="p-title-ko">미기후 환경에서의 국지적 온도 제어</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">Even outdoors, although climate (including temperature) is usually regarded as beyond the control of man, localized temperature control is sometimes effective on a microclimate scale.</p>
+      <p class="plain-sent">Vancouver, Canada, is a few miles north of the 49th parallel, about 60 miles farther north than Minot, North Dakota, with its legendary harsh winter temperatures.</p>
+      <p class="plain-sent">But constant foehn winds off the Pacific Ocean make Vancouver winters mild and wet, although sunshine is scant.</p>
+      <p class="plain-sent">When I had a garden there in the late 1940s, a neighbor used to say that I "cheated God" to bring in my lettuce and tomatoes earlier than anyone else.</p>
+      <p class="plain-sent">The bed in which the vegetables grew was banked toward the south at approximately 50 degrees, and the area between the plants was covered with flat stones, gathered from the nearby beach, to maximize soil heating from the weak late winter- early spring sun.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">📖 개념 학습 및 심층 분석</div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">➤ Localized temperature control</div>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">Not changing the climate of a wide area, but controlling the temperature of small spaces such as fields, garden beds, and the area around plants.</p>
+      <p style="font-size:13px; color:var(--ink2); margin-bottom:8px; line-height:1.6;">(넓은 지역의 기후 자체를 바꾸는 것이 아니라, 들판, 정원의 모종밭, 식물 주변 공간 등 좁은 공간의 온도를 통제하는 것을 의미합니다.)</p>
+    </div>
+    <div class="gr-note blue" style="margin-top:16px;">
+      <div class="gr-note-ttl blue">➤ Microclimate scale</div>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">A localized, small-scale level where temperature is shaped by local conditions.</p>
+      <p style="font-size:13px; color:var(--ink2); margin-bottom:8px; line-height:1.6;">(기온이 국지적 조건과 환경에 의해 형성되는 아주 제한적이고 소규모적인 기후 수준을 뜻합니다.)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 및 구조 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Even outdoors, <span class="gr">[although climate (including temperature) is usually regarded as beyond the control of man]</span>, localized temperature control is sometimes effective on a <span class="vw">microclimate<span class="tt">미기후 (특정 좁은 지역의 기후)</span></span> scale.</div>
+        <div class="sp-ko">심지어 야외에서도, 비록 기후(기온 포함)가 대개 인간의 통제 범위를 벗어난 것으로 여겨지지만, 국지적인 온도 제어는 미기후 규모에서 때때로 효과적이다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] <code>[although ~ ]</code> 부분은 양보의 부사절이며, 주절의 주어는 <code>localized temperature control</code>, 동사는 <code>is</code>인 2형식 구조입니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Vancouver, Canada, is a few miles north of the 49th <span class="vw">parallel<span class="tt">위도선, 평행선</span></span>, <span class="gr">[about 60 miles farther north than Minot, North Dakota]</span>, <span class="gr">[with its legendary harsh winter temperatures]</span>.</div>
+        <div class="sp-ko">캐나다 밴쿠버는 북위 49도선에서 북쪽으로 몇 마일 떨어져 있는데, 전설적으로 혹독한 겨울 기온을 가진 노스다코타주 마이넛보다 북쪽으로 약 60마일 더 멀리 있다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] 콤마(,)를 사용해 밴쿠버의 위치를 구체적으로 부연 설명하는 동격구와 전치사구(<code>with ~</code>)가 덧붙여진 구조입니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But constant <span class="vw">foehn<span class="tt">(산에서 내리 부는 건조하고 따뜻한 바람) 푄 현상</span></span> winds off the Pacific Ocean make Vancouver winters mild and wet, although sunshine is <span class="vw">scant<span class="tt">부족한, 거의 없는</span></span>.</div>
+        <div class="sp-ko">그러나 태평양에서 불어오는 끊임없는 푄 바람은 햇빛이 부족함에도 불구하고 밴쿠버의 겨울을 온화하고 습하게 만든다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] <code>make(동사) + Vancouver winters(목적어) + mild and wet(목적격 보어)</code> 형태를 취하는 5형식 문장입니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">When I had a garden there in the late 1940s, a neighbor used to say that I "cheated God" to bring in my lettuce and tomatoes earlier than anyone else.</div>
+        <div class="sp-ko">내가 1940년대 후반 그곳에 정원을 가졌을 때, 한 이웃은 내가 다른 누구보다 상추와 토마토를 일찍 수확하기 위해 "신을 속였다"고 말하곤 했다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] <code>used to + 동사원형</code>(~하곤 했다)이 쓰였으며, <code>that</code> 명사절 내의 <code>to bring in</code>은 목적(~하기 위해)을 나타내는 to부정사의 부사적 용법입니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The bed <span class="gr">[in which the vegetables grew]</span> was banked toward the south at approximately 50 degrees, and the area between the plants was covered with flat stones, <span class="gr">gathered from the nearby beach</span>, to maximize soil heating from the weak late winter- early spring sun.</div>
+        <div class="sp-ko">채소가 자라는 모종밭은 대략 50도 각도로 남쪽을 향해 둑이 쌓여 있었고, 식물들 사이의 공간은 늦겨울에서 초봄의 약한 태양으로부터 토양 가열을 극대화하기 위해 근처 해변에서 모아온 납작한 돌들로 덮여 있었다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] <code>[in which the vegetables grew]</code>는 선행사 <code>The bed</code>를 수식하는 전치사+관계대명사 절이며, <code>gathered from...</code>은 <code>flat stones</code>를 후치 수식하는 과거분사구입니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      <strong>* Topic:</strong> strategic <span class="blank-ul">cultivation</span> techniques
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Introduction</span></td>
+          <td>(sent. 1) : topic statement</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Development 1</span></td>
+          <td>(sent. 2) : an example of harsh winter temperatures</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Development 2</span></td>
+          <td>(sent. 3~5) : strategic cultivation practices</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="gr-note" style="margin-top:16px;">
+      <div class="gr-note-ttl">📌 Writing Style Analysis</div>
+      <p style="font-size:13px; margin-bottom:8px; line-height:1.6;">In scientific and explanatory writing, a paragraph often stands complete with a topic sentence followed by examples.</p>
+      <p style="font-size:13px; line-height:1.6;">Its purpose is to demonstrate that temperature control is possible on a microclimate scale, not to argue for what should be done.</p>
+    </div>
+
+    <div class="card-lbl" style="margin-top:20px;">* Conclusion</div>
+    <div class="keyword-list">
+      <span style="font-size:0.85rem; color:var(--ink2);">Thus, even within the limits of nature, humans can influence temperature at a microclimate scale through simple environmental adjustments.</span>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(3) · 3번 지문</div>
+    <div class="p-title">🧬 DNA as a Record of Biological History</div>
+    <div class="p-title-ko">생물학적 역사의 기록으로서의 DNA: 자연선택의 산물이자 결정적 힘</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">In the early 1960s the great American writer James Baldwin wrote: "People are trapped in history, and history is trapped in them."</p>
+      <p class="plain-sent">He was speaking to race when he penned those words.</p>
+      <p class="plain-sent">But the statement is equally true if the word "people" is replaced with "all of life on Earth, present and past," for each strand of DNA, in each of our cells, is an ancient record of biological history, written in simple code and passed down from generation to generation.</p>
+      <p class="plain-sent">One could say that DNA is nothing but history, one with a physical manifestation that was slowly blended and accumulated over countless eons by the most pitiless of all phenomena natural selection.</p>
+      <p class="plain-sent">DNA is a history that is inside us and yet one that is our master as well, the blueprint for our bodies, and dictator of what we will pass on to our children, gifts that can be blessings or deadly time bombs.</p>
+      <p class="plain-sent">We are indeed trapped in this particular vehicle of history as much as it is trapped in us.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">📖 개념 학습 및 심층 분석</div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">➤ The Pitiless Determinism of DNA</div>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">
+        <span class="orig-ul">[the most pitiless of all phenomena natural selection]</span>, <span class="orig-ul">[one that is our master]</span>, <span class="orig-ul">[dictator of what we will pass on to our children]</span>
+      </p>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">Together, these ideas present DNA as the product of a pitiless, non-moral process of natural selection and as a determining force that governs human traits and inheritance, leaving individuals little control over who they are or what they pass on to their children.</p>
+      <p style="font-size:13px; color:var(--ink2); line-height:1.6;">(이 개념들은 DNA를 가장 무자비하고 도덕적이지 않은 자연선택 과정의 산물이자, 인간의 특성과 유전을 지배하는 결정론적 힘으로 제시하여, 개인이 자신이 누구인지 또는 자녀에게 무엇을 물려줄지에 대해 통제할 수 있는 여지를 거의 남기지 않음을 보여줍니다.)</p>
+    </div>
+    <div class="gr-note blue" style="margin-top:16px;">
+      <div class="gr-note-ttl blue">➤ The Duality of DNA</div>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">
+        <span class="orig-ul">[gifts that can be blessings or deadly time bombs]</span>
+      </p>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">This shows the duality of DNA : a genetic trait can provide health or special abilities, such as resistance to some infections or greater physical strength, while the same genetic makeup can also become a deadly time bomb by carrying hidden diseases, including inherited heart problems or cancers that appear later in life.</p>
+      <p style="font-size:13px; color:var(--ink2); line-height:1.6;">(이는 DNA의 이중성을 보여줍니다. 유전적 특성은 감염에 대한 저항력이나 더 강한 체력과 같은 건강이나 특별한 능력을 제공할 수 있는 반면, 동일한 유전적 구성이 나중에 나타나는 유전성 심장 문제나 암을 포함한 숨겨진 질병을 옮김으로써 치명적인 시한폭탄이 될 수도 있습니다.)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 및 구조 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In the early 1960s the great American writer James Baldwin wrote: "People are trapped in history, and history is trapped in them."</div>
+        <div class="sp-ko">1960년대 초 위대한 미국 작가 제임스 볼드윈은 썼다: "사람들은 역사 속에 갇혀 있고, 역사는 사람들 속에 갇혀 있다."</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">He was speaking to race when he penned those words.</div>
+        <div class="sp-ko">그가 그 말을 썼을 때 그는 인종에 대해 말하고 있었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But the statement is equally true if the word "people" is replaced with "all of life on Earth, present and past," <span class="gr">for</span> each <span class="vw">strand<span class="tt">가닥, 올</span></span> of DNA, in each of our cells, is an ancient record of biological history, <span class="gr">written in simple code and passed down from generation to generation</span>.</div>
+        <div class="sp-ko">그러나 "사람들"이라는 단어가 "현재와 과거, 지구상의 모든 생명체"로 대체된다 하더라도 그 진술은 똑같이 사실이다. 왜냐하면 우리 세포 각각에 있는 각각의 DNA 가닥은 단순한 암호로 쓰여 세대에서 세대로 전해지는 생물학적 역사의 고대 기록이기 때문이다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] <code>for</code>는 이유를 나타내는 등위접속사(~이기 때문에)로 쓰였고, 주어는 <code>each strand</code>, 동사는 <code>is</code>입니다. <code>written... and passed down...</code>은 <code>record</code>를 후위 수식하는 과거분사구입니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">One could say that DNA is nothing but history, <span class="gr">one</span> with a physical <span class="vw">manifestation<span class="tt">구현(물), 징후</span></span> <span class="gr">[that was slowly blended and accumulated over countless <span class="vw">eon<span class="tt">억겁(영겁)의 시간</span></span>s by the most pitiless of all phenomena natural selection]</span>.</div>
+        <div class="sp-ko">DNA는 역사, 즉 모든 현상 중 가장 무자비한 자연선택에 의해 셀 수 없이 긴 시간 동안 천천히 혼합되고 축적된 물리적 구현을 가진 역사에 지나지 않는다고 말할 수 있다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] <code>that</code> 명사절 안에서 <code>history</code>와 동격인 대명사 <code>one</code>이 이어지며, 그 뒤의 주격 관계대명사 <code>that</code> 절이 <code>manifestation</code>을 수식하는 복합 구조입니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">DNA is a history <span class="gr">[that is inside us]</span> and yet <span class="gr">one</span> <span class="gr">[that is our master as well]</span>, the blueprint for our bodies, and dictator of what we will pass on to our children, gifts that can be blessings or deadly time bombs.</div>
+        <div class="sp-ko">DNA는 우리 안에 있는 역사이면서 동시에 우리의 주인이기도 하며, 우리 몸의 청사진이자 우리가 자녀에게 물려줄 것을 결정하는 독재자이며, 축복이 될 수도 있고 치명적인 시한폭탄이 될 수도 있는 선물이다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] 주격 관계대명사 <code>that</code> 절 두 개가 각각 <code>history</code>와 대명사 <code>one</code>을 수식하며, 뒤이어 동격 명사구(<code>the blueprint...</code>, <code>dictator...</code>, <code>gifts...</code>)들이 계속 나열되어 DNA의 다면적 특성을 부연합니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We are indeed trapped in this particular vehicle of history <span class="gr">as much as</span> it is trapped in us.</div>
+        <div class="sp-ko">우리는 그것(역사/DNA)이 우리 안에 갇혀 있는 것만큼이나 이 특정한 역사의 운반체 안에 진정 갇혀 있는 것이다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] <code>as much as</code> (~만큼이나 많이) 원급 비교 구문을 사용하여 인간과 DNA(역사)가 상호 갇혀있음을 효과적으로 강조합니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      <strong>* Topic:</strong> DNA as a <span class="blank-ul">record</span> of biological <span class="blank-ul">history</span>
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Introduction</span></td>
+          <td>(sent. 1~2) : James Baldwin's words on race</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Development 1</span></td>
+          <td>(sent. 3~4) : the extension of Baldwin's quotation to DNA</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Development 2</span></td>
+          <td>(sent. 5) : the deterministic nature and duality of DNA</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Conclusion</span></td>
+          <td>(sent. 6) : humans shaped by DNA</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p4">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(3) · 4번 지문</div>
+    <div class="p-title">🧠 Fear That Hinders Critical Thinking</div>
+    <div class="p-title-ko">비판적 사고를 방해하는 두려움: 생각이 우리의 기반을 흔들기 때문에</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">People may not think critically for a variety of reasons, such as laziness and inability, but fear is a big one.</p>
+      <p class="plain-sent">Why is that? People don't want to think not just because it's hard, but also because they're afraid it will make them question their long-held beliefs.</p>
+      <p class="plain-sent">Your students most likely do want to think about things that can be very controversial, like politics, ethics, and philosophy.</p>
+      <p class="plain-sent">But probe even deeper.</p>
+      <p class="plain-sent">Once we start thinking deeply, long-held assumptions are challenged.</p>
+      <p class="plain-sent">Thought makes us worry that we'll lose our balance and have to look at the world in a different way.</p>
+      <p class="plain-sent">We worry about thinking because we care about what we and other people think.</p>
+      <p class="plain-sent">Even the most far-fetched ideas have an effect on the world.</p>
+      <p class="plain-sent">Non-Euclidean geometry and symbolic logic are about as abstract as thinking can get, but you can't understand Einsteinian gravity without the first and run computers without the second.</p>
+      <p class="plain-sent">Thinking is important to us, to others, and to the world we live in.</p>
+      <p class="plain-sent">This is one reason why we are so afraid of it: it shakes us to the core.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">📖 개념 학습 및 심층 분석</div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">➤ The Fear of Inner Change</div>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">
+        <span class="orig-ul">[ But probe even deeper ]</span>, <span class="orig-ul">[ it will make them question their long-held beliefs ]</span>, <span class="orig-ul">[ long-held assumptions are challenged ]</span>, <span class="orig-ul">[ it shakes us to the core ]</span>
+      </p>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">People fear thinking itself because they feel it can undo them, triggering deep inner change marked by intense emotional anxiety, the fear that what they have long believed may be wrong, and a sense that the very foundations of their identity are being shaken.</p>
+      <p style="font-size:13px; color:var(--ink2); line-height:1.6;">(사람들은 생각이 자신들을 파멸시킬 수 있다고 느끼기 때문에 생각하는 것 자체를 두려워합니다. 이는 강렬한 정서적 불안, 자신이 오랫동안 믿어왔던 것이 틀렸을지도 모른다는 두려움, 그리고 정체성의 바로 그 근간이 흔들리고 있다는 느낌으로 특징지어지는 깊은 내적 변화를 촉발하기 때문입니다.)</p>
+    </div>
+    
+    <div class="gr-note blue" style="margin-top:16px;">
+      <div class="gr-note-ttl blue">➤ The Author's Strategic Argument</div>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">Although <span class="orig-ul">[ Development 2_elaboration (sent. 8~10) ]</span> does not directly address social revolution, it leaves room for an extended interpretation in which abstract thinking is understood to influence not only science and technology but also broader social structures.</p>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">At the same time, the author preserves universality by relying on science and logic, which persuade without ideological conflict, deliberately avoiding the more controversial realm of political and social revolution where value judgments intervene. This allows the argument to remain focused on the central claim that thinking itself is powerful and therefore feared.</p>
+      <p style="font-size:13px; color:var(--ink2); line-height:1.6;">(비록 이 단락이 사회 혁명을 직접적으로 다루고 있지는 않지만, 추상적 사고가 과학과 기술뿐만 아니라 더 넓은 사회 구조에도 영향을 미치는 것으로 이해되는 확장된 해석의 여지를 남깁니다. 동시에, 저자는 이데올로기적 갈등 없이 설득할 수 있는 과학과 논리에 의존함으로써 보편성을 유지하고, 가치 판단이 개입되는 정치적, 사회적 혁명이라는 더 논쟁적인 영역을 의도적으로 피합니다. 이를 통해 생각하는 것 자체가 강력하며 따라서 두려움의 대상이 된다는 핵심 주장에 논점이 집중되도록 합니다.)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 및 구조 분석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">People may not think critically for a variety of reasons, such as laziness and inability, but fear is a big one.</div>
+        <div class="sp-ko">게으름이나 무능력과 같은 여러 가지 이유로 사람들이 비판적으로 생각하지 않을 수도 있지만, 두려움이 큰 이유 중 하나이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Why is that? People don't want to think <span class="gr">not just because</span> it's hard, <span class="gr">but also because</span> they're afraid it will <span class="gr">make them question</span> their long-held beliefs.</div>
+        <div class="sp-ko">왜 그럴까? 사람들은 생각하는 것이 어려울 뿐만 아니라, 그것이 자신들의 오랜 믿음에 의문을 제기하게 만들까봐 두려워서 생각하고 싶어 하지 않는다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] <code>not just A but also B</code> (A뿐만 아니라 B때문에) 상관접속사 구문이 쓰였고, 뒤에 사역동사 <code>make + 목적어(them) + 목적격 보어(동사원형 question)</code> 구조가 포함되어 있습니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Your students most likely <span class="gr">do want</span> to think about things <span class="gr">that</span> can be very controversial, like politics, ethics, and philosophy.</div>
+        <div class="sp-ko">당신의 학생들은 필시 정치, 윤리, 철학과 같이 매우 논쟁적일 수 있는 것들에 대해 생각하기를 진정 원할 것이다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] 조동사 <code>do</code>를 일반동사 <code>want</code> 앞에 사용하여 '진정으로 원한다'는 강조의 의미를 나타내며, 주격 관계대명사 <code>that</code>이 <code>things</code>를 수식합니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But <span class="vw">probe<span class="tt">면밀히 조사하다, 파고들다</span></span> even deeper.</div>
+        <div class="sp-ko">하지만 훨씬 더 깊이 파고들어 보라.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Once we start thinking deeply, long-held assumptions are challenged.</div>
+        <div class="sp-ko">우리가 깊이 생각하기 시작하면, 오랜 가정들이 도전을 받는다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Thought <span class="gr">makes us worry that</span> we'll lose our balance and have to look at the world in a different way.</div>
+        <div class="sp-ko">생각은 우리가 균형을 잃고 세상을 다른 방식으로 봐야 할지도 모른다고 걱정하게 만든다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] 사역동사 <code>makes + 목적어(us) + 목적격 보어(동사원형 worry)</code>가 쓰였고, <code>that</code> 명사절이 <code>worry</code>의 목적어 역할을 합니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We worry about thinking because we care about <span class="gr">what we and other people think</span>.</div>
+        <div class="sp-ko">우리는 우리와 다른 사람들이 생각하는 것에 신경 쓰기 때문에 생각하는 것에 대해 걱정한다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] 전치사 <code>about</code>의 목적어로 선행사를 포함하는 관계대명사 <code>what</code>이 이끄는 명사절이 공통으로 연결되어 왔습니다. (what we think and what other people think)</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Even the most <span class="vw">far-fetched<span class="tt">억지스러운, 믿기지 않는</span></span> ideas have an effect on the world.</div>
+        <div class="sp-ko">심지어 가장 억지스러운 아이디어들조차 세상에 영향을 미친다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Non-Euclidean geometry<span class="tt">비(非)유클리드 기하학</span></span> and symbolic logic are <span class="gr">about as abstract as thinking can get</span>, but you can't understand Einsteinian gravity without the first and run computers without the second.</div>
+        <div class="sp-ko">비유클리드 기하학과 기호 논리학은 사고가 도달할 수 있을 만큼 최대한 추상적이지만, 당신은 전자 없이는 아인슈타인의 중력을 이해할 수 없고 후자 없이는 컴퓨터를 실행할 수 없다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] <code>as 형용사/부사 as S can get</code> (S가 될 수 있는 한 최대한 ~한) 관용적 비교 구문이 사용되었으며, <code>the first</code>는 전자(비유클리드 기하학), <code>the second</code>는 후자(기호 논리학)를 지칭합니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Thinking is important to us, to others, and to the world we live in.</div>
+        <div class="sp-ko">생각하는 것은 우리에게, 다른 사람들에게, 그리고 우리가 사는 세상에 중요하다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This is <span class="gr">one reason why</span> we are so afraid of it: it shakes us to the core.</div>
+        <div class="sp-ko">이것이 우리가 그것을 그렇게 두려워하는 한 가지 이유이다: 그것은 우리를 근본부터 흔든다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [문장 구조 & 핵심 문법] <code>one reason</code> 뒤에 관계부사 <code>why</code>가 생략되지 않고 수식절을 이끌고 있으며, 콜론(:)은 부연 설명을 이끕니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      <strong>* Topic:</strong> <span class="blank-ul">fear</span> that hinders <span class="blank-ul">critical</span> thinking
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:140px;"><span class="step-badge">Introduction</span></td>
+          <td>(sent. 1) : reasons for not thinking critically</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Development 1</span></td>
+          <td>(sent. 2~7) : the source of fear</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Development 2</span><br>(Elaboration)</td>
+          <td>(sent. 8~10) : the need for abstract thinking</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Conclusion</span></td>
+          <td>(sent. 11~12) : the importance of thinking and why we fear it</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p1','p3','p4'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
