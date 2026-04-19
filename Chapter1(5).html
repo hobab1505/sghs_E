@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Focus Framework · Chapter 1(5) 완전 보강본</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#4f46e5;--accent2:#4338ca;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--red:#b42318;--red-bg:rgba(180,35,24,.08);--border:#ddd5c5;--border2:#ece5d8;--purple-bg:linear-gradient(135deg, #7c3aed, #4f46e5);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1240px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.24rem;font-weight:600;}
+.hdr-sub{font-size:.79rem;opacity:.86;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.83);padding:5px 12px;border-radius:4px;font-size:.72rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1240px;margin:0 auto;padding:30px 18px 90px;}
+.sec{display:none;} .sec.on{display:block;}
+.hero{background:linear-gradient(135deg,#fff,#f7f2ff);border:1px solid var(--border);border-radius:14px;padding:26px 28px;box-shadow:0 10px 30px rgba(80,60,30,.05);}
+.hero h1{font-size:1.9rem;line-height:1.25;margin-bottom:10px;}
+.hero p{font-size:.92rem;color:var(--ink3);}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:10px;padding:18px 20px;cursor:pointer;transition:.18s ease;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1.02rem;font-weight:600;margin-bottom:4px;}
+.toc-ko{font-size:.8rem;color:var(--ink3);}
+.p-header{background:var(--purple-bg);color:#fefcf8;padding:24px 28px;border-radius:12px 12px 0 0;}
+.p-code{font-size:.66rem;opacity:.82;margin-bottom:5px;font-weight:700;letter-spacing:.05em;}
+.p-title{font-size:1.5rem;font-weight:700;}
+.p-title-ko{font-size:.86rem;opacity:.84;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 12px 12px;}
+.card-lbl{font-size:.64rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.split{display:grid;grid-template-columns:1.35fr .95fr;gap:20px;align-items:start;}
+@media (max-width:980px){.split{grid-template-columns:1fr;}}
+.plain-passage-box,.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:10px;padding:24px 28px;position:relative;}
+.plain-passage-box::before{content:'본문 (전체 반영)';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.passage-box::before{content:'구문해석 + 구조설명';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:18px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.84rem;color:var(--ink2);line-height:1.75;margin-top:7px;padding-left:12px;border-left:3px solid var(--border);}
+.sp-note{display:block;font-size:.75rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:8px 10px;border-radius:7px;margin-top:8px;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.06rem;line-height:1.98;margin-bottom:5px;}
+.sent-no{display:inline-block;min-width:28px;height:28px;line-height:28px;text-align:center;border-radius:50%;background:#efe9ff;color:var(--accent2);font-size:.73rem;font-weight:700;margin-right:8px;vertical-align:middle;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent);padding:16px 20px;font-size:.95rem;border-radius:0 8px 8px 0;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:10px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;}
+.step-badge{background:var(--accent);color:#fff;font-size:.62rem;padding:3px 10px;border-radius:20px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:10px;padding:20px 24px;margin-top:16px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.92rem;font-weight:700;margin-bottom:10px;line-height:1.7;}
+.choices{display:flex;flex-direction:column;gap:9px;}
+.choice{font-size:.87rem;color:var(--ink2);line-height:1.65;}
+.cn{display:inline-block;width:22px;font-weight:700;color:var(--ink);}
+.note-box{background:#f5f3ff;border:1px solid rgba(99,102,241,.28);border-radius:8px;padding:16px 18px;margin-top:15px;}
+.note-title{font-size:.84rem;font-weight:700;color:var(--accent);margin-bottom:7px;}
+.kw-box{display:flex;flex-wrap:wrap;gap:8px;}
+.kw{display:inline-block;background:var(--border);color:var(--ink2);font-size:.77rem;padding:5px 10px;border-radius:13px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:6px 10px;border-radius:6px;font-size:.72rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.16);}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:700;background:var(--green-bg);padding:0 2px;border-radius:3px;}
+.ans{color:var(--red);font-weight:800;text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px;}
+.ansbox{background:var(--red-bg);border:1px solid rgba(180,35,24,.25);border-radius:8px;padding:12px 14px;margin-top:12px;}
+.anslabel{font-size:.67rem;font-weight:700;color:var(--red);margin-bottom:4px;letter-spacing:.05em;}
+.side-stack{display:flex;flex-direction:column;gap:16px;}
+.panel{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 18px;}
+.panel h4{font-size:.84rem;margin-bottom:10px;color:var(--ink);}
+.panel p,.panel li{font-size:.84rem;color:var(--ink2);line-height:1.7;}
+.panel ul{padding-left:18px;}
+.small{font-size:.8rem;color:var(--ink3);}
+.info-box{background:#fcfbf6;border:1px solid var(--border);border-radius:10px;padding:16px 18px;line-height:1.75;}
+.footer-note{font-size:.8rem;color:var(--ink3);margin-top:22px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · Chapter 1(5)</div>
+      <div class="hdr-sub">PDF 전체 반영 · 구문해석 전체 추가 · 툴팁 구현 · 오른쪽 빈칸 답안 표시</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">1번</button>
+      <button class="nb" onclick="show('p3')">3번</button>
+      <button class="nb" onclick="show('p4')">4번</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="sec on" id="home">
+    <div class="hero">
+      <h1>Chapter 1(5) 완전 보강본</h1>
+      <p>이전 작업과 동일한 방식으로 본문 전체, 구문해석, 문법 구조 설명, 마우스오버 어휘 툴팁, 오른쪽 Topic / Text Structure / Keywords / 문제 요소를 모두 반영한 HTML 버전입니다.</p>
+      <div class="toc-grid">
+        <a class="toc-card" onclick="show('p1')"><div class="toc-en">⚖️ 1번 · Overcoming Oversized Crises</div><div class="toc-ko">통제 불가능한 큰 위기 속에서 통제 가능한 요소에 집중하기</div></a>
+        <a class="toc-card" onclick="show('p3')"><div class="toc-en">🥖 3번 · Servant Leadership</div><div class="toc-ko">리더는 사소한 일도 함께하는 사람이라는 관점</div></a>
+        <a class="toc-card" onclick="show('p4')"><div class="toc-en">🫁 4번 · Slower Breathing Outside Performance</div><div class="toc-ko">훈련·경기 밖에서 느린 호흡을 연습해 각성 상태를 조절하기</div></a>
+      </div>
+    </div>
+    <p class="footer-note">※ 오른쪽 빈칸 힌트 중 일부는 PDF OCR 한계가 있어 문맥과 보이는 알파벳 힌트를 함께 대조해 복원했습니다.</p>
+  </section>
+
+  <section class="sec" id="p1">
+    <div class="p-header">
+      <div class="p-code">Chapter 1(5) · 1번 지문</div>
+      <div class="p-title">⚖️ Managing Oversized Crises by Focusing on What You Can Control</div>
+      <div class="p-title-ko">통제 가능한 요소에 집중하여 거대한 위기를 극복하기</div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">01 본문 + 오른쪽 요약 정보</div>
+      <div class="split">
+        <div class="plain-passage-box">
+          <p class="plain-sent"><span class="sent-no">1</span>Many crises today, such as the Great Recession, are simply too big and too overwhelming for you to completely comprehend, much less control.</p>
+          <p class="plain-sent"><span class="sent-no">2</span>Crises of this <span class="vw">ilk<span class="tt">종류, 부류</span></span> are precisely the kind that can easily <span class="vw">engulf<span class="tt">집어삼키다</span></span> you with destructive reactions that interfere with your ability to overcome them.</p>
+          <p class="plain-sent"><span class="sent-no">3</span>Focusing on these oversized crises will <span class="vw">exacerbate<span class="tt">악화하다</span></span> the natural psychological, emotional, and physical reactions you are going to experience.</p>
+          <p class="plain-sent"><span class="sent-no">4</span>With these sorts of crises, your best chance is to identify those aspects that are within your control.</p>
+          <p class="plain-sent"><span class="sent-no">5</span>Then, you can break down the bigger crisis into smaller, more manageable problems toward which you can direct your energy and find solutions.</p>
+          <p class="plain-sent"><span class="sent-no">6</span>For example, think back to the Great Recession.</p>
+          <p class="plain-sent"><span class="sent-no">7</span>Although you probably didn’t have the ability to influence economic policy, you were able to revisit the distribution of your investments and choose to create a more diverse portfolio.</p>
+        </div>
+
+        <div class="side-stack">
+          <div class="panel">
+            <h4>Topic</h4>
+            <p>How to Overcome <span class="ans">Oversized</span> Crises</p>
+          </div>
+          <div class="panel">
+            <h4>Text Structure</h4>
+            <ul>
+              <li>1) Introduction (sent. 1~3) : Presenting the <span class="ans">Problem</span></li>
+              <li>2) Main Idea (sent. 4~5) : Presenting a <span class="ans">Simple</span> Principle</li>
+              <li>3) Elaboration (sent. 6~7) : Providing an <span class="ans">Example</span></li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>Keywords</h4>
+            <p>crises, overcome, <span class="ans">break</span> <span class="ans">down</span>, <span class="ans">manageable</span></p>
+          </div>
+          <div class="panel">
+            <h4>어휘</h4>
+            <p><b>ilk</b> : 종류<br><b>engulf</b> : 집어삼키다<br><b>exacerbate</b> : 악화하다</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">02 구문해석 + 문법 구조설명</div>
+      <div class="passage-box">
+        <div class="sp">
+          <div class="sp-en">Many crises today, such as the Great Recession, are simply too big and too overwhelming for you to completely comprehend, much less control.</div>
+          <div class="sp-ko">오늘날의 많은 위기들, 예를 들어 대침체와 같은 것들은, 당신이 완전히 이해하기에도 너무 크고 압도적이며, 하물며 통제하는 것은 더욱 어렵다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>such as the Great Recession</code>은 앞의 <code>Many crises</code>를 예시로 설명하는 삽입구입니다. <code>too A and too B for you to ...</code>는 ‘너무 ~해서 …할 수 없다’는 <b>too ... to부정사</b> 구조이며, <code>much less control</code>는 ‘이해하는 것은 물론이고 통제는 더더욱 어렵다’는 <b>비교·강조 표현</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Crises of this ilk are precisely the kind that can easily engulf you with destructive reactions that interfere with your ability to overcome them.</div>
+          <div class="sp-ko">이런 종류의 위기들은 당신이 그것들을 극복하는 능력을 방해하는 파괴적 반응들로 당신을 쉽게 집어삼킬 수 있는 바로 그런 유형의 위기들이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>the kind that can easily engulf you ...</code>에서 <code>that</code>은 <b>kind</b>를 수식하는 관계절입니다. 뒤의 <code>that interfere with ...</code>는 다시 <b>destructive reactions</b>를 수식하는 관계절로, 관계절이 연속으로 중첩된 구조입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Focusing on these oversized crises will exacerbate the natural psychological, emotional, and physical reactions you are going to experience.</div>
+          <div class="sp-ko">이처럼 지나치게 큰 위기들에 초점을 맞추는 것은 당신이 겪게 될 자연스러운 심리적, 정서적, 신체적 반응들을 더욱 악화시킬 것이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>Focusing on ...</code>은 <b>동명사구 주어</b>입니다. <code>the reactions (that) you are going to experience</code>에서 목적격 관계대명사 <code>that</code>이 생략되어 있습니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">With these sorts of crises, your best chance is to identify those aspects that are within your control.</div>
+          <div class="sp-ko">이런 종류의 위기에서는, 당신에게 가장 좋은 방법은 당신의 통제 안에 있는 측면들을 찾아내는 것이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>your best chance is to identify ...</code>는 <b>SVC 2형식</b>에서 보어가 <b>to부정사</b>인 구조입니다. <code>that are within your control</code>은 <b>aspects</b>를 수식하는 관계절입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Then, you can break down the bigger crisis into smaller, more manageable problems toward which you can direct your energy and find solutions.</div>
+          <div class="sp-ko">그다음에는 더 큰 위기를 더 작고 더 다룰 수 있는 문제들로 나누고, 그 문제들을 향해 당신의 에너지를 쏟아 해결책을 찾을 수 있다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>break down A into B</code>는 ‘A를 B로 나누다’라는 구동사입니다. <code>toward which</code>는 전치사 + 관계대명사 구조로, 앞의 <b>problems</b>를 받아 ‘그 문제들을 향해’라는 뜻을 만듭니다. 뒤의 <code>direct your energy and find solutions</code>는 병렬 구조입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">For example, think back to the Great Recession.</div>
+          <div class="sp-ko">예를 들어, 대침체를 떠올려 보라.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>think back to ...</code>는 ‘~을 되돌아보다, 떠올리다’라는 표현이며, 문장 전체는 독자에게 말을 거는 <b>명령문</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Although you probably didn’t have the ability to influence economic policy, you were able to revisit the distribution of your investments and choose to create a more diverse portfolio.</div>
+          <div class="sp-ko">비록 당신이 경제 정책에 영향을 미칠 능력은 아마 없었겠지만, 당신은 자신의 투자 배분을 다시 검토하고 더 다양한 포트폴리오를 만들기로 선택할 수는 있었다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>Although ...</code>는 양보의 부사절입니다. 본절은 <code>you were able to revisit ... and choose to create ...</code>로, 두 개의 동작이 <b>and</b>로 병렬 연결되어 있습니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">03 문제 + 설명 박스 반영</div>
+      <div class="q-block">
+        <div class="q-type">Q. Title</div>
+        <div class="q-stem">Which of the following is the best title for the passage?</div>
+        <div class="choices">
+          <div class="choice"><span class="cn">①</span>The Psychological Effects of Major Economic Crises</div>
+          <div class="choice"><span class="cn">②</span>Why Large Economic Crises Are Difficult to Predict</div>
+          <div class="choice"><span class="cn">③</span><span class="ans">Managing Crises by Focusing on Controllable Factors</span></div>
+          <div class="choice"><span class="cn">④</span>Breaking Complex Economic Problems into Smaller Ones</div>
+          <div class="choice"><span class="cn">⑤</span>Maintaining Stability During Periods of Economic Uncertainty</div>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top:16px;">
+        <div class="note-title">Great Recession 설명 박스 반영</div>
+        <p><b>Great Recession</b> refers to a major global economic crisis that occurred between 2007 and 2009. In Korean, it is commonly called the <span class="ans">Great Recession</span> or the <span class="ans">2008 global financial crisis</span>. In many English exam passages, the term Great Recession usually refers to this 2008 worldwide financial crisis.</p>
+        <p class="small" style="margin-top:8px; line-height:1.8;"><b>국문해석</b> : <b>Great Recession</b>은 2007년부터 2009년 사이에 발생한 대규모 세계 경제 위기를 뜻한다. 한국어로는 보통 <span class="ans">대침체</span> 또는 <span class="ans">2008년 세계 금융위기</span>라고 부른다. 많은 영어 지문에서 <i>Great Recession</i>이라는 용어는 대개 이 2008년 전 세계 금융위기를 가리킨다.</p>
+        <p style="margin-top:10px;">In the passage, this example is used to support the author’s idea. During a large crisis like the Great Recession, individuals cannot <span class="ans">influence</span> economic policies or <span class="ans">control</span> the overall situation. However, they can still control their <span class="ans">own</span> actions, such as diversifying their investments or managing their money more carefully. Therefore, the example shows that although we cannot control a large crisis itself, we can focus on the parts that are <span class="ans">within</span> our control.</p>
+        <p class="small" style="margin-top:8px; line-height:1.8;"><b>국문해석</b> : 이 지문에서 이 예시는 필자의 생각을 뒷받침하기 위해 사용된다. 대침체와 같은 큰 위기 상황에서는 개인이 경제 정책에 <span class="ans">영향을 미치거나</span> 전체 상황을 <span class="ans">통제할</span> 수 없다. 그러나 투자 대상을 분산하거나 돈을 더 신중하게 관리하는 것처럼, 자신의 <span class="ans">스스로의</span> 행동은 여전히 통제할 수 있다. 따라서 이 예시는 우리가 큰 위기 자체는 통제할 수 없더라도, 우리의 통제 <span class="ans">범위 안에 있는</span> 부분에 집중할 수 있음을 보여 준다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="p3">
+    <div class="p-header">
+      <div class="p-code">Chapter 1(5) · 3번 지문</div>
+      <div class="p-title">🥖 Servant Leadership Through Example and Pitching In</div>
+      <div class="p-title-ko">직접 본을 보이고 함께 일하는 섬김의 리더십</div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">01 본문 + 오른쪽 요약 정보</div>
+      <div class="split">
+        <div class="plain-passage-box">
+          <p class="plain-sent"><span class="sent-no">1</span>My business partner Charles and I embraced the servant leader’s way of doing things.</p>
+          <p class="plain-sent"><span class="sent-no">2</span>In other words, nothing was beneath us.</p>
+          <p class="plain-sent"><span class="sent-no">3</span>We led by example and did the work.</p>
+          <p class="plain-sent"><span class="sent-no">4</span>When any new salesman came into the store, he would look around, notice Charles polishing some corner of the floor and me covered in flour, and assume the decision-maker was not present.</p>
+          <p class="plain-sent"><span class="sent-no">5</span>He’d then hand off whatever he was selling to me and say, “Can you give this to the owner?”</p>
+          <p class="plain-sent"><span class="sent-no">6</span>Now, if Charles and I had remained in the bakery for too long, we wouldn’t have been able to grow and scale, so I’m not saying you should be sweeping the floors forever.</p>
+          <p class="plain-sent"><span class="sent-no">7</span>It’s more about modeling what’s important.</p>
+          <p class="plain-sent"><span class="sent-no">8</span>If cleanliness and details are important, be sure you aren’t above doing the work and <span class="vw">pitching in<span class="tt">협력하다, 기꺼이 돕다</span></span>.</p>
+          <p class="plain-sent"><span class="sent-no">9</span>Come into your workspace and ask how you can help.</p>
+          <p class="plain-sent"><span class="sent-no">10</span>If it’s clear your team is <span class="vw">in the weeds<span class="tt">어려움에 처한, 정신없이 바쁜</span></span>, jump in without asking.</p>
+        </div>
+
+        <div class="side-stack">
+          <div class="panel">
+            <h4>Topic</h4>
+            <p><span class="ans">Servant</span> Leadership</p>
+          </div>
+          <div class="panel">
+            <h4>Text Structure</h4>
+            <ul>
+              <li>1) Introduction (sent. 1~3) : Servant Leadership</li>
+              <li>2) Development 1 (sent. 4~5) : Typical Reaction</li>
+              <li>3) Development 2 (sent. 6~8) : The Author’s <span class="ans">View</span></li>
+              <li>4) Conclusion (sent. 9~10) : The Author’s <span class="ans">Conclusion</span></li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>Keywords</h4>
+            <p>servant leader, <span class="ans">modeling</span>, pitching in</p>
+          </div>
+          <div class="panel">
+            <h4>어휘</h4>
+            <p><b>pitch in</b> : 협력하다<br><b>in the weeds</b> : 어려움에 처한</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">02 구문해석 + 문법 구조설명</div>
+      <div class="passage-box">
+        <div class="sp">
+          <div class="sp-en">My business partner Charles and I embraced the servant leader’s way of doing things.</div>
+          <div class="sp-ko">나의 사업 파트너 찰스와 나는 섬기는 리더의 일 처리 방식을 받아들였다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>Charles and I</code>가 공동 주어이며, <code>embraced</code>의 목적어는 <code>the servant leader’s way of doing things</code>입니다. <code>of doing things</code>는 <b>way</b>를 구체화합니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">In other words, nothing was beneath us.</div>
+          <div class="sp-ko">다시 말해, 우리에게 하찮거나 낮은 일은 아무것도 없었다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>nothing was beneath us</code>는 ‘어떤 일도 우리 아래가 아니었다’, 즉 ‘무슨 일이든 마다하지 않았다’는 뜻의 <b>관용적 표현</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">We led by example and did the work.</div>
+          <div class="sp-ko">우리는 솔선수범하며 실제로 일을 했다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>led by example</code>와 <code>did the work</code>는 <b>and</b>로 연결된 병렬 동사 구조입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">When any new salesman came into the store, he would look around, notice Charles polishing some corner of the floor and me covered in flour, and assume the decision-maker was not present.</div>
+          <div class="sp-ko">새로운 영업사원이 가게에 들어오면, 그는 둘러보다가 찰스가 바닥 구석을 닦고 있고 내가 밀가루를 뒤집어쓴 채 있는 것을 보고, 의사결정권자는 그 자리에 없다고 생각하곤 했다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>When ...</code>은 시간 부사절입니다. 본절에서는 <code>look around</code>, <code>notice ...</code>, <code>assume ...</code> 세 동작이 병렬로 이어집니다. <code>Charles polishing ...</code>와 <code>me covered in flour</code>는 각각 지각동사 <code>notice</code> 뒤에서 목적어 + 보어 역할을 합니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">He’d then hand off whatever he was selling to me and say, “Can you give this to the owner?”</div>
+          <div class="sp-ko">그러고 나면 그는 자신이 팔고 있던 물건을 나에게 넘기며 “이것을 사장님께 전해 주시겠어요?”라고 말하곤 했다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>whatever he was selling</code>은 ‘그가 팔고 있던 무엇이든’이라는 뜻의 <b>복합관계대명사 whatever</b> 절입니다. <code>hand off A to B</code>는 ‘A를 B에게 건네다’라는 구동사입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Now, if Charles and I had remained in the bakery for too long, we wouldn’t have been able to grow and scale, so I’m not saying you should be sweeping the floors forever.</div>
+          <div class="sp-ko">이제, 만약 찰스와 내가 빵집에 너무 오래 남아 있었더라면 우리는 성장하고 규모를 키울 수 없었을 것이다. 그러니 내가 당신이 영원히 바닥을 쓸고 있어야 한다고 말하는 것은 아니다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : 앞부분은 <b>가정법 과거완료</b>입니다. <code>If ... had remained</code>에 대해 결과절은 <code>wouldn’t have been able to ...</code>로 이어집니다. 뒤의 <code>I’m not saying (that) ...</code>에서 <code>that</code>은 생략 가능합니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">It’s more about modeling what’s important.</div>
+          <div class="sp-ko">그것은 무엇이 중요한지를 몸소 보여 주는 데 더 가깝다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>what’s important</code>는 선행사를 포함한 관계대명사 <b>what절</b>로, <code>modeling</code>의 목적어 역할을 합니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">If cleanliness and details are important, be sure you aren’t above doing the work and pitching in.</div>
+          <div class="sp-ko">청결과 세부 사항이 중요하다면, 실제로 일을 하고 함께 돕는 것을 자신보다 낮은 일로 여기지 않도록 하라.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>If ...</code>는 조건절이고, 본절은 <code>be sure (that) ...</code> 구조입니다. <code>doing the work and pitching in</code>은 전치사 <code>above</code>의 목적어로 쓰인 <b>동명사 병렬 구조</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Come into your workspace and ask how you can help.</div>
+          <div class="sp-ko">당신의 작업 공간으로 들어가서 어떻게 도울 수 있는지 물어보라.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : 명령문 두 개가 <code>and</code>로 연결되어 있습니다. <code>how you can help</code>는 <b>ask</b>의 목적어인 간접의문문입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">If it’s clear your team is in the weeds, jump in without asking.</div>
+          <div class="sp-ko">당신의 팀이 곤경에 빠져 있다는 것이 분명하다면, 묻지 말고 바로 뛰어들어 도와라.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>If it’s clear (that) ...</code> 구조이며, <code>that</code>은 생략되어 있습니다. 본절 <code>jump in</code>은 ‘바로 나서다, 개입하다’라는 구동사입니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">03 문제 + 의미 설명 박스 반영</div>
+      <div class="q-block">
+        <div class="q-type">Q. Meaning</div>
+        <div class="q-stem">Which of the following best expresses the meaning of the sentence?<br>[ A true leader is never above helping with simple tasks. ]</div>
+        <div class="choices">
+          <div class="choice"><span class="cn">①</span>Leaders prefer doing simple work.</div>
+          <div class="choice"><span class="cn">②</span>Leaders must always assign simple tasks.</div>
+          <div class="choice"><span class="cn">③</span>Leaders must focus only on important tasks.</div>
+          <div class="choice"><span class="cn">④</span>Leaders should avoid doing unnecessary work.</div>
+          <div class="choice"><span class="cn">⑤</span><span class="ans">Leaders should not think simple tasks are beneath them.</span></div>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top:16px;">
+        <div class="note-title">의미 설명 박스 반영</div>
+        <p>All four expressions convey the idea that no task is too small or beneath a true leader.</p>
+        <p class="small" style="margin-top:8px; line-height:1.8;"><b>국문해석</b> : 이 네 표현은 모두 진정한 리더에게는 너무 사소하거나, 하기에는 체면이 깎인다고 여겨질 만한 일은 없다는 뜻을 전달한다.</p>
+        <p style="margin-top:10px;">① <span class="ans">No task should be beneath a true leader.</span><br>② <span class="ans">A good leader is never above helping with small tasks.</span><br>③ <span class="ans">A true leader is never too good to help their team.</span><br>④ <span class="ans">A responsible manager knows that no job is below them.</span></p>
+        <p class="small" style="margin-top:10px; line-height:1.8;"><b>설명</b> : 네 문장은 표현만 다를 뿐 핵심 의미는 같습니다. <code>beneath / below</code>는 ‘~보다 아래에 있는’이라는 뜻에서 발전해 ‘체면상 하기에는 낮은, 품위에 맞지 않는’이라는 의미로 쓰였고, <code>above helping</code>은 ‘돕는 일을 자기 수준 이하라고 여기지 않는다’는 뜻입니다. 또한 <code>too good to help</code>는 ‘남을 도울 만큼 자신이 대단하다고 여기지 않는다’는 의미이므로, 결국 모두 <b>좋은 리더는 작은 일도 마다하지 않고 직접 돕는다</b>는 메시지를 나타냅니다.</p>
+        <p class="small" style="margin-top:8px; line-height:1.8;"><b>포인트</b> : 이 문제는 문장 표면이 아니라 <b>리더의 태도</b>라는 공통 의미를 잡아내는 것이 중요합니다. 즉 ‘작은 일을 하찮게 여기지 않는 자세’가 네 표현의 공통 핵심입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="p4">
+    <div class="p-header">
+      <div class="p-code">Chapter 1(5) · 4번 지문</div>
+      <div class="p-title">🫁 Practicing Slower Breathing Outside of Training and Competition</div>
+      <div class="p-title-ko">훈련과 경기 밖에서 느린 호흡을 연습하기</div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">01 본문 + 오른쪽 요약 정보</div>
+      <div class="split">
+        <div class="plain-passage-box">
+          <p class="plain-sent"><span class="sent-no">1</span>Training and competition naturally speed the breath, which activates the <span class="vw">sympathetic nervous system<span class="tt">교감 신경계</span></span>.</p>
+          <p class="plain-sent"><span class="sent-no">2</span>In performance, this is acceptable because an athlete wants to produce adrenaline and compete and train in an <span class="vw">aroused<span class="tt">고조된, 각성된</span></span> state.</p>
+          <p class="plain-sent"><span class="sent-no">3</span>However, it is equally important for an athlete to learn how to mentally and physically downshift from the <span class="vw">acute<span class="tt">급격한, 급성의</span></span> sympathetic activity experienced in sport, and outside of performance focus their attention on slow breathing to reduce the sympathetic activity and resolve the fight-or-flight state.</p>
+          <p class="plain-sent"><span class="sent-no">4</span>In the Feinstein Institutes study, participants were able to use the pace of their breathing to activate specific regions of the brain.</p>
+          <p class="plain-sent"><span class="sent-no">5</span>In a performance realm, this means athletes can use breathing pace to manage their state of arousal.</p>
+          <p class="plain-sent"><span class="sent-no">6</span>During training and competition, the breathing rate increases with the introduction of adrenaline, and athletes must be able to control this to be able to adapt and recover.</p>
+          <p class="plain-sent"><span class="sent-no">7</span>One way is to practice slower breathing protocols outside of training and competition.</p>
+        </div>
+
+        <div class="side-stack">
+          <div class="panel">
+            <h4>Topic</h4>
+            <p>Practicing <span class="ans">Slower</span> Breathing <span class="ans">Outside</span> of Training and Competition</p>
+          </div>
+          <div class="panel">
+            <h4>Text Structure</h4>
+            <ul>
+              <li>1) Introduction (sent. 1~2) : Training and Competition <span class="ans">Speed</span> the Breath and <span class="ans">Activate</span> the Sympathetic Nervous System</li>
+              <li>2) Development (sent. 3) : The <span class="ans">Importance</span> of Slow Breathing</li>
+              <li>3) Elaboration (sent. 4~5) : The Feinstein Institutes Study</li>
+              <li>4) Conclusion (sent. 6~7) : Practice Slower Breathing Protocols</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>Keywords</h4>
+            <p>athlete, <span class="ans">slow</span> <span class="ans">breathing</span>, practice, outside of training and competition</p>
+          </div>
+          <div class="panel">
+            <h4>어휘</h4>
+            <p><b>sympathetic nervous system</b> : 교감 신경계<br><b>arouse</b> : 고조시키다<br><b>acute</b> : 급격한</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">02 구문해석 + 문법 구조설명</div>
+      <div class="passage-box">
+        <div class="sp">
+          <div class="sp-en">Training and competition naturally speed the breath, which activates the sympathetic nervous system.</div>
+          <div class="sp-ko">훈련과 경기는 자연스럽게 호흡을 빠르게 만들고, 이는 교감 신경계를 활성화한다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>which activates ...</code>는 앞 절 전체를 받는 <b>계속적 용법의 관계대명사</b>입니다. 즉 ‘호흡이 빨라지는 것’이 교감신경계를 활성화한다는 뜻입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">In performance, this is acceptable because an athlete wants to produce adrenaline and compete and train in an aroused state.</div>
+          <div class="sp-ko">경기 상황에서는 이것이 허용될 수 있는데, 선수는 아드레날린을 만들어 내고 각성된 상태에서 경쟁하고 훈련하기를 원하기 때문이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>because</code> 이하가 이유를 나타냅니다. <code>to produce</code>, <code>compete</code>, <code>train</code>은 선수의 수행 목적/상태를 설명하는 병렬 구조입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">However, it is equally important for an athlete to learn how to mentally and physically downshift from the acute sympathetic activity experienced in sport, and outside of performance focus their attention on slow breathing to reduce the sympathetic activity and resolve the fight-or-flight state.</div>
+          <div class="sp-ko">그러나 선수에게는 스포츠에서 경험되는 급격한 교감신경 활동으로부터 정신적·신체적으로 기어를 낮추는 법을 배우고, 경기 밖에서는 느린 호흡에 주의를 집중해 교감신경 활동을 줄이고 투쟁-도피 상태를 해소하는 것이 똑같이 중요하다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>It is equally important for an athlete to learn ...</code>는 <b>가주어 it + 진주어 to부정사</b> 구조입니다. <code>experienced in sport</code>는 <b>activity</b>를 수식하는 과거분사구이고, <code>to reduce ... and resolve ...</code>는 느린 호흡에 집중하는 목적을 나타내는 병렬 <b>to부정사</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">In the Feinstein Institutes study, participants were able to use the pace of their breathing to activate specific regions of the brain.</div>
+          <div class="sp-ko">Feinstein Institutes의 연구에서, 참가자들은 자신의 호흡 속도를 이용하여 뇌의 특정 영역들을 활성화할 수 있었다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>were able to use A to activate B</code>는 ‘A를 사용하여 B를 활성화할 수 있었다’는 구조입니다. 두 번째 <code>to activate</code>는 목적을 나타냅니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">In a performance realm, this means athletes can use breathing pace to manage their state of arousal.</div>
+          <div class="sp-ko">경기 영역에서 이것은 선수들이 자신의 호흡 속도를 사용해 각성 상태를 조절할 수 있음을 의미한다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>this means (that) ...</code>에서 <code>that</code>은 생략되었습니다. <code>use A to manage B</code>는 목적을 나타내는 <b>to부정사</b> 구조입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">During training and competition, the breathing rate increases with the introduction of adrenaline, and athletes must be able to control this to be able to adapt and recover.</div>
+          <div class="sp-ko">훈련과 경기 중에는 아드레날린의 도입과 함께 호흡 속도가 증가하며, 선수들은 적응하고 회복할 수 있도록 이것을 조절할 수 있어야 한다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>with the introduction of adrenaline</code>는 ‘아드레날린이 투입되면서’라는 부가 정보 전치사구입니다. 뒤의 <code>to be able to adapt and recover</code>는 목적/결과를 나타냅니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">One way is to practice slower breathing protocols outside of training and competition.</div>
+          <div class="sp-ko">한 가지 방법은 훈련과 경기 밖에서 더 느린 호흡 프로토콜을 연습하는 것이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>One way is to practice ...</code>는 <b>2형식 문장</b>으로, 보어에 <b>to부정사</b>가 온 구조입니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">03 문제 반영</div>
+      <div class="q-block">
+        <div class="q-type">Q. NOT True</div>
+        <div class="q-stem">Which of the following is NOT true according to the passage?</div>
+        <div class="choices">
+          <div class="choice"><span class="cn">①</span>Faster breathing during training and competition is associated with increased sympathetic nervous system activity.</div>
+          <div class="choice"><span class="cn">②</span>Athletes often perform in an aroused state because adrenaline helps them compete effectively.</div>
+          <div class="choice"><span class="cn">③</span>Participants in the Feinstein Institutes study showed that breathing pace could influence activity in certain brain regions.</div>
+          <div class="choice"><span class="cn">④</span>Practicing slower breathing can help athletes reduce sympathetic nervous system activity outside training and competition.</div>
+          <div class="choice"><span class="cn">⑤</span><span class="ans">Athletes should suppress changes in breathing during training and competition in order to control their arousal state.</span></div>
+        </div>
+        <div class="ansbox"><div class="anslabel">WHY</div><div class="small">본문은 훈련과 경기 중 빠른 호흡과 각성 상태 자체를 부정하지 않습니다. 오히려 그런 상태는 경기에서는 자연스럽고, <span class="ans">훈련·경기 밖에서</span> 느린 호흡을 연습해 회복과 조절 능력을 기르라고 말합니다.</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const ids=['home','p1','p3','p4'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i); if(el) el.classList.remove('on');});
+  const t=document.getElementById(id); if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb'); btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id); if(idx>=0 && btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

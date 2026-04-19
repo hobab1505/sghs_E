@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Focus Framework · Chapter 1(4) 완전 보강본</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#4f46e5;--accent2:#4338ca;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--red:#b42318;--red-bg:rgba(180,35,24,.08);--border:#ddd5c5;--border2:#ece5d8;--purple-bg:linear-gradient(135deg, #7c3aed, #4f46e5);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1220px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.24rem;font-weight:600;}
+.hdr-sub{font-size:.79rem;opacity:.86;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.83);padding:5px 12px;border-radius:4px;font-size:.72rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1220px;margin:0 auto;padding:30px 18px 90px;}
+.sec{display:none;} .sec.on{display:block;}
+.hero{background:linear-gradient(135deg,#fff,#f7f2ff);border:1px solid var(--border);border-radius:14px;padding:26px 28px;box-shadow:0 10px 30px rgba(80,60,30,.05);}
+.hero h1{font-size:1.9rem;line-height:1.25;margin-bottom:10px;}
+.hero p{font-size:.92rem;color:var(--ink3);}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:10px;padding:18px 20px;cursor:pointer;transition:.18s ease;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1.02rem;font-weight:600;margin-bottom:4px;}
+.toc-ko{font-size:.8rem;color:var(--ink3);}
+.p-header{background:var(--purple-bg);color:#fefcf8;padding:24px 28px;border-radius:12px 12px 0 0;}
+.p-code{font-size:.66rem;opacity:.82;margin-bottom:5px;font-weight:700;letter-spacing:.05em;}
+.p-title{font-size:1.5rem;font-weight:700;}
+.p-title-ko{font-size:.86rem;opacity:.84;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 12px 12px;}
+.card-lbl{font-size:.64rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.split{display:grid;grid-template-columns:1.35fr .95fr;gap:20px;align-items:start;}
+@media (max-width:980px){.split{grid-template-columns:1fr;}}
+.plain-passage-box,.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:10px;padding:24px 28px;position:relative;}
+.plain-passage-box::before{content:'본문 (전체 반영)';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.passage-box::before{content:'구문해석 + 구조설명';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:18px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.84rem;color:var(--ink2);line-height:1.75;margin-top:7px;padding-left:12px;border-left:3px solid var(--border);}
+.sp-note{display:block;font-size:.75rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:8px 10px;border-radius:7px;margin-top:8px;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.06rem;line-height:1.98;margin-bottom:5px;}
+.sent-no{display:inline-block;min-width:28px;height:28px;line-height:28px;text-align:center;border-radius:50%;background:#efe9ff;color:var(--accent2);font-size:.73rem;font-weight:700;margin-right:8px;vertical-align:middle;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent);padding:16px 20px;font-size:.95rem;border-radius:0 8px 8px 0;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:10px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;}
+.step-badge{background:var(--accent);color:#fff;font-size:.62rem;padding:3px 10px;border-radius:20px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:10px;padding:20px 24px;margin-top:16px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.92rem;font-weight:700;margin-bottom:10px;line-height:1.7;}
+.choices{display:flex;flex-direction:column;gap:9px;}
+.choice{font-size:.87rem;color:var(--ink2);line-height:1.65;}
+.cn{display:inline-block;width:22px;font-weight:700;color:var(--ink);}
+.note-box{background:#f5f3ff;border:1px solid rgba(99,102,241,.28);border-radius:8px;padding:16px 18px;margin-top:15px;}
+.note-title{font-size:.84rem;font-weight:700;color:var(--accent);margin-bottom:7px;}
+.kw-box{display:flex;flex-wrap:wrap;gap:8px;}
+.kw{display:inline-block;background:var(--border);color:var(--ink2);font-size:.77rem;padding:5px 10px;border-radius:13px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:6px 10px;border-radius:6px;font-size:.72rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.16);}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:700;background:var(--green-bg);padding:0 2px;border-radius:3px;}
+.ans{color:var(--red);font-weight:800;text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px;}
+.ansbox{background:var(--red-bg);border:1px solid rgba(180,35,24,.25);border-radius:8px;padding:12px 14px;margin-top:12px;}
+.anslabel{font-size:.67rem;font-weight:700;color:var(--red);margin-bottom:4px;letter-spacing:.05em;}
+.side-stack{display:flex;flex-direction:column;gap:16px;}
+.panel{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 18px;}
+.panel h4{font-size:.84rem;margin-bottom:10px;color:var(--ink);}
+.panel p,.panel li{font-size:.84rem;color:var(--ink2);line-height:1.7;}
+.panel ul{padding-left:18px;}
+.small{font-size:.8rem;color:var(--ink3);}
+.footer-note{font-size:.8rem;color:var(--ink3);margin-top:22px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · Chapter 1(4)</div>
+      <div class="hdr-sub">PDF 전체 반영 · 구문해석 전체 추가 · 툴팁 구현 · 오른쪽 빈칸 답안 표시</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">1번</button>
+      <button class="nb" onclick="show('p3')">3번</button>
+      <button class="nb" onclick="show('p4')">4번</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="sec on" id="home">
+    <div class="hero">
+      <h1>Chapter 1(4) 완전 보강본</h1>
+      <p>요청하신 기준에 맞춰 본문 전체 반영, 전 문장 구문해석, 문법 구조 설명, 어려운 어휘 툴팁, 오른쪽 학습 포인트/문제/빈칸 답안 표시까지 모두 포함한 HTML 버전입니다.</p>
+      <div class="toc-grid">
+        <a class="toc-card" onclick="show('p1')"><div class="toc-en">☀️ 1번 · Food, Knowledge, and Energy</div><div class="toc-ko">음식은 지식을 통해 가공된 태양 에너지라는 관점</div></a>
+        <a class="toc-card" onclick="show('p3')"><div class="toc-en">🔬 3번 · Science, Intuition, and Evidence</div><div class="toc-ko">직관은 검증되어야 하며, 증거가 현실 신뢰의 근거라는 주장</div></a>
+        <a class="toc-card" onclick="show('p4')"><div class="toc-en">🤝 4번 · Anxiety into Compassion</div><div class="toc-ko">사회적 불안을 공감과 배려의 행동으로 전환하는 방법</div></a>
+      </div>
+    </div>
+    <p class="footer-note">※ 일부 오른쪽 빈칸 힌트는 원본 PDF의 OCR 한계가 있었지만, 본문 의미와 보이는 글자 힌트를 모두 반영해 정답 형태로 복원했습니다.</p>
+  </section>
+
+  <section class="sec" id="p1">
+    <div class="p-header">
+      <div class="p-code">Chapter 1(4) · 1번 지문</div>
+      <div class="p-title">☀️ Food as Solar Energy Distilled Through Human Knowledge</div>
+      <div class="p-title-ko">인간의 지식을 통해 증류된 태양 에너지로서의 음식</div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">01 본문 + 오른쪽 요약 정보</div>
+      <div class="split">
+        <div class="plain-passage-box">
+          <p class="plain-sent"><span class="sent-no">1</span>There’s a saying that “you can’t eat information.” That may be so, but the food we eat today is the fruit of thousands of years of increasingly high-quality information — the knowledge of how to farm — what <span class="vw">seeds<span class="tt">씨앗</span></span>, what tools and how to use them, what times of year, what <span class="vw">irrigation<span class="tt">관개(법), 물을 끌어들임</span></span>, what sequence of one crop after another on the same land.</p>
+          <p class="plain-sent"><span class="sent-no">2</span>What we eat is solar energy, filtered, concentrated, and <span class="vw">distilled<span class="tt">증류된, 정제된</span></span> through the lens of human knowledge.</p>
+          <p class="plain-sent"><span class="sent-no">3</span>The energy the Earth receives from the sun each year has remained more or less constant through all of human civilization.</p>
+          <p class="plain-sent"><span class="sent-no">4</span>What’s allowed us to <span class="vw">flourish<span class="tt">번영하다, 잘 살아가다</span></span> is our increasingly sophisticated knowledge of how to capture an ever-growing but still tiny fraction of that energy in a form that can fuel our bodies.</p>
+          <p class="plain-sent"><span class="sent-no">5</span>Every step in the advancement of our knowledge has brought with it an increase in the amount of energy we can <span class="vw">tap into<span class="tt">활용하다, 끌어다 쓰다</span></span>.</p>
+        </div>
+
+        <div class="side-stack">
+          <div class="panel">
+            <h4>Topic</h4>
+            <p>Human <span class="ans">flourishing</span> through the <span class="ans">advancement</span> of knowledge about <span class="ans">harnessing</span> energy</p>
+          </div>
+          <div class="panel">
+            <h4>Text Structure</h4>
+            <ul>
+              <li>1) Introduction (sent. 1) : <span class="ans">Posing a paradox / question</span></li>
+              <li>2) Development 1 (sent. <span class="ans">2</span>) : The meaning of food 1</li>
+              <li>3) Development 2 (sent. <span class="ans">3~4</span>) : The meaning of food 2</li>
+              <li>4) Conclusion (sent. <span class="ans">5</span>) : An increase in the amount of <span class="ans">energy</span> humans can <span class="ans">tap into</span> through the <span class="ans">advancement</span> of knowledge</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>어휘</h4>
+            <p><b>irrigation</b> : 관개(법), 물을 끌어들임<br><b>distill</b> : 증류하다<br><b>tap into</b> : ~을 활용하다</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">02 구문해석 + 문법 구조설명</div>
+      <div class="passage-box">
+        <div class="sp">
+          <div class="sp-en"><span class="gr">There’s a saying</span> <span class="gr">that “you can’t eat information.”</span> That may be so, but the food we eat today is the fruit of thousands of years of increasingly high-quality information — the knowledge of how to farm — what seeds, what tools and how to use them, what times of year, what irrigation, what sequence of one crop after another on the same land.</div>
+          <div class="sp-ko">‘정보는 먹을 수 없다’라는 말이 있다. 그것이 사실일 수는 있지만, 오늘날 우리가 먹는 음식은 수천 년 동안 점점 더 고도화된 정보, 즉 농사짓는 방법에 대한 지식의 산물이다. 어떤 씨앗을 써야 하는지, 어떤 도구를 어떻게 써야 하는지, 어느 계절에 해야 하는지, 어떤 관개가 필요한지, 같은 땅에 어떤 순서로 작물을 재배해야 하는지에 대한 지식 말이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : 첫 부분의 <code>There’s a saying</code>은 존재를 나타내는 <b>there-be 구문</b>입니다. 뒤의 <code>that “you can’t eat information”</code>은 <b>saying</b>을 설명하는 <b>동격의 that절</b>입니다. 이어지는 본문 핵심절은 <code>the food we eat today is the fruit ...</code>이고, <code>we eat today</code>는 <b>food</b>를 수식하는 <b>관계절(목적격 관계대명사 생략)</b>입니다. 뒤의 긴 대시(—) 이하 부분은 <b>the knowledge of how to farm</b>를 구체적으로 풀어 쓰는 <b>동격·열거 구조</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">What we eat is solar energy, filtered, concentrated, and distilled through the lens of human knowledge.</div>
+          <div class="sp-ko">우리가 먹는 것은 인간의 지식이라는 렌즈를 통과해 걸러지고, 농축되고, 증류된 태양 에너지이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>What we eat</code>은 ‘우리가 먹는 것’이라는 뜻의 <b>선행사를 포함한 관계대명사 what절</b>로, 문장 전체에서 <b>주어</b> 역할을 합니다. <code>filtered, concentrated, and distilled ...</code>는 <b>solar energy</b>를 뒤에서 설명하는 <b>과거분사구</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">The energy <span class="gr">(that)</span> the Earth receives from the sun each year has remained more or less constant through all of human civilization.</div>
+          <div class="sp-ko">지구가 매년 태양으로부터 받는 에너지는 인류 문명 전체를 통틀어 대체로 일정하게 유지되어 왔다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>the energy (that) the Earth receives ...</code>에서 <code>that</code>은 생략된 <b>목적격 관계대명사</b>입니다. 즉 ‘지구가 받는 에너지’라는 뜻입니다. 본동사는 <code>has remained</code>이며, <code>constant</code>는 <b>주격보어</b>로 쓰였습니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">What’s allowed us to flourish is our increasingly sophisticated knowledge of how to capture an ever-growing but still tiny fraction of that energy in a form that can fuel our bodies.</div>
+          <div class="sp-ko">우리를 번영하게 해 온 것은, 그 에너지의 점점 커지지만 여전히 작은 일부를 우리 몸에 연료가 될 수 있는 형태로 포착하는 방법에 대한 점점 더 정교해진 지식이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>What’s allowed us to flourish</code>는 again <b>what절 주어</b>입니다. 내부 구조는 <code>allow + 목적어 + to부정사</code>로, <code>allowed us to flourish</code>는 ‘우리가 번영하도록 해 주었다’는 뜻입니다. <code>of how to capture ...</code>는 <b>knowledge</b>를 설명하는 전치사구이고, <code>that can fuel our bodies</code>는 <b>a form</b>을 수식하는 <b>주격 관계절</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Every step in the advancement of our knowledge has brought with it an increase in the amount of energy we can tap into.</div>
+          <div class="sp-ko">우리 지식의 발전에서 이루어진 모든 단계는 우리가 활용할 수 있는 에너지 양의 증가를 동반해 왔다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : 주어는 <code>Every step in the advancement of our knowledge</code>, 동사는 <code>has brought</code>입니다. <code>with it</code>은 ‘그와 함께’라는 부가 표현이고, <code>we can tap into</code>는 <b>energy</b>를 수식하는 <b>관계절</b>로 쓰였습니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">03 문제 + 오른쪽 빈칸 답안 반영</div>
+      <div class="q-block">
+        <div class="q-type">Q.1 Fill in the blank</div>
+        <div class="q-stem">Every step in the advancement of our <span class="ans">knowledge</span> has brought with it an increase in the amount of energy we can tap into.</div>
+        <div class="choices"><div class="choice">[ technology / civilization / agriculture / resources / knowledge ]</div></div>
+        <div class="ansbox"><div class="anslabel">ANSWER</div><div class="small">정답은 <span class="ans">knowledge</span>입니다.</div></div>
+      </div>
+      <div class="q-block">
+        <div class="q-type">Q.2 Complete the summary</div>
+        <div class="q-stem">Human civilization has flourished not because the amount of solar energy has changed, but because humans have accumulated knowledge about how to <span class="ans">capture / harness</span> that energy through agriculture.</div>
+        <div class="choices"><div class="choice">[ eliminate / capture / captivate / harness / utilize ]</div></div>
+        <div class="ansbox"><div class="anslabel">ANSWER NOTE</div><div class="small">PDF OCR상 보기 판독이 완벽하지 않지만, 본문 원문과 직접 연결되는 표현은 <span class="ans">capture</span>이고 요약답안형으로는 <span class="ans">harness</span>도 자연스럽습니다.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="p3">
+    <div class="p-header">
+      <div class="p-code">Chapter 1(4) · 3번 지문</div>
+      <div class="p-title">🔬 Confirming the Veracity of Intuition Through Scientific Testing</div>
+      <div class="p-title-ko">직관의 진실성은 과학적 검증을 통해 확인되어야 한다</div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">01 본문 + 오른쪽 요약 정보</div>
+      <div class="split">
+        <div class="plain-passage-box">
+          <p class="plain-sent"><span class="sent-no">1</span>It is a myth that all ideas are equally valid, even those with little or no objective proof.</p>
+          <p class="plain-sent"><span class="sent-no">2</span>The existence of science is the commitment to objective truth.</p>
+          <p class="plain-sent"><span class="sent-no">3</span>After all, science is true: fire is hot, the wheel is efficient, birds and planes can fly, we’ve landed on a comet and traveled to the Moon, antibiotics treat illness, and immunizations keep us from getting sick.</p>
+          <p class="plain-sent"><span class="sent-no">4</span>These accomplishments are made possible by objective truths.</p>
+          <p class="plain-sent"><span class="sent-no">5</span>A <span class="vw">plausible<span class="tt">그럴듯한</span></span> theory can, and frequently does, push science forward.</p>
+          <p class="plain-sent"><span class="sent-no">6</span>However, an intuition must be followed with testing that confirms or disproves its <span class="vw">veracity<span class="tt">진실성</span></span>.</p>
+          <p class="plain-sent"><span class="sent-no">7</span>If a theory is disproved, one should consider it as a reason to reject or alter the hypothesis, not a justification to just keep firmly holding to the hypothesis because you are instinctively <span class="vw">wedded to<span class="tt">~에 집착하는</span></span> it.</p>
+          <p class="plain-sent"><span class="sent-no">8</span>Critical thinking is an absolute must, and we must respect evidence.</p>
+          <p class="plain-sent"><span class="sent-no">9</span>It’s the only reason for anyone to trust anything about reality.</p>
+          <p class="plain-sent"><span class="sent-no">10</span>Without testing and evidence, intuition is useful, but it is never the ultimate word.</p>
+        </div>
+        <div class="side-stack">
+          <div class="panel">
+            <h4>Topic</h4>
+            <p>Confirming the <span class="ans">veracity</span> of <span class="ans">intuition</span> through scientific testing</p>
+          </div>
+          <div class="panel">
+            <h4>Text Structure</h4>
+            <ul>
+              <li>1) Introduction (sent. 1) : a belief with little or no <span class="ans">objective</span> proof</li>
+              <li>2) Development 1 (sent. <span class="ans">2~4</span>) : The existence of science and <span class="ans">objective</span> truth</li>
+              <li>3) Development 2 (sent. <span class="ans">5~7</span>) : The need to test theories and <span class="ans">intuition</span></li>
+              <li>4) Conclusion (sent. <span class="ans">8~10</span>) : The importance of <span class="ans">critical thinking</span> and evidence</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>어휘</h4>
+            <p><b>plausible</b> : 그럴듯한<br><b>veracity</b> : 진실성<br><b>be wedded to</b> : ~에 집착하다</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">02 구문해석 + 문법 구조설명</div>
+      <div class="passage-box">
+        <div class="sp">
+          <div class="sp-en">It is a myth <span class="gr">that all ideas are equally valid</span>, even those with little or no objective proof.</div>
+          <div class="sp-ko">거의 혹은 전혀 객관적 증거가 없는 생각들까지 포함해 모든 생각이 똑같이 타당하다는 것은 허구이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>It is a myth that ...</code>는 <b>가주어 it + 진주어 that절</b> 구조로 볼 수 있습니다. <code>those with little or no objective proof</code>는 <b>ideas</b>를 다시 가리키는 표현입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">The existence of science is the commitment to objective truth.</div>
+          <div class="sp-ko">과학의 존재는 객관적 진실에 대한 헌신이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <b>SVC 2형식</b> 문장입니다. 주어는 <code>The existence of science</code>, 동사는 <code>is</code>, 보어는 <code>the commitment to objective truth</code>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">After all, science is true: fire is hot, the wheel is efficient, birds and planes can fly, we’ve landed on a comet and traveled to the Moon, antibiotics treat illness, and immunizations keep us from getting sick.</div>
+          <div class="sp-ko">결국 과학은 참이다. 불은 뜨겁고, 바퀴는 효율적이며, 새와 비행기는 날 수 있고, 우리는 혜성에 착륙하고 달에 갔으며, 항생제는 질병을 치료하고, 예방접종은 우리를 병들지 않게 한다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : 콜론(<code>:</code>) 뒤에서 앞 문장 <code>science is true</code>를 뒷받침하는 <b>구체적 예시</b>들이 병렬로 나열됩니다. 마지막의 <code>keep us from getting sick</code>는 <b>keep + 목적어 + from -ing</b> 구문입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">These accomplishments are made possible by objective truths.</div>
+          <div class="sp-ko">이러한 성취들은 객관적 진실들에 의해 가능해진다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>are made possible</code>는 <b>수동태</b>이며, <code>by objective truths</code>는 원인/근거를 나타냅니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">A plausible theory can, and frequently does, push science forward.</div>
+          <div class="sp-ko">그럴듯한 이론은 과학을 진전시킬 수 있고, 실제로 자주 그렇게 한다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>can, and frequently does, push</code>에서 <code>does</code>는 앞의 일반동사 <code>push</code>를 대신하여 <b>강조</b>하는 역할을 합니다. 핵심은 <code>push science forward</code>라는 <b>동사 + 목적어 + 부사</b> 구조입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">However, an intuition must be followed with testing <span class="gr">that confirms or disproves its veracity</span>.</div>
+          <div class="sp-ko">하지만 직관은 그것의 진실성을 확인하거나 반증하는 검증이 뒤따라야 한다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>must be followed with</code>는 <b>수동태 조동사</b> 구조입니다. <code>that confirms or disproves ...</code>는 <b>testing</b>을 수식하는 <b>주격 관계절</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">If a theory is disproved, one should consider it as a reason to reject or alter the hypothesis, not a justification to just keep firmly holding to the hypothesis because you are instinctively wedded to it.</div>
+          <div class="sp-ko">만약 어떤 이론이 반증된다면, 그것을 그 가설을 거부하거나 수정해야 할 이유로 여겨야지, 본능적으로 거기에 집착하고 있기 때문에 그 가설을 계속 고수할 정당화 근거로 여겨서는 안 된다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : 맨 앞의 <code>If a theory is disproved</code>는 <b>조건 부사절</b>입니다. 본절은 <code>one should consider it as A, not B</code>의 <b>대조 구조</b>이며, <code>to reject or alter</code>, <code>to just keep ...</code>는 각각 <b>reason</b>과 <b>justification</b>을 설명하는 <b>to부정사</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Critical thinking is an absolute must, and we must respect evidence.</div>
+          <div class="sp-ko">비판적 사고는 절대적으로 필요하며, 우리는 증거를 존중해야 한다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : 등위접속사 <code>and</code>로 연결된 두 개의 절입니다. <code>must</code>는 각각 ‘반드시 ~해야 한다’는 강한 필요를 나타냅니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">It’s the only reason for anyone to trust anything about reality.</div>
+          <div class="sp-ko">그것만이 누구든 현실에 대해 무엇이든 신뢰할 수 있게 해 주는 유일한 근거이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>for anyone to trust anything about reality</code>는 <b>reason</b>를 뒤에서 설명하는 <b>for + 목적격 + to부정사</b> 구조입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Without testing and evidence, intuition is useful, but it is never the ultimate word.</div>
+          <div class="sp-ko">검증과 증거가 없다면 직관은 유용할 수는 있지만, 결코 최종 판단이 될 수는 없다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>Without ~</code>은 ‘~이 없이는’의 의미를 가진 <b>전치사구</b>이며, 뒤의 <code>but</code>는 ‘유용성’과 ‘최종적 권위 없음’을 대조합니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">03 문제 + 오른쪽 빈칸 답안 반영</div>
+      <div class="q-block">
+        <div class="q-type">Q.1 Fill in the blank</div>
+        <div class="q-stem">A plausible theory can push science forward, but intuition must be followed with <span class="ans">testing</span> that confirms or disproves its veracity.</div>
+        <div class="choices"><div class="choice">[ proof / testing / hypothesis / evidence / insight ]</div></div>
+        <div class="ansbox"><div class="anslabel">ANSWER</div><div class="small">흐름 : intuition → hypothesis → <span class="ans">testing</span> → evidence</div></div>
+      </div>
+      <div class="q-block">
+        <div class="q-type">Q.2 Meaning Check</div>
+        <div class="q-stem">밑줄 친 부분 “It’s the only reason for anyone to trust anything about reality.”의 바꿔쓴 문장</div>
+        <div class="choices">
+          <div class="choice">Paraphrased version : <span class="ans">It is the only reason people can trust what they believe about reality.</span></div>
+        </div>
+        <div class="note-box"><div class="note-title">워크시트 메모 반영</div><p class="small">원본 오른쪽 영역에는 보기 비교와 함께 ‘similarities and differences’를 적는 형식이 있었고, 하단에 위의 paraphrased version이 제시되어 있었습니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="p4">
+    <div class="p-header">
+      <div class="p-code">Chapter 1(4) · 4번 지문</div>
+      <div class="p-title">🤝 Flipping Anxiety into Compassion and Empathy</div>
+      <div class="p-title-ko">불안을 연민과 공감으로 뒤집어 활용하기</div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">01 본문 + 오른쪽 요약 정보</div>
+      <div class="split">
+        <div class="plain-passage-box">
+          <p class="plain-sent"><span class="sent-no">1</span>If you suffer from social <span class="vw">angst<span class="tt">불안</span></span>, awkwardness, or dread, know that this is a perfectly normal response.</p>
+          <p class="plain-sent"><span class="sent-no">2</span>No matter what it looks like, a lot of people are dealing with internal anxiety in social situations.</p>
+          <p class="plain-sent"><span class="sent-no">3</span>But it is actually possible to build your social muscle and use it to boost your connections — and your anxiety is giving you clues to what <span class="vw">icebreakers<span class="tt">어색함을 깨는 말·행동</span></span> and <span class="vw">lifelines<span class="tt">불안을 덜어 주는 도움 행동</span></span> other people might be grateful for you to extend.</p>
+          <p class="plain-sent"><span class="sent-no">4</span>Truly listen to what your anxiety is signaling to you about where you feel uncertain or insecure, and practice empathy by offering a hand to others who might be in the same boat.</p>
+          <p class="plain-sent"><span class="sent-no">5</span>Remember that flipping anxiety into compassion is something inherent in you — it is, in fact, what your anxiety was designed to do for you.</p>
+          <p class="plain-sent"><span class="sent-no">6</span>Together, compassion and empathy can <span class="vw">buffer<span class="tt">완화하다</span></span> against bad anxiety.</p>
+          <p class="plain-sent"><span class="sent-no">7</span>You can use your anxiety to be more <span class="vw">outward-facing<span class="tt">자기 불안에서 타인 배려로 시선을 돌리는</span></span>.</p>
+          <p class="plain-sent"><span class="sent-no">8</span>The outcome? The spread of compassion for your fellow human beings, other species, and the planet!</p>
+        </div>
+        <div class="side-stack">
+          <div class="panel">
+            <h4>Topic</h4>
+            <p>Flipping <span class="ans">anxiety</span> into <span class="ans">compassion</span> and empathy</p>
+          </div>
+          <div class="panel">
+            <h4>Text Structure</h4>
+            <ul>
+              <li>1) Introduction (sent. <span class="ans">1~2</span>) : social anxiety</li>
+              <li>2) Development 1 (sent. <span class="ans">3</span>) : The <span class="ans">role</span> of anxiety</li>
+              <li>3) Development 2 (sent. <span class="ans">4~6</span>) : The <span class="ans">power</span> of empathy</li>
+              <li>4) Conclusion (sent. <span class="ans">7~8</span>) : The <span class="ans">use</span> of anxiety</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4>하단 개념 설명</h4>
+            <p><b>icebreakers</b> : words or actions that <span class="ans">break</span> the awkwardness</p>
+            <p><b>lifelines</b> : <span class="ans">helpful</span> gestures or actions that <span class="ans">ease</span> someone’s anxiety</p>
+            <p><b>being outward-facing</b> : a mindset of <span class="ans">shifting</span> attention from one’s own <span class="ans">anxiety</span> to caring about others</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">02 구문해석 + 문법 구조설명</div>
+      <div class="passage-box">
+        <div class="sp">
+          <div class="sp-en">If you suffer from social angst, awkwardness, or dread, know <span class="gr">that this is a perfectly normal response</span>.</div>
+          <div class="sp-ko">만약 당신이 사회적 불안, 어색함, 혹은 두려움으로 힘들어한다면, 이것이 지극히 정상적인 반응이라는 것을 알아라.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>If you suffer ...</code>는 <b>조건 부사절</b>입니다. 본절의 핵심은 명령형 <code>know</code>이며, 뒤의 <code>that절</code>은 <b>know</b>의 목적어입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">No matter what it looks like, a lot of people are dealing with internal anxiety in social situations.</div>
+          <div class="sp-ko">겉으로 어떻게 보이든, 많은 사람들이 사회적 상황에서 내면의 불안을 겪고 있다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>No matter what it looks like</code>는 ‘어떻게 보이든 상관없이’라는 뜻의 <b>양보 표현</b>입니다. 핵심 절은 <code>a lot of people are dealing with ...</code>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">But it is actually possible to build your social muscle and use it to boost your connections — and your anxiety is giving you clues to what icebreakers and lifelines other people might be grateful for you to extend.</div>
+          <div class="sp-ko">하지만 당신의 사회적 근육을 키우고 그것을 이용해 관계를 강화하는 것은 실제로 가능하다. 그리고 당신의 불안은 다른 사람들이 당신이 내밀어 주면 고마워할 만한 대화의 물꼬와 도움 행동이 무엇인지에 대한 단서를 주고 있다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>It is possible to ...</code>는 <b>가주어 it + 진주어 to부정사</b>입니다. <code>use it to boost</code>에서 두 번째 <code>to boost</code>는 <b>목적</b>을 나타냅니다. 뒤의 <code>what icebreakers and lifelines ...</code>는 <b>to의 목적어인 명사절</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Truly listen to what your anxiety is signaling to you about where you feel uncertain or insecure, and practice empathy by offering a hand to others who might be in the same boat.</div>
+          <div class="sp-ko">당신의 불안이 당신이 어디에서 불확실하거나 불안정함을 느끼는지에 대해 무엇을 신호하고 있는지 진심으로 귀 기울여 듣고, 같은 처지에 있을지도 모르는 다른 사람들에게 손을 내밀며 공감을 실천하라.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>listen to what ...</code>에서 <code>what절</code>은 전치사 <code>to</code>의 목적어입니다. <code>where you feel uncertain or insecure</code>는 <b>about</b>의 목적어 역할을 하는 명사절입니다. <code>who might be in the same boat</code>는 <b>others</b>를 수식하는 관계절입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Remember <span class="gr">that flipping anxiety into compassion is something inherent in you</span> — it is, in fact, what your anxiety was designed to do for you.</div>
+          <div class="sp-ko">불안을 연민으로 바꾸는 것이 당신 안에 본래 내재된 것임을 기억하라. 사실 그것은 당신의 불안이 당신을 위해 하도록 설계된 일이다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>Remember that ...</code>에서 <code>that절</code>이 목적어입니다. <code>flipping anxiety into compassion</code>은 <b>동명사구 주어</b>이고, <code>what your anxiety was designed to do</code>는 <b>what절 보어</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">Together, compassion and empathy can buffer against bad anxiety.</div>
+          <div class="sp-ko">함께할 때 연민과 공감은 해로운 불안을 완화할 수 있다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : 문두의 <code>Together</code>는 문장 전체를 수식하는 부사입니다. 핵심은 <code>can buffer against</code>라는 동사구입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">You can use your anxiety to be more outward-facing.</div>
+          <div class="sp-ko">당신은 자신의 불안을 더 바깥을 향하는 사람이 되기 위해 사용할 수 있다.</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : <code>use A to be B</code> 구조로, <code>to be more outward-facing</code>는 목적/결과 방향을 나타내는 <b>to부정사</b>입니다.</span>
+        </div>
+        <div class="sp">
+          <div class="sp-en">The outcome? The spread of compassion for your fellow human beings, other species, and the planet!</div>
+          <div class="sp-ko">그 결과는 무엇인가? 바로 동료 인간과 다른 종들, 그리고 지구를 향한 연민의 확산이다!</div>
+          <span class="sp-note">⭐ <b>문법 포인트</b> : 첫 문장은 <b>단문 의문형 표현</b>으로 독자의 주의를 끌고, 뒤에서 명사구 <code>The spread of compassion ...</code>로 답을 제시하는 <b>수사적 강조</b>입니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">03 문제 + 오른쪽 빈칸 답안 반영</div>
+      <div class="q-block">
+        <div class="q-type">Q.1 Meaning</div>
+        <div class="q-stem">What does the underlined expression “who might be in the same boat” most nearly mean in the passage?</div>
+        <div class="choices">
+          <div class="choice"><span class="cn">①</span>who are more socially confident than others</div>
+          <div class="choice"><span class="cn">②</span><span class="ans">who may have similar feelings of anxiety or insecurity</span></div>
+          <div class="choice"><span class="cn">③</span>who are physically traveling together in the same place</div>
+          <div class="choice"><span class="cn">④</span>who are responsible for causing the same problem</div>
+          <div class="choice"><span class="cn">⑤</span>who prefer to avoid social situations completely</div>
+        </div>
+      </div>
+      <div class="q-block">
+        <div class="q-type">Q.2 Illustration Check</div>
+        <div class="q-stem">Read the sentences below. Which of them correctly illustrate the ideas of “icebreakers,” “lifelines,” and being “outward-facing”?</div>
+        <div class="choices">
+          <div class="choice"><span class="cn">①</span><span class="ans">At the party, Jamie said, “Hey, I love your shoes! Mind if I join you?”</span></div>
+          <div class="choice"><span class="cn">②</span><span class="ans">Sam noticed a classmate looking nervous and invited them to sit together.</span></div>
+          <div class="choice"><span class="cn">③</span>Taylor spent the entire lunch scrolling through their phone and ignored everyone around.</div>
+          <div class="choice"><span class="cn">④</span><span class="ans">Alex told a funny story to start a conversation with a group of strangers.</span></div>
+          <div class="choice"><span class="cn">⑤</span>Jordan hid behind a book and refused to talk to anyone all day.</div>
+        </div>
+        <div class="ansbox"><div class="anslabel">INTERPRETATION</div><div class="small"><span class="ans">①, ②, ④</span>가 각각 어색함을 깨고, 불안을 덜어 주며, 타인 쪽으로 시선을 향하는 행동에 해당합니다.</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const ids=['home','p1','p3','p4'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i); if(el) el.classList.remove('on');});
+  const t=document.getElementById(id); if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb'); btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id); if(idx>=0 && btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
