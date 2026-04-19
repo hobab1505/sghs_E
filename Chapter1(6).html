@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · Chapter 1(6) 완전 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#4f46e5;--accent2:#4338ca;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;--purple-bg:linear-gradient(135deg, #7c3aed, #4f46e5);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--purple-bg);color:#fefcf8;padding:24px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.65rem;opacity:.8;margin-bottom:5px;font-weight:700;letter-spacing:.05em;}
+.p-title{font-family:'Noto Sans KR',sans-serif;font-size:1.45rem;font-weight:700;}
+.p-title-ko{font-size:.85rem;opacity:.8;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:6px 10px;border-radius:6px;margin-top:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f5f3ff;border:1px solid rgba(99,102,241,.3);border-radius:6px;padding:16px 20px;}
+.gr-note.blue {background:#e0f2fe;border:1px solid rgba(14,165,233,.3);}
+.gr-note-ttl{font-weight:700;color:var(--accent);font-size:.85rem;margin-bottom:8px;}
+.gr-note-ttl.blue{color:#0369a1;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-top:16px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:10px;}
+.choices{display:flex;flex-direction:column;gap:10px;}
+.choice{font-size:.87rem;padding:0;color:var(--ink2);line-height:1.6;}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:16px;padding:12px 16px;background:var(--orange-bg);border-radius:6px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:4px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;}
+.ans-num{font-weight:700; color:var(--ink); margin-bottom:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent);padding:15px 20px;font-size:.95rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:10px;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;}
+.step-badge{background:var(--accent);color:#fff;font-size:.62rem;padding:3px 10px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+.kw-pill {display:inline-block; background:var(--border); color:var(--ink2); font-size:0.75rem; padding:3px 10px; border-radius:12px; margin-right:6px; margin-top:6px;}
+.blank-ul {color:#7c3aed; font-weight:700; text-decoration:underline; text-decoration-color:#7c3aed; text-underline-offset:3px;}
+.orig-ul {text-decoration:underline; text-decoration-color:var(--ink); text-underline-offset:3px;}
+.mi-box {background:#f0fdf4; border:1px solid rgba(16,185,129,.3); border-radius:6px; padding:16px 20px; margin-top:16px;}
+.mi-title {font-weight:700; color:var(--green); font-size:.85rem; margin-bottom:8px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · Chapter 1(6)</div>
+      <div class="hdr-sub">SGHS 비평적 읽기와 쓰기</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">1번 지문 (외국인 투표권)</button>
+      <button class="nb" onclick="show('p3')">3번 지문 (컴퓨터와 인지)</button>
+      <button class="nb" onclick="show('p4')">4번 지문 (문학과 상상력)</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Noto Sans KR',sans-serif;font-size:1.7rem;margin-bottom:8px;font-weight:700;">Chapter 1(6) · 주제 파악</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">알파벳 힌트 빈칸 완성, 배경지식 해설, 구문 분석과 <b>핵심 문법 포인트</b>가 완벽하게 통합되었습니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')"><div class="toc-en">🗳️ 1번: 외국인 투표권과 시민권의 딜레마</div><div class="toc-ko">민주주의 이상과 배타적 시민권 사이의 긴장</div></a>
+    <a class="toc-card" onclick="show('p3')"><div class="toc-en">💻 3번: 인간 마음의 모델로서의 컴퓨터</div><div class="toc-ko">정보 처리 모델의 한계와 서사적 사고의 중요성</div></a>
+    <a class="toc-card" onclick="show('p4')"><div class="toc-en">📚 4번: 문학이 활성화하는 상상력</div><div class="toc-ko">기억을 활용하여 창조해내는 독자의 내면 세계</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(6) · 1번 지문</div>
+    <div class="p-title">🗳️ The Tension of the Vote in a Democracy</div>
+    <div class="p-title-ko">외국인 투표권과 배타적 시민권 사이의 딜레마</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">In the United States, the practice of permitting aliens to vote could be seen as compatible with the idea of an exclusionary citizenship, but that is a hard balance to maintain.</p>
+      <p class="plain-sent">If the vote, of all rights, is in the hands of noncitizens, why should they not count as citizens, and the entire distinction between resident alien and citizen be abandoned?</p>
+      <p class="plain-sent">Indeed, something like this thought probably lay behind the disappearance of alien voting: with universal adult citizen suffrage after 1920, the only way to maintain an exclusionary kind of citizenship was to restrict the vote to citizens and not residents.</p>
+      <p class="plain-sent">But no theory of "active" democracy can countenance this distinction: the laws concerning our common life must be made by all those who are taking part in it, and residence is the only convincing test of whether someone is taking part as is understood almost universally when it comes to questions of which citizens should have a voice in local government.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">📖 개념 학습 및 실전 문제</div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">U.S. History and the Tension Between Ideals and Reality</div>
+    </div>
+    
+    <div class="q-block">
+      <div class="q-stem">Q1) The alien voting debate in U.S. history illustrates what kind of tension?</div>
+      <div class="choices">
+        <div class="choice">a) A conflict between federal and state governments</div>
+        <div class="choice">b) A tension between America's ideal values and political reality</div>
+        <div class="choice">c) Economic class inequality</div>
+        <div class="choice">d) Military conflicts between citizens and noncitizens</div>
+      </div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-exp">
+          정답: <strong style="color:var(--orange);">b) A tension between America's ideal values and political reality</strong><br>
+          <span style="font-size:13px;color:var(--ink2);">미국 역사에서 외국인 투표권 논쟁은 '공동체에 참여하는 모든 이가 투표권을 가져야 한다'는 민주주의의 이상적 가치와 '시민권을 배타적으로 유지하려는' 정치적 현실 사이의 긴장(tension)을 잘 보여줍니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-stem">Q2) In the following timeline, what is the most appropriate reason for the strengthening of exclusionary citizenship?</div>
+      <div style="background:#f3f4f6; padding:12px; border-radius:6px; font-size:0.85rem; margin-bottom:12px; font-family:'Courier New', Courier, monospace;">
+        Noncitizen voting allowed<br>
+        ↓<br>
+        Women's suffrage (1920) / Expansion of voting rights<br>
+        ↓<br>
+        Exclusionary citizenship in modern U.S.
+      </div>
+      <div class="choices">
+        <div class="choice">a) To guarantee equal voting rights for all residents</div>
+        <div class="choice">b) To distinguish between citizens and residents and maintain the exclusivity of citizenship</div>
+        <div class="choice">c) Because the federal government required noncitizens to vote</div>
+        <div class="choice">d) Because of economic interests</div>
+      </div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-exp">
+          정답: <strong style="color:var(--orange);">b) To distinguish between citizens and residents and maintain the exclusivity of citizenship</strong><br>
+          <span style="font-size:13px;color:var(--ink2);">1920년 이후 성인 시민의 보통 선거권(보편적 참정권)이 확립되면서, '배타적 시민권'을 유지할 수 있는 유일한 방법은 거 거주자가 아닌 '시민'에게만 투표권을 제한하는 것이었습니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In the United States, the practice of permitting aliens to vote could be seen as compatible with the idea of an <span class="vw">exclusionary citizenship<span class="tt">배타적 시민권</span></span>, but that is a hard balance to maintain.</div>
+        <div class="sp-ko">미국에서 외국인(비시민권자)에게 투표를 허용하는 관행은 배타적 시민권이라는 개념과 양립할 수 있는 것으로 여겨질 수도 있었지만, 그것은 유지하기 어려운 균형이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">If the vote, of all rights, is in the hands of noncitizens, <span class="gr">why should</span> they not <span class="gr">count</span> as citizens, and the entire distinction between resident alien and citizen <span class="gr">be abandoned</span>?</div>
+        <div class="sp-ko">모든 권리 중에서도 투표권이 비시민권자의 수중에 있다면, 왜 그들이 시민으로 간주되어서는 안 되며, 거주 외국인과 시민 사이의 전체적인 구별이 왜 포기되어서는 안 되겠는가?
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] 조동사 <code>should</code> 뒤에 능동태(<code>count</code>)와 수동태(<code>be abandoned</code>)가 <code>and</code>로 병렬 연결된 구조입니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Indeed, something like this thought probably lay behind the disappearance of alien voting: with <span class="vw">universal suffrage<span class="tt">보통 선거권</span></span> after 1920, the only way to maintain an exclusionary kind of citizenship was to restrict the vote to citizens and not residents.</div>
+        <div class="sp-ko">실제로, 이와 같은 생각이 아마도 외국인 투표가 사라진 배경에 있었을 것이다. 1920년 이후의 성인 시민의 보통 선거권과 함께, 배타적인 종류의 시민권을 유지하는 유일한 방법은 투표권을 거주자가 아닌 시민에게로 제한하는 것이었다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But no theory of "active" democracy can <span class="vw">countenance<span class="tt">지지하다, 동의하다</span></span> this distinction: the laws concerning our common life must be made by all those who are taking part in it, and residence is the only convincing test of whether someone is taking part <span class="gr">as is understood</span> almost universally <span class="gr">when it comes to</span> questions of <span class="gr">which citizens</span> should have a voice in local government.</div>
+        <div class="sp-ko">그러나 어떤 "적극적" 민주주의 이론도 이러한 구별을 지지할 수 없다. 우리의 공동생활에 관한 법률은 그것에 참여하고 있는 모든 사람에 의해 만들어져야 하며, 거주야말로 누군가가 (공동체에) 참여하고 있는지를 보여주는 유일한 설득력 있는 기준(테스트)이다. 이는 어떤 시민이 지방 정부에서 목소리를 내야 하는가에 대한 문제에 있어서 거의 보편적으로 이해되는 바와 같다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] <code>as</code>는 앞의 내용을 선행사로 받는 유사 관계대명사처럼 쓰이거나, '보편적으로 이해되듯이'라는 양태의 접속사로 쓰인 관용적 표현입니다. / <code>when it comes to</code>(~에 관해서라면)의 <code>to</code>는 전치사이므로 뒤에 명사(구)가 오며, <code>which</code>는 <code>citizens</code>를 수식하는 의문형용사로 쓰여 간접의문문 명사절을 이끕니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      <strong>* Topic:</strong> the <span class="blank-ul">tension</span> of the vote in "<span class="blank-ul">active</span>" democracy
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Introduction</span></td>
+          <td>(sent. 1) : posing a question (문제 제기)</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Development</span></td>
+          <td>(sent. 2~3) : logical rebuttal (논리적 반박)</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Conclusion</span></td>
+          <td>(sent. 4) : central claim (핵심 주장)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card-lbl" style="margin-top:20px;">* Keywords</div>
+    <div class="keyword-list">
+      <span class="kw-pill"><span class="blank-ul">alien</span></span><span class="kw-pill">vote</span><span class="kw-pill"><span class="blank-ul">citizenship</span></span><span class="kw-pill">democracy</span><span class="kw-pill"><span class="blank-ul">residence</span></span>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(6) · 3번 지문</div>
+    <div class="p-title">💻 The Limits of the Computer as a Model</div>
+    <div class="p-title-ko">인간 마음의 모델로서의 컴퓨터 비유의 한계와 서사적 사고</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The reliance on the computer as a model for the operations of the human mind may well prove to be as limited as an earlier fascination with behaviorism.</p>
+      <p class="plain-sent">Psychologists have already begun to recognize the flaws of the mind-as-computer metaphor.</p>
+      <p class="plain-sent">Some have turned to cultural anthropology as a way of understanding the factors outside any particular individual's brain that help the individual make sense out of the world.</p>
+      <p class="plain-sent">Others, such as Jerome Bruner, one of the founders of cognitive psychology, find that the computer analogy carries with it an unfortunate shift "from the construction of meaning to the processing of information."</p>
+      <p class="plain-sent">Bruner's reflections on the limits of the machine model lead him back to a humanistic emphasis on narrative and story-telling as essential ingredients in understanding human cognition, a fascinating intellectual journey that reveals both the power and the limits of computers as guides to the way we think.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">📖 Background Knowledge</div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">behaviorism (행동주의)</div>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">It is a <span class="orig-ul">school of psychology(학파)</span> that places the object of psychological inquiry not on cognition but on <span class="orig-ul">overt behavior(외현적 행동)</span>.</p>
+      <p style="font-size:14px; line-height:1.6;">It understands human beings as entities that respond to stimuli and regards learning as a process of <span class="orig-ul">reinforcing appropriate</span> <span class="blank-ul">stimuli</span> and <span class="blank-ul">responses</span> <span class="orig-ul">(적절한 자극과 반응을 강화하는)</span> in order to bring about desirable changes in behavior.</p>
+    </div>
+    
+    <div class="gr-note blue" style="margin-top:16px;">
+      <div class="gr-note-ttl blue">Jerome Bruner (제롬 브루너)</div>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">An American psychologist, he made significant contributions to the development of cognitive psychology and <span class="orig-ul">theories of</span> <span class="blank-ul">cognitive</span> <span class="orig-ul">learning(인지 학습 이론)</span>.</p>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">While acknowledging its progress, he expressed concern that the field focuses too narrowly on the processing of information, neglecting <span class="orig-ul">essential</span> <span class="blank-ul">human</span> <span class="blank-ul">elements</span> <span class="orig-ul">(중요한 인간적 요소)</span> such as meaning, intention, and culture.</p>
+      <p style="font-size:14px; line-height:1.6;">He argued that the human mind is not an isolated machine but is formed within a <span class="blank-ul">cultural</span> <span class="blank-ul">context</span> shaped by language, values, and norms, and that people understand both the world and themselves through <span class="blank-ul">narrative</span> <span class="blank-ul">thinking</span> <span class="orig-ul">(서사적 사고)</span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The reliance on the computer as a model for the operations of the human mind <span class="gr">may well</span> prove to be <span class="gr">as limited as</span> an earlier fascination with behaviorism.</div>
+        <div class="sp-ko">인간 정신의 작용을 위한 모델로서 컴퓨터에 의존하는 것은 이전의 행동주의에 대한 매료(집착)만큼이나 제한적인 것으로 판명될 가능성이 높다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] <code>may well + 동사원형</code>은 '~하는 것도 당연하다, ~일 가능성이 높다'는 뜻입니다. 뒤에 <code>as ~ as</code> 원급 비교 구조가 이어져 의미를 구체화합니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Psychologists have already begun to recognize the flaws of the <span class="vw">mind-as-computer metaphor<span class="tt">컴퓨터로서의 마음이라는 은유</span></span>.</div>
+        <div class="sp-ko">심리학자들은 이미 '컴퓨터로서의 마음'이라는 은유의 결함을 인식하기 시작했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Some have turned to cultural anthropology as a way of understanding the <span class="gr">factors</span> [outside any particular individual's brain] <span class="gr">that help</span> the individual make sense out of the world.</div>
+        <div class="sp-ko">일부 학자들은 개인이 세상을 이해하는 데 도움을 주는, 특정 개인의 뇌 외부에 있는 요인들을 이해하는 방법으로서 문화 인류학으로 눈을 돌렸다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] 주격 관계대명사 <code>that</code>이 이끄는 절의 동사가 복수형 <code>help</code>입니다. 이는 선행사가 바로 앞의 단수 명사 <code>brain</code>이 아니라, 수식어구를 건너뛴 복수 명사 <code>the factors</code>임을 보여줍니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Others, such as Jerome Bruner, one of the founders of cognitive psychology, find that the computer <span class="vw">analogy<span class="tt">비유, 유추</span></span> carries with it an unfortunate shift "from the construction of meaning to the processing of information."</div>
+        <div class="sp-ko">인지 심리학의 창시자 중 한 명인 제롬 브루너와 같은 다른 학자들은 컴퓨터 비유가 "의미의 구성에서 정보의 처리로" 불행한 전환을 수반한다는 것을 발견했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Bruner's reflections on the limits of the machine model lead him back to a humanistic emphasis on narrative and story-telling as essential ingredients in understanding human cognition, a fascinating intellectual journey that reveals both the power and the limits of computers as guides to the way we think.</div>
+        <div class="sp-ko">기계 모델의 한계에 대한 브루너의 성찰은 그를 인간 인지를 이해하는 필수적인 요소로서의 서사와 스토리텔링에 대한 인본주의적 강조로 되돌아가게 이끄는데, 이는 우리가 생각하는 방식에 대한 안내자로서 컴퓨터의 힘과 한계 모두를 드러내는 매혹적인 지적 여정이다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      <strong>* Topic:</strong> the <span class="blank-ul">limits</span> of the computer as a <span class="blank-ul">model</span> for human cognition
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Introduction</span></td>
+          <td>(sent. 1) : the limits of the computer as a model</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Development</span></td>
+          <td>(sent. 2~3) : psychologists have turned to another way</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Elaboration</span></td>
+          <td>(sent. 4~5) : Bruner's <span class="blank-ul">humanistic</span> emphasis</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card-lbl" style="margin-top:20px;">* Keywords</div>
+    <div class="keyword-list">
+      <span class="kw-pill">computer</span><span class="kw-pill">human mind</span><span class="kw-pill"><span class="blank-ul">metaphor</span></span><span class="kw-pill"><span class="blank-ul">processing</span></span><span class="kw-pill">cognition</span>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p4">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(6) · 4번 지문</div>
+    <div class="p-title">📚 The Imagination Activated by Literature</div>
+    <div class="p-title-ko">문학이 활성화하는 상상력: 기억을 활용하여 창조해내는 내면의 세계</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">In the escape [that reading literature provides through vicarious identification and comparison with other lives, places, and times], we activate our imagination, [that uniquely human ability {to explore an alternative set of ideas and...experiences... (that are outside our present environment) and (that may not even be real)}].</p>
+      <p class="plain-sent">As opposed to perception [that {receives and processes information from the outside world — light, sound, shape} and {finds meaning in it — a sunset, a symphony, a house}], in imagination, the process is reversed.</p>
+      <p class="plain-sent">Translating the words we read into what they signify, we populate an inner world in which imagery is created from the memory.</p>
+      <p class="plain-sent">For example, we read "house" and picture a representation of a house from memory.</p>
+      <p class="plain-sent">It is our imagination, the complex interweaving of perception and memory that literature activates, releasing a latent creativity that pleases.</p>
+      <p class="plain-sent">The writer may provide the blueprint, but the reader builds literature's many rooms, and like any satisfying occupation, literature gratifies our imaginative and creative abilities.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">📝 실전 문제</div>
+    <div class="q-block" style="margin-top:0;">
+      <div class="q-stem">Q. Describe in one sentence what literature's 'many rooms' means:</div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 가이드</div>
+        <div class="ans-exp">
+          It refers to the vivid and diverse imaginative worlds and experiences that readers actively construct in their minds using their own memories and creativity based on the author's text. <br>
+          <span style="font-size:13px;color:var(--ink2);">(작가의 텍스트를 바탕으로 독자가 자신의 기억과 창의성을 활용하여 능동적으로 머릿속에 구축하는 생생하고 다양한 상상의 세계와 경험을 의미한다.)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In the escape <span class="gr">[that reading literature provides Ø through <span class="vw">vicarious<span class="tt">대리의, 간접적인</span></span> identification and comparison with other lives, places, and times]</span>, we activate our imagination, <span class="gr">[that uniquely human ability {to explore an alternative set of ideas and...experiences... (that are outside our present environment) and (that may not even be real)}]</span>.</div>
+        <div class="sp-ko">다른 삶, 장소, 시대와의 대리적 동일시와 비교를 통해 문학 읽기가 제공하는 탈출 속에서, 우리는 우리의 상상력, 즉 [현재의 환경 밖에 있고 심지어 진짜가 아닐지도 모르는 일련의 대안적인 생각과 경험을 탐구하는 그 독특한 인간의 능력]을 활성화한다.
+          <span class="sp-note">📝 [선생님 메모] [ ] 묶인 부분은 앞의 명사(escape, imagination)를 수식/동격으로 부연 설명하는 절이며, { }는 ability를 수식, ( )는 ideas and experiences를 수식하는 구조.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As opposed to perception <span class="gr">[that {receives and processes information from the outside world — light, sound, shape} and {finds meaning in it — a sunset, a symphony, a house}]</span>, in imagination, the process is reversed.</div>
+        <div class="sp-ko">[외부 세계로부터 정보(빛, 소리, 모양)를 받아들여 처리하고, 그 안에서 의미(일몰, 교향곡, 집)를 찾는] 인식(지각)과는 반대로, 상상 속에서는 그 과정이 역전된다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Translating</span> the words we read into <span class="gr">what they signify</span>, we populate an inner world in which imagery is created from the memory.</div>
+        <div class="sp-ko">우리가 읽는 단어들을 그것들이 의미하는 바(기호)로 변환하면서, 우리는 기억으로부터 이미지가 창조되는 내면의 세계를 채워 나간다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] 접속사 없이 콤마로 주절과 연결된 분사구문(<code>~하면서</code>)입니다. 전치사 <code>into</code>의 목적어 자리에는 관계대명사 <code>what</code>이 이끄는 명사절(<code>그것들이 의미하는 것</code>)이 왔습니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, we read "house" and picture a representation of a house from memory.</div>
+        <div class="sp-ko">예를 들어, 우리는 "집"이라는 단어를 읽고 기억 속에서 집의 표상(모습)을 그린다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">It is</span> our imagination, [the complex interweaving of perception and memory] <span class="gr">that</span> literature activates, <span class="gr">releasing</span> a <span class="vw">latent<span class="tt">잠재적인</span></span> creativity that pleases.</div>
+        <div class="sp-ko">문학이 활성화하는 것은 바로 우리의 상상력, 즉 지각과 기억의 복잡한 얽힘이며, 이는 즐거움을 주는 잠재적인 창의성을 해방시킨다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] 문학이 활성화하는 대상이 '우리의 상상력'임을 강조하기 위해 <code>It is ~ that</code> 구문을 사용했으며, 뒤이어 능동의 의미를 지닌 현재분사 <code>releasing</code>이 부대 상황(연속 동작이나 결과)을 나타냅니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The writer may provide the blueprint, but the reader builds literature's many rooms, and like any satisfying occupation, literature <span class="vw">gratify<span class="tt">만족시키다</span></span>ies our imaginative and creative abilities.</div>
+        <div class="sp-ko">작가는 청사진을 제공할지 모르지만, 독자는 문학의 많은 방들을 지어 올리며, 다른 만족스러운 직업(활동)과 마찬가지로 문학은 우리의 상상적이고 창의적인 능력을 만족시킨다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      <strong>* Topic:</strong> the imagination activated by <span class="blank-ul">literature</span>
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Introduction</span></td>
+          <td>(sent. 1~2) : presentation of a phenomenon</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Development</span></td>
+          <td>(sent. 3~4) : explanation of the mechanism</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Conclusion</span></td>
+          <td>(sent. 5~6) : presentation of meaning and effect</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card-lbl" style="margin-top:20px;">* Keywords</div>
+    <div class="keyword-list">
+      <span class="kw-pill">literature</span><span class="kw-pill"><span class="blank-ul">latent</span></span><span class="kw-pill">imagery</span><span class="kw-pill"><span class="blank-ul">creativity</span></span>
+    </div>
+  </div>
+</div>
+
+</main>
+<script>
+const ids = ['home','p1','p3','p4'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

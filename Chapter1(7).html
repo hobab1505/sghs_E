@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · Chapter 1(7) 완전 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;--accent:#4f46e5;--accent2:#4338ca;--blue:#1a4b8c;--blue-light:#2563b0;--green:#1a6b3a;--green-bg:rgba(26,107,58,0.09);--orange:#c05010;--orange-bg:rgba(192,80,16,0.09);--border:#ddd5c5;--border2:#ece5d8;--purple-bg:linear-gradient(135deg, #7c3aed, #4f46e5);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.2rem;font-weight:600;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 11px;border-radius:4px;font-size:.7rem;cursor:pointer;}
+.nb:hover,.nb.on{background:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;} .sec.on{display:block;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;}
+.toc-card:hover{border-color:var(--accent2);}
+.toc-code{font-size:.65rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--purple-bg);color:#fefcf8;padding:24px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-size:.65rem;opacity:.8;margin-bottom:5px;font-weight:700;letter-spacing:.05em;}
+.p-title{font-family:'Noto Sans KR',sans-serif;font-size:1.45rem;font-weight:700;}
+.p-title-ko{font-size:.85rem;opacity:.8;margin-top:4px;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;color:var(--accent);margin-bottom:16px;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;color:var(--ink2);border-bottom:2px solid var(--border);}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);}
+.vw-word{font-weight:600;color:var(--blue);font-size:.95rem;}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'본문 & 구문해석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:6px 10px;border-radius:6px;margin-top:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;opacity:0;visibility:hidden;z-index:100;}
+.vw:hover .tt{opacity:1;visibility:visible;}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:150px;margin:0 3px;}
+.gr-note{background:#f5f3ff;border:1px solid rgba(99,102,241,.3);border-radius:6px;padding:16px 20px;}
+.gr-note.blue {background:#e0f2fe;border:1px solid rgba(14,165,233,.3);}
+.gr-note-ttl{font-weight:700;color:var(--accent);font-size:.85rem;margin-bottom:8px;}
+.gr-note-ttl.blue{color:#0369a1;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-top:16px;}
+.q-type{font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.q-stem{font-size:.91rem;font-weight:700;margin-bottom:10px;}
+.choices{display:flex;flex-direction:column;gap:10px;}
+.choice{font-size:.87rem;padding:0;color:var(--ink2);line-height:1.6;}
+.cn{display:inline-block;width:20px;font-weight:700;}
+.ans-box{margin-top:16px;padding:12px 16px;background:var(--orange-bg);border-radius:6px;}
+.ans-lbl{font-size:.65rem;font-weight:700;color:var(--orange);margin-bottom:4px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.65;}
+.ans-num{font-weight:700; color:var(--ink); margin-bottom:8px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent);padding:15px 20px;font-size:.95rem;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:10px;}
+.fw-table th{background:var(--ink);color:#fff;padding:9px 15px;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;}
+.step-badge{background:var(--accent);color:#fff;font-size:.62rem;padding:3px 10px;border-radius:20px;}
+.plain-passage-box {background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; padding: 24px 28px; position: relative;}
+.plain-passage-box::before {content: '본문 (문제용)'; position: absolute; top: -10px; left: 16px; background: var(--paper); padding: 0 8px; font-size: .62rem; letter-spacing: .15em; color: var(--ink); font-weight: 700;}
+.plain-sent {font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.95; margin-bottom: 2px;}
+.kw-pill {display:inline-block; background:var(--border); color:var(--ink2); font-size:0.75rem; padding:3px 10px; border-radius:12px; margin-right:6px; margin-top:6px;}
+.blank-ul {color:#7c3aed; font-weight:700; text-decoration:underline; text-decoration-color:#7c3aed; text-underline-offset:3px;}
+.orig-ul {text-decoration:underline; text-decoration-color:var(--ink); text-underline-offset:3px;}
+.mi-box {background:#f0fdf4; border:1px solid rgba(16,185,129,.3); border-radius:6px; padding:16px 20px; margin-top:16px;}
+.mi-title {font-weight:700; color:var(--green); font-size:.85rem; margin-bottom:8px;}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · Chapter 1(7)</div>
+      <div class="hdr-sub">SGHS 비평적 읽기와 쓰기</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">본 지문 (컬처테인먼트)</button>
+      <button class="nb" onclick="show('p2')">추가 지문 (건축과 CAD)</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Noto Sans KR',sans-serif;font-size:1.7rem;margin-bottom:8px;font-weight:700;">Chapter 1(7) · 제목 파악</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:4px;">알파벳 힌트 빈칸 완성, 배경지식 해설, 구문 분석과 <b>핵심 문법 포인트</b>가 완벽하게 통합되었습니다.</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')"><div class="toc-en">🎭 본 지문: 컬처테인먼트와 상업화</div><div class="toc-ko">재정적 이득과 문화적 진정성 사이의 균형</div></a>
+    <a class="toc-card" onclick="show('p2')"><div class="toc-en">🏗️ 추가 지문: 건축과 CAD 설계</div><div class="toc-ko">스케치의 상실이 창의성에 미치는 영향</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(7) · 제목 파악</div>
+    <div class="p-title">🎭 컬처테인먼트와 상업화</div>
+    <div class="p-title-ko">The balance between financial gain and cultural authenticity</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">The economic benefit of culturtainment makes it attractive to politicians and policy makers alike.</p>
+      <p class="plain-sent">A potential increase in inbound visitor numbers [coupled with their demand for related goods and services (travel, accommodation, retail)] is an incentive for those within governments and authorities to work with cultural groups / in order to develop celebrations and commemorations into larger and more high profile events.</p>
+      <p class="plain-sent">However, such commercialization risks culturtainment becoming homogeneous and losing its original 'message' that could lead to a dilution of audiences.</p>
+      <p class="plain-sent">This could also lead to [smaller non-commercial independent events being set up that would only serve to divide audiences further].</p>
+      <p class="plain-sent">This is something that planners and stakeholders will need to balance against potential financial gain.</p>
+      <p class="plain-sent">Changing political, social and religious landscapes will lead to the emergence of new cultures, and with them new culturtainment experiences.</p>
+      <p class="plain-sent">Overall this is a healthy growth sector of the entertainment industry, but one that by its very nature is delicate in the face of exploitation.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">📖 개념 학습 및 실전 문제</div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">➤ Culturtainment</div>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">The combination of <span class="blank-ul">culture</span> and <span class="blank-ul">entertainment</span>, where cultural elements such as history, traditions, or arts are presented in an engaging, <span class="blank-ul">entertaining</span>, and often <span class="blank-ul">commercially</span> appealing way to attract and involve audiences.</p>
+      <p style="font-size:14px; margin-bottom:8px; line-height:1.6;">The term culturetainment (also spelled culturtainment) is a modern <span class="blank-ul">portmanteau</span> of "culture" and "entertainment."</p>
+      <p style="font-size:14px; line-height:1.6;">While it does not have a single credited "inventor" like a scientific discovery, its origins and rise can be traced through <span class="blank-ul">academic</span> and <span class="blank-ul">industrial</span> contexts starting in the late 1990s.</p>
+    </div>
+    
+    <div class="q-block">
+      <div class="q-stem">Q. Which of the following are examples of culturtainment? Select THREE correct answers.</div>
+      <div class="choices">
+        <div class="choice">① Gyeongbokgung Palace Night Tour transforms a historical palace into a nighttime attraction with performances and guided tours, allowing visitors to experience traditional culture in an entertaining way.</div>
+        <div class="choice">② Changdeokgung Palace limits large-scale entertainment events in order to preserve its historical authenticity and traditional atmosphere.</div>
+        <div class="choice">③ Squid Game is a global television series based on traditional games and social themes, leading to tourism, merchandise, and immersive experiences.</div>
+        <div class="choice">④ Boseong Green Tea Fields focuses mainly on agricultural production and scenic viewing, with limited development of entertainment-based cultural experiences.</div>
+        <div class="choice">⑤ Busan International Film Festival promotes cinema while also boosting tourism and strengthening the image of the host city.</div>
+      </div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-exp">
+          정답: <strong style="color:var(--orange);">①, ③, ⑤</strong><br><br>
+          <span style="font-size:13px;color:var(--ink2);">②는 진정성 보존을 위해 오락적 요소를 '제한'하는 사례이므로 컬처테인먼트가 아니며, ④는 오락적 요소를 결합하지 않은 단순 농업 및 경관 위주의 장소이므로 정답에서 제외됩니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The economic benefit of <span class="vw">culturtainment<span class="tt">문화+오락이 결합된 문화 관광 콘텐츠</span></span> / makes it attractive / to politicians and policy makers alike.</div>
+        <div class="sp-ko">컬처테인먼트의 경제적 이익은 / 그것을 매력적으로 만든다 / 정치인과 정책 입안자 모두에게.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A potential increase in <span class="vw">inbound<span class="tt">외부에서 들어오는</span></span> visitor numbers / <span class="gr">[coupled with their demand / for related goods and services / (travel, accommodation, retail)]</span> / is an incentive / for those within governments and authorities / to work with cultural groups / in order to develop celebrations and <span class="vw">commemoration<span class="tt">기념행사, 기리는 의식</span></span>s / into larger and more <span class="vw">high profile<span class="tt">세간의 관심을 끄는, 주목받는</span></span> events.</div>
+        <div class="sp-ko">잠재적인 인바운드 방문자 수의 증가는 / [그들의 수요와 결합하여 / 관련 상품과 서비스에 대한 / (여행, 숙박, 소매업)] / 유인이 된다 / 정부와 당국 내의 사람들에게 / 문화 단체들과 협력하도록 하는 / 축제와 기념행사를 발전시키기 위해 / 더 크고 더 주목받는 행사로.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, / such <span class="vw">commercialization<span class="tt">상업화</span></span> / <span class="gr">risks</span> <span class="gr">culturtainment</span> <span class="gr">becoming</span> <span class="vw">homogeneous<span class="tt">동질적인, 균일한</span></span> / and losing its original 'message' / that could lead to a <span class="vw">dilution<span class="tt">희석, 약화</span></span> of audiences.</div>
+        <div class="sp-ko">하지만, / 그러한 상업화는 / 컬처테인먼트가 동질적이 될 위험을 초래한다 / 그리고 원래의 '메시지'를 잃을 위험이 있다 / 그것이 관객의 희석으로 이어질 수 있는.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] 동사 <code>risk</code>의 목적어로 동명사 <code>becoming</code>과 <code>losing</code>이 병렬로 쓰였으며, 그 앞의 <code>culturtainment</code>는 동명사의 의미상 주어입니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This could also lead to / <span class="gr">[smaller non-commercial independent events / being set up / {that would only serve to divide audiences further}]</span>.</div>
+        <div class="sp-ko">이것은 또한 이어질 수 있다 / [더 작은 비상업적 독립 행사들이 / 설립되는 것으로 / {그것들이 관객을 더 분열시키는 역할만 할}].</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This is something / that planners and stakeholders / will need to balance / against potential financial gain.</div>
+        <div class="sp-ko">이것은 어떤 것이다 / 기획자들과 이해관계자들이 / 균형을 맞춰야 할 / 잠재적인 재정적 이득에 맞서.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Changing political, social and religious landscapes / will lead to the <span class="vw">emergence<span class="tt">출현, 등장</span></span> of new cultures, / and with them / new culturtainment experiences.</div>
+        <div class="sp-ko">변화하는 정치적, 사회적, 종교적 환경들은 / 새로운 문화들의 출현으로 이어질 것이다, / 그리고 그것들과 함께 / 새로운 컬처테인먼트 경험들도.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Overall this is a healthy growth sector of the entertainment industry, / but <span class="gr">one that</span> by its very nature / is <span class="vw">delicate<span class="tt">섬세한, 취약한</span></span> in the face of <span class="vw">exploitation<span class="tt">착취, 상업적 이용</span></span>.</div>
+        <div class="sp-ko">전반적으로 이것은 오락 산업의 건전한 성장 분야이다, / 하지만 그 본질적인 특성상 / 착취에 직면했을 때 취약한 분야이다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] <code>one</code>은 앞의 <code>a sector</code>를 대신 받는 부정대명사이며, <code>that</code>은 <code>one</code>을 선행사로 하는 주격 관계대명사입니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box">
+      <strong>* Topic:</strong> The <span class="blank-ul">balance</span> between potential <span class="blank-ul">financial</span> gain and a sector <span class="blank-ul">delicate</span> in the face of exploitation.
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table">
+      <tbody>
+        <tr>
+          <td style="width:120px;"><span class="step-badge">Introduction</span></td>
+          <td>(sent. 1~2) : Benefits</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Development</span></td>
+          <td>(sent. 3~6) : Problems, Need for balance</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">Conclusion</span></td>
+          <td>(sent. 7~8) : Future growth with risks</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card-lbl" style="margin-top:20px;">* Keywords</div>
+    <div class="keyword-list">
+      <span class="kw-pill">culturetainment</span><span class="kw-pill"><span class="blank-ul">economic</span> benefit</span><span class="kw-pill">commercialization</span><span class="kw-pill"><span class="blank-ul">authenticity</span></span><span class="kw-pill"><span class="blank-ul">dilution</span></span><span class="kw-pill">balance</span>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p2">
+  <div class="p-header" style="background:linear-gradient(135deg, #0284c7, #3b82f6);">
+    <div class="p-code">추가 지문 · 연계 학습</div>
+    <div class="p-title">🏗️ 건축과 CAD 설계</div>
+    <div class="p-title-ko">스케치의 상실이 창의성에 미치는 영향</div>
+  </div>
+
+  <div class="card plain-passage-card">
+    <div class="plain-passage-box">
+      <p class="plain-sent">In 2012, the Yale School of Architecture held a symposium called "Is Drawing Dead?"</p>
+      <p class="plain-sent">The bold title reflects a growing sense that the architect's freehand sketch is being displaced by the computer.</p>
+      <p class="plain-sent">The transition from sketchpad to screen entails, many architects believe, a loss of creativity, of adventurousness.</p>
+      <p class="plain-sent">Thanks to the precision and apparent completeness of screen renderings, a designer working at a computer has a tendency to lock in, visually and cognitively, on a design at an early stage.</p>
+      <p class="plain-sent">He bypasses much of the reflective and exploratory playfulness that springs from the uncertainty and ambiguity of sketching.</p>
+      <p class="plain-sent">Researchers term this phenomenon "premature fixation" and trace its cause to "the disincentive for design changes once a large amount of detail and interconnectedness is built too quickly into a CAD (Computer-Aided Design) model."</p>
+      <p class="plain-sent">The designer at the computer also tends to emphasize formal experimentation at the expense of expressiveness.</p>
+      <p class="plain-sent">By weakening an architect's "personal, emotional connection with the work," a renowned American architect and designer Michael Graves argues, CAD software produces designs that, "while complex and interesting in their own way," often "lack the emotional content of a design derived from hand."</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">📝 실전 문제 및 개념 학습</div>
+    <div class="gr-note blue" style="margin-bottom:16px;">
+      <div class="gr-note-ttl blue">➤ 단어 의미 (Rendering)</div>
+      <p style="font-size:14px; margin-bottom:8px;">In this passage, "rendering" means a detailed visual image of a design created by a computer to show what it will look like when finished.</p>
+      <p style="color:#b45309;font-size:13px;">For example:<br>
+      - The architect showed a 3D rendering of the new building before construction started.<br>
+      - This rendering helps clients imagine the final design clearly.</p>
+    </div>
+
+    <div class="q-block" style="margin-top:0;">
+      <div class="q-stem">Q1. "Premature fixation" occurs because designers ___.</div>
+      <div class="choices">
+        <div class="choice">① avoid using digital tools in the early stages of the design process in order to maintain creativity</div>
+        <div class="choice">② tend to avoid design changes once a highly detailed and interconnected CAD model is formed too early</div>
+        <div class="choice">③ prefer maintaining ambiguity in early design stages rather than moving quickly toward clear and fixed forms</div>
+        <div class="choice">④ lack sufficient technical skills to effectively use CAD systems for complex architectural design</div>
+      </div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-exp">
+          정답: <strong style="color:var(--orange);">②</strong><br>
+          <span style="font-size:13px;color:var(--ink2);">매우 상세하고 상호 연결된 CAD 모델이 너무 일찍 형성되면 디자인 변경을 피하는 경향이 있기 때문입니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-stem">Q2. What is the main cause of the loss of exploratory playfulness in design?</div>
+      <div class="choices">
+        <div class="choice">① The ambiguity of sketching</div>
+        <div class="choice">② The precision and completeness of screen renderings</div>
+        <div class="choice">③ The lack of training in freehand drawing</div>
+        <div class="choice">④ The complexity of architectural projects</div>
+      </div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-exp">
+          정답: <strong style="color:var(--orange);">②</strong><br>
+          <span style="font-size:13px;color:var(--ink2);">화면 렌더링의 정밀함과 외관상의 완성도가 초기 단계에 디자인을 고착시키기 때문입니다.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-stem">Q3. What is the primary concern raised in the passage?</div>
+      <div class="choices">
+        <div class="choice">① The decline in architectural education standards</div>
+        <div class="choice">② The reduced role of human emotion and creativity due to CAD</div>
+        <div class="choice">③ The inefficiency of traditional sketching methods</div>
+        <div class="choice">④ The financial cost of digital design tools</div>
+      </div>
+      <div class="ans-box">
+        <div class="ans-lbl">정답 및 해설</div>
+        <div class="ans-exp">
+          정답: <strong style="color:var(--orange);">②</strong><br>
+          <span style="font-size:13px;color:var(--ink2);">CAD로 인해 모험심과 창의성, 인간의 감정적 내용이 결여된다는 점을 주된 문제로 제기하고 있습니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 원문 · 구문 해석 (마우스 호버 시 단어 뜻 표시)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In 2012, / the Yale School of Architecture / held a symposium called "Is Drawing Dead?"</div>
+        <div class="sp-ko">2012년에, / 예일 건축대학원은 / "스케치는 죽었는가?"라고 불리는 심포지엄을 개최했다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The bold title reflects a growing sense / that the architect's freehand sketch / is being <span class="vw">displace<span class="tt">대체되다, 밀려나다</span></span>d by the computer.</div>
+        <div class="sp-ko">이 대담한 제목은 점점 커지는 인식을 반영한다 / 건축가의 자유화 스케치가 / 컴퓨터에 의해 대체되고 있다는.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The transition from sketchpad to screen / <span class="vw">entail<span class="tt">수반하다, 일으키다</span></span>s, / <span class="gr">many architects believe</span>, / a loss of creativity, / of <span class="vw">adventurousness<span class="tt">모험적 자세, 실험적 태도</span></span>.</div>
+        <div class="sp-ko">스케치패드에서 화면으로의 전환은 / 많은 건축가들이 믿기에, / 창의성의 상실을, / (즉) 모험적 자세의 상실을 수반한다.
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] 주절의 주어(<code>The transition</code>)와 동사(<code>entails</code>) 사이에 삽입절 <code>many architects believe</code>가 들어간 구조입니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Thanks to the precision and apparent completeness / of screen <span class="vw">rendering<span class="tt">렌더링 (컴퓨터가 생성한 시각적 이미지)</span></span>s, / a designer working at a computer / has a tendency to lock in, / visually and cognitively, / on a design at an early stage.</div>
+        <div class="sp-ko">화면 렌더링의 정밀함과 외관상 완성도 덕분에, / 컴퓨터에서 작업하는 디자이너는 / 시각적으로나 인지적으로, / 초기 단계의 디자인에 고착되는 경향이 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">He bypasses much of the <span class="vw">reflective<span class="tt">성찰적인, 사려 깊은</span></span> and exploratory <span class="vw">playfulness<span class="tt">유희성, 실험적 태도</span></span> / that springs from the uncertainty and <span class="vw">ambiguity<span class="tt">애매모호함</span></span> of sketching.</div>
+        <div class="sp-ko">그는 많은 성찰적이고 탐구적인 유희성을 거치지 않는다 / 스케치의 불확실성과 애매모호함에서 비롯되는.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Researchers term this phenomenon "premature fixation" / and trace its cause to "the disincentive for design changes / <span class="gr">{once a large amount of detail and <span class="vw">interconnectedness<span class="tt">상호 연결성</span></span> / is built too quickly into a CAD (Computer-Aided Design) model.}</span>"</div>
+        <div class="sp-ko">연구자들은 이 현상을 "섣부른 고착"이라 명명하고 / 그 원인을 다음으로 추적한다: "디자인 변경에 대한 유인 부족 / {대량의 세부 사항과 상호 연결성이 / CAD 모델에 너무 빨리 내장되면}"
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] 접속사 <code>once</code>(~하면)가 부사절을 이끌어 직접 인용구 안에 포함되어 있습니다.</span>
+        </div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The designer at the computer also tends to / emphasize formal experimentation / <span class="vw">at the expense of<span class="tt">~을 희생하여, ~을 대가로</span></span> expressiveness.</div>
+        <div class="sp-ko">컴퓨터에서의 디자이너는 또한 경향이 있다 / 표현력을 희생하여 형식적 실험을 강조하는.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">By weakening an architect's "personal, emotional connection with the work," / a renowned American architect and designer Michael Graves argues, / CAD software produces designs / <span class="gr">[that, "while complex and interesting in their own way," / often "lack the emotional content / of a design derived from hand."]</span></div>
+        <div class="sp-ko">건축가의 "작품과의 개인적, 감정적 연결"을 약화시킴으로써, / 저명한 미국 건축가이자 디자이너 마이클 그레이브스는 주장한다, / CAD 소프트웨어는 설계를 만들어 낸다고 / ["그 자체로 복잡하고 흥미롭지만," / 종종 "손으로 만든 설계의 감정적 내용이 결여되어 있는".]
+          <span class="sp-note" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">⭐ [핵심 문법] 주격 관계대명사 <code>that</code>이 이끄는 절 안에 부사절 <code>while (they are) complex...</code>가 삽입된 형태입니다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic & 04 Logical Framework</div>
+    <div class="topic-box" style="border-left-color:#3b82f6;">
+      <strong>* Topic:</strong> The <span class="blank-ul" style="color:#2563eb;text-decoration-color:#2563eb;">displacement</span> of the freehand sketch by computer-aided design and its impact on architectural <span class="blank-ul" style="color:#2563eb;text-decoration-color:#2563eb;">creativity</span>.
+    </div>
+    
+    <div style="margin-top:16px; font-weight:700;">* Text Structure</div>
+    <table class="fw-table" style="margin-top:15px;">
+      <thead><tr style="background:#1e3a8a;"><th>Step</th><th>Logic</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge" style="background:#3b82f6;">① Intro</span></td>
+          <td>(sent. 1~3) : The Displacement of the Freehand Sketch</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge" style="background:#3b82f6;">② Dev 1</span></td>
+          <td>(sent. 4~6) : Premature Fixation and its Causes</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge" style="background:#3b82f6;">③ Dev 2</span></td>
+          <td>(sent. 7~8) : <span class="blank-ul" style="color:#2563eb;text-decoration-color:#2563eb;">Loss</span> of Expressiveness and Emotional Content</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="card-lbl" style="margin-top:20px;">* Keywords</div>
+    <div class="keyword-list">
+      <span class="kw-pill">freehand sketch</span><span class="kw-pill">CAD model</span><span class="kw-pill">premature fixation</span><span class="kw-pill">emotional content</span>
+    </div>
+  </div>
+
+</div>
+
+</main>
+<script>
+const ids = ['home','p1','p2'];
+function show(id){
+  ids.forEach(i=>{
+    const el=document.getElementById(i);
+    if(el) el.classList.remove('on');
+  });
+  const t=document.getElementById(id);
+  if(t) t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx]) btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
