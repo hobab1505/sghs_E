@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch22 Environment · 완전 분석 | SGHS Critical Reading & Writing</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+
+/* ─── HEADER ─── */
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1100px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.15rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.7rem;opacity:.55;margin-top:2px;}
+.hdr-nav{display:flex;gap:6px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:5px 14px;border-radius:4px;font-size:.72rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+
+/* ─── LAYOUT ─── */
+.wrap{max-width:1100px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── TOC ─── */
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:20px 22px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);}
+.toc-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.65rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.08em;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1.05rem;font-weight:600;margin-bottom:4px;line-height:1.4;}
+.toc-ko{font-size:.8rem;color:var(--ink3);}
+
+/* ─── PASSAGE HEADER ─── */
+.p-header{background:var(--ink);color:#fefcf8;padding:22px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;font-style:italic;}
+.p-type-badge{display:inline-block;margin-top:10px;background:var(--accent2);color:#fff;font-size:.65rem;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.1em;}
+
+/* ─── CARD ─── */
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ─── PLAIN PASSAGE (원문) ─── */
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:24px 28px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.95;color:var(--ink);margin-bottom:2px;}
+.plain-sent + .plain-sent{margin-top:4px;}
+/* 삽입 문장 강조 */
+.insert-sent{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.95;color:var(--ink);background:#fdf0e8;border-left:4px solid var(--accent2);padding:8px 14px;margin:10px 0;border-radius:0 6px 6px 0;}
+/* 번호 표기 */
+.num-circle{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--ink);font-size:.72rem;font-weight:700;margin:0 3px;vertical-align:middle;font-family:'Noto Sans KR',sans-serif;}
+/* 빈칸 */
+.bk{display:inline-block;border-bottom:2.5px solid var(--ink);min-width:180px;margin:0 3px;vertical-align:bottom;}
+/* 각주 */
+.fn{font-size:.77rem;color:var(--ink3);margin-top:14px;border-top:1px solid var(--border2);padding-top:10px;font-style:italic;line-height:1.6;}
+
+/* ─── QUESTION ─── */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:14px;}
+.q-type{font-size:.68rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:10px;text-transform:uppercase;}
+.q-stem{font-size:.91rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:7px;}
+.choice{font-size:.88rem;line-height:1.55;padding:8px 12px;border-radius:5px;color:var(--ink2);}
+.cn{display:inline-block;font-weight:700;color:var(--ink);margin-right:4px;}
+/* 어휘 문제용: 밑줄 번호 */
+.choice-ul{text-decoration:underline;font-weight:700;color:var(--ink);}
+/* 정답 표기 */
+.correct-choice{background:var(--orange-bg);border:1px solid rgba(192,80,16,.25);color:var(--ink);}
+.correct-choice .cn{color:var(--orange);}
+/* 오답(바꿔야 할 답) */
+.wrong-choice{background:var(--red-bg);border:1px solid rgba(176,26,26,.2);color:var(--ink);}
+.wrong-choice .cn{color:var(--red);}
+
+/* ─── ANSWER BOX ─── */
+.ans-box{margin-top:14px;padding:18px 22px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-lbl{font-size:.65rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+.ans-num{font-size:1.05rem;font-weight:700;color:var(--orange);margin-bottom:10px;}
+.ans-exp{font-size:.84rem;color:var(--ink2);line-height:1.7;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+
+/* ─── 구문해석 ─── */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;color:var(--ink);}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+/* 어휘 툴팁 */
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+/* 문법 초록 */
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+/* 오답(빨강 취소선) */
+.wrong-word{color:var(--red);font-weight:700;text-decoration:line-through;text-decoration-color:var(--red);}
+/* 정답(오렌지 밑줄) */
+.right-word{color:var(--orange);font-weight:700;}
+/* 삽입 위치 표시 */
+.insert-pos{display:inline-flex;align-items:center;gap:2px;background:var(--accent2);color:#fff;font-size:.7rem;font-weight:700;padding:1px 8px;border-radius:4px;margin:0 4px;vertical-align:middle;}
+
+/* ─── GRAMMAR NOTE ─── */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;margin-top:10px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;letter-spacing:.06em;margin-bottom:8px;}
+.gr-note p{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:6px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+
+/* ─── TOPIC & FRAMEWORK ─── */
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;border-radius:0 7px 7px 0;margin-bottom:14px;font-size:.9rem;line-height:1.65;}
+.topic-ko{margin-top:8px;font-size:.8rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:8px;font-style:italic;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:9px 15px;text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.06em;margin-bottom:4px;}
+.fw-ko{margin-top:8px;font-size:.79rem;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:8px;}
+
+/* ─── TEXT STRUCTURE BOX ─── */
+.structure-box{background:#f8f4ff;border:1px solid rgba(100,60,180,.2);border-radius:8px;padding:18px 22px;font-size:.84rem;line-height:1.75;}
+.structure-box h4{color:#5a3aaa;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;font-weight:700;}
+.structure-box .s-item{margin-bottom:6px;padding-left:14px;border-left:3px solid #c0a8f0;}
+.structure-box .s-arrow{color:var(--accent2);font-weight:700;margin:0 4px;}
+.main-idea-box{background:#fff8f0;border:1px solid rgba(176,90,30,.25);border-radius:8px;padding:16px 20px;margin-top:14px;font-size:.84rem;line-height:1.75;}
+.main-idea-box h4{color:var(--accent2);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;font-weight:700;}
+
+/* ─── VOCAB TABLE ─── */
+.voca-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.55;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.95rem;}
+.vw-mean{color:var(--ink2);}
+.vw-syn{font-size:.78rem;color:var(--ink3);margin-top:2px;}
+
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card,.passage-box,.plain-box{padding:16px 18px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Ch22 · Environment, Resources, Recycling</div>
+      <div class="hdr-sub">SGHS Critical Reading &amp; Writing — 본문·문항·정답해설·구문분석·Text Structure·Vocabulary</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">지문 1 · 어휘</button>
+      <button class="nb" onclick="show('p2')">지문 2 · 무관문장</button>
+      <button class="nb" onclick="show('p3')">지문 3 · 문장삽입</button>
+      <button class="nb" onclick="show('voca')">단어장</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ════════════════════ HOME ════════════════════ -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">Chapter 22 — Environment, Resources, Recycling</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:24px;">SGHS Critical Reading &amp; Writing · Suah Kim &nbsp;|&nbsp; 총 3개 지문 + 단어장</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')">
+      <div class="toc-badge">기출 · 2026 수능 9월 모평</div>
+      <div class="toc-en">Soft-Path River Engineering</div>
+      <div class="toc-ko">소프트 패스 강 공학 · 문맥상 맞지 않는 단어 고르기</div>
+    </a>
+    <a class="toc-card" onclick="show('p2')">
+      <div class="toc-badge">전체 흐름과 관계없는 문장</div>
+      <div class="toc-en">Biopower & Sustainability</div>
+      <div class="toc-ko">바이오 동력과 지속 가능성 · 무관한 문장 찾기</div>
+    </a>
+    <a class="toc-card" onclick="show('p3')">
+      <div class="toc-badge">문장 삽입</div>
+      <div class="toc-en">Elephants as Keystone Species</div>
+      <div class="toc-ko">핵심종으로서의 코끼리 · 주어진 문장 위치 찾기</div>
+    </a>
+    <a class="toc-card" onclick="show('voca')">
+      <div class="toc-badge">Vocabulary</div>
+      <div class="toc-en">Chapter 22 Word & Phrase List</div>
+      <div class="toc-ko">Ch22 전체 단어 &amp; 숙어 정리 — 45개</div>
+    </a>
+  </div>
+</div>
+
+<!-- ════════════════════ P1 ════════════════════ -->
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">기출 · 2026학년도 9월 모평 · Chapter 22</div>
+    <div class="p-title">Soft-Path River Engineering</div>
+    <div class="p-title-ko">소프트 패스 강 공학 — 자연 변동성의 생태적 가치</div>
+    <span class="p-type-badge">문맥상 맞지 않는 단어 고르기</span>
+  </div>
+
+  <!-- 본문 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">What is soft-path river engineering?</p>
+      <p class="plain-sent">One way to visualize its spirit is to <span class="vw">liken<span class="tt">비유하다</span></span> it to a <span class="vw">footpath<span class="tt">오솔길, 산책로</span></span> in the forest.</p>
+      <p class="plain-sent">Suppose a tree falls across a footpath.</p>
+      <p class="plain-sent">A soft-path response would be simply to redirect the <span class="vw">trail<span class="tt">오솔길, 경로</span></span> around the fallen tree.</p>
+      <p class="plain-sent">A more <span class="vw">interventionist<span class="tt">개입주의적인</span></span> response would be to ① <span style="font-weight:700;text-decoration:underline;">remove</span> the tree and restore the original route.</p>
+      <p class="plain-sent">A still more interventionist response might be to straighten and pave the path to insert it more ② <span style="font-weight:700;text-decoration:underline;">permanently</span> in the landscape.</p>
+      <p class="plain-sent">The true high-modernist step would, of course, be to ③ <span style="font-weight:700;text-decoration:underline;">create</span> a superhighway that removes the landscape and <span class="vw">bulldoze through<span class="tt">밀어붙이다, 강행하다</span></span> straight through all obstacles in the topography.</p>
+      <p class="plain-sent">Soft-path engineering has the unique advantage of intellectual ④ <span style="font-weight:700;text-decoration:underline;">modesty</span> <span class="vw">with respect to<span class="tt">~에 관하여</span></span> what we actually know about river movement and its environmental effects.</p>
+      <p class="plain-sent">In contrast to hard-path engineering, soft-path engineering accepts <span class="vw">variability<span class="tt">가변성, 변동성</span></span> in the river's movement as ⑤ <span style="font-weight:700;text-decoration:underline;">insignificant</span> until proven otherwise.</p>
+      <p class="plain-sent"><span class="vw">Backwater<span class="tt">물웅덩이, 정체된 물</span></span>s, short-lived <span class="vw">wetland<span class="tt">습지</span></span>s, <span class="vw">braid<span class="tt">망류 하천</span></span>s and <span class="vw">channel<span class="tt">수로, 물길</span></span>s, <span class="vw">swamp<span class="tt">늪, 습지</span></span>s — all undesirable to hard-path engineering — are <span class="vw">presume<span class="tt">추정하다</span></span>d by soft-path engineers to be ecologically important.</p>
+      <div class="fn">* pave: 포장하다 &nbsp;&nbsp;** topography: 지형</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">01 문항 — 밑줄 친 단어 중 문맥상 맞지 않는 것은?</div>
+    <div class="q-block">
+      <div class="q-type">어휘 추론 (Vocabulary in Context)</div>
+      <div class="q-stem">밑줄 친 ①~⑤ 중 문맥상 낱말의 쓰임이 적절하지 <strong>않은</strong> 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> <span class="choice-ul">remove</span></div>
+        <div class="choice"><span class="cn">②</span> <span class="choice-ul">permanently</span></div>
+        <div class="choice"><span class="cn">③</span> <span class="choice-ul">create</span></div>
+        <div class="choice"><span class="cn">④</span> <span class="choice-ul">modesty</span></div>
+        <div class="choice wrong-choice"><span class="cn">⑤</span> <span class="choice-ul">insignificant</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤ insignificant → <strong>significant (or: important)</strong></span></div>
+      <div class="ans-exp">
+        <strong>오답 이유:</strong> 소프트 패스 공학은 강의 변동성을 "달리 증명될 때까지" <u>생태적으로 중요한 것으로</u> 전제한다.<br>
+        마지막 문장: "Backwaters, wetlands, braids, channels, swamps ... are presumed to be <strong>ecologically important</strong>" → 변동성을 <strong>important/significant</strong>으로 받아들임.<br><br>
+        따라서 ⑤의 <span class="wrong-word">insignificant</span>(중요하지 않은)은 문맥과 정반대. <span class="right-word">significant</span>(중요한)이 되어야 한다.<br><br>
+        <strong>나머지 오답 확인:</strong><br>
+        ① remove — 개입적 대응: 나무를 <u>제거</u>하고 원래 경로를 복원 ✓<br>
+        ② permanently — 더 개입적 대응: 경로를 더 <u>영구적으로</u> 삽입 ✓<br>
+        ③ create — 최고 개입적 대응: 초고속도로를 <u>만들다</u> ✓<br>
+        ④ modesty — 소프트 패스의 지적 <u>겸손함</u> ✓
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문 해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">One way to <span class="gr">visualize</span> its spirit // is to <span class="vw">liken<span class="tt">비유하다</span></span> it to a <span class="vw">footpath<span class="tt">오솔길</span></span> in the forest.</div>
+        <div class="sp-ko">그 정신을 시각화하는 한 가지 방법은 / 그것을 숲속의 오솔길에 비유하는 것이다. <span class="sp-note">★ liken A to B: "A를 B에 비유하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A soft-path response would be <span class="gr">simply</span> to redirect the trail around the fallen tree.</div>
+        <div class="sp-ko">소프트 패스적 대응은 단순히 쓰러진 나무 주위로 경로를 다시 잡는 것이다. <span class="sp-note">★ would be to V: "~하는 것일 것이다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A more <span class="vw">interventionist<span class="tt">개입주의적인</span></span> response would be to ① remove the tree and restore the original route. A still more interventionist response might be to straighten and pave the path to insert it more ② permanently in the landscape.</div>
+        <div class="sp-ko">더 개입주의적인 대응은 나무를 제거하고 원래 경로를 복원하는 것이다. / 더욱 개입주의적인 대응은 길을 곧게 하고 포장하여 그것을 더 영구적으로 지형에 삽입하는 것이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The true high-modernist step would, of course, be to ③ create a superhighway <span class="gr">{that removes the landscape and <span class="vw">bulldoze through<span class="tt">밀어붙이다</span></span>s straight through all obstacles in the topography}</span>.</div>
+        <div class="sp-ko">진정한 고도 근대주의적 단계는 물론, 경관을 제거하고 지형의 모든 장애물을 직선으로 밀어붙이는 초고속도로를 만드는 것이다. <span class="sp-note">★ that절: 관계절, superhighway를 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Soft-path engineering has the unique advantage of intellectual ④ modesty // <span class="vw">with respect to<span class="tt">~에 관하여</span></span> <span class="gr">what we actually know about river movement and its environmental effects</span>.</div>
+        <div class="sp-ko">소프트 패스 공학은 강의 움직임과 그 환경적 영향에 관하여 / 우리가 실제로 알고 있는 것에 대한 / 지적 겸손함이라는 고유한 이점을 가지고 있다. <span class="sp-note">★ what we know ~: 관계대명사 what절 (명사절)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In contrast to hard-path engineering, soft-path engineering accepts <span class="vw">variability<span class="tt">가변성</span></span> in the river's movement as ⑤ <span class="wrong-word">insignificant</span> <span class="right-word">→ significant</span> // until proven otherwise.</div>
+        <div class="sp-ko">하드 패스 공학과 달리, 소프트 패스 공학은 강의 움직임의 가변성을 / 달리 증명될 때까지 <span class="wrong-word">중요하지 않은 것</span>→ <span class="right-word">중요한 것</span>으로 받아들인다. <span class="sp-note">★ until proven otherwise: "달리 증명될 때까지" (분사구문 — 시간)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Backwater<span class="tt">물웅덩이</span></span>s, short-lived <span class="vw">wetland<span class="tt">습지</span></span>s, <span class="vw">braid<span class="tt">망류 하천</span></span>s and <span class="vw">channel<span class="tt">수로</span></span>s, <span class="vw">swamp<span class="tt">늪</span></span>s — <span class="gr">all undesirable to hard-path engineering</span> — are <span class="vw">presume<span class="tt">추정하다</span></span>d by soft-path engineers to be ecologically important.</div>
+        <div class="sp-ko">물웅덩이, 단명하는 습지, 망류 하천과 수로, 늪 — 하드 패스 공학에게 모두 바람직하지 않은 — 은 소프트 패스 공학자들에 의해 생태적으로 중요한 것으로 추정된다. <span class="sp-note">★ be presumed to be ~: "~인 것으로 추정되다" (수동태) / 삽입구 all undesirable ~</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① liken A to B</strong> — "A를 B에 비유하다": "liken it to a footpath in the forest"</p>
+      <p><strong>② would be to V</strong> — "~하는 것일 것이다": 가정적 결과 표현</p>
+      <p><strong>③ what we actually know ~ (관계대명사 what절)</strong> — 명사절로 전치사 of의 목적어: "우리가 실제로 알고 있는 것"</p>
+      <p><strong>④ until proven otherwise (분사구문)</strong> — = until it is proven otherwise: "달리 증명될 때까지"</p>
+      <p><strong>⑤ be presumed by ~ to be (수동태 + to부정사)</strong> — "~에 의해 ...인 것으로 추정되다"</p>
+    </div>
+  </div>
+
+  <!-- Text Structure & Main Idea -->
+  <div class="card">
+    <div class="card-lbl">03 Topic & Text Structure</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Soft-path river engineering
+      <div class="topic-ko">소프트 패스 강 공학</div>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item">A forest <strong>Analogy</strong> (숲 오솔길 비유)</div>
+      <div class="s-item"><strong>Contrast</strong>: Soft-path <span class="s-arrow">vs</span> Hard-path engineering
+        <br><span class="s-arrow">→</span> Soft-path: adapts to natural conditions
+        <br><span class="s-arrow">→</span> Hard-path: seeks to control/dominate</div>
+      <div class="s-item"><strong>Explanation</strong>: the ecological value of soft-path engineering
+        <br><span class="s-arrow">→</span> intellectual modesty: accepting <u>limits</u> of human knowledge about river behavior
+        <br><span class="s-arrow">→</span> treats natural &amp; seemingly "<u>undesirable</u>" features (backwaters, wetlands, swamps…) as ecologically <u>important</u> until proven otherwise</div>
+    </div>
+    <div class="main-idea-box">
+      <h4>Main Idea</h4>
+      Soft-path river engineering, which <u>adapts</u> to natural river processes rather than <u>controlling</u> them, has the key advantage of acknowledging <u>uncertainty</u> about river behavior and treating natural variability as ecologically <u>meaningful</u>.
+      <div style="margin-top:8px;font-size:.8rem;color:var(--ink3);font-style:italic;">소프트 패스 강 공학은 강의 과정을 통제하기보다 적응함으로써, 강 행동에 대한 불확실성을 인정하고 자연적 변동성을 생태적으로 의미 있는 것으로 다루는 핵심적 이점을 가진다.</div>
+    </div>
+  </div>
+
+  <!-- Framework -->
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>내용 요약</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span><br>Analogy</td><td>소프트 패스의 정신 = 숲 오솔길 비유<br>나무 쓰러짐 → 길을 돌아가는 유연한 대응</td><td class="fw-ko">숲 오솔길 비유로 소프트 패스의 본질(자연에 적응)을 소개한다.</td></tr>
+        <tr><td><span class="step-badge">② Contrast</span><br>Spectrum</td><td>3단계 개입 스펙트럼: 우회 → 제거·복원 → 포장·영구화 → 초고속도로·정복<br>↑ 개입 강도 증가 →</td><td class="fw-ko">개입 강도에 따른 3단계 스펙트럼을 통해 하드 패스의 극단성을 드러낸다.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span><br>Ecological Value</td><td>소프트 패스의 장점 = 지적 겸손함<br>강의 변동성(물웅덩이·습지·늪 등)을 생태적으로 중요한 것으로 전제</td><td class="fw-ko">소프트 패스는 자연 변동성을 생태적 가치로 인정하는 지적 겸손함을 가진다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p1 -->
+
+<!-- ════════════════════ P2 ════════════════════ -->
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">Chapter 22 · 지문 2</div>
+    <div class="p-title">Biopower & Sustainability</div>
+    <div class="p-title-ko">바이오 동력과 지속 가능성</div>
+    <span class="p-type-badge">전체 흐름과 관계없는 문장 고르기</span>
+  </div>
+
+  <!-- 본문 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">By enhancing energy efficiency and putting waste products to use, biopower helps move utilities and industries in a sustainable direction.</p>
+      <p class="plain-sent"><span class="num-circle">①</span> The U.S. forest products industry now obtains half its energy by combusting woody waste and liquid waste from <span class="vw">pulp mill<span class="tt">펄프 공장</span></span> processing.</p>
+      <p class="plain-sent"><span class="num-circle">②</span> Biopower helps alleviate climate change as well by reducing carbon dioxide <span class="vw">emissions<span class="tt">배출물</span></span>, and capturing <span class="vw">landfill<span class="tt">매립지</span></span> gas reduces emissions of methane, a <span class="vw">potent<span class="tt">강력한</span></span> greenhouse gas.</p>
+      <p class="plain-sent"><span class="num-circle">③</span> Biopower also benefits human health as it cuts down on pollution; by replacing coal in <span class="vw">co-firing<span class="tt">혼합연소</span></span> and direct combustion, biopower reduces emissions of sulfur dioxide because plant matter, unlike coal, contains no <span class="vw">appreciable<span class="tt">상당한, 눈에 띄는</span></span> sulfur <span class="vw">content<span class="tt">함량</span></span>.</p>
+      <p class="plain-sent" style="background:var(--red-bg);border-left:4px solid var(--red);padding:8px 14px;margin:6px 0;border-radius:0 6px 6px 0;"><span class="num-circle" style="border-color:var(--red);color:var(--red);">④</span> When plant matter is burned for power, soil is <span class="vw">deprive of<span class="tt">~을 빼앗다</span></span>d of nutrients and organic matter it would have gained from the plant matter's <span class="vw">decomposition<span class="tt">분해</span></span>.</p>
+      <p class="plain-sent"><span class="num-circle">⑤</span> In addition, <span class="vw">biomass<span class="tt">생물량, 생물 자원</span></span> resources tend to be geographically spread out, so using them can help support rural economies and reduce many nations' dependence on imported fuels.</p>
+      <div class="fn">* combust: 연소시키다 &nbsp;&nbsp;** alleviate: 완화하다 &nbsp;&nbsp;*** sulfur dioxide: 이산화황</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">01 문항 — 전체 흐름과 관계없는 문장을 고르시오</div>
+    <div class="q-block">
+      <div class="q-type">무관한 문장 (Irrelevant Sentence)</div>
+      <div class="q-stem">전체 흐름과 관계 없는 문장을 고르시오.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="choice"><span class="cn">②</span></div>
+        <div class="choice"><span class="cn">③</span></div>
+        <div class="choice wrong-choice"><span class="cn">④</span> <span style="color:var(--red);">← 무관한 문장</span></div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">④</span></div>
+      <div class="ans-exp">
+        <strong>글의 주제:</strong> 바이오 동력이 지속 가능성에 기여한다 (에너지 효율 ↑, 탄소 배출 ↓, 오염 ↓, 농촌 경제 지원)<br><br>
+        <strong>④가 무관한 이유:</strong> "식물을 태우면 토양이 영양분을 빼앗긴다" = 바이오 동력의 <u>단점(환경적 비용)</u>을 언급 → 글 전체의 <u>긍정적 방향</u>과 정반대 흐름.<br><br>
+        <strong>빠른 확인법:</strong> ①②③⑤는 모두 바이오 동력의 <u>장점</u>을 나열. ④만 토양 영양 손실이라는 <u>부정적 결과</u>를 제시.<br><br>
+        → ④의 내용: the <span class="ans">environmental drawback</span> of burning plant matter = 글의 흐름(지속 가능성)과 무관
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문 해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 & 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">By <span class="gr">enhancing energy efficiency and putting waste products to use</span>, biopower helps move utilities and industries / in a <span class="vw">sustainable<span class="tt">지속 가능한</span></span> direction.</div>
+        <div class="sp-ko">에너지 효율을 높이고 폐기물을 활용함으로써, / 바이오 동력은 공익사업체와 산업이 지속 가능한 방향으로 나아가도록 돕는다. <span class="sp-note">★ by -ing: 수단 / help + V(원형): "~하도록 돕다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="num-circle">①</span> The U.S. forest products industry now obtains half its energy / by <span class="gr">combusting woody waste and liquid waste from <span class="vw">pulp mill<span class="tt">펄프 공장</span></span> processing</span>.</div>
+        <div class="sp-ko">미국 삼림 산물 산업은 이제 / 펄프 공장 처리 과정에서 나오는 목재 폐기물과 액체 폐기물을 연소시켜 / 에너지의 절반을 얻는다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="num-circle">②</span> Biopower helps alleviate climate change / by reducing carbon dioxide <span class="vw">emissions<span class="tt">배출물</span></span>, and capturing <span class="vw">landfill<span class="tt">매립지</span></span> gas reduces emissions of methane, a <span class="vw">potent<span class="tt">강력한</span></span> greenhouse gas.</div>
+        <div class="sp-ko">바이오 동력은 이산화탄소 배출을 줄여 기후 변화를 완화하는 데도 도움이 되고, / 매립지 가스를 포집하면 강력한 온실가스인 메탄의 배출이 줄어든다. <span class="sp-note">★ methane, a potent greenhouse gas: 동격 (메탄 = 강력한 온실가스)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="num-circle">③</span> Biopower also benefits human health / as it cuts down on pollution; / by replacing coal in <span class="vw">co-firing<span class="tt">혼합연소</span></span> and direct combustion, / biopower reduces emissions of sulfur dioxide / <span class="gr">because plant matter, unlike coal, contains no <span class="vw">appreciable<span class="tt">상당한</span></span> sulfur <span class="vw">content<span class="tt">함량</span></span></span>.</div>
+        <div class="sp-ko">바이오 동력은 또한 오염을 줄여 인간 건강에도 이롭다; / 혼합연소와 직접 연소에서 석탄을 대체함으로써, / 바이오 동력은 이산화황 배출을 줄이는데, / 식물 물질은 석탄과 달리 상당한 황 함량을 포함하지 않기 때문이다. <span class="sp-note">★ as: "~하기 때문에" / because절: 이유</span></div>
+      </div>
+      <div class="sp" style="background:var(--red-bg);border-radius:6px;padding:14px;">
+        <div class="sp-en" style="color:var(--red);"><span class="num-circle" style="border-color:var(--red);color:var(--red);">④</span> [무관한 문장] When plant matter is burned for power, soil is <span class="vw">deprive of<span class="tt">~을 빼앗다</span></span>d of nutrients and organic matter <span class="gr">{it would have gained from the plant matter's <span class="vw">decomposition<span class="tt">분해</span></span>}</span>.</div>
+        <div class="sp-ko" style="color:var(--red);">【무관】 식물 물질이 동력을 위해 태워질 때, 토양은 식물 물질의 분해에서 얻었을 영양분과 유기물을 빼앗긴다. <span class="sp-note">★ it would have gained ~: "얻었을" (가정법 과거완료)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="num-circle">⑤</span> In addition, <span class="vw">biomass<span class="tt">생물량</span></span> resources tend to be geographically spread out, so using them can help support rural economies and reduce many nations' dependence on imported fuels.</div>
+        <div class="sp-ko">또한, 바이오매스 자원은 지리적으로 분산되는 경향이 있어서, / 그것들을 활용하면 농촌 경제를 지원하고 많은 국가들의 수입 연료 의존도를 낮추는 데 도움이 될 수 있다. <span class="sp-note">★ tend to be: "~하는 경향이 있다"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① by -ing (수단)</strong> — "~함으로써": "By enhancing / by reducing / by replacing"</p>
+      <p><strong>② help + 원형부정사</strong> — "~하도록 돕다": "helps move utilities / can help support rural economies"</p>
+      <p><strong>③ as (원인 접속사)</strong> — "~하기 때문에": "as it cuts down on pollution"</p>
+      <p><strong>④ it would have gained ~ (가정법 과거완료)</strong> — "얻었을": 현재 사실의 반대 가정(④번 문장)</p>
+      <p><strong>⑤ be deprived of (수동태)</strong> — "~을 빼앗기다": "soil is deprived of nutrients"</p>
+    </div>
+  </div>
+
+  <!-- Text Structure -->
+  <div class="card">
+    <div class="card-lbl">03 Topic & Text Structure</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Biopower and its benefits (바이오 동력과 그 이점)
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>Main claim:</strong> biopower promotes <u>sustainability</u> in utilities and industries</div>
+      <div class="s-item"><strong>Supporting points</strong>
+        <br><span class="s-arrow">→</span> uses woody/liquid waste as <u>energy</u> sources
+        <br><span class="s-arrow">→</span> reduces carbon dioxide and methane <u>emissions</u>
+        <br><span class="s-arrow">→</span> <u>lowers</u> pollution and sulfur dioxide emissions
+        <br><span class="s-arrow">→</span> supports <u>rural</u> economies and reduces <u>dependence</u> on imported fuels
+      </div>
+      <div class="s-item" style="color:var(--red);"><strong>④ 제거 이유:</strong> the <u>environmental drawback</u> of burning plant matter (토양 영양 손실) → 장점 나열 흐름에 어긋남</div>
+    </div>
+    <div class="main-idea-box">
+      <h4>Main Idea</h4>
+      Biopower <u>contributes</u> to sustainability by using waste resources, reducing greenhouse gas emissions and pollution, supporting rural economies, and reducing <u>dependence</u> on imported fuels.
+      <div style="margin-top:8px;font-size:.8rem;color:var(--ink3);font-style:italic;">바이오 동력은 폐기물 자원 활용, 온실가스 및 오염 감소, 농촌 경제 지원, 수입 연료 의존 감소를 통해 지속 가능성에 기여한다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>내용 요약</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Main Claim</span></td><td>바이오 동력 → 에너지 효율 ↑ + 폐기물 활용 → 지속 가능한 방향</td><td class="fw-ko">바이오 동력이 지속 가능한 에너지로 이동하는 것을 돕는다는 주장이 제시된다.</td></tr>
+        <tr><td><span class="step-badge">② Supporting 1~3</span></td><td>①폐기물 연소로 에너지 획득 / ②CO₂·메탄 감소 / ③황산화물 오염 감소</td><td class="fw-ko">환경·기후·건강 차원에서 바이오 동력의 세 가지 이점이 열거된다.</td></tr>
+        <tr><td><span class="step-badge">③ Supporting ⑤</span></td><td>바이오매스 지리적 분산 → 농촌 경제 지원 + 수입 연료 의존 감소</td><td class="fw-ko">경제·에너지 안보 차원의 네 번째 이점이 추가된다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p2 -->
+
+<!-- ════════════════════ P3 ════════════════════ -->
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">Chapter 22 · 지문 3</div>
+    <div class="p-title">Elephants as a Keystone Species</div>
+    <div class="p-title-ko">핵심종으로서의 코끼리 — 사바나 생태계</div>
+    <span class="p-type-badge">주어진 문장이 들어가기에 가장 적절한 곳</span>
+  </div>
+
+  <!-- 삽입 문장 -->
+  <div class="card">
+    <div class="card-lbl">삽입 문장 (주어진 문장)</div>
+    <div class="insert-sent">
+      Conversely, where human interference prevents elephants from moving freely within their habitats and leads to their numbers exceeding the <span class="vw">carrying capacity<span class="tt">수용력</span></span> of the savanna, their effect can be environmentally disastrous.
+    </div>
+    <div style="font-size:.82rem;color:var(--ink2);margin-top:10px;padding-left:12px;border-left:3px solid var(--border);">
+      반대로, 인간의 개입이 코끼리가 서식지 내에서 자유롭게 이동하는 것을 막고 그 수가 사바나의 수용력을 초과하게 되는 경우, 그 영향은 환경적으로 재앙이 될 수 있다.
+    </div>
+  </div>
+
+  <!-- 본문 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">One example of human interventions modifying the character of savannas is through their effects on savanna-<span class="vw">dwell<span class="tt">서식하다</span></span>ing mammals such as elephants.</p>
+      <p class="plain-sent">They are what is known as a '<span class="vw">keystone species<span class="tt">핵심종</span></span>' because they have a strong effect on many aspects of the environment in which they live.</p>
+      <p class="plain-sent">( <span class="num-circle">①</span> ) They <span class="vw">diversify<span class="tt">다양화하다</span></span> the ecosystems which they occupy and create a mosaic of habitats by browsing, trampling, and <span class="vw">knock over<span class="tt">쓰러뜨리다</span></span>ing bushes and trees.</p>
+      <p class="plain-sent">( <span class="num-circle">②</span> ) They also spread seeds through their eating and defecating habits and maintain or create water holes by wallowing.</p>
+      <p class="plain-sent">( <span class="num-circle">③</span> ) All these roles are beneficial to other species.</p>
+      <p class="plain-sent">( <span class="num-circle">④</span> ) Equally, if humans reduce elephant numbers in a particular piece of savanna, the savanna may become less diverse and less open, and its water holes may fill with mud.</p>
+      <p class="plain-sent">( <span class="num-circle">⑤</span> ) This will be harmful to other species.</p>
+      <div class="fn">* trample: 짓밟다 &nbsp;&nbsp;** defecate: 배설하다 &nbsp;&nbsp;*** wallow: 뒹굴다</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">01 문항 — 주어진 문장이 들어가기에 가장 적절한 곳은?</div>
+    <div class="q-block">
+      <div class="q-type">문장 삽입 (Sentence Insertion)</div>
+      <div class="q-stem">주어진 문장이 들어가기에 가장 적절한 곳을 고르시오.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="choice"><span class="cn">②</span></div>
+        <div class="choice"><span class="cn">③</span></div>
+        <div class="choice correct-choice"><span class="cn">④</span> ← 정답</div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">④</span></div>
+      <div class="ans-exp">
+        <strong>삽입 문장 핵심 단서:</strong><br>
+        • <strong>Conversely</strong> (반대로) → 앞 내용과 대조되는 상황 필요<br>
+        • <strong>exceeding the carrying capacity</strong> → 수가 <u>너무 많을 때</u>의 결과 = 재앙<br><br>
+        <strong>④ 앞 문장:</strong> "if humans reduce elephant numbers ... the savanna may become less diverse" = 코끼리 수가 <u>너무 적을 때</u>의 결과<br>
+        <strong>삽입 문장:</strong> <u>반대로</u> 코끼리 수가 <u>너무 많을 때(carrying capacity 초과)</u> = 재앙<br>
+        <strong>④ 뒤 문장:</strong> "This will be harmful to other species" → 삽입 문장의 결과를 받음<br><br>
+        <strong>구조:</strong> ③ 유익한 역할 → ④ 앞: 너무 적으면 문제 <insert-pos style="background:var(--accent2);color:#fff;font-size:.7rem;padding:1px 8px;border-radius:4px;display:inline-block;">삽입</insert-pos> Conversely 너무 많으면 재앙 → ⑤ 해롭다
+      </div>
+    </div>
+  </div>
+
+  <!-- 완성된 지문 (삽입 후) -->
+  <div class="card">
+    <div class="card-lbl">02 완성된 지문 (삽입 위치 확인)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">One example of human interventions modifying the character of savannas // is through their effects on savanna-<span class="vw">dwell<span class="tt">서식하다</span></span>ing mammals such as elephants.</div>
+        <div class="sp-ko">사바나의 특성을 변화시키는 인간 개입의 한 가지 예는 / 코끼리와 같은 사바나에 서식하는 포유류에 미치는 영향을 통해서이다. <span class="sp-note">★ modifying: 현재분사구, interventions를 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They(=elephants) are <span class="gr">what is known as a '<span class="vw">keystone species<span class="tt">핵심종</span></span>'</span> // because they have a strong effect on many aspects of the environment <span class="gr">{in which they live}</span>.</div>
+        <div class="sp-ko">그들은 '핵심종'으로 알려진 존재인데, / 그것은 그들이 살고 있는 환경의 많은 측면에 강한 영향을 미치기 때문이다. <span class="sp-note">★ what is known as ~: "~로 알려진 것" / in which: 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">( ① ) They <span class="vw">diversify<span class="tt">다양화하다</span></span> the ecosystems <span class="gr">{which they occupy}</span> / and create a mosaic of habitats / by <span class="gr">browsing, trampling, and <span class="vw">knock over<span class="tt">쓰러뜨리다</span></span>ing bushes and trees</span>.</div>
+        <div class="sp-ko">( ① ) 그들은 자신들이 차지하는 생태계를 다양화하고 / 관목과 나무를 뜯어먹고, 짓밟고, 쓰러뜨림으로써 / 다양한 서식지의 모자이크를 만든다. <span class="sp-note">★ by -ing(병렬): browsing / trampling / knocking over</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">( ② ) They also spread seeds through their eating and defecating habits / and maintain or create water holes by wallowing.</div>
+        <div class="sp-ko">( ② ) 그들은 또한 먹고 배설하는 습관을 통해 씨앗을 퍼뜨리고, / 뒹굴기를 통해 물웅덩이를 유지하거나 만든다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">( ③ ) All these roles are beneficial to other species.</div>
+        <div class="sp-ko">( ③ ) 이 모든 역할은 다른 종들에게 유익하다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">( ④ ) Equally, <span class="gr">if humans reduce elephant numbers in a particular piece of savanna</span>, the savanna may become less diverse and less open, and its water holes may fill with mud.</div>
+        <div class="sp-ko">( ④ ) 마찬가지로, 인간이 특정 사바나 지역의 코끼리 수를 줄이면, / 사바나는 덜 다양하고 덜 개방적이 될 수 있고, 물웅덩이는 진흙으로 채워질 수 있다. <span class="sp-note">★ if절: 조건 부사절</span></div>
+      </div>
+      <div class="sp" style="background:#fdf0e8;border-left:4px solid var(--accent2);padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:10px;">
+        <div class="sp-en" style="color:var(--accent2);">[ 삽입 문장 ④ ] <strong>Conversely</strong>, <span class="gr">where human interference prevents elephants from moving freely within their habitats and leads to their numbers <span class="vw">exceeding<span class="tt">초과하다</span></span> the <span class="vw">carrying capacity<span class="tt">수용력</span></span> of the savanna</span>, their effect can be environmentally disastrous.</div>
+        <div class="sp-ko" style="color:var(--accent2);">반대로, 인간의 개입이 코끼리가 서식지 내에서 자유롭게 이동하는 것을 막고 / 그 수가 사바나의 수용력을 초과하게 되는 경우, / 그 영향은 환경적으로 재앙이 될 수 있다. <span class="sp-note">★ Conversely: 역접 / where절: 부사절 "~하는 경우에"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">( ⑤ ) This will be harmful to other species.</div>
+        <div class="sp-ko">( ⑤ ) 이것은 다른 종들에게 해로울 것이다.</div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① what is known as ~ (관계대명사 what)</strong> — "~로 알려진 것": "what is known as a 'keystone species'"</p>
+      <p><strong>② by -ing (병렬)</strong> — "browsing, trampling, and knocking over": by + 동명사 3개 병렬</p>
+      <p><strong>③ where절 (부사절)</strong> — "~하는 곳에서/경우에": "where human interference prevents elephants from V-ing"</p>
+      <p><strong>④ prevent A from V-ing</strong> — "A가 V하는 것을 막다": "prevents elephants from moving freely"</p>
+      <p><strong>⑤ lead to ~ (이어지다)</strong> — "~로 이어지다": "leads to their numbers exceeding the carrying capacity"</p>
+    </div>
+  </div>
+
+  <!-- Text Structure -->
+  <div class="card">
+    <div class="card-lbl">03 Topic & Text Structure</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Human interventions with elephants in savanna ecosystems
+      <div class="topic-ko">사바나 생태계에서 코끼리와 인간의 개입</div>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>Introduction:</strong> human interventions can affect elephant <u>populations</u> in savannas</div>
+      <div class="s-item"><strong>Supporting 1:</strong> elephants' <u>beneficial</u> roles
+        <br><span class="s-arrow">→</span> <u>diversify</u> ecosystems: browsing, trampling, knocking over bushes and trees
+        <br><span class="s-arrow">→</span> <u>spread</u> seeds through eating/defecating
+        <br><span class="s-arrow">→</span> <u>maintain</u> water holes by wallowing
+      </div>
+      <div class="s-item"><strong>Supporting 2:</strong> <u>negative</u> human interference
+        <br><span class="s-arrow">→</span> elephant numbers ↓ → savanna becomes less diverse, water holes fill with mud
+        <br><span class="s-arrow">→</span> [삽입] Conversely: numbers ↑ (exceeding carrying capacity) → environmentally disastrous
+      </div>
+      <div class="s-item"><strong>Conclusion:</strong> too many / too few elephants can both <u>damage</u> the savanna ecosystem</div>
+    </div>
+    <div class="main-idea-box">
+      <h4>Main Idea</h4>
+      Elephants, as a keystone species, play a crucial role in <u>maintaining</u> savanna ecosystems, and any human interference that disrupts their <u>numbers</u> — whether reducing or exceeding <u>carrying capacity</u> — has harmful ecological consequences.
+      <div style="margin-top:8px;font-size:.8rem;color:var(--ink3);font-style:italic;">핵심종으로서 코끼리는 사바나 생태계 유지에 결정적 역할을 하며, 코끼리 수를 방해하는 어떤 인간의 개입도 — 감소든 수용력 초과든 — 해로운 생태적 결과를 낳는다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>내용 요약</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>코끼리 = 핵심종 → 사바나 환경의 많은 측면에 강한 영향</td><td class="fw-ko">코끼리가 핵심종임을 소개하며 글의 방향을 제시한다.</td></tr>
+        <tr><td><span class="step-badge">② Beneficial Roles</span></td><td>생태계 다양화 / 씨앗 전파 / 물웅덩이 생성·유지 → 다른 종들에게 유익</td><td class="fw-ko">코끼리의 세 가지 유익한 생태적 역할이 열거된다.</td></tr>
+        <tr><td><span class="step-badge">③ Too Few</span></td><td>인간이 코끼리 수 줄이면 → 사바나 다양성 ↓, 물웅덩이 진흙</td><td class="fw-ko">코끼리 수 감소로 인한 부정적 결과가 제시된다.</td></tr>
+        <tr><td><span class="step-badge">④ Too Many [삽입]</span></td><td>반대로 수용력 초과 → 환경적 재앙</td><td class="fw-ko">삽입 문장: 코끼리 과잉(수용력 초과)의 반대 결과가 대조된다.</td></tr>
+        <tr><td><span class="step-badge">⑤ Conclusion</span></td><td>너무 적어도, 너무 많아도 → 생태계 손상</td><td class="fw-ko">균형 유지의 중요성이 결론으로 도출된다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p3 -->
+
+<!-- ════════════════════ VOCABULARY ════════════════════ -->
+<div class="sec" id="voca">
+  <div style="background:var(--ink);color:#fefcf8;padding:22px 28px;border-radius:8px 8px 0 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;">Chapter 22 · Word & Phrase List</div>
+    <div style="font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;">단어장 — Environment, Resources, Recycling</div>
+    <div style="font-size:.82rem;opacity:.62;margin-top:4px;">총 45개 단어 &amp; 숙어 · 한영 / 동의어 포함</div>
+  </div>
+  <div class="card" style="border-radius:0 0 8px 8px;">
+    <div class="card-lbl">Chapter 22 전체 단어 &amp; 숙어</div>
+    <table class="voca-table">
+      <thead>
+        <tr><th>단어 / 숙어</th><th>뜻</th><th>동의어 / 관련어</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="vw-word">liken</td><td class="vw-mean">비유하다</td><td class="vw-syn">compare, equate</td></tr>
+        <tr><td class="vw-word">footpath</td><td class="vw-mean">오솔길, 산책로</td><td class="vw-syn">trail, path</td></tr>
+        <tr><td class="vw-word">trail</td><td class="vw-mean">오솔길, 경로</td><td class="vw-syn">path, track</td></tr>
+        <tr><td class="vw-word">interventionist</td><td class="vw-mean">개입주의적인</td><td class="vw-syn">intrusive</td></tr>
+        <tr><td class="vw-word">bulldoze through</td><td class="vw-mean">밀어붙이다, 강행하다</td><td class="vw-syn">force through, push through</td></tr>
+        <tr><td class="vw-word">with respect to</td><td class="vw-mean">~에 관하여</td><td class="vw-syn">regarding, concerning, in relation to</td></tr>
+        <tr><td class="vw-word">variability</td><td class="vw-mean">가변성, 변동성</td><td class="vw-syn">fluctuation, variation</td></tr>
+        <tr><td class="vw-word">backwater</td><td class="vw-mean">물웅덩이, 정체된 물, 강의 후미</td><td class="vw-syn">stagnant water</td></tr>
+        <tr><td class="vw-word">wetland</td><td class="vw-mean">습지</td><td class="vw-syn">marsh, swamp, bog</td></tr>
+        <tr><td class="vw-word">braid</td><td class="vw-mean">망류 하천, 여러 갈래로 나뉜 물줄기</td><td class="vw-syn">braided stream</td></tr>
+        <tr><td class="vw-word">channel</td><td class="vw-mean">수로, 물길</td><td class="vw-syn">waterway, canal</td></tr>
+        <tr><td class="vw-word">swamp</td><td class="vw-mean">늪, 습지</td><td class="vw-syn">bog, marsh, wetland</td></tr>
+        <tr><td class="vw-word">presume</td><td class="vw-mean">추정하다</td><td class="vw-syn">assume, suppose</td></tr>
+        <tr><td class="vw-word">connectivity</td><td class="vw-mean">연결성</td><td class="vw-syn">connection, linkage</td></tr>
+        <tr><td class="vw-word">conservation</td><td class="vw-mean">보전, 보존</td><td class="vw-syn">preservation (cf. conservation: 자연 보전, preservation: 문화재 보존)</td></tr>
+        <tr><td class="vw-word">wander</td><td class="vw-mean">돌아다니다, 배회하다</td><td class="vw-syn">roam, stray</td></tr>
+        <tr><td class="vw-word">substantially</td><td class="vw-mean">상당히, 크게</td><td class="vw-syn">considerably, significantly</td></tr>
+        <tr><td class="vw-word">make it across</td><td class="vw-mean">건너다, 통과하다</td><td class="vw-syn">cross, get through</td></tr>
+        <tr><td class="vw-word">halt</td><td class="vw-mean">막다, 중단시키다</td><td class="vw-syn">stop, block, hinder</td></tr>
+        <tr><td class="vw-word">breeding ground</td><td class="vw-mean">번식지</td><td class="vw-syn">habitat, spawning ground</td></tr>
+        <tr><td class="vw-word">fragmentation</td><td class="vw-mean">단편화, 분절화</td><td class="vw-syn">division, breakup</td></tr>
+        <tr><td class="vw-word">pulp mill</td><td class="vw-mean">펄프 공장</td><td class="vw-syn">paper mill</td></tr>
+        <tr><td class="vw-word">emissions</td><td class="vw-mean">배출(물), 배기가스</td><td class="vw-syn">discharge, release</td></tr>
+        <tr><td class="vw-word">landfill</td><td class="vw-mean">(쓰레기) 매립지</td><td class="vw-syn">dump, waste site</td></tr>
+        <tr><td class="vw-word">potent</td><td class="vw-mean">강력한</td><td class="vw-syn">powerful, strong</td></tr>
+        <tr><td class="vw-word">co-firing</td><td class="vw-mean">혼합연소</td><td class="vw-syn">mixed combustion</td></tr>
+        <tr><td class="vw-word">appreciable</td><td class="vw-mean">상당한, 눈에 띄는, 주목할 만한</td><td class="vw-syn">significant, noticeable</td></tr>
+        <tr><td class="vw-word">content</td><td class="vw-mean">함량, 함유량</td><td class="vw-syn">level, amount, concentration</td></tr>
+        <tr><td class="vw-word">deprive of</td><td class="vw-mean">~을 빼앗다</td><td class="vw-syn">strip of, rob of</td></tr>
+        <tr><td class="vw-word">decomposition</td><td class="vw-mean">분해</td><td class="vw-syn">decay, breakdown</td></tr>
+        <tr><td class="vw-word">biomass</td><td class="vw-mean">(특정 지역 내) 생물량, 생물 자원</td><td class="vw-syn">organic matter, biological material</td></tr>
+        <tr><td class="vw-word">matter</td><td class="vw-mean">유기물, 물질</td><td class="vw-syn">substance, material</td></tr>
+        <tr><td class="vw-word">exceed</td><td class="vw-mean">초과하다</td><td class="vw-syn">surpass, go beyond</td></tr>
+        <tr><td class="vw-word">carrying capacity</td><td class="vw-mean">수용력 (수용 가능 개체 수), 부양 능력</td><td class="vw-syn">supportable population</td></tr>
+        <tr><td class="vw-word">dwell</td><td class="vw-mean">서식하다, 살다</td><td class="vw-syn">inhabit, reside, live</td></tr>
+        <tr><td class="vw-word">keystone species</td><td class="vw-mean">핵심종</td><td class="vw-syn">foundation species</td></tr>
+        <tr><td class="vw-word">diversify</td><td class="vw-mean">다양화하다</td><td class="vw-syn">vary, broaden</td></tr>
+        <tr><td class="vw-word">browse</td><td class="vw-mean">(나뭇잎 등을) 뜯어먹다</td><td class="vw-syn">graze, feed on</td></tr>
+        <tr><td class="vw-word">knock over</td><td class="vw-mean">쓰러뜨리다</td><td class="vw-syn">topple, push over</td></tr>
+        <tr><td class="vw-word">fragmentation</td><td class="vw-mean">단편화, 분절화</td><td class="vw-syn">division, splitting</td></tr>
+        <tr><td class="vw-word">sustainable</td><td class="vw-mean">지속 가능한</td><td class="vw-syn">renewable, maintainable</td></tr>
+        <tr><td class="vw-word">alleviate</td><td class="vw-mean">완화하다, 경감하다</td><td class="vw-syn">ease, reduce, lessen</td></tr>
+        <tr><td class="vw-word">disastrous</td><td class="vw-mean">재앙적인, 치명적인</td><td class="vw-syn">catastrophic, devastating</td></tr>
+        <tr><td class="vw-word">ecologically</td><td class="vw-mean">생태적으로</td><td class="vw-syn">environmentally</td></tr>
+        <tr><td class="vw-word">geographically</td><td class="vw-mean">지리적으로</td><td class="vw-syn">spatially, regionally</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end voca -->
+
+</main>
+
+<script>
+const ids=['home','p1','p2','p3','voca'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
