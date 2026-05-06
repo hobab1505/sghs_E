@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · 5강 완전 분석 | 2026 심화영어독해 II</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.15rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.7rem;opacity:.55;margin-top:2px;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 10px;border-radius:4px;font-size:.7rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:20px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);}
+.toc-code{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:.98rem;font-weight:600;margin-bottom:3px;line-height:1.35;}
+.toc-ko{font-size:.77rem;color:var(--ink3);}
+.toc-badge{display:inline-block;background:var(--bg);border:1px solid var(--border);color:var(--ink3);font-size:.62rem;padding:1px 7px;border-radius:10px;margin-top:6px;}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.3rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;font-style:italic;}
+.p-badge{display:inline-block;margin-top:8px;background:var(--accent2);color:#fff;font-size:.63rem;font-weight:700;padding:2px 10px;border-radius:20px;letter-spacing:.08em;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:24px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+/* PLAIN PASSAGE */
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:22px 26px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.92;color:var(--ink);}
+.bk{display:inline-block;border-bottom:2.5px solid var(--ink);min-width:180px;margin:0 3px;vertical-align:bottom;}
+.fn{font-size:.77rem;color:var(--ink3);margin-top:12px;border-top:1px solid var(--border2);padding-top:9px;font-style:italic;line-height:1.6;}
+/* NUM CIRCLE */
+.nc{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--ink);font-size:.7rem;font-weight:700;margin:0 2px;vertical-align:middle;}
+.nc-wrong{border-color:var(--red);color:var(--red);}
+.nc-right{border-color:var(--orange);color:var(--orange);}
+/* UNDERLINE FOR VOCAB Q */
+.vq-ul{text-decoration:underline;font-weight:700;}
+/* WRONG WORD */
+.ww{color:var(--red);font-weight:700;text-decoration:line-through;}
+.rw{color:var(--orange);font-weight:700;}
+/* IRRELEVANT SENT */
+.irr-sent{background:var(--red-bg);border-left:4px solid var(--red);padding:8px 14px;margin:6px 0;border-radius:0 6px 6px 0;}
+/* INSERT SENT */
+.insert-box{background:#fdf0e8;border-left:4px solid var(--accent2);padding:14px 18px;border-radius:0 6px 6px 0;margin-bottom:16px;}
+/* Q BLOCK */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:18px 22px;margin-bottom:12px;}
+.q-type{font-size:.67rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;text-transform:uppercase;}
+.q-stem{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:12px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;line-height:1.55;padding:7px 12px;border-radius:5px;color:var(--ink2);}
+.cn{font-weight:700;color:var(--ink);margin-right:4px;}
+.correct{background:var(--orange-bg);border:1px solid rgba(192,80,16,.25);}
+.correct .cn{color:var(--orange);}
+.wrong-c{background:var(--red-bg);border:1px solid rgba(176,26,26,.2);}
+.wrong-c .cn{color:var(--red);}
+/* ANSWER */
+.ans-box{margin-top:12px;padding:16px 20px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-lbl{font-size:.64rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:6px;}
+.ans-num{font-size:1rem;font-weight:700;color:var(--orange);margin-bottom:8px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.7;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+/* GRAMMAR DRILL */
+.drill-box{background:#f0f4ff;border:1px solid rgba(26,75,140,.2);border-radius:6px;padding:14px 18px;margin-top:10px;}
+.drill-box h4{color:var(--blue);font-size:.76rem;font-weight:700;letter-spacing:.1em;margin-bottom:10px;}
+.drill-item{font-size:.84rem;color:var(--ink2);line-height:1.65;margin-bottom:6px;padding-left:10px;border-left:2px solid var(--blue-light);}
+.drill-ans{color:var(--green);font-weight:700;}
+/* PASSAGE BOX (구문) */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:22px 26px;margin-bottom:18px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.88;color:var(--ink);}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.73rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 5px;border-radius:3px;margin-left:5px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:5px 9px;border-radius:5px;font-size:.72rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+/* GRAMMAR NOTE */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.2);border-radius:6px;padding:13px 17px;margin-top:8px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.77rem;letter-spacing:.06em;margin-bottom:7px;}
+.gr-note p{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:5px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+/* TOPIC */
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:14px 18px;border-radius:0 7px 7px 0;margin-bottom:12px;font-size:.9rem;line-height:1.65;}
+.topic-ko{margin-top:7px;font-size:.79rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:7px;font-style:italic;}
+/* FRAMEWORK */
+.fw-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:8px 14px;text-align:left;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:12px 14px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.61rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:3px;}
+.fw-ko{margin-top:7px;font-size:.78rem;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:7px;}
+/* VOCAB TABLE */
+.voca-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.voca-table th{background:var(--bg);padding:8px 12px;text-align:left;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:7px 12px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.55;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.93rem;}
+.vw-mean{color:var(--ink2);}
+.vw-syn{font-size:.76rem;color:var(--ink3);margin-top:2px;}
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card{padding:16px;}.plain-box,.passage-box{padding:16px 18px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · 5강 완전 분석</div>
+      <div class="hdr-sub">2026 고3 1학기 심화영어독해 II — 본문·문항·정답해설·구문분석·Topic·Logical Framework</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">001</button>
+      <button class="nb" onclick="show('p2')">002</button>
+      <button class="nb" onclick="show('p3')">003</button>
+      <button class="nb" onclick="show('p4')">004</button>
+      <button class="nb" onclick="show('p5')">005</button>
+      <button class="nb" onclick="show('p6')">006</button>
+      <button class="nb" onclick="show('p7')">007</button>
+      <button class="nb" onclick="show('p8')">008</button>
+      <button class="nb" onclick="show('p9')">009</button>
+      <button class="nb" onclick="show('p10')">010</button>
+      <button class="nb" onclick="show('p11')">011</button>
+      <button class="nb" onclick="show('p12')">012</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.65rem;margin-bottom:8px;">Focus Framework · 5강 전체 목록</h1>
+  <p style="font-size:.87rem;color:var(--ink3);margin-bottom:20px;">총 12개 지문 · 본문 원문 → 문항 &amp; 정답해설 → 구문해석 → Topic → Logical Framework</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')">
+      <div class="toc-code">#001 · 26007-0049 · 쪽 054</div>
+      <div class="toc-en">Dolphin Cognition &amp; Culture</div>
+      <div class="toc-ko">돌고래의 인지·감정·문화</div>
+      <div class="toc-badge">구문분석 · 분사구문</div>
+    </a>
+    <a class="toc-card" onclick="show('p2')">
+      <div class="toc-code">#002 · 26007-0050 · 쪽 055</div>
+      <div class="toc-en">Technology &amp; Ecocrisis</div>
+      <div class="toc-ko">기술과 생태 위기의 한계</div>
+      <div class="toc-badge">제목 추론</div>
+    </a>
+    <a class="toc-card" onclick="show('p3')">
+      <div class="toc-code">#003 · 26007-0051 · 쪽 056</div>
+      <div class="toc-en">Animal Welfare vs. Rights</div>
+      <div class="toc-ko">동물 복지 vs 동물 권리 논쟁</div>
+      <div class="toc-badge">제목 추론</div>
+    </a>
+    <a class="toc-card" onclick="show('p4')">
+      <div class="toc-code">#004 · 26007-0052 · 쪽 057</div>
+      <div class="toc-en">Ancient Greek Education</div>
+      <div class="toc-ko">고대 그리스 교육과 대인 유대</div>
+      <div class="toc-badge">구문분석 · that/what</div>
+    </a>
+    <a class="toc-card" onclick="show('p5')">
+      <div class="toc-code">#005 · 26007-0053 · 쪽 058</div>
+      <div class="toc-en">The Search for Approval</div>
+      <div class="toc-ko">승인 추구와 자기 가치</div>
+      <div class="toc-badge">흐름무관 문장</div>
+    </a>
+    <a class="toc-card" onclick="show('p6')">
+      <div class="toc-code">#006 · 26007-0054 · 쪽 059</div>
+      <div class="toc-en">Motivation &amp; Goal Pursuit</div>
+      <div class="toc-ko">동기와 목표 추구</div>
+      <div class="toc-badge">구문분석</div>
+    </a>
+    <a class="toc-card" onclick="show('p7')">
+      <div class="toc-code">#007 · 26007-0055 · 쪽 060</div>
+      <div class="toc-en">Rational vs. Irrational Actions</div>
+      <div class="toc-ko">이성적·비이성적 행동과 정신 성숙도</div>
+      <div class="toc-badge">구문분석 · 수일치</div>
+    </a>
+    <a class="toc-card" onclick="show('p8')">
+      <div class="toc-code">#008 · 26007-0044 · 쪽 049</div>
+      <div class="toc-en">Neural Pathways of Thinking</div>
+      <div class="toc-ko">사고의 신경 경로 — 물줄기 비유</div>
+      <div class="toc-badge">제목 추론</div>
+    </a>
+    <a class="toc-card" onclick="show('p9')">
+      <div class="toc-code">#009 · 26007-0045 · 쪽 050</div>
+      <div class="toc-en">Youth &amp; Digital Media</div>
+      <div class="toc-ko">청소년과 디지털 미디어의 권력 전환</div>
+      <div class="toc-badge">빈칸 추론</div>
+    </a>
+    <a class="toc-card" onclick="show('p10')">
+      <div class="toc-code">#010 · 26007-0046 · 쪽 051</div>
+      <div class="toc-en">Tree Etiquette in the Forest</div>
+      <div class="toc-ko">숲 속 나무의 예절 — 구조적 균형</div>
+      <div class="toc-badge">구문분석 · 수일치</div>
+    </a>
+    <a class="toc-card" onclick="show('p11')">
+      <div class="toc-code">#011 · 26007-0047 · 쪽 052</div>
+      <div class="toc-en">Technology &amp; Epistemology</div>
+      <div class="toc-ko">기술과 인식론 — Heidegger</div>
+      <div class="toc-badge">흐름무관 문장</div>
+    </a>
+    <a class="toc-card" onclick="show('p12')">
+      <div class="toc-code">#012 · 26007-0048 · 쪽 053</div>
+      <div class="toc-en">Fan Editors &amp; Info Barriers</div>
+      <div class="toc-ko">팬 편집자와 정보 장벽</div>
+      <div class="toc-badge">구문분석</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ P001 ═══ -->
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">#강 05 · #쪽 054 · #번 001 · #문항코드 26007-0049</div>
+    <div class="p-title">Dolphin Cognition, Emotion &amp; Culture</div>
+    <div class="p-title-ko">돌고래의 인지·감정·문화 · 구문분석형</div>
+    <span class="p-badge">분사구문 / 관계사 / 구문 분석</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">The new millennium has brought discoveries about dolphin <span class="vw">cognition<span class="tt">인지</span></span>, emotion, and <span class="vw">consciousness<span class="tt">의식</span></span>, creating a bridge to [<span class="vq-ul">① what is known about dolphin behavior</span>] with an <span class="vw">emphasis<span class="tt">중점, 강조</span></span> on communication.</p>
+      <p class="plain-sent">New data on dolphin intelligence allow us to <span class="vw">obtain<span class="tt">얻다</span></span> a broader picture of the inner lives of dolphins.</p>
+      <p class="plain-sent">We see that dolphins exhibit <span class="vw">sophisticated<span class="tt">정교한</span></span> characteristics {previously <span class="vq-ul">② attributed</span> only to humans and possibly to other higher <span class="vw">primate<span class="tt">영장류</span></span>s}.</p>
+      <p class="plain-sent">We know that dolphins understand <span class="vw">syntax<span class="tt">구문, 통사론</span></span>, <span class="vw">semantics<span class="tt">의미론</span></span>, and word order, and <span class="vq-ul">③ are capable of</span> mirror-self-recognition, <span class="vw">comprehension<span class="tt">이해</span></span> of pointing gestures, and understanding <span class="vw">reference<span class="tt">언급</span></span> to body parts.</p>
+      <p class="plain-sent">They can identify the same <span class="vw">abstract<span class="tt">추상적인</span></span> object [<span class="vq-ul">④ using vision or echolocation</span>].</p>
+      <p class="plain-sent">There is evidence [<span class="vq-ul">⑤ that dolphins have culture</span>].</p>
+      <p class="plain-sent">For instance, killer whales have <span class="vw">vocal<span class="tt">음성의</span></span> <span class="vw">dialect<span class="tt">방언</span></span>s {that are <span class="vw">distinct<span class="tt">고유한</span></span> to each family group and are <span class="vw">pass down<span class="tt">~을 전승하다</span></span>ed through generations}; some <span class="vw">bottlenose dolphin<span class="tt">큰돌고래</span></span>s use sponges as tools {when <span class="vw">forage<span class="tt">(먹이를) 찾아다니다</span></span>ing along the sea floor}.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 구문 밑줄 분석</div>
+    <div class="q-block">
+      <div class="q-type">구문 분석 (밑줄 ①~⑤)</div>
+      <div class="q-stem">밑줄 친 ①~⑤의 문법적 기능을 파악하시오.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> <span class="vq-ul">what is known about dolphin behavior</span> — 관계대명사 what절 (명사절): bridge to의 목적어</div>
+        <div class="choice"><span class="cn">②</span> <span class="vq-ul">attributed</span> — 과거분사: characteristics를 후치 수식. "이전에 ~에 귀속된"</div>
+        <div class="choice"><span class="cn">③</span> <span class="vq-ul">are capable of</span> — "~을 할 수 있다": and로 understand와 병렬</div>
+        <div class="choice"><span class="cn">④</span> <span class="vq-ul">using vision or echolocation</span> — 현재분사구: "시각이나 반향정위를 사용하여" (수단 분사구문)</div>
+        <div class="choice"><span class="cn">⑤</span> <span class="vq-ul">that dolphins have culture</span> — 동격 that절: evidence의 내용</div>
+      </div>
+    </div>
+    <div class="drill-box">
+      <h4>📝 Grammar Drill — 분사 형태 채우기 (정답 포함)</h4>
+      <div class="drill-item">1. The documents <span class="drill-ans">(attached)</span> to this email contain confidential information.</div>
+      <div class="drill-item">2. We stood on the hilltop watching the <span class="drill-ans">(setting)</span> sun.</div>
+      <div class="drill-item">3. The technician spent the whole afternoon fixing the <span class="drill-ans">(frozen)</span> computer system.</div>
+      <div class="drill-item">4. Anyone <span class="drill-ans">(wishing)</span> to apply for the scholarship must submit the form by Friday.</div>
+      <div class="drill-item">5. Most people <span class="drill-ans">(invited)</span> to the seminar did not show up.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The new <span class="vw">millennium<span class="tt">천년</span></span> has brought discoveries about dolphin <span class="vw">cognition<span class="tt">인지</span></span>, emotion, and <span class="vw">consciousness<span class="tt">의식</span></span>, / <span class="gr">creating a bridge to [what is known about dolphin behavior]</span> / with an emphasis on communication.</div>
+        <div class="sp-ko">새천년은 돌고래의 인지, 감정, 의식에 관한 발견들을 가져왔으며, / 의사소통에 중점을 두고 돌고래 행동에 대해 알려진 것으로의 교량을 만들고 있다. <span class="sp-note">★ creating ~: 결과의 분사구문 / what절: 명사절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We see <span class="gr">[that dolphins exhibit <span class="vw">sophisticated<span class="tt">정교한</span></span> characteristics {previously <span class="gr">attributed only to humans and possibly to other higher <span class="vw">primate<span class="tt">영장류</span></span>s</span>}]</span>.</div>
+        <div class="sp-ko">우리는 돌고래가 이전에 인간과 가능하게는 다른 고등 영장류에게만 귀속되던 / 정교한 특성들을 보여준다는 것을 알게 된다. <span class="sp-note">★ attributed: 과거분사구, characteristics 후치 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We know <span class="gr">[that dolphins understand <span class="vw">syntax<span class="tt">구문</span></span>, <span class="vw">semantics<span class="tt">의미론</span></span>, and word order, and are capable of mirror-self-recognition, <span class="vw">comprehension<span class="tt">이해</span></span> of pointing gestures, and understanding reference to body parts]</span>.</div>
+        <div class="sp-ko">우리는 돌고래가 구문론, 의미론, 어순을 이해하고, / 거울 자아 인식, 가리키는 제스처의 이해, 신체 부위에 대한 언급 이해를 할 수 있다는 것을 안다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They can identify the same <span class="vw">abstract<span class="tt">추상적인</span></span> object [<span class="gr">using vision or <span class="vw">echolocation<span class="tt">반향 정위</span></span></span>].</div>
+        <div class="sp-ko">그들은 시각이나 반향 정위를 사용하여 / 동일한 추상적 대상을 식별할 수 있다. <span class="sp-note">★ using ~: 수단의 분사구문</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">There is evidence <span class="gr">[that dolphins have culture]</span>. For instance, killer whales have <span class="vw">vocal<span class="tt">음성의</span></span> <span class="vw">dialect<span class="tt">방언</span></span>s <span class="gr">{that are <span class="vw">distinct<span class="tt">고유한</span></span> to each family group and are passed down through generations}</span>; some <span class="vw">bottlenose dolphin<span class="tt">큰돌고래</span></span>s use sponges as tools {when foraging along the sea floor}.</div>
+        <div class="sp-ko">돌고래가 문화를 가진다는 증거가 있다. / 예를 들어, 범고래는 각 가족 집단에 고유하고 세대를 거쳐 전승되는 음성 방언을 가지고 있다; / 일부 큰돌고래는 해저를 따라 먹이를 찾을 때 스펀지를 도구로 사용한다. <span class="sp-note">★ that절(동격): evidence의 내용 / when foraging(분사구문): "먹이를 찾을 때"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① creating ~ (결과의 분사구문)</strong> — "그 결과 ~를 만들면서": 주절의 자연스러운 결과</p>
+      <p><strong>② attributed (과거분사구)</strong> — "이전에 ~에게만 귀속된": characteristics를 후치 수식</p>
+      <p><strong>③ evidence [that ~] (동격 that절)</strong> — evidence의 내용을 that절이 설명</p>
+      <p><strong>④ when foraging (분사구문)</strong> — = when they are foraging: "먹이를 찾을 때"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Recent discoveries reveal the sophisticated cognitive and cultural depth of dolphins.
+      <div class="topic-ko">최근의 발견들은 돌고래의 정교한 인지적·문화적 깊이를 드러낸다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Discoveries regarding Dolphin Intelligence (cognition, emotion, and consciousness)</td><td class="fw-ko">새천년의 발견이 돌고래의 인지·감정·의식을 새로이 조명한다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>Sophisticated Attributes: Syntax · Semantics · Mirror-Self-Recognition · Gestures · Abstract Mental Representation</td><td class="fw-ko">구문론·의미론·거울 자아 인식·제스처 이해 등 정교한 인지 능력이 열거된다.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span></td><td>Social and cultural behaviors: Vocal Dialects passed through generations · Tool use for foraging</td><td class="fw-ko">개인 지능에서 집단 사회 전통(방언 전승·도구 사용)으로 초점이 이동한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p1 -->
+
+<!-- ═══ P002 ═══ -->
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">#강 05 · #쪽 055 · #번 002 · #문항코드 26007-0050</div>
+    <div class="p-title">The Limits of Technology in the Ecocrisis</div>
+    <div class="p-title-ko">생태 위기에서 기술에 의존하는 것의 한계 · 제목 추론</div>
+    <span class="p-badge">제목 추론 (Title Inference)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Many people, (including those in most governments), place their faith in new technologies {as the solution to every present and indeed future <span class="vw">ecological<span class="tt">생태계의</span></span> problem}.</p>
+      <p class="plain-sent">And it is true that <span class="vw">appropriate<span class="tt">적절한</span></span>, clean, and <span class="vw">affordable<span class="tt">적당한 가격의</span></span> technology has an important role {to play in <span class="vw">resolve<span class="tt">해결하다</span></span>ing the <span class="vw">ecocrisis<span class="tt">생태 위기</span></span>}; but it cannot bear the weight of <span class="vw">cornucopian<span class="tt">풍요로운</span></span> dreams.</p>
+      <p class="plain-sent">Technology is <span class="vw">vanishingly<span class="tt">극히 적게</span></span> unlikely to be able to <span class="vw">compensate for<span class="tt">~을 보상하다</span></span> uncontrolled <span class="vw">expansion<span class="tt">팽창</span></span> of either population or consumption.</p>
+      <p class="plain-sent">For example, it tends to become increasingly expensive and/or specialized, and technological 'solutions' <span class="vw">notoriously<span class="tt">악명 높게</span></span> tend to create new problems, {which then seem to require more technological <span class="vw">intervention<span class="tt">개입</span></span>, and so on.}</p>
+      <p class="plain-sent">Still more fundamentally, such 'solutions' to ecological problems ignore the <span class="vw">urgent<span class="tt">시급한</span></span> need actually {to reduce consumption} (thereby, of course, spending less) and lock us into a collective mindset ― run by technoscience, financed by capital, and protected by state power ― which is a principal cause of the problems.</p>
+      <p class="plain-sent">Then more of that cause can only be perceived, (with increasingly <span class="vw">desperate<span class="tt">필사적인</span></span> <span class="vw">denial<span class="tt">부인</span></span>), as the only solution.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 제목으로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">제목 추론 (Title Inference)</div>
+      <div class="q-stem">다음 글의 제목으로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> Effects of government policies on environmental protection</div>
+        <div class="choice correct"><span class="cn">②</span> <span class="ans">Limits of relying on technology to solve ecological problems</span></div>
+        <div class="choice"><span class="cn">③</span> The role of information in fostering environmental awareness</div>
+        <div class="choice"><span class="cn">④</span> The necessity of reducing overproduction to prevent ecological damage</div>
+        <div class="choice"><span class="cn">⑤</span> Benefits of technological innovations in promoting environmental sustainability</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">②</span></div>
+      <div class="ans-exp">
+        <strong>핵심 논리:</strong> "Technology cannot bear the weight of cornucopian dreams" + "Technology is vanishingly unlikely to compensate for uncontrolled expansion" + "technological solutions notoriously tend to create new problems" → 기술에 의존하는 것의 <u>한계</u>가 주제.<br><br>
+        <strong>오답:</strong> ①은 정부 정책 효과 — 논점 이탈 / ③은 정보의 역할 — 무관 / ④는 과잉 생산 감소 필요성 — 부분적 언급이지만 제목으로는 너무 좁음 / ⑤는 기술 혁신의 이점 — 반대 방향
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">And it is true <span class="gr">[that appropriate, clean, and affordable technology has an important role {to play in resolving the ecocrisis}]</span>; but it cannot bear the weight of <span class="vw">cornucopian<span class="tt">풍요로운</span></span> dreams.</div>
+        <div class="sp-ko">그리고 적절하고 깨끗하며 저렴한 기술이 생태 위기 해결에 중요한 역할을 한다는 것은 사실이다; / 그러나 그것은 풍요로운 꿈의 무게를 감당할 수 없다. <span class="sp-note">★ it is true that ~ (가주어·진주어) / role to play: to부정사 형용사적 용법</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Technology is <span class="vw">vanishingly<span class="tt">극히 적게</span></span> unlikely to be able to <span class="vw">compensate for<span class="tt">보상하다</span></span> uncontrolled <span class="vw">expansion<span class="tt">팽창</span></span> of either population or consumption.</div>
+        <div class="sp-ko">기술이 인구나 소비의 통제되지 않는 팽창을 보상할 수 있을 가능성은 극히 낮다. <span class="sp-note">★ vanishingly unlikely: "거의 불가능한 정도로 가능성이 없는"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">...technological 'solutions' <span class="vw">notoriously<span class="tt">악명 높게</span></span> tend to create new problems, <span class="gr">{which then seem to require more technological <span class="vw">intervention<span class="tt">개입</span></span>, and so on}</span>.</div>
+        <div class="sp-ko">기술적 '해결책'들은 악명 높게도 새로운 문제들을 만들어내는 경향이 있는데, / 그것들은 그러면 더 많은 기술적 개입을 필요로 하는 것처럼 보이고, 계속 이런 식으로 이어진다. <span class="sp-note">★ which: 계속적 관계절, 앞 절 전체를 받음</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Still more fundamentally, such 'solutions' to ecological problems / ignore the urgent need actually {to reduce consumption} / and lock us into a collective mindset ― <span class="gr">run by technoscience, financed by capital, and protected by state power</span> ― which is a principal cause of the problems.</div>
+        <div class="sp-ko">더욱 근본적으로, 생태 문제에 대한 그러한 '해결책'들은 / 실제로 소비를 줄여야 하는 시급한 필요를 무시하고 / 우리를 기술 과학이 운영하고, 자본이 자금을 대고, 국가 권력이 보호하는 집단적 사고방식에 가두는데, 이것이 문제의 주요 원인이다. <span class="sp-note">★ 삽입구(―～―): 주어 mindset을 부연설명 / which: 계속적 관계절</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① it is true that ~ (가주어·진주어)</strong> — 사실을 인정하면서도 역접(but)으로 핵심 주장 도입</p>
+      <p><strong>② which절 (계속적 관계절)</strong> — 두 번 사용: 앞 절 전체를 받아 추가 설명</p>
+      <p><strong>③ 삽입구 (―run by ~ protected by―)</strong> — 주어(mindset)와 동사(which) 사이 삽입, 과거분사구 3개 병렬</p>
+      <p><strong>④ lock us into ~ (구동사)</strong> — "우리를 ~에 가두다": lock A into B</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Relying solely on technology to solve ecological crises is <strong>insufficient</strong> as it creates a cycle of new problems and ignores the root of the issue.
+      <div class="topic-ko">생태 위기 해결에 기술에만 의존하는 것은 새로운 문제의 순환을 만들고 근본 원인을 무시하기 때문에 불충분하다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Public faith in tech as a universal "cure-all." Technology cannot fulfill the "cornucopian dream" of infinite growth.</td><td class="fw-ko">기술을 만능 해결책으로 보는 신뢰가 제시되지만, 기술은 풍요로운 꿈을 실현할 수 없다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>Tech fails to offset population/consumption growth. Technical "fixes" create new problems, requiring even more tech intervention.</td><td class="fw-ko">기술은 인구·소비 팽창을 상쇄하지 못하고 오히려 새 문제를 만들어 더 많은 개입을 필요로 한다.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span></td><td>Tech-solutions distract from the need to change mindset. We desperately treat the cause (technoscience) as the only solution.</td><td class="fw-ko">기술 해결책은 사고방식 전환의 필요를 가리며, 원인 자체를 유일한 해결책으로 인식하는 역설을 낳는다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p2 -->
+
+<!-- ═══ P003 ═══ -->
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">#강 05 · #쪽 056 · #번 003 · #문항코드 26007-0051</div>
+    <div class="p-title">Animal Welfare vs. Animal Rights</div>
+    <div class="p-title-ko">동물 복지와 동물 권리의 논쟁 · 제목 추론</div>
+    <span class="p-badge">제목 추론 (Title Inference)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Many countries have had <span class="vw">legislation<span class="tt">법률, 입법</span></span> to protect animals in place for decades, even for centuries.</p>
+      <p class="plain-sent">This legislation may <span class="vw">regulate<span class="tt">규제하다</span></span> practices such as <span class="vw">slaughter<span class="tt">도살</span></span> or experimentation, or may be more generally aimed at preventing <span class="vw">cruelty<span class="tt">잔혹 행위</span></span>.</p>
+      <p class="plain-sent">But [whether this kind of legislation is <span class="vw">adequate<span class="tt">적절한</span></span>] lies at the heart of a key debate between those {who argue, in a legal context, for the <span class="vw">promotion<span class="tt">증진</span></span> of animal welfare} and those {who argue for the promotion of animal rights}.</p>
+      <p class="plain-sent">Those {who argue for animal welfare} seek increased legal protection for animals from <span class="vw">human-inflicted<span class="tt">인간이 가하는</span></span> pain and other kinds of suffering (for example, <span class="vw">insufficient<span class="tt">충분하지 못한</span></span> food and space).</p>
+      <p class="plain-sent">Animal rights <span class="vw">advocate<span class="tt">옹호자</span></span>s <span class="vw">maintain<span class="tt">주장하다</span></span> that this welfare legislation does not <span class="vw">go far enough<span class="tt">충분하다</span></span>.</p>
+      <p class="plain-sent">Welfare legislation accepts, [they argue], [that animals may be used by humans for food and as experimental subjects]; it merely tries to <span class="vw">curb<span class="tt">억제하다</span></span> the worst <span class="vw">excess<span class="tt">잔혹 행위</span></span>es of these practices.</p>
+      <p class="plain-sent">The problem, {on the rights view}, is more <span class="vw">fundamental<span class="tt">근본적인</span></span> than this: animals are not the kinds of thing {that humans should use in this way at all}.</p>
+      <p class="plain-sent">The problem, therefore, is not one about treating animals <span class="vw">inhumanely<span class="tt">비인도적으로</span></span>, but instead one about understanding them as human resources.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 제목으로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">제목 추론 (Title Inference)</div>
+      <div class="q-stem">다음 글의 제목으로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> Why Some Animals Deserve More Legal Protection than Others</div>
+        <div class="choice correct"><span class="cn">②</span> <span class="ans">The Debate on the Appropriateness of Animal Welfare Legislation</span></div>
+        <div class="choice"><span class="cn">③</span> Animal Protection Laws: Scientific Advances Driving Policy Changes</div>
+        <div class="choice"><span class="cn">④</span> The Role of Animal Protection Laws in Conserving Threatened Wildlife</div>
+        <div class="choice"><span class="cn">⑤</span> Understanding How Cultural Differences Shape Animal Welfare Legislation</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">②</span></div>
+      <div class="ans-exp">
+        <strong>핵심 논리:</strong> "whether this kind of legislation is adequate lies at the heart of a key debate between welfare advocates and rights advocates" → 동물 복지 법률의 <u>적절성</u>을 둘러싼 논쟁이 주제.<br><br>
+        <strong>Topic 확인:</strong> "The central debate between a <u>welfare</u> and a <u>rights</u> view is not merely about how we treat animals, but whether we should view them as human resources at all." → ② 가장 정확히 반영.<br><br>
+        <strong>오답:</strong> ①은 일부 동물이 더 많은 보호를 받아야 하는 이유 — 논점 이탈 / ③⑤는 과학적 발전·문화 차이 — 글에 없음 / ④는 멸종위기종 — 글의 범위를 벗어남
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">But <span class="gr">[whether this kind of legislation is <span class="vw">adequate<span class="tt">적절한</span></span>]</span> lies at the heart of a key debate / between those <span class="gr">{who argue ... for the promotion of animal welfare}</span> and those <span class="gr">{who argue for the promotion of animal rights}</span>.</div>
+        <div class="sp-ko">그러나 이런 종류의 법률이 적절한지의 문제는 / 동물 복지를 옹호하는 사람들과 동물 권리를 옹호하는 사람들 사이의 핵심 논쟁의 중심에 있다. <span class="sp-note">★ whether절: 명사절(주어) / who절: 관계절 병렬</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Animal rights advocates maintain <span class="gr">[that this welfare legislation does not go far enough]</span>. Welfare legislation accepts, [they argue], <span class="gr">[that animals may be used by humans for food and as experimental subjects]</span>; it merely tries to curb the worst excesses of these practices.</div>
+        <div class="sp-ko">동물 권리 옹호자들은 이 복지 법률이 충분히 가지 않는다고 주장한다. / 복지 법률은, 그들이 주장하기를, 동물이 식품이나 실험 대상으로 인간에 의해 사용될 수 있다는 것을 받아들인다; / 단지 이러한 관행의 최악의 잔혹 행위를 억제하려 할 뿐이다. <span class="sp-note">★ [they argue]: 삽입절 / that절: accepts의 목적어</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The problem, {on the rights view}, is more fundamental than this: animals are not the kinds of thing <span class="gr">{that humans should use in this way at all}</span>. The problem, therefore, is not one about treating animals inhumanely, but instead one about understanding them as human resources.</div>
+        <div class="sp-ko">권리의 관점에서 문제는 이것보다 더 근본적이다: / 동물은 인간이 이런 방식으로 전혀 사용해서는 안 되는 종류의 존재이다. / 따라서 문제는 동물을 비인도적으로 다루는 것에 관한 것이 아니라, / 그들을 인적 자원으로 이해하는 것에 관한 것이다. <span class="sp-note">★ not A but B: "A가 아니라 B"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① whether절 (명사절 — 주어)</strong> — "~인지의 문제": "[Whether this legislation is adequate] lies at the heart"</p>
+      <p><strong>② [they argue] (삽입절)</strong> — 문장 중간에 삽입되어 출처를 밝힘. "그들이 주장하기를"</p>
+      <p><strong>③ not A but B</strong> — "A가 아니라 B": "not one about treating ... but instead one about understanding"</p>
+      <p><strong>④ the kinds of thing that ~ (관계절)</strong> — "~한 종류의 것": animals are not the kinds of thing [that humans should use]</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">The central debate between a <strong>welfare</strong> and a <strong>rights</strong> view is not merely about how we treat animals, but whether we should view them as human resources at all.
+      <div class="topic-ko">복지론과 권리론 간의 핵심 논쟁은 단순히 우리가 동물을 어떻게 다루느냐가 아니라, 동물을 인적 자원으로 봐야 하는지의 여부에 관한 것이다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>A historical overview of animal protection laws — regulating specific practices / preventing overt cruelty</td><td class="fw-ko">수십 년~수백 년에 걸친 동물 보호 법률의 역사적 개관이 제시된다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>Welfare vs. Rights: Welfare seeks to minimize suffering. Rights argues measures are insufficient — still normalize exploitation.</td><td class="fw-ko">복지론은 고통 최소화를, 권리론은 동물 이용 자체의 정당성을 문제 삼는다.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span></td><td>The real problem: not HOW we treat animals but HOW we DEFINE them → animals as "human resources"</td><td class="fw-ko">진짜 문제는 대우 방식이 아니라 동물을 '인적 자원'으로 정의하는 시각 자체이다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p3 -->
+
+<!-- ═══ P004 ═══ -->
+<div class="sec" id="p4">
+  <div class="p-header">
+    <div class="p-code">#강 05 · #쪽 057 · #번 004 · #문항코드 26007-0052</div>
+    <div class="p-title">Ancient Greek Education &amp; Personal Bonds</div>
+    <div class="p-title-ko">고대 그리스 교육과 대인 유대 · 구문분석형</div>
+    <span class="p-badge">that / what 구별 · 구문 분석</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">In ancient Greece, education <span class="vq-ul">① consistently</span> occurred in the context of the personal relations among teachers and students.</p>
+      <p class="plain-sent">Most often, it involved a tutor [who traveled to homes or other community locations {<span class="vq-ul">② where</span> they worked with individuals or small groups of students.}]</p>
+      <p class="plain-sent">Additionally, <span class="vq-ul">③ collecting</span> teachers and students {into learning communities} was another approach to creating a social learning context, such as Plato's Academy and its <span class="vw">descendent<span class="tt">후대의</span></span> organizations.</p>
+      <p class="plain-sent">It is important to note <span class="vq-ul">④ that</span> a close relationship between student and teacher was <span class="vw">consistently<span class="tt">일관되게</span></span> seen as <span class="vw">essential<span class="tt">필수적인</span></span>: "advanced education involved a deep and absolutely personal <span class="vw">bond<span class="tt">유대감</span></span> between teacher and <span class="vw">pupil<span class="tt">학생</span></span>, a bond {in which ... emotion, if not passion, played a considerable part."}</p>
+      <p class="plain-sent">Indeed, Plato, in the Dialogues, supported the active <span class="vw">engagement<span class="tt">참여</span></span> of students in learning.</p>
+      <p class="plain-sent">Much of [what was learned] occurred through these <span class="vw">interpersonal<span class="tt">대인 관계의</span></span> oral relationships rather than through <span class="vq-ul">⑤ written</span> materials.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 구문 밑줄 분석 &amp; that/what 구별</div>
+    <div class="q-block">
+      <div class="q-type">구문 분석 (밑줄 ①~⑤)</div>
+      <div class="q-stem">밑줄 친 ①~⑤의 문법적 기능을 파악하고, ④ what→that 수정 이유를 설명하시오.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> <span class="vq-ul">consistently</span> — 부사: "일관되게, 지속적으로"</div>
+        <div class="choice"><span class="cn">②</span> <span class="vq-ul">where</span> — 관계부사: locations를 선행사로 받는 관계절</div>
+        <div class="choice"><span class="cn">③</span> <span class="vq-ul">collecting</span> — 동명사: "교사와 학생을 모으는 것" → 주어</div>
+        <div class="choice wrong-c"><span class="cn">④</span> <span class="vq-ul">what → <span class="rw">that</span></span> — note의 목적어절. "that a close relationship ... was essential"에서 that절은 완전한 문장 → <span class="ww">what</span> 불가, <span class="rw">that</span> 사용</div>
+        <div class="choice"><span class="cn">⑤</span> <span class="vq-ul">written</span> — 과거분사: "서면으로 작성된" materials 수식</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">④ what → that 수정 이유</div>
+      <div class="ans-num"><span class="ans">that</span>이 올바름</div>
+      <div class="ans-exp">
+        <strong>that vs what 구별:</strong><br>
+        • <strong>that</strong>: 완전한 절(S+V+O 모두 있음) 앞에 사용하는 접속사<br>
+        • <strong>what</strong>: 불완전한 절(명사 요소가 빠진 절) 앞에 사용하는 관계대명사<br><br>
+        "a close relationship between student and teacher was consistently seen as essential" → 주어(a close relationship), 동사(was seen), 보어(essential) 모두 있는 <u>완전한 절</u> → <span class="rw">that</span> ✓<br><br>
+        만약 "_____ was seen as essential"처럼 주어가 없으면 <span class="ww">what</span>이 됨.
+      </div>
+    </div>
+    <div class="drill-box">
+      <h4>📝 that / what 선택 연습 (정답 포함)</h4>
+      <div class="drill-item">1. The professor emphasized ( <span class="drill-ans">that</span> ) academic integrity is the cornerstone of original research. — 완전한 절</div>
+      <div class="drill-item">2. Students are often confused about ( <span class="drill-ans">what</span> ) they should focus on. — focus on의 목적어 없음(불완전)</div>
+      <div class="drill-item">3. Research reveals ( <span class="drill-ans">what</span> ) we perceive as reality is a subjective construction. — perceive의 목적어 없음(불완전)</div>
+      <div class="drill-item">4. The challenge is ( <span class="drill-ans">that</span> ) the public remains skeptical. — 완전한 절</div>
+      <div class="drill-item">5. Historians have argued ( <span class="drill-ans">that</span> ) the printing press was the primary catalyst. — 완전한 절</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In ancient Greece, education consistently occurred / in the context of the personal relations among teachers and students. Most often, it involved a tutor <span class="gr">[who traveled to homes or other community locations {where they worked with individuals or small groups of students}]</span>.</div>
+        <div class="sp-ko">고대 그리스에서, 교육은 교사와 학생들 사이의 개인적 관계의 맥락에서 일관되게 이루어졌다. / 대개, 그것은 가정이나 다른 지역 사회 장소들로 이동하여 개인이나 소그룹 학생들과 작업하는 교사를 포함했다. <span class="sp-note">★ who: 관계절 / where: 관계부사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Collecting teachers and students {into learning communities}</span> was another approach to creating a social learning context, such as Plato's Academy and its descendent organizations.</div>
+        <div class="sp-ko">교사와 학생을 학습 공동체로 모으는 것은 / 플라톤의 아카데미와 그 후속 조직들과 같은 / 사회적 학습 맥락을 만드는 또 다른 접근법이었다. <span class="sp-note">★ Collecting ~: 동명사구 주어</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It is important to note <span class="gr">[that a close relationship between student and teacher was consistently seen as essential]</span>: "advanced education involved a deep and absolutely personal bond between teacher and pupil, a bond <span class="gr">{in which ... emotion, if not passion, played a considerable part}</span>."</div>
+        <div class="sp-ko">학생과 교사 사이의 긴밀한 관계가 필수적인 것으로 일관되게 여겨진다는 것을 주목하는 것이 중요하다: / "고급 교육은 교사와 학생 사이의 깊고 완전히 개인적인 유대감을 포함했으며, / 그 유대감 속에서 ... 열정까지는 아니더라도 감정이 상당한 역할을 했다." <span class="sp-note">★ It is important to note that ~ (가주어·진주어) / in which: 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Much of <span class="gr">[what was learned]</span> occurred / through these interpersonal oral relationships / rather than through written materials.</div>
+        <div class="sp-ko">배운 것의 대부분은 서면 자료보다는 / 이러한 대인 구술 관계를 통해 일어났다. <span class="sp-note">★ what was learned: 관계대명사 what절(명사절) / rather than: "~보다는"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① Collecting ~ (동명사구 주어)</strong> — "~하는 것이 ~이었다": 동명사구 전체가 주어</p>
+      <p><strong>② It is important to note that ~ (가주어·진주어)</strong> — that절이 진주어</p>
+      <p><strong>③ in which ~ (관계절)</strong> — "그 속에서 ~": a bond를 선행사로 받는 관계절</p>
+      <p><strong>④ what was learned (관계대명사 what)</strong> — "배운 것": 불완전한 절(주어 없음)</p>
+      <p><strong>⑤ rather than (비교 표현)</strong> — "~보다는": 대조 강조</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Ancient Greek education was defined by deep interpersonal bonds and oral dialogue rather than the passive use of written materials.
+      <div class="topic-ko">고대 그리스 교육은 서면 자료의 수동적 사용보다 깊은 대인 유대와 구술 대화로 정의되었다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>The foundational role of personal relations in Greek education</td><td class="fw-ko">고대 그리스 교육의 근본은 교사와 학생 간의 개인적 관계였다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>Various learning contexts and the essential nature of the teacher-student bond — community tuition / Plato's Academy</td><td class="fw-ko">개인 교습과 플라톤 아카데미 같은 학습 공동체 모두 긴밀한 유대감을 핵심으로 했다.</td></tr>
+        <tr><td><span class="step-badge">③ Closing</span></td><td>Learning was primarily driven by oral interaction rather than written texts</td><td class="fw-ko">배움은 서면 자료보다 대인 구술 관계를 통해 일어났다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p4 -->
+
+<!-- ═══ P005 ═══ -->
+<div class="sec" id="p5">
+  <div class="p-header">
+    <div class="p-code">#강 05 · #쪽 058 · #번 005 · #문항코드 26007-0053</div>
+    <div class="p-title">The Search for Approval</div>
+    <div class="p-title-ko">승인 추구와 자기 가치 · 흐름무관 문장</div>
+    <span class="p-badge">전체 흐름과 관계없는 문장 고르기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">The search for <span class="vw">approval<span class="tt">인정, 승인</span></span> has its own challenges.</p>
+      <p class="plain-sent">In the <span class="vw">formative<span class="tt">형성하는</span></span> period of childhood the child seeks the approval of its caretakers as a means of <span class="vw">secure<span class="tt">확보하다</span></span>ing their love.</p>
+      <p class="plain-sent">This <span class="vw">persist<span class="tt">지속되다</span></span>s into adulthood [where there is a general need for the approval of others, especially loved ones, or those {who are admired or looked up to because they have particular qualities or skills}].</p>
+      <p class="plain-sent"><span class="nc">①</span> But this can turn into an unhealthy, <span class="vw">excessive<span class="tt">지나친</span></span> need for approval {if the individual is uncertain about his or her own <span class="vw">independence<span class="tt">독립성</span></span>, rights, responsibilities and <span class="vw">effectiveness<span class="tt">효능감</span></span> (the ability to influence things).}</p>
+      <p class="plain-sent"><span class="nc">②</span> The <span class="vw">constant<span class="tt">끊임없는</span></span> searching for approval is based on the fear [that the other's love will be <span class="vw">withdraw<span class="tt">철회하다</span></span>n] and [that you will be left helpless and unloved].</p>
+      <p class="plain-sent"><span class="nc">③</span> This, of course, is an <span class="vw">extension<span class="tt">연장</span></span> of a childhood pattern {whereby the individual feels [that he or she never received enough (unconditional) approval or love from her or his parents.]}.</p>
+      <p class="plain-sent" style="background:var(--red-bg);border-left:4px solid var(--red);padding:8px 14px;margin:6px 0;border-radius:0 6px 6px 0;"><span class="nc nc-wrong">④</span> Although loving and being loved by others are crucial, the love of self is no less important.</p>
+      <p class="plain-sent"><span class="nc">⑤</span> As a result they learn to feel <span class="vw">unworthy<span class="tt">무가치한</span></span> and [that they don't have the right to expect unconditional love and approval].</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 전체 흐름과 관계없는 문장을 고르시오</div>
+    <div class="q-block">
+      <div class="q-type">무관한 문장 (Irrelevant Sentence)</div>
+      <div class="q-stem">전체 흐름과 관계없는 문장을 고르시오.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="choice"><span class="cn">②</span></div>
+        <div class="choice"><span class="cn">③</span></div>
+        <div class="choice wrong-c"><span class="cn">④</span> <span style="color:var(--red);">← 무관한 문장</span></div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">④</span></div>
+      <div class="ans-exp">
+        <strong>글의 흐름:</strong> 승인 추구 → ① 과도한 승인 욕구로 변질 → ② 두려움 기반 → ③ 어린 시절 패턴의 연장 → ⑤ 결과: 자신이 무가치하다고 느낌<br><br>
+        <strong>④가 무관한 이유:</strong> "타인을 사랑하는 것이 중요하지만 자기 사랑도 중요하다"는 내용은 <u>자기 사랑의 중요성</u>에 관한 것. 글의 흐름은 외부 승인에 대한 두려움 기반 집착과 어린 시절 원인으로 이어지다가 ⑤에서 "무가치함을 느낀다"는 결론으로 이어짐.<br><br>
+        ④는 자기 사랑에 대한 긍정적 주장으로 두려움 기반 불안 심리를 다루는 흐름과 어긋남.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">This persists into adulthood / <span class="gr">[where there is a general need for the approval of others, especially loved ones, or those {who are admired or looked up to because they have particular qualities or skills}]</span>.</div>
+        <div class="sp-ko">이것은 성인기까지 지속되는데, / 거기서는 다른 사람들, 특히 사랑하는 사람들이나 / 특별한 자질이나 기술을 가지고 있어 존경받거나 우러러보는 사람들의 인정에 대한 일반적인 필요가 있다. <span class="sp-note">★ where: 계속적 관계부사 / who: 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="nc">②</span> The constant searching for approval / is based on the fear <span class="gr">[that the other's love will be withdrawn] and [that you will be left helpless and unloved]</span>.</div>
+        <div class="sp-ko">끊임없는 승인 추구는 / 상대방의 사랑이 철회될 것이라는 두려움과 / 당신이 무력하고 사랑받지 못한 채 버려질 것이라는 두려움에 근거한다. <span class="sp-note">★ 동격 that절 2개 병렬: the fear [that ~] and [that ~]</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="nc">③</span> This is an extension of a childhood pattern <span class="gr">{whereby the individual feels [that he or she never received enough (unconditional) approval or love from her or his parents]}</span>.</div>
+        <div class="sp-ko">이것은 물론 개인이 부모로부터 충분한 (무조건적인) 인정이나 사랑을 받지 못했다고 느끼는 / 어린 시절 패턴의 연장이다. <span class="sp-note">★ whereby = by which: "그것에 의해, 그 패턴을 통해"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="nc">⑤</span> As a result / they learn to feel <span class="vw">unworthy<span class="tt">무가치한</span></span> and <span class="gr">[that they don't have the right to expect unconditional love and approval]</span>.</div>
+        <div class="sp-ko">그 결과 / 그들은 자신이 무가치하다고 느끼고 / 무조건적인 사랑과 인정을 기대할 권리가 없다고 느끼게 된다. <span class="sp-note">★ learn to feel + 형용사 and that절: feel의 두 목적어 병렬</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① the fear [that ~] and [that ~] (동격 that절 병렬)</strong> — fear의 내용을 설명하는 두 개의 that절</p>
+      <p><strong>② whereby = by which</strong> — "그것을 통해": "a childhood pattern whereby the individual feels ~"</p>
+      <p><strong>③ where (계속적 관계부사)</strong> — adulthood를 선행사로 받아 추가 설명</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">When childhood's natural need for <strong>approval</strong> is not met with unconditional love, it transforms into a lifelong fear-based obsession that undermines one's self-worth.
+      <div class="topic-ko">어린 시절의 자연스러운 승인 욕구가 무조건적인 사랑으로 충족되지 않으면, 자기 가치를 훼손하는 두려움 기반의 집착으로 변한다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Childhood (Security) → Adulthood (Social Need)</td><td class="fw-ko">어린 시절의 승인 욕구가 성인기까지 지속된다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>Lack of Self-Identity + Fear of Withdrawal = Excessive Need. Origin: Childhood patterns (Insufficient unconditional love).</td><td class="fw-ko">자아 정체성 부재와 철회 두려움이 과도한 승인 욕구를 만들며, 이는 어린 시절 패턴에서 비롯된다.</td></tr>
+        <tr><td><span class="step-badge">③ Closing</span></td><td>Neglecting Self-love → Feeling Unworthy. The search for external approval cannot replace internal self-worth.</td><td class="fw-ko">외부 승인 추구는 내면의 자기 가치를 대체할 수 없으며 자신을 무가치하게 느끼게 한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p5 -->
+
+<!-- ═══ P006 ═══ -->
+<div class="sec" id="p6">
+  <div class="p-header">
+    <div class="p-code">#강 05 · #쪽 059 · #번 006 · #문항코드 26007-0054</div>
+    <div class="p-title">Motivation &amp; Goal Pursuit</div>
+    <div class="p-title-ko">동기와 목표 추구 — 목표에 가까울수록 노력 증가 · 구문분석형</div>
+    <span class="p-badge">구문 분석</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Motivation has an <span class="vw">extensive<span class="tt">광범위한</span></span> history in <span class="vw">academic<span class="tt">학문적인</span></span> research.</p>
+      <p class="plain-sent">Some of the earliest work on this topic was by Clark Hull, {who <span class="vw">observe<span class="tt">관찰하다</span></span>d [that effort 〈invested in <span class="vw">accomplish<span class="tt">달성하다</span></span>ing a goal〉 increases as goal <span class="vw">attainment<span class="tt">달성</span></span> becomes more likely]}.</p>
+      <p class="plain-sent">Although this conclusion was drawn by observing rats running a maze to achieve a food reward ― with speed increasing 〈as distance to the food decreased〉 ― it is nevertheless useful in seeking to explain goal <span class="vw">pursuit<span class="tt">추구</span></span> in humans.</p>
+      <p class="plain-sent">Indeed, much of the modern work on motivation has built on this foundation to understand [what promotes goal pursuit and achievement].</p>
+      <p class="plain-sent">For example, 〈mirroring Hull's rats〉, consumers have been shown to <span class="vw">accelerate<span class="tt">가속화하다</span></span> coffee purchases as they approach the end of a '10th free' <span class="vw">loyalty card<span class="tt">고객 카드</span></span>.</p>
+      <p class="plain-sent">In the sports context, <span class="vw">athlete<span class="tt">운동선수</span></span>s are often observed to give 'one last push' 〈as they complete a given event,〉 and this is also often a feature both of others' efforts to motivate them despite their <span class="vw">fatigue<span class="tt">피로</span></span>, and of their own <span class="vw">self-talk<span class="tt">자기 대화</span></span>.</p>
+      <p class="plain-sent">This method of motivation can also be seen when a person puts in extra effort as they reach the end of a given exercise routine.</p>
+      <p class="plain-sent">Given the <span class="vw">centrality<span class="tt">중심적 역할</span></span> of motivation to success in most life <span class="vw">domain<span class="tt">영역</span></span>s, this topic has <span class="vw">fascinate<span class="tt">매료시키다</span></span>d scholars in a range of <span class="vw">discipline<span class="tt">(학문의) 분야</span></span>s in the social sciences, including economics and psychology.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 구문 분석</div>
+    <div class="q-block">
+      <div class="q-type">구문 분석</div>
+      <div class="q-stem">다음 핵심 구문의 구조를 분석하시오.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">A</span> "effort 〈invested in accomplishing a goal〉 increases as goal attainment becomes more likely" — 과거분사구 invested가 effort를 수식; as절: "~할수록"</div>
+        <div class="choice"><span class="cn">B</span> "mirroring Hull's rats" — 분사구문: "Hull의 쥐를 반영하듯이" (동시 상황/방식)</div>
+        <div class="choice"><span class="cn">C</span> "what promotes goal pursuit and achievement" — 관계대명사 what절: understand의 목적어</div>
+        <div class="choice"><span class="cn">D</span> "Given the centrality of motivation ~" — 분사구문 관용표현: "~을 감안할 때"</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">핵심 구문 해설</div>
+      <div class="ans-num"><span class="ans">as S+V ... as S+V (비례 부사절)</span></div>
+      <div class="ans-exp">
+        <strong>핵심 패턴:</strong> "increases <u>as</u> goal attainment becomes more likely" / "speed increasing <u>as</u> distance decreased" → as + S + V: "~할수록 ~한다" (비례 관계)<br><br>
+        <strong>mirroring Hull's rats (분사구문)</strong> — = As they mirrored Hull's rats: "Hull의 쥐와 유사하게" 또는 "Hull의 쥐를 반영하듯이"<br><br>
+        <strong>Given ~ (분사구문 관용)</strong> — "~을 감안할 때": Given the centrality of motivation to success...
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Some of the earliest work on this topic was by Clark Hull, / <span class="gr">{who observed [that effort 〈<span class="gr">invested in accomplishing a goal</span>〉 increases <span class="gr">as goal <span class="vw">attainment<span class="tt">달성</span></span> becomes more likely</span>]}</span>.</div>
+        <div class="sp-ko">이 주제에 대한 가장 초기의 연구 중 일부는 Clark Hull에 의한 것으로, / 그는 목표 달성에 투자된 노력이 목표 달성이 더 가능해질수록 증가한다는 것을 관찰했다. <span class="sp-note">★ invested ~: 과거분사구, effort 수식 / as절: "~할수록"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Although this conclusion was drawn / by observing rats running a maze to achieve a food reward ― <span class="gr">with speed increasing 〈as distance to the food decreased〉</span> ― / it is nevertheless useful in seeking to explain goal pursuit in humans.</div>
+        <div class="sp-ko">비록 이 결론은 음식 보상을 얻기 위해 미로를 달리는 쥐들을 관찰함으로써 도출되었지만 / ―음식까지의 거리가 줄어들수록 속도가 증가하면서― / 그것은 그럼에도 불구하고 인간의 목표 추구를 설명하는 데 유용하다. <span class="sp-note">★ with + O + 분사 (부대상황) / nevertheless: "그럼에도 불구하고"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, 〈<span class="gr">mirroring Hull's rats</span>〉, consumers have been shown to <span class="vw">accelerate<span class="tt">가속화하다</span></span> coffee purchases / as they approach the end of a '10th free' loyalty card.</div>
+        <div class="sp-ko">예를 들어, Hull의 쥐를 반영하듯이, / 소비자들은 '10번째 무료' 고객 카드의 마지막에 가까워질수록 / 커피 구매를 가속화하는 것으로 나타났다. <span class="sp-note">★ mirroring ~: 분사구문 (방식/비교) / as절: 비례</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Given the <span class="vw">centrality<span class="tt">중심적 역할</span></span> of motivation to success in most life domains</span>, this topic has fascinated scholars in a range of disciplines in the social sciences, including economics and psychology.</div>
+        <div class="sp-ko">대부분의 삶의 영역에서 성공에 대한 동기의 중심적 역할을 감안할 때, / 이 주제는 경제학과 심리학을 포함한 사회과학의 다양한 분야에서 학자들을 매료시켜 왔다. <span class="sp-note">★ Given ~: "~을 감안할 때" (분사구문 관용)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① as S+V (비례 부사절)</strong> — "~할수록 ~하다": effort increases as attainment becomes more likely</p>
+      <p><strong>② with + O + 분사 (부대상황)</strong> — "O가 ~하면서": "with speed increasing as distance decreased"</p>
+      <p><strong>③ mirroring ~ (분사구문)</strong> — "~을 반영하듯": 방식 또는 비교</p>
+      <p><strong>④ Given ~ (분사구문 관용)</strong> — "~을 감안할 때": Given the centrality of motivation</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Motivation and effort naturally increase as a person gets closer to achieving a goal, a universal principle applicable to various fields of life.
+      <div class="topic-ko">동기와 노력은 목표 달성에 가까워질수록 자연스럽게 증가하며, 이는 삶의 다양한 분야에 적용 가능한 보편적 원칙이다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span><br><span style="font-size:.7rem;color:var(--ink3);">Theory</span></td><td>Clark Hull's Rat Experiment: Proximity to goal = Increased effort</td><td class="fw-ko">Hull의 쥐 실험: 목표 근접 = 노력 증가 이론의 출발점.</td></tr>
+        <tr><td><span class="step-badge">② Development</span><br><span style="font-size:.7rem;color:var(--ink3);">Evidence</span></td><td>Marketing: coffee loyalty card / Sports: athletes' last push / Self-regulation: exercise routine</td><td class="fw-ko">마케팅(고객 카드)·스포츠(마지막 스퍼트)·자기 조절(운동 루틴)의 세 가지 실증 사례.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span><br><span style="font-size:.7rem;color:var(--ink3);">Impact</span></td><td>Motivation as the key to success. Disciplines: Economics, Psychology, and beyond.</td><td class="fw-ko">동기는 성공의 핵심으로 경제학·심리학 등 다양한 학문 분야에서 연구된다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p6 -->
+
+<!-- ═══ P007 ═══ -->
+<div class="sec" id="p7">
+  <div class="p-header">
+    <div class="p-code">#강 05 · #쪽 060 · #번 007 · #문항코드 26007-0055</div>
+    <div class="p-title">Rational vs. Irrational Actions</div>
+    <div class="p-title-ko">이성적·비이성적 행동과 정신 성숙도 · 구문분석형</div>
+    <span class="p-badge">구문분석 · 수일치 (appear → appears)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Every action starts in the mind.</p>
+      <p class="plain-sent">We may know about the reasoned thought process in most cases but there are instances <span class="vq-ul">① {where one may not be able to identify the thought process}</span>.</p>
+      <p class="plain-sent">If a person does something stupid or <span class="vw">atrocious<span class="tt">극악무도한</span></span> against his <span class="vw">fundamental<span class="tt">근본적인</span></span> nature, he may say <span class="vq-ul">② that he had lost his mind momentarily</span>.</p>
+      <p class="plain-sent">When <span class="vq-ul">③ pressed</span>, he may be unable to offer any other explanation for his actions.</p>
+      <p class="plain-sent">He may not be able to identify it(= the actual cause) but the actual cause might be a result of some kind of <span class="vw">repressed<span class="tt">억눌린</span></span> emotion <span class="vw">surface<span class="tt">드러나다</span></span>ing in <span class="vw">impulsive<span class="tt">충동적인</span></span> behaviour.</p>
+      <p class="plain-sent">Impulsive behaviour is a result of <span class="vw">emotive<span class="tt">감정의</span></span> build-up and <span class="vq-ul">④ <span class="ww">appear</span> → <span class="rw">appears</span></span> as sparks in our mind 〈leading to <span class="vw">instantaneous<span class="tt">즉각적인</span></span> rational or irrational behaviour〉.</p>
+      <p class="plain-sent">The conscious mind may not be able to <span class="vw">discern<span class="tt">분간하다</span></span> and identify the logic or the rationale behind many of our actions.</p>
+      <p class="plain-sent">Though mankind is <span class="vw">be endowed with<span class="tt">~을 타고나다</span></span> rational thinking, irrational actions happen often.</p>
+      <p class="plain-sent">The <span class="vw">outcome<span class="tt">결과</span></span> will <span class="vq-ul">⑤ largely depend upon</span> mental <span class="vw">maturity<span class="tt">성숙도</span></span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 구문 밑줄 분석 &amp; 수일치 수정</div>
+    <div class="q-block">
+      <div class="q-type">구문 분석 (밑줄 ①~⑤) · ④ 수일치 오류 수정</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> <span class="vq-ul">where one may not be able to identify ~</span> — 관계부사: instances를 선행사로 받는 관계절</div>
+        <div class="choice"><span class="cn">②</span> <span class="vq-ul">that he had lost his mind momentarily</span> — 명사절: say의 목적어</div>
+        <div class="choice"><span class="cn">③</span> <span class="vq-ul">pressed</span> — 분사구문: = When he is pressed (수동) "추궁받을 때"</div>
+        <div class="choice wrong-c"><span class="cn">④</span> <span class="ww">appear</span> → <span class="rw">appears</span> — 주어: "Impulsive behaviour" (단수) → 동사도 단수 appears로 수정</div>
+        <div class="choice"><span class="cn">⑤</span> <span class="vq-ul">largely depend upon</span> — "주로 ~에 달려 있다": will + 부사 + 동사원형</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">④ 수일치 해설</div>
+      <div class="ans-num">정답: <span class="ans">appear → <strong>appears</strong></span></div>
+      <div class="ans-exp">
+        <strong>문장 구조:</strong> "Impulsive behaviour is a result of emotive build-up and <span class="ww">appear</span> as sparks..."<br>
+        주어 "Impulsive behaviour"는 단수 → 동사 <span class="rw">appears</span><br><br>
+        <strong>※ 주의:</strong> "is a result of ... and appears as ..." 에서 and가 동사 is와 appears를 연결하는 병렬 구조. 주어는 여전히 "Impulsive behaviour"(단수).
+      </div>
+    </div>
+    <div class="drill-box">
+      <h4>📝 수일치 연습 (정답 포함)</h4>
+      <div class="drill-item">1. Neither the lead researcher nor the assistants <span class="drill-ans">(were)</span> aware that the data had been compromised. — Neither A nor B에서 B가 복수 → 복수 동사</div>
+      <div class="drill-item">2. Each of the candidates who <span class="drill-ans">(applies)</span> for the scholarship must submit the form. — Each of + 복수명사 → 단수 동사</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">If a person does something stupid or atrocious against his fundamental nature, / he may say <span class="gr">[that he had lost his mind <span class="vw">momentarily<span class="tt">잠시</span></span>]</span>. When <span class="gr">pressed</span>, he may be unable to offer any other explanation for his actions.</div>
+        <div class="sp-ko">만약 어떤 사람이 자신의 근본적인 본성에 반하는 어리석거나 극악무도한 짓을 한다면, / 그는 잠시 정신이 나갔다고 말할 수 있다. / 추궁을 받으면, 그는 자신의 행동에 대한 다른 어떤 설명도 제시하지 못할 수 있다. <span class="sp-note">★ When pressed: = When he is pressed (수동 분사구문)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">...the actual cause might be a result of some kind of <span class="vw">repressed<span class="tt">억눌린</span></span> emotion / <span class="gr"><span class="vw">surface<span class="tt">드러나다</span></span>ing in <span class="vw">impulsive<span class="tt">충동적인</span></span> behaviour</span>.</div>
+        <div class="sp-ko">...실제 원인은 충동적 행동으로 드러나는 어떤 종류의 억눌린 감정의 결과일 수 있다. <span class="sp-note">★ surfacing: 현재분사구, emotion 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Impulsive behaviour is a result of emotive build-up / and <span class="rw">appears</span>(← <span class="ww">appear</span>) as sparks in our mind / 〈<span class="gr">leading to <span class="vw">instantaneous<span class="tt">즉각적인</span></span> rational or irrational behaviour</span>〉.</div>
+        <div class="sp-ko">충동적 행동은 감정적 축적의 결과이며 / 우리 마음 속에 불꽃으로 나타나 / 즉각적인 이성적 또는 비이성적 행동으로 이어진다. <span class="sp-note">★ appears(단수) / leading to ~: 결과의 분사구문</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Though mankind <span class="vw">be endowed with<span class="tt">~을 타고나다</span></span> rational thinking, irrational actions happen often. The <span class="vw">outcome<span class="tt">결과</span></span> will largely depend upon mental <span class="vw">maturity<span class="tt">성숙도</span></span>.</div>
+        <div class="sp-ko">인류가 이성적 사고를 타고났지만, 비이성적 행동은 자주 일어난다. / 결과는 주로 정신적 성숙도에 달려 있을 것이다. <span class="sp-note">★ Though(양보 접속사) / depend upon: "~에 달려 있다"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① When pressed (수동 분사구문)</strong> — = When he is pressed: "추궁을 받을 때"</p>
+      <p><strong>② surfacing in ~ (현재분사구)</strong> — emotion을 수식: "충동적 행동으로 드러나는"</p>
+      <p><strong>③ leading to ~ (결과 분사구문)</strong> — "즉각적 행동으로 이어지면서"</p>
+      <p><strong>④ be endowed with (수동태)</strong> — "~을 타고나다": = be gifted with</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Although humans are rational, some actions stem from unidentified emotions rather than reasoned thought, with the final results often relating to one's mental maturity.
+      <div class="topic-ko">인간은 이성적이지만, 일부 행동은 이성적 사고보다 확인되지 않은 감정에서 비롯되며, 최종 결과는 종종 정신적 성숙도와 관련된다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>While actions originate in the mind, individuals often fail to identify the specific thought processes behind their behavior.</td><td class="fw-ko">모든 행동은 마음에서 시작되지만, 사람들은 종종 그 이면의 사고 과정을 파악하지 못한다.</td></tr>
+        <tr><td><span class="step-badge">② Example</span></td><td>Actions against one's nature are often driven by repressed emotions that bypass conscious logic and manifest as impulsive sparks.</td><td class="fw-ko">본성에 반하는 행동은 의식적 논리를 우회하는 억눌린 감정에서 충동적으로 드러난다.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span></td><td>Despite being endowed with reason, humans frequently act irrationally; outcomes correlate with mental maturity.</td><td class="fw-ko">이성을 타고났음에도 비이성적 행동이 자주 일어나며, 결과는 정신 성숙도에 달려 있다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p7 -->
+
+<!-- ═══ P008 ═══ -->
+<div class="sec" id="p8">
+  <div class="p-header">
+    <div class="p-code">#강 05(04강 편입) · #쪽 049 · #번 008 · #문항코드 26007-0044</div>
+    <div class="p-title">Neural Pathways — Rivers of Thinking</div>
+    <div class="p-title-ko">신경 경로 — 사고의 물줄기 비유 · 제목 추론</div>
+    <span class="p-badge">제목 추론 (Title Inference)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">It is human nature for our brains to form thought patterns ― <span class="vw">neural<span class="tt">신경의</span></span> pathways or so-called rivers of thinking ― to get through our daily activities.</p>
+      <p class="plain-sent">To better understand this concept, 〈developed by Edward de Bono〉, create a mental image of water 〈running down a mountain〉.</p>
+      <p class="plain-sent">It may start as a series of slow drips or <span class="vw">scattered<span class="tt">드문드문 있는</span></span> <span class="vw">stream<span class="tt">물줄기</span></span>s, but the water eventually comes together and flows in the same direction, creating deep <span class="vw">groove<span class="tt">홈</span></span>s or pathways over time ― even cutting through rock and creating <span class="vw">gully<span class="tt">골짜기</span></span>ies.</p>
+      <p class="plain-sent">These pathways are a good <span class="vw">analogy<span class="tt">비유</span></span> to {what happens with our thinking}.</p>
+      <p class="plain-sent">We develop deep mental pathways {that influence how we <span class="vw">interpret<span class="tt">해석하다</span></span> information, what we see in the world around us, and how we respond}.</p>
+      <p class="plain-sent">It's not all bad. These rivers of thinking help us <span class="vw">extract<span class="tt">끌어내다</span></span> order, make quick decisions, and create <span class="vw">expertise<span class="tt">전문 지식</span></span>.</p>
+      <p class="plain-sent">These patterns are [why we can go through our morning routine 〈without much thought〉 or drive to work 〈without directions〉].</p>
+      <p class="plain-sent">They help us <span class="vw">survive<span class="tt">생존하다</span></span> and are <span class="vw">essential<span class="tt">필수적인</span></span> to [how we work and live].</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 제목으로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">제목 추론 (Title Inference)</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> Effects of external influences on daily cognitive processes</div>
+        <div class="choice"><span class="cn">②</span> Outcomes of rigid thinking patterns for efficient decision-making</div>
+        <div class="choice correct"><span class="cn">③</span> <span class="ans">Influences of structured thought patterns in shaping routine processes</span></div>
+        <div class="choice"><span class="cn">④</span> Responsiveness of thought patterns to perceived limitations on routines</div>
+        <div class="choice"><span class="cn">⑤</span> Potentials for emotion-driven thought streams to shape mental pathways</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">③</span></div>
+      <div class="ans-exp">
+        <strong>핵심 논리:</strong> 뇌는 신경 경로(thought patterns)를 형성하여 일상 활동(routine processes)을 처리한다. 물줄기 비유로 설명되는 이 경로들이 정보 해석·빠른 결정·전문 지식을 가능하게 함.<br><br>
+        <strong>③ 선택 이유:</strong> "Influences of structured thought patterns in shaping routine processes" → "구조화된 사고 패턴이 일상 과정을 형성하는 데 미치는 영향" = 글 전체의 핵심<br><br>
+        <strong>오답:</strong> ①은 외부 영향 — 글의 초점은 내부 패턴 / ②는 경직된 패턴의 결과 — 글은 긍정적 역할 강조 / ④는 한계에 대한 반응성 — 무관 / ⑤는 감정 기반 — 글의 핵심이 아님
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">It is human nature / <span class="gr">for our brains to form thought patterns ― neural pathways or so-called rivers of thinking ―</span> / to get through our daily activities.</div>
+        <div class="sp-ko">우리의 뇌가 일상 활동을 처리하기 위해 / 신경 경로 또는 소위 사고의 물줄기라 불리는 사고 패턴을 형성하는 것은 / 인간의 본성이다. <span class="sp-note">★ It is ~ for O to V: "O가 V하는 것은 ~이다" / 삽입구 (―～―): 동격 설명</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">...the water eventually comes together and flows in the same direction, / <span class="gr">creating deep grooves or pathways over time ― even cutting through rock and creating gullies</span>.</div>
+        <div class="sp-ko">...물은 결국 한데 모여 같은 방향으로 흐르면서, / 시간이 지남에 따라 깊은 홈이나 경로를 만들어 ― 심지어 암석을 뚫고 골짜기를 만들기도 한다. <span class="sp-note">★ creating ~: 결과의 분사구문 / even: "심지어" (강조)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We develop deep mental pathways <span class="gr">{that influence [how we interpret information], [what we see in the world around us], and [how we respond]}</span>.</div>
+        <div class="sp-ko">우리는 우리가 정보를 어떻게 해석하는지, 주변 세계에서 무엇을 보는지, 그리고 어떻게 반응하는지에 영향을 미치는 / 깊은 정신적 경로를 발전시킨다. <span class="sp-note">★ that절: 관계절 / how/what/how: 간접의문문 3개 병렬</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">These patterns are <span class="gr">[why we can go through our morning routine without much thought or drive to work without directions]</span>.</div>
+        <div class="sp-ko">이러한 패턴들이 우리가 많은 생각 없이 아침 일상을 처리하거나 길 안내 없이 직장까지 운전할 수 있는 이유이다. <span class="sp-note">★ why절: 관계부사절(보어)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① It is ~ for O to V</strong> — "O가 V하는 것은 ~이다": "It is human nature for our brains to form thought patterns"</p>
+      <p><strong>② creating ~ (결과 분사구문)</strong> — "그 결과 ~를 만들면서": "creating deep grooves ... even cutting through rock"</p>
+      <p><strong>③ how/what/how 병렬 (간접의문문)</strong> — that절 안에서 세 개의 간접의문문이 and로 병렬 연결</p>
+      <p><strong>④ why절 (관계부사절 — 보어)</strong> — "~인 이유": "These patterns are [why we can ~]"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Our brains naturally form thought patterns, much like water carving pathways on a mountain, which are essential for processing information efficiently and navigating daily life.
+      <div class="topic-ko">우리의 뇌는 물이 산에 경로를 새기는 것처럼 자연스럽게 사고 패턴을 형성하는데, 이는 정보를 효율적으로 처리하고 일상생활을 살아가는 데 필수적이다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Our brains form Thought patterns (Neural pathways) to navigate daily activities.</td><td class="fw-ko">뇌가 일상 활동을 처리하기 위해 신경 경로(사고 패턴)를 형성한다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span><br><span style="font-size:.7rem;color:var(--ink3);">The Water Metaphor</span></td><td>Like water carving paths on a mountain, repeated thoughts create deep mental grooves over time.</td><td class="fw-ko">물이 산에 골짜기를 만들듯, 반복적 사고가 시간이 지나면서 깊은 정신적 홈을 만든다.</td></tr>
+        <tr><td><span class="step-badge">③ Elaboration</span></td><td>These established pathways dictate how we interpret information and respond to the world.</td><td class="fw-ko">확립된 경로가 정보 해석과 세계 반응 방식을 결정한다.</td></tr>
+        <tr><td><span class="step-badge">④ Conclusion</span></td><td>These patterns are essential for making quick decisions, creating expertise, and ensuring survival.</td><td class="fw-ko">사고 패턴은 빠른 결정·전문 지식·생존에 필수적이다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p8 -->
+
+<!-- ═══ P009 ═══ -->
+<div class="sec" id="p9">
+  <div class="p-header">
+    <div class="p-code">#강 05(04강 편입) · #쪽 050 · #번 009 · #문항코드 26007-0045</div>
+    <div class="p-title">Youth &amp; Digital Media — Power Shift</div>
+    <div class="p-title-ko">청소년과 디지털 미디어의 권력 전환 · 빈칸 추론</div>
+    <span class="p-badge">빈칸 추론 (Blank Completion)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">The emerging power shift, {where smaller and edge players are gaining more <span class="vw">visibility<span class="tt">가시성</span></span> and <span class="vw">voice<span class="tt">발언권</span></span>}, is particularly important to children and youth.</p>
+      <p class="plain-sent">If we look at children and youth through the lens of digital media, we have a population {that has been historically subject to a higher degree of systematic and <span class="vw">institutional<span class="tt">제도적인</span></span> control in the kinds of information and social communication {to which they have access}}.</p>
+      <p class="plain-sent">This is one reason {why the <span class="vw">alchemy<span class="tt">마법 같은 결합</span></span> between youth and digital media has been <span class="vw">distinctive<span class="tt">독특한</span></span>}; it <span class="vw">disrupt<span class="tt">혼란에 빠뜨리다</span></span>s the existing set of power relations between adult authority and young people.</p>
+      <p class="plain-sent">While many studies of children, youth, and media have for decades stressed the status of young people as competent and full social subjects, digital media increasingly <span class="vw">insist<span class="tt">주장하다</span></span> [that we <span class="vw">acknowledge<span class="tt">인정하다</span></span> this <span class="vw">viewpoint<span class="tt">관점</span></span>].</p>
+      <p class="plain-sent">Not only must we see youth as <span class="vw">legitimate<span class="tt">정당한</span></span> social and political actors, but we must also recognize them as potential <span class="vw">innovator<span class="tt">혁신가</span></span>s and drivers of new media change.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 빈칸 추론 (선택지는 유인물 기준)</div>
+    <div class="q-block">
+      <div class="q-type">빈칸 추론 — 유인물에 선택지 없음 (내용 기반 추론)</div>
+      <div class="q-stem">글의 핵심 주제를 한 문장으로 요약하면?</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">핵심 내용 정리</div>
+      <div class="ans-num"><span class="ans">디지털 미디어 + 청소년 = 기존 성인 권위 해체 → 청소년을 정당한 사회·정치적 행위자로 인정</span></div>
+      <div class="ans-exp">
+        <strong>핵심 흐름:</strong><br>
+        ① 소규모·주변부 플레이어(청소년)가 가시성·발언권 획득<br>
+        ② 청소년 = 역사적으로 제도적 통제를 받아온 집단<br>
+        ③ 디지털 미디어 + 청소년의 결합 = 기존 성인 권위와 청소년 간 권력 관계를 혼란에 빠뜨림<br>
+        ④ 결론: 청소년을 정당한 사회·정치적 행위자 + 잠재적 혁신가로 인정해야 함
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The emerging power shift, <span class="gr">{where smaller and edge players are gaining more visibility and voice}</span>, / is particularly important to children and youth.</div>
+        <div class="sp-ko">더 작고 주변부의 플레이어들이 더 많은 가시성과 발언권을 얻고 있는 / 새로 등장하는 권력 이동은, / 특히 아동과 청소년에게 중요하다. <span class="sp-note">★ where: 계속적 관계부사, the power shift를 부연 설명</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">...we have a population <span class="gr">{that has been historically subject to a higher degree of systematic and institutional control / in the kinds of information and social communication {<span class="gr">to which they have access</span>}}</span>.</div>
+        <div class="sp-ko">...우리는 역사적으로 그들이 접근할 수 있는 / 정보와 사회적 소통의 종류에서 / 더 높은 수준의 체계적·제도적 통제를 받아온 집단을 가지고 있다. <span class="sp-note">★ to which they have access = which they have access to: 전치사 to가 관계사 앞으로 이동</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">...digital media increasingly insist <span class="gr">[that we acknowledge this viewpoint]</span>. <span class="gr">Not only must we see youth as legitimate social and political actors, but we must also recognize them as potential innovators and drivers of new media change</span>.</div>
+        <div class="sp-ko">...디지털 미디어는 점점 더 우리가 이 관점을 인정할 것을 주장한다. / 우리는 청소년을 정당한 사회적·정치적 행위자로 봐야 할 뿐만 아니라, / 잠재적인 혁신가와 새로운 미디어 변화의 주도자로도 인정해야 한다. <span class="sp-note">★ Not only must we ~ but ~ (도치): Not only가 문두로 → must we(도치)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① to which they have access (전치사+관계대명사)</strong> — = which they have access to: "그들이 접근할 수 있는"</p>
+      <p><strong>② Not only must we ~ but ~ (도치)</strong> — Not only가 문두 → 주어·조동사 도치: "Not only must we see ~ but we must also recognize"</p>
+      <p><strong>③ insist that S+(should)+V</strong> — "강하게 요구·주장하다": "insist that we acknowledge this viewpoint"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Digital media empowers youth by disrupting traditional adult authority and transforming them from passive subjects into proactive drivers of social change.
+      <div class="topic-ko">디지털 미디어는 전통적인 성인 권위를 해체하고 청소년을 수동적 주체에서 사회 변화의 능동적 주도자로 변화시킴으로써 그들에게 힘을 부여한다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Emerging Power Shift: Visibility and voice shifting toward previously marginalized groups, specifically children and youth.</td><td class="fw-ko">새로운 권력 이동이 이전에 소외된 집단(청소년)의 가시성·발언권을 높이고 있다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>Alchemy between Youth and Digital Media: Digital media disrupts historical "systematic and institutional control" exerted by adult authority.</td><td class="fw-ko">청소년과 디지털 미디어의 결합이 성인 권위의 역사적 제도적 통제를 해체한다.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span></td><td>Redefining the Role of Youth: View youth as legitimate political leaders and potential innovators of change.</td><td class="fw-ko">청소년을 정당한 사회·정치적 행위자이자 잠재적 혁신가로 재정의해야 한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p9 -->
+
+<!-- ═══ P010 ═══ -->
+<div class="sec" id="p10">
+  <div class="p-header">
+    <div class="p-code">#강 05(04강 편입) · #쪽 051 · #번 010 · #문항코드 26007-0046</div>
+    <div class="p-title">Tree Etiquette in the Forest</div>
+    <div class="p-title-ko">숲 속 나무의 예절 — 구조적 균형 · 구문분석형</div>
+    <span class="p-badge">구문분석 · 수일치 (reaches → reach)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">In the forest, there are <span class="vw">unwritten<span class="tt">암묵적인, 불문율의</span></span> <span class="vw">guideline<span class="tt">지침</span></span>s for tree etiquette.</p>
+      <p class="plain-sent">These guidelines lay down {the <span class="vw">proper<span class="tt">적절한</span></span> <span class="vw">appearance<span class="tt">외관</span></span> for upright members of ancient forests} and {<span class="vq-ul">① acceptable</span> forms of behavior}.</p>
+      <p class="plain-sent">This is [what a mature, well-behaved seasonal tree looks like].</p>
+      <p class="plain-sent">It has a <span class="vw">ramrod-straight<span class="tt">꼿꼿한</span></span> trunk with a regular, orderly <span class="vw">arrangement<span class="tt">배열</span></span> of wood <span class="vw">fiber<span class="tt">섬유</span></span>s.</p>
+      <p class="plain-sent">The roots stretch out evenly in all directions and <span class="vq-ul">② <span class="ww">reaches</span> → <span class="rw">reach</span></span> down into the earth under the tree.</p>
+      <p class="plain-sent">In its youth, the tree had <span class="vw">narrow<span class="tt">가는, 폭이 좁은</span></span> branches {<span class="vw">extend<span class="tt">뻗치다</span></span>ing sideways from its trunk}.</p>
+      <p class="plain-sent">They(= branches) died back a long time ago, and the tree <span class="vw">seal~off<span class="tt">~을 봉인하다</span></span>ed them off with fresh <span class="vw">bark<span class="tt">나무껍질</span></span> and new wood so that <span class="vq-ul">③ what you see now</span> is a long, smooth column.</p>
+      <p class="plain-sent">Only when you get to the top do you see a <span class="vw">symmetrical<span class="tt">대칭적인</span></span> crown <span class="vq-ul">④ {formed of strong branches <span class="vw">angle<span class="tt">비스듬히 뻗다</span></span>ing upward like arms 〈raised to heaven〉}</span>.</p>
+      <p class="plain-sent">An ideally formed tree such as this can grow very old.</p>
+      <p class="plain-sent">Similar rules hold for <span class="vw">conifer<span class="tt">침엽수</span></span>s, 〈except that the <span class="vw">topmost<span class="tt">맨 꼭대기의</span></span> branches should be <span class="vw">horizontal<span class="tt">수평의</span></span> or bent <span class="vq-ul">⑤ slightly</span> downward.〉</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 구문 밑줄 분석 &amp; 수일치 수정</div>
+    <div class="q-block">
+      <div class="q-type">구문 분석 (밑줄 ①~⑤) · ② 수일치 오류 수정</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> <span class="vq-ul">acceptable</span> — 형용사: "acceptable forms of behavior" = "수용 가능한 행동 형태"</div>
+        <div class="choice wrong-c"><span class="cn">②</span> <span class="ww">reaches</span> → <span class="rw">reach</span> — 주어: "The roots" (복수) → 동사도 복수 reach. and로 이어진 병렬 구조</div>
+        <div class="choice"><span class="cn">③</span> <span class="vq-ul">what you see now</span> — 관계대명사 what절: "지금 당신이 보는 것"(명사절, 주어)</div>
+        <div class="choice"><span class="cn">④</span> <span class="vq-ul">{formed of strong branches angling upward}</span> — 과거분사구: crown을 후치 수식 / angling: 현재분사</div>
+        <div class="choice"><span class="cn">⑤</span> <span class="vq-ul">slightly</span> — 부사: "약간" bent(굽어진)를 수식</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">② 수일치 해설</div>
+      <div class="ans-num">정답: <span class="ans">reaches → <strong>reach</strong></span></div>
+      <div class="ans-exp">
+        <strong>문장 구조:</strong> "The roots stretch out evenly in all directions and <span class="ww">reaches</span> down into the earth"<br>
+        주어 "The roots"는 복수 → 동사 <span class="rw">reach</span> (복수 형태)<br>
+        stretch와 reach가 and로 연결된 병렬 구조: "The roots stretch ... and reach ..."
+      </div>
+    </div>
+    <div class="drill-box">
+      <h4>📝 수일치 연습 (정답 포함)</h4>
+      <div class="drill-item">1. The diverse collection of ancient artifacts discovered during the excavations <span class="drill-ans">(provides)</span> invaluable insights. — 주어 = collection (단수)</div>
+      <div class="drill-item">2. Each of the participants who volunteered for the study <span class="drill-ans">(was)</span> required to sign an agreement. — Each of + 복수명사 → 단수</div>
+      <div class="drill-item">3. The subtle changes in atmospheric pressure, along with humidity, <span class="drill-ans">(suggest)</span> a severe storm. — 주어 = changes (복수); along with는 수에 영향 없음</div>
+      <div class="drill-item">4. Not only the lead vocalist but also the instrumentalists <span class="drill-ans">(practice)</span> for six hours daily. — Not only A but also B → B에 수 일치 (복수)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">This is <span class="gr">[what a mature, well-behaved seasonal tree looks like]</span>. It has a ramrod-straight trunk with a regular, orderly arrangement of wood fibers. The roots stretch out evenly in all directions and <span class="rw">reach</span> down into the earth under the tree.</div>
+        <div class="sp-ko">이것이 성숙하고 잘 행동하는 계절 나무의 모습이다. / 그것은 목재 섬유의 규칙적이고 질서 있는 배열을 가진 꼿꼿한 줄기를 가지고 있다. / 뿌리는 모든 방향으로 고르게 뻗어 나무 아래 땅속으로 뻗어 내려간다. <span class="sp-note">★ what절: 관계대명사 what(명사절) / stretch and reach: 병렬</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">...the tree sealed them off with fresh bark and new wood / <span class="gr">so that [what you see now] is a long, smooth column</span>.</div>
+        <div class="sp-ko">...나무는 신선한 나무껍질과 새 목재로 그것들을 봉인해서 / 지금 당신이 보는 것이 길고 매끄러운 기둥이 되도록 했다. <span class="sp-note">★ so that S+V: 목적절 / what you see: 관계대명사 what절(주어)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Only when you get to the top</span> / do you see a symmetrical crown <span class="gr">{formed of strong branches <span class="gr">angling upward like arms 〈raised to heaven〉</span>}</span>.</div>
+        <div class="sp-ko">꼭대기에 이를 때에만 / 하늘을 향해 올린 팔처럼 위쪽으로 비스듬히 뻗은 강한 가지들로 이루어진 / 대칭적인 수관을 볼 수 있다. <span class="sp-note">★ Only when ~ do you ~ (도치): Only + 부사절 → 주어·조동사 도치 / formed: 과거분사 / angling: 현재분사 / raised: 과거분사</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① Only when ~ do you ~ (도치)</strong> — "Only + 부사절"이 문두 → 주어·조동사 도치: "Only when you get to the top do you see"</p>
+      <p><strong>② so that S+V (목적절)</strong> — "~하도록": "sealed them off ... so that what you see now is a long column"</p>
+      <p><strong>③ formed / angling / raised (분사 중첩)</strong> — formed: crown 수식 / angling: branches 수식 / raised: arms 수식</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">The "etiquette" of structural balance is a universal standard for ensuring a tree's longevity.
+      <div class="topic-ko">구조적 균형의 "예절"은 나무의 장수를 보장하는 보편적 기준이다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Trees in a forest follow a set of natural norms that define their ideal physical appearance and behavior.</td><td class="fw-ko">숲 속 나무들은 이상적인 외관과 행동을 정의하는 자연적 규범을 따른다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>Structural integrity — straight trunk, balanced roots, symmetrical crown — is essential for a tree to reach old age.</td><td class="fw-ko">꼿꼿한 줄기, 균형 잡힌 뿌리, 대칭적 수관이라는 구조적 완전성이 장수의 필수 조건이다.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span></td><td>These growth standards serve as a universal blueprint for survival across various tree types, including conifers.</td><td class="fw-ko">이 성장 기준은 침엽수를 포함한 다양한 나무 종류에 걸친 보편적 생존 설계도이다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p10 -->
+
+<!-- ═══ P011 ═══ -->
+<div class="sec" id="p11">
+  <div class="p-header">
+    <div class="p-code">#강 05(04강 편입) · #쪽 052 · #번 011 · #문항코드 26007-0047</div>
+    <div class="p-title">Technology &amp; Epistemology — Heidegger</div>
+    <div class="p-title-ko">기술과 인식론 — Heidegger의 'bringing-forth' · 흐름무관 문장</div>
+    <span class="p-badge">전체 흐름과 관계없는 문장 고르기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Heidegger thought of technology as a 'bringing-forth', something {that produces something}.</p>
+      <p class="plain-sent"><span class="nc">①</span> Interestingly enough, the Latin <span class="vw">combination<span class="tt">조합</span></span> of pro and ducere 〈in the word production〉 also refers to something {that can be called 'bringing forth' (pro = forward and ducere = to lead)}.</p>
+      <p class="plain-sent"><span class="nc">②</span> Technology, then, is deeply connected to the production of knowledge, and hence to <span class="vw">epistemology<span class="tt">인식론</span></span>.</p>
+      <p class="plain-sent"><span class="nc">③</span> This is not only because the more <span class="vw">administrative<span class="tt">관리의</span></span> <span class="vw">pedagogical<span class="tt">교육(학)의</span></span> technologies {used in teaching and learning} bring with them tools for <span class="vw">efficiency<span class="tt">효율성</span></span> in educational <span class="vw">sphere<span class="tt">영역</span></span>s.</p>
+      <p class="plain-sent" style="background:var(--red-bg);border-left:4px solid var(--red);padding:8px 14px;margin:6px 0;border-radius:0 6px 6px 0;"><span class="nc nc-wrong">④</span> The use of technological tools in education can sometimes lead to <span class="vw">confusion<span class="tt">혼란</span></span> due to the <span class="vw">complexity<span class="tt">복잡성</span></span> of the knowledge students must learn.</p>
+      <p class="plain-sent"><span class="nc">⑤</span> It is also connected to the <span class="vw">critique<span class="tt">비판적 분석</span></span> of technology and its critical uses, that is, [the deeper <span class="vw">penetration<span class="tt">통찰력</span></span> of technological processes {that help us be aware of the worlds (in the phenomenological sense) 〈we <span class="vw">inhabit<span class="tt">거주하다</span></span>〉}], [be it in the observation of new technologies of seeing or those of hearing].</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 전체 흐름과 관계없는 문장을 고르시오</div>
+    <div class="q-block">
+      <div class="q-type">무관한 문장 (Irrelevant Sentence)</div>
+      <div class="q-stem">전체 흐름과 관계없는 문장을 고르시오.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="choice"><span class="cn">②</span></div>
+        <div class="choice"><span class="cn">③</span></div>
+        <div class="choice wrong-c"><span class="cn">④</span> <span style="color:var(--red);">← 무관한 문장</span></div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">④</span></div>
+      <div class="ans-exp">
+        <strong>글의 흐름:</strong> Heidegger의 'bringing-forth' → 기술은 지식 생산과 연결 → 인식론 → ③ 교육적 효율성 도구 → ⑤ 현상학적 세계 인식을 위한 더 깊은 통찰력<br><br>
+        <strong>④가 무관한 이유:</strong> "교육에서 기술 도구 사용이 지식의 복잡성으로 인해 혼란을 야기할 수 있다" → 기술의 부정적 측면(혼란)을 언급. 글 전체는 기술의 긍정적·심층적 역할(지식 생산, 현상학적 인식)을 다루는데 ④만 부정적 맥락.<br><br>
+        ③에서 "not only because ~"로 시작하여 ⑤에서 "It is also connected to ~"로 이어지는 연속 흐름. ④가 이 사이를 끊음.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Heidegger thought of technology as a 'bringing-forth', / something <span class="gr">{that produces something}</span>.</div>
+        <div class="sp-ko">하이데거는 기술을 '앞으로 이끌어냄'으로, / 무언가를 생산하는 것으로 생각했다. <span class="sp-note">★ think of A as B: "A를 B로 생각하다" / something ~ = 동격</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Technology, then, is deeply connected to the production of knowledge, / and hence to <span class="vw">epistemology<span class="tt">인식론</span></span>.</div>
+        <div class="sp-ko">그렇다면 기술은 지식의 생산과 깊이 연결되어 있으며, / 따라서 인식론과도 연결되어 있다. <span class="sp-note">★ hence: "따라서, 그러므로"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑤ It is also connected to the critique of technology and its critical uses, that is, [the deeper penetration of technological processes <span class="gr">{that help us be aware of the worlds (in the phenomenological sense) 〈we inhabit〉}</span>], [<span class="gr">be it in the observation of new technologies of seeing or those of hearing</span>].</div>
+        <div class="sp-ko">그것은 또한 기술에 대한 비판적 분석과 그 비판적 사용들, / 즉 우리가 거주하는 세계(현상학적 의미에서)를 인식하도록 돕는 / 기술적 과정들의 더 깊은 통찰력과도 연결되어 있으며, / 그것이 새로운 시각 기술의 관찰이든 청각 기술이든 마찬가지이다. <span class="sp-note">★ that is: "즉, 다시 말해" / be it A or B: "A이든 B이든" (양보)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① think of A as B</strong> — "A를 B로 생각하다": "Heidegger thought of technology as a 'bringing-forth'"</p>
+      <p><strong>② hence (접속부사)</strong> — "따라서": "and hence to epistemology" = "그리고 따라서 인식론에도"</p>
+      <p><strong>③ that is (즉)</strong> — 앞 내용 재진술: "the critique of technology ... that is, the deeper penetration"</p>
+      <p><strong>④ be it A or B (양보 구문)</strong> — "A이든 B이든": "be it in the observation of seeing technologies or those of hearing"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Technology, as a Heideggerian 'bringing-forth,' transcends mere utility to deepen our phenomenological awareness of the world.
+      <div class="topic-ko">하이데거적 '앞으로 이끌어냄'으로서의 기술은 단순한 도구적 유용성을 초월하여 세계에 대한 우리의 현상학적 인식을 심화시킨다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Technology is fundamentally a process of "bringing forth" or producing something, moving beyond its common definition as a mere tool.</td><td class="fw-ko">기술은 단순한 도구를 넘어 무언가를 '앞으로 이끌어내는' 근본적인 과정이다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>As a means of producing knowledge, technology enhances administrative and teaching efficiency within educational environments.</td><td class="fw-ko">지식 생산 수단으로서 기술은 교육 환경에서 관리·교육 효율성을 향상시킨다.</td></tr>
+        <tr><td><span class="step-badge">③ Elaboration</span></td><td>Technology deepens our phenomenological awareness, allowing us to perceive and inhabit our worlds through new sensory dimensions.</td><td class="fw-ko">기술은 새로운 감각 차원을 통해 우리가 세계를 인식하고 거주하도록 하여 현상학적 인식을 심화시킨다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p11 -->
+
+<!-- ═══ P012 ═══ -->
+<div class="sec" id="p12">
+  <div class="p-header">
+    <div class="p-code">#강 05(04강 편입) · #쪽 053 · #번 012 · #문항코드 26007-0048</div>
+    <div class="p-title">Fan Editors &amp; Informational Barriers</div>
+    <div class="p-title-ko">팬 편집자와 정보 장벽 · 구문분석형</div>
+    <span class="p-badge">구문 분석</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Fan editors often <span class="vw">consult<span class="tt">참고하다</span></span> "specialist sources" to track down information about their media interests.</p>
+      <p class="plain-sent">These works are considered <span class="vw">authoritative<span class="tt">권위 있는</span></span> due to their <span class="vw">reputation<span class="tt">평판</span></span> for <span class="vw">accuracy<span class="tt">정확성</span></span> and focused <span class="vw">coverage<span class="tt">취급 범위</span></span>, and after sufficient "<span class="vw">enculturation<span class="tt">문화적응</span></span>," fan editors will often learn to seek out these sources 〈whenever an information need arises〉.</p>
+      <p class="plain-sent">While fan editors usually seek information individually, they will sometimes collaborate with others {who share their taste in media}.</p>
+      <p class="plain-sent">This collaboration tends to emerge <span class="vw">spontaneously<span class="tt">자발적으로</span></span>, often in response to a lack of <span class="vw">accessible<span class="tt">이용 가능한</span></span> information, and it usually occurs within established groups of editors.</p>
+      <p class="plain-sent">And regardless of [whether information seeking is done individually or collaboratively], fan editors commonly <span class="vw">face<span class="tt">직면하다</span></span> several key informational <span class="vw">barrier<span class="tt">장벽</span></span>s.</p>
+      <p class="plain-sent"><span class="vw">paywalled<span class="tt">유료화된</span></span> sources, for instance, often block off content, and link rot can <span class="vw">hinder<span class="tt">방해하다</span></span> an editor's ability to locate information.</p>
+      <p class="plain-sent">Language <span class="vw">barrier<span class="tt">장벽</span></span>s can also hinder editors, leading some to use machine <span class="vw">translation<span class="tt">번역</span></span> tools or to seek help from <span class="vw">multilingual<span class="tt">여러 언어를 사용하는</span></span> <span class="vw">colleague<span class="tt">동료</span></span>s.</p>
+      <p class="plain-sent">Finally, the issue of "recentism" often makes it difficult for fan editors to find pre-digital sources.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 구문 분석</div>
+    <div class="q-block">
+      <div class="q-type">구문 분석 (핵심 구조)</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">A</span> "These works are considered authoritative due to their reputation for accuracy" — "be considered + 형용사": "~으로 여겨지다" / due to: "~ 때문에"</div>
+        <div class="choice"><span class="cn">B</span> "regardless of [whether information seeking is done individually or collaboratively]" — regardless of + whether절: "~인지 여부에 관계없이"</div>
+        <div class="choice"><span class="cn">C</span> "leading some to use machine translation tools or to seek help" — 결과의 분사구문: "그 결과 일부는 ~을 사용하게 된다"</div>
+        <div class="choice"><span class="cn">D</span> "makes it difficult for fan editors to find pre-digital sources" — 가목적어 it / 진목적어 to부정사: "팬 편집자들이 ~를 찾는 것을 어렵게 만든다"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">These works are considered <span class="vw">authoritative<span class="tt">권위 있는</span></span> / due to their reputation for accuracy and focused coverage, / and after sufficient "enculturation," fan editors will often learn to seek out these sources 〈<span class="gr">whenever an information need arises</span>〉.</div>
+        <div class="sp-ko">이 저작물들은 정확성과 집중된 취급 범위에 대한 평판으로 인해 권위 있는 것으로 여겨지며, / 충분한 "문화적응" 이후, 팬 편집자들은 정보 필요가 생길 때마다 / 이러한 출처를 찾는 법을 배우게 된다. <span class="sp-note">★ be considered + 형용사 / whenever: "~할 때마다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">...regardless of <span class="gr">[whether information seeking is done individually or collaboratively]</span>, / fan editors commonly face several key informational barriers.</div>
+        <div class="sp-ko">...정보 탐색이 개별적으로 이루어지든 협력적으로 이루어지든 관계없이, / 팬 편집자들은 일반적으로 몇 가지 핵심 정보 장벽에 직면한다. <span class="sp-note">★ regardless of whether: "~인지 여부와 관계없이"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Language barriers can also hinder editors, <span class="gr">leading some to use machine translation tools or to seek help from multilingual colleagues</span>. Finally, the issue of "recentism" often <span class="gr">makes it difficult for fan editors to find pre-digital sources</span>.</div>
+        <div class="sp-ko">언어 장벽도 편집자들을 방해할 수 있어, / 일부는 기계 번역 도구를 사용하거나 다국어 동료에게 도움을 구하게 된다. / 마지막으로, "최근주의"의 문제는 팬 편집자들이 디지털 이전 자료를 찾기 어렵게 만드는 경우가 많다. <span class="sp-note">★ leading ~: 결과 분사구문 / make it difficult for sb to V: 가목적어·진목적어</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① be considered + 형용사 (수동태)</strong> — "~으로 여겨지다": "are considered authoritative"</p>
+      <p><strong>② regardless of whether ~ (전치사 + whether절)</strong> — "~인지 여부와 관계없이"</p>
+      <p><strong>③ leading some to V (결과 분사구문)</strong> — "그 결과 일부는 V하게 된다"</p>
+      <p><strong>④ make it difficult for sb to V (가목적어·진목적어)</strong> — "sb가 V하는 것을 어렵게 만들다"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Fan editors rely on authoritative specialist sources through enculturation and employ both individual and collaborative strategies to navigate various informational barriers.
+      <div class="topic-ko">팬 편집자들은 문화적응을 통해 권위 있는 전문 자료에 의존하고, 다양한 정보 장벽을 극복하기 위해 개인적·협력적 전략을 모두 사용한다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Fan editors rely on authoritative "specialist sources" for accurate information, a habit developed through a process of enculturation.</td><td class="fw-ko">팬 편집자들은 문화적응 과정을 통해 권위 있는 전문 자료를 찾는 습관을 발전시킨다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>While information seeking is primarily individual, editors often engage in spontaneous collaboration within established groups when data is difficult to access.</td><td class="fw-ko">정보 탐색은 주로 개인적이지만, 접근이 어려울 때는 확립된 그룹 내에서 자발적 협력이 이루어진다.</td></tr>
+        <tr><td><span class="step-badge">③ Elaboration</span></td><td>Editors face various informational barriers: paywalls, link rot, language differences, and "recentism" in finding pre-digital sources.</td><td class="fw-ko">유료 장벽, 링크 끊김, 언어 장벽, '최근주의' 등 다양한 정보 장벽이 팬 편집자들을 방해한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p12 -->
+
+</main>
+
+<script>
+const ids=['home','p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
