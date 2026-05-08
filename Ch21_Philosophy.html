@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch21 Philosophy · Religion · History · Custom · Geography | SGHS Critical R&W</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --purple:#5a2d82;--purple-bg:rgba(90,45,130,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+
+/* HEADER */
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1100px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.15rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.7rem;opacity:.55;margin-top:2px;}
+.hdr-nav{display:flex;gap:6px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:5px 14px;border-radius:4px;font-size:.72rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+
+/* LAYOUT */
+.wrap{max-width:1100px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* TOC */
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:20px 22px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);}
+.toc-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.63rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:9px;letter-spacing:.08em;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1.02rem;font-weight:600;margin-bottom:4px;line-height:1.4;}
+.toc-ko{font-size:.79rem;color:var(--ink3);}
+
+/* PASSAGE HEADER */
+.p-header{background:var(--ink);color:#fefcf8;padding:22px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.3rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;font-style:italic;}
+.p-badge{display:inline-block;margin-top:8px;background:var(--accent2);color:#fff;font-size:.63rem;font-weight:700;padding:2px 10px;border-radius:20px;letter-spacing:.08em;}
+
+/* CARD */
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:24px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* PLAIN PASSAGE BOX */
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:22px 26px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.92;color:var(--ink);}
+.bk{display:inline-block;border-bottom:2.5px solid var(--ink);min-width:160px;margin:0 3px;vertical-align:bottom;}
+.fn{font-size:.77rem;color:var(--ink3);margin-top:12px;border-top:1px solid var(--border2);padding-top:9px;font-style:italic;line-height:1.6;}
+
+/* PARAGRAPH BLOCKS (for ordering question) */
+.para-block{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:16px 20px;margin-bottom:12px;}
+.para-block-label{font-size:.68rem;font-weight:700;letter-spacing:.18em;color:var(--accent2);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+
+/* INSERT BOX */
+.insert-box{background:#fdf0e8;border-left:4px solid var(--accent2);padding:14px 18px;border-radius:0 6px 6px 0;margin-bottom:16px;font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.88;}
+.insert-label{font-size:.65rem;font-weight:700;letter-spacing:.15em;color:var(--accent2);margin-bottom:7px;text-transform:uppercase;}
+
+/* NUM CIRCLES */
+.nc{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--ink);font-size:.7rem;font-weight:700;margin:0 2px;vertical-align:middle;}
+.nc-ans{border-color:var(--orange);color:var(--orange);}
+
+/* VOCAB TOOLTIPS */
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:5px 9px;border-radius:5px;font-size:.72rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+
+/* GRAMMAR / GREEN */
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+
+/* QUESTION BLOCK */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:18px 22px;margin-bottom:12px;}
+.q-type{font-size:.67rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;text-transform:uppercase;}
+.q-stem{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:12px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;line-height:1.55;padding:7px 12px;border-radius:5px;color:var(--ink2);}
+.cn{font-weight:700;color:var(--ink);margin-right:4px;}
+.correct{background:var(--orange-bg);border:1px solid rgba(192,80,16,.25);}
+.correct .cn{color:var(--orange);}
+
+/* ANSWER BOX */
+.ans-box{margin-top:12px;padding:16px 20px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-lbl{font-size:.64rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:6px;}
+.ans-num{font-size:1rem;font-weight:700;color:var(--orange);margin-bottom:8px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.7;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+
+/* PASSAGE BOX (구문해석) */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:22px 26px;margin-bottom:18px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.88;color:var(--ink);}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.73rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 5px;border-radius:3px;margin-left:5px;}
+
+/* GRAMMAR NOTE */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.2);border-radius:6px;padding:13px 17px;margin-top:8px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.77rem;letter-spacing:.06em;margin-bottom:7px;}
+.gr-note p{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:5px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+
+/* TEXT STRUCTURE BOX */
+.structure-box{background:#f8f4ff;border:1px solid rgba(90,45,130,.18);border-radius:8px;padding:16px 20px;font-size:.84rem;line-height:1.75;margin-bottom:12px;}
+.structure-box h4{color:var(--purple);font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;font-weight:700;}
+.s-item{margin-bottom:6px;padding-left:14px;border-left:3px solid #c0a8f0;}
+.s-arrow{color:var(--accent2);font-weight:700;margin:0 4px;}
+
+/* MAIN IDEA BOX */
+.main-idea-box{background:#fff8f0;border:1px solid rgba(176,90,30,.25);border-radius:8px;padding:15px 18px;font-size:.84rem;line-height:1.75;}
+.main-idea-box h4{color:var(--accent2);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;font-weight:700;}
+
+/* TOPIC BOX */
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:14px 18px;border-radius:0 7px 7px 0;margin-bottom:12px;font-size:.9rem;line-height:1.65;}
+.topic-ko{margin-top:7px;font-size:.79rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:7px;font-style:italic;}
+
+/* FRAMEWORK TABLE */
+.fw-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:8px 14px;text-align:left;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:12px 14px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.61rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:3px;}
+.fw-ko{margin-top:7px;font-size:.78rem;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:7px;}
+
+/* VOCAB TABLE */
+.voca-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.voca-table th{background:var(--bg);padding:8px 12px;text-align:left;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:7px 12px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.55;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.93rem;}
+.vw-mean{color:var(--ink2);}
+.vw-syn{font-size:.76rem;color:var(--ink3);margin-top:2px;}
+
+/* ORDER ARROW */
+.order-box{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.order-pill{background:var(--ink);color:#fefcf8;font-weight:700;font-size:.9rem;padding:6px 18px;border-radius:20px;font-family:'JetBrains Mono',monospace;}
+.order-arrow{color:var(--accent2);font-size:1.2rem;font-weight:700;}
+
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card{padding:16px;}.plain-box,.passage-box{padding:16px 18px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Ch21 · Philosophy, Religion, History, Custom, Geography</div>
+      <div class="hdr-sub">SGHS Critical Reading &amp; Writing — 본문·문항·정답해설·구문분석·Text Structure·Vocabulary</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">기출 · 요지</button>
+      <button class="nb" onclick="show('p2')">지문 1 · 주제</button>
+      <button class="nb" onclick="show('p3')">지문 2 · 순서</button>
+      <button class="nb" onclick="show('p4')">지문 3 · 삽입</button>
+      <button class="nb" onclick="show('voca')">단어장</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ════ HOME ════ -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.65rem;margin-bottom:8px;">Chapter 21 — Philosophy, Religion, History, Custom, Geography</h1>
+  <p style="font-size:.87rem;color:var(--ink3);margin-bottom:22px;">SGHS Critical Reading &amp; Writing · Suah Kim &nbsp;|&nbsp; 총 4개 지문 + 단어장</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')">
+      <div class="toc-badge">기출 · 2026 수능 6월 모평</div>
+      <div class="toc-en">Geography &amp; Spatial Awareness</div>
+      <div class="toc-ko">지리학과 공간적 인식 — 글의 요지 / 빈칸 완성</div>
+    </a>
+    <a class="toc-card" onclick="show('p2')">
+      <div class="toc-badge">지문 1 · 주제 완성</div>
+      <div class="toc-en">Spatially Explicit Methods in Research</div>
+      <div class="toc-ko">공간 명시적 방법의 혁신 — 주제 완성</div>
+    </a>
+    <a class="toc-card" onclick="show('p3')">
+      <div class="toc-badge">지문 2 · 글의 순서 배열</div>
+      <div class="toc-en">Descartes &amp; Cogito Ergo Sum</div>
+      <div class="toc-ko">데카르트의 감각 의심과 코기토 — 순서 배열</div>
+    </a>
+    <a class="toc-card" onclick="show('p4')">
+      <div class="toc-badge">지문 3 · 문장 삽입</div>
+      <div class="toc-en">Ache Tribe &amp; Resource Sharing</div>
+      <div class="toc-ko">아체 부족의 공유 전략 — 문장 삽입</div>
+    </a>
+    <a class="toc-card" onclick="show('voca')">
+      <div class="toc-badge">Vocabulary</div>
+      <div class="toc-en">Chapter 21 Word &amp; Phrase List</div>
+      <div class="toc-ko">Ch21 전체 단어 &amp; 숙어 정리 — 22개</div>
+    </a>
+  </div>
+</div>
+
+<!-- ════ P1 기출 요지 ════ -->
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">기출 · 2026학년도 6월 모평 · Chapter 21</div>
+    <div class="p-title">Geography &amp; Spatial Awareness</div>
+    <div class="p-title-ko">지리학과 공간적 인식 — where, why there, so what</div>
+    <span class="p-badge">글의 요지 / 빈칸 완성</span>
+  </div>
+
+  <!-- 본문 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">One word is <span class="vw">inextricably<span class="tt">풀 수 없게</span></span> associated with geography: <em>where</em>.</p>
+      <p class="plain-sent">That is because geography starts from the <span class="vw">premise<span class="tt">전제</span></span> that it matters where something takes place on Earth's surface.</p>
+      <p class="plain-sent">The key questions are not simply "where" questions, though; they are "why there" and "so what" questions.</p>
+      <p class="plain-sent"><span class="vw">Get to<span class="tt">~에 도달하다</span></span>ing to such questions means taking spatial <span class="vw">arrangement<span class="tt">배치, 배열</span></span>s, <span class="vw">variation<span class="tt">차이, 변화</span></span>s, and <span class="vw">interconnection<span class="tt">상호 연결</span></span>s seriously.</p>
+      <p class="plain-sent">Engaging in even the simplest day-to-day activity requires some <span class="vw">appreciation<span class="tt">이해, 인식</span></span> of spatial circumstances — where to find food and services, how to get to work places, and the like.</p>
+      <p class="plain-sent">Moving up in scale, without some awareness of <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>, it is difficult to make <span class="vw">reasoned<span class="tt">논리적인</span></span> business or policy judgments, make sense of events, or <span class="vw">grasp<span class="tt">이해하다</span></span> some of the basic forces shaping life on the planet.</p>
+      <p class="plain-sent">Locating a new store or public service requires taking into consideration population distributions, the location of roads and utilities, socio-economic patterns, and more.</p>
+      <p class="plain-sent">Understanding why and where <span class="vw">migration<span class="tt">이주</span></span> happens requires consideration of the political organization of territory, the spatial consequences of discrimination, socio-economic patterns, and the <span class="vw">layout<span class="tt">배치</span></span> of the physical environment.</p>
+      <div class="fn">* inextricably: 풀 수 없게</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">01 문항 — 글의 요지 &amp; 빈칸 완성</div>
+    <div class="q-block">
+      <div class="q-type">글의 요지 (Main Point) + 빈칸 완성 (Blank — keyword: how, arrange)</div>
+      <div class="q-stem">빈칸에 들어갈 말을 주어진 키워드(how, arrange)를 활용하여 완성하시오.</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">빈칸: <span class="ans">how spatial arrangements work</span> (또는 how things are spatially arranged)</div>
+      <div class="ans-exp">
+        <strong>빈칸 전후 문맥:</strong> "without some awareness of [빈칸], it is difficult to make reasoned business or policy judgments, make sense of events, or grasp some of the basic forces shaping life on the planet"<br><br>
+        <strong>핵심 논리:</strong> 글 전체에서 "spatial arrangements, variations, interconnections"를 진지하게 고려해야 한다는 것이 핵심. 빈칸은 이 spatial awareness를 받아야 함.<br><br>
+        <strong>keyword 활용:</strong><br>
+        • <strong>how</strong>: "어떻게" → how things are arranged / how spatial patterns work<br>
+        • <strong>arrange → arrangements</strong>: "공간적 배치들이 어떻게 이루어지는지"<br><br>
+        <strong>글의 요지:</strong> 지리학은 단순히 "어디에"를 묻는 것을 넘어 "왜 거기에"와 "그래서 어떻게"를 탐구하며, 일상생활부터 정책, 이주까지 다양한 결정에 공간적 인식이 필수적이다.
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문 해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">One word is <span class="vw">inextricably<span class="tt">풀 수 없게</span></span> associated with geography: <em>where</em>. That is because geography starts from the <span class="vw">premise<span class="tt">전제</span></span> <span class="gr">[that it matters where something takes place on Earth's surface]</span>.</div>
+        <div class="sp-ko">하나의 단어가 지리학과 불가분하게 연결되어 있다: "어디에"(where). / 그것은 지리학이 무언가가 지구 표면의 어디에서 일어나는지가 중요하다는 전제에서 출발하기 때문이다. <span class="sp-note">★ the premise that ~ (동격 that절) / it matters where ~: 가주어·진주어 where절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Getting to such questions means <span class="gr">taking spatial arrangements, variations, and interconnections seriously</span>.</div>
+        <div class="sp-ko">그러한 질문들에 도달한다는 것은 공간적 배치, 차이, 상호 연결을 진지하게 고려하는 것을 의미한다. <span class="sp-note">★ Getting to ~: 동명사 주어 / mean + -ing: "~을 의미하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Engaging in even the simplest day-to-day activity / requires some <span class="vw">appreciation<span class="tt">이해, 인식</span></span> of spatial circumstances — <span class="gr">where to find food and services, how to get to work places, and the like</span>.</div>
+        <div class="sp-ko">심지어 가장 단순한 일상 활동에 참여하는 것도 / 공간적 상황에 대한 어느 정도의 이해를 필요로 한다 — / 음식과 서비스를 어디서 찾을지, 직장에 어떻게 가야 할지 등. <span class="sp-note">★ Engaging in ~: 동명사 주어 / where/how to V: "어디/어떻게 ~할지" (의문사 + to부정사)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Moving up in scale, <span class="gr">without some awareness of [빈칸]</span>, it is difficult / to make <span class="vw">reasoned<span class="tt">논리적인</span></span> business or policy judgments, make sense of events, or <span class="vw">grasp<span class="tt">이해하다</span></span> some of the basic forces shaping life on the planet.</div>
+        <div class="sp-ko">규모를 높여서, [빈칸]에 대한 어느 정도의 인식 없이는, / 논리적인 사업이나 정책 판단을 내리거나, 사건들을 이해하거나, / 지구상의 삶을 형성하는 기본적인 힘들 중 일부를 파악하기 어렵다. <span class="sp-note">★ it is difficult to V (가주어·진주어) / 3개 병렬: make ~ / make sense ~ / grasp ~</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Locating a new store or public service / requires taking into consideration <span class="gr">population distributions, the location of roads and utilities, socio-economic patterns, and more</span>.</div>
+        <div class="sp-ko">새 상점이나 공공 서비스의 위치를 정하는 것은 / 인구 분포, 도로와 공공시설의 위치, 사회경제적 패턴 등을 고려하는 것을 필요로 한다. <span class="sp-note">★ take ~ into consideration: "~을 고려하다"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① the premise [that ~] (동격 that절)</strong> — premise의 내용을 that절이 설명: "~라는 전제"</p>
+      <p><strong>② it matters where ~ (가주어·진주어)</strong> — "~가 중요하다": "it matters where something takes place"</p>
+      <p><strong>③ where/how to V (의문사 + to부정사)</strong> — "어디/어떻게 ~할지": where to find / how to get</p>
+      <p><strong>④ 동명사 주어 (Getting to / Engaging in / Moving up)</strong> — 동명사구 전체가 주어 역할</p>
+      <p><strong>⑤ take ~ into consideration</strong> — "~을 고려하다" = take ~ into account</p>
+    </div>
+  </div>
+
+  <!-- Topic & Structure -->
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; Text Structure</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> The essential questions geography asks about <strong>s</strong>patial <strong>a</strong>rrangements
+      <div class="topic-ko">지리학이 공간적 배치에 관해 묻는 핵심 질문들</div>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>Claim:</strong> Geography = asking "where," "why there," and "so what"</div>
+      <div class="s-item"><strong>Support 1:</strong> Daily life (finding food, commuting) <span class="s-arrow">→</span> spatial awareness required</div>
+      <div class="s-item"><strong>Support 2:</strong> Larger scale (business/policy, events) <span class="s-arrow">→</span> spatial awareness required</div>
+      <div class="s-item"><strong>Support 3:</strong> Specific examples
+        <br><span class="s-arrow">→</span> New store location: population, roads, socio-economic data
+        <br><span class="s-arrow">→</span> Migration factors: territory, discrimination, physical environment
+      </div>
+    </div>
+    <div class="main-idea-box">
+      <h4>Main Idea (빈칸 완성)</h4>
+      Geography goes beyond simply asking "where" — it investigates <strong>how</strong> things occur in particular places and what spatial <strong>arrangements</strong> mean for decisions ranging from everyday activities to business, policy, and migration.
+      <div style="margin-top:8px;font-size:.79rem;color:var(--ink3);font-style:italic;">지리학은 단순히 "어디에"를 묻는 것을 넘어, 특정 장소에서 사물이 어떻게 발생하는지, 공간적 배치가 일상 활동부터 사업·정책·이주에 이르는 결정에 무엇을 의미하는지를 탐구한다.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Claim</span></td><td>Geography's core = "where" + "why there" + "so what" → taking spatial arrangements, variations, interconnections seriously</td><td class="fw-ko">지리학의 핵심은 "어디에"를 넘어 "왜 거기에"와 "그래서 어떻게"를 탐구하는 것이다.</td></tr>
+        <tr><td><span class="step-badge">② Support: Daily Life</span></td><td>Even simple daily activities require spatial awareness (food, work, services)</td><td class="fw-ko">일상 활동도 공간적 인식을 필요로 한다.</td></tr>
+        <tr><td><span class="step-badge">③ Support: Scale Up</span></td><td>Business/policy, understanding events → requires spatial awareness at larger scale</td><td class="fw-ko">더 큰 규모에서 사업·정책·사건 이해에도 공간적 인식이 필수적이다.</td></tr>
+        <tr><td><span class="step-badge">④ Examples</span></td><td>Store location (population, roads) / Migration (territory, discrimination, environment)</td><td class="fw-ko">신규 상점 위치 선정과 이주 이해 모두 복합적 공간 데이터를 필요로 한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p1 -->
+
+<!-- ════ P2 지문1 주제 ════ -->
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">Chapter 21 · 지문 1</div>
+    <div class="p-title">Spatially Explicit Methods in Human-Environment Research</div>
+    <div class="p-title-ko">인간-환경 연구에서 공간 명시적 방법의 혁신 · 주제 완성</div>
+    <span class="p-badge">다음 글의 주제를 완성하시오</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Perhaps nothing has <span class="vw">revolutionize<span class="tt">혁신하다</span></span>d the study of human-environment interactions more than the development of spatially explicit methods for collecting and analyzing data.</p>
+      <p class="plain-sent">Just a few decades ago, most natural and social scientists collected their data without precise spatial <span class="vw">referent<span class="tt">지시 대상, 준거점</span></span>s.</p>
+      <p class="plain-sent"><span class="vw">make reference to<span class="tt">~을 언급하다</span></span>References were made to watersheds, to communities, to villages, to cities, to <span class="vw">proximity<span class="tt">근처, 근접</span></span> to rivers, and so on.</p>
+      <p class="plain-sent">In some cases (in anthropology mostly), there was even the custom of changing the name of the community and even its location, "to protect the <span class="vw">informant<span class="tt">정보 제공자</span></span>s."</p>
+      <p class="plain-sent">While <span class="vw">confidentiality<span class="tt">기밀성, 비밀 유지</span></span> remains an important concern when working with human subjects, the extreme to which this was done was largely <span class="vw">unjustified<span class="tt">정당화되지 않은</span></span>.</p>
+      <p class="plain-sent">Everyone knew more or less where these studied communities were, and anyone interested could have found out.</p>
+      <p class="plain-sent"><span class="vw">be that as it may<span class="tt">그렇다 하더라도</span></span>, there was very little interest, except in geography, to precisely locate a study area on a map with coordinates.</p>
+      <p class="plain-sent">Geography <span class="vw">persist<span class="tt">지속하다, 고집하다</span></span>ed, and finally convinced the rest of us, that place was fundamentally important to understand human-environment dynamics.</p>
+      <div class="fn">* watershed: (강의) 유역 &nbsp;&nbsp;** proximity: 근처, 근접 &nbsp;&nbsp;*** coordinate: 좌표</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 주제를 완성하시오</div>
+    <div class="q-block">
+      <div class="q-type">주제 완성 (Topic Completion)</div>
+      <div class="q-stem">The role of _____________ in establishing spatial p_____________ in human-environment research</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">The role of <strong>geography</strong> in establishing spatial <strong>precision</strong> in human-environment research</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong><br>
+        • "Geography persisted, and finally convinced the rest of us, that place was fundamentally important" → <strong>geography</strong>가 역할의 주체<br>
+        • "spatially explicit methods" + "precise spatial referents" + "precisely locate a study area with coordinates" → spatial <strong>precision</strong>(공간적 정밀성)<br><br>
+        <strong>Text Structure 빈칸 정답:</strong><br>
+        - Claim: <u>spatially explicit</u> methods <u>transformed</u> how scientists study ...<br>
+        - Support 1: researchers relied on geographic references rather than <u>precise</u> locations<br>
+        - Support 2: Anthropology deliberately <u>changed</u> community names and locations to <u>shield</u> research participants<br>
+        - Conclusion: Geography kept <u>insisting</u> that precise location <u>matters</u>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Perhaps nothing has revolutionized the study of human-environment interactions more than <span class="gr">the development of spatially explicit methods for collecting and analyzing data</span>.</div>
+        <div class="sp-ko">아마도 공간 명시적 데이터 수집·분석 방법의 개발만큼 / 인간-환경 상호작용 연구를 혁신한 것은 없을 것이다. <span class="sp-note">★ nothing ~ more than ~: "~ 만큼 ~한 것은 없다" (최상급 의미)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In some cases (in anthropology mostly), there was even the custom of <span class="gr">changing the name of the community and even its location</span>, "to protect the informants."</div>
+        <div class="sp-ko">일부 경우에(주로 인류학에서), 심지어 공동체의 이름과 심지어 그 위치를 바꾸는 관습이 있었는데, / "정보 제공자들을 보호하기 위해서"였다. <span class="sp-note">★ the custom of -ing: "~하는 관습" / of: 동격</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">While confidentiality remains an important concern <span class="gr">when working with human subjects</span>, the extreme <span class="gr">to which this was done</span> was largely unjustified.</div>
+        <div class="sp-ko">비록 기밀성이 인간 연구 대상자들과 작업할 때 중요한 관심사로 남아있지만, / 이것이 행해진 극단적인 정도는 대체로 정당화되지 않았다. <span class="sp-note">★ While(양보절) / the extreme to which ~: "~가 행해진 극단적 정도"(관계절)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="vw">be that as it may<span class="tt">그렇다 하더라도</span></span>, there was very little interest, except in geography, to precisely locate a study area on a map with coordinates. Geography persisted, and finally convinced the rest of us, <span class="gr">that place was fundamentally important to understand human-environment dynamics</span>.</div>
+        <div class="sp-ko">그렇다 하더라도, 지리학을 제외하고는, 좌표로 지도에 연구 지역을 정확히 위치시키는 것에 관심이 거의 없었다. / 지리학은 지속적으로 주장했고, 마침내 나머지 사람들을 납득시켰다, / 장소가 인간-환경 역학을 이해하는 데 근본적으로 중요하다는 것을. <span class="sp-note">★ be that as it may: "그렇다 하더라도" (= nevertheless) / convinced us that ~: "우리에게 ~라는 것을 납득시켰다"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① nothing ~ more than ~ (비교 최상급)</strong> — "~만큼 ~한 것은 없다": "nothing has revolutionized ~ more than the development"</p>
+      <p><strong>② While(양보절)</strong> — "비록 ~이지만": "While confidentiality remains important ~ the extreme was unjustified"</p>
+      <p><strong>③ the extreme to which this was done (관계절)</strong> — "이것이 행해진 극단적인 정도": 전치사+관계대명사 구조</p>
+      <p><strong>④ be that as it may (관용 표현)</strong> — "그렇다 하더라도" = nevertheless: 앞 내용을 인정하면서 역접</p>
+      <p><strong>⑤ convince O that ~ (5형식)</strong> — "O에게 ~라는 것을 납득시키다"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      The role of <strong>geography</strong> in establishing spatial <strong>precision</strong> in human-environment research
+      <div class="topic-ko">인간-환경 연구에서 공간적 정밀성을 확립하는 데 있어 지리학의 역할</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Claim</span></td><td>Spatially explicit methods have most revolutionized how scientists study human-environment interactions.</td><td class="fw-ko">공간 명시적 방법이 인간-환경 연구를 가장 혁신적으로 변화시켰다.</td></tr>
+        <tr><td><span class="step-badge">② Support 1</span></td><td>Previously, researchers relied on imprecise geographic references (watersheds, communities, villages) rather than precise locations.</td><td class="fw-ko">이전에는 정확한 위치 대신 유역·마을 같은 모호한 지리적 참조를 사용했다.</td></tr>
+        <tr><td><span class="step-badge">③ Support 2</span></td><td>Anthropology even changed community names/locations "to protect informants" — largely unjustified.</td><td class="fw-ko">인류학에서는 정보 제공자 보호를 명목으로 공동체 이름과 위치까지 변경했다.</td></tr>
+        <tr><td><span class="step-badge">④ Conclusion</span></td><td>Geography persisted in insisting precise location matters → eventually convinced other disciplines.</td><td class="fw-ko">지리학은 정확한 위치의 중요성을 고집하여 결국 다른 학문 분야를 설득했다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p2 -->
+
+<!-- ════ P3 지문2 순서배열 ════ -->
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">Chapter 21 · 지문 2</div>
+    <div class="p-title">Descartes &amp; Cogito Ergo Sum</div>
+    <div class="p-title-ko">데카르트의 감각 의심과 코기토 · 글의 순서 배열</div>
+    <span class="p-badge">다음 글에 이어질 순서를 쓰시오</span>
+  </div>
+
+  <!-- 주어진 첫 단락 -->
+  <div class="card">
+    <div class="card-lbl">주어진 도입 단락</div>
+    <div class="insert-box">
+      <div class="insert-label">주어진 단락 (도입)</div>
+      The idea that our senses may be <span class="vw">deceive<span class="tt">속이다</span></span>ing us was <span class="vw">take up<span class="tt">(주제를) 다루다</span></span>n up by the French philosopher and mathematician René Descartes.
+      <div style="margin-top:8px;font-size:.81rem;color:var(--ink3);font-style:italic;">우리의 감각이 우리를 속이고 있을 수 있다는 생각은 프랑스의 철학자이자 수학자인 René Descartes에 의해 다루어졌다.</div>
+    </div>
+
+    <div style="margin-bottom:14px;padding:14px 18px;background:var(--purple-bg);border:1px solid rgba(90,45,130,.2);border-radius:8px;font-size:.85rem;">
+      <strong style="color:var(--purple);">📋 각 단락 (A) (B) (C)</strong>
+    </div>
+
+    <div class="para-block">
+      <div class="para-block-label">(A)</div>
+      <p style="font-family:'Crimson Pro',serif;font-size:1.02rem;line-height:1.88;color:var(--ink);">It might even be that we are asleep, and that the world we are experiencing is no more than a dream, or that God or some <span class="vw">mischievous<span class="tt">장난기 많은</span></span> power is making us believe things that are not really true. If that is the case, though, we can never know anything for sure.</p>
+      <div style="font-size:.8rem;color:var(--ink3);margin-top:8px;padding-left:10px;border-left:2px solid var(--border);">심지어 우리가 잠들어 있고, 우리가 경험하는 세계가 꿈에 불과하거나, 신이나 어떤 장난기 많은 힘이 우리로 하여금 실제로 사실이 아닌 것들을 믿게 만들고 있을 수도 있다. 그러나 만약 그것이 사실이라면, 우리는 어떤 것도 확실하게 알 수 없다.</div>
+    </div>
+
+    <div class="para-block">
+      <div class="para-block-label">(B)</div>
+      <p style="font-family:'Crimson Pro',serif;font-size:1.02rem;line-height:1.88;color:var(--ink);">But Descartes then showed that there was one thing he could be sure of: In order to be <span class="vw">deceive<span class="tt">속이다</span></span>d, he must exist, and exist as a thing that thinks. So, although his senses could not be trusted, he could be sure he existed as something that was capable of thinking and reasoning.</p>
+      <div style="font-size:.8rem;color:var(--ink3);margin-top:8px;padding-left:10px;border-left:2px solid var(--border);">그러나 데카르트는 그가 확신할 수 있는 한 가지가 있다는 것을 보여주었다: 속임을 당하기 위해서는, 그는 존재해야 하고, 생각하는 것으로 존재해야 한다. 따라서 비록 그의 감각은 신뢰할 수 없었지만, 그는 생각하고 추론할 수 있는 무언가로 존재한다는 것을 확신할 수 있었다.</div>
+    </div>
+
+    <div class="para-block">
+      <div class="para-block-label">(C)</div>
+      <p style="font-family:'Crimson Pro',serif;font-size:1.02rem;line-height:1.88;color:var(--ink);">He realized that sometimes our senses give us a false impression — a straight stick in a glass of water appears to be <span class="vw">bend<span class="tt">구부러지다</span></span>t, for example. And if we know that they can be unreliable, it would be wrong to trust them completely — everything that we experience with our senses might be false.</p>
+      <div style="font-size:.8rem;color:var(--ink3);margin-top:8px;padding-left:10px;border-left:2px solid var(--border);">그는 때때로 우리의 감각이 우리에게 거짓 인상을 준다는 것을 깨달았다 — 예를 들어 물 한 잔 속의 곧은 막대기가 구부러진 것처럼 보인다. 그리고 만약 우리가 그것들이 신뢰할 수 없다는 것을 안다면, 그것들을 완전히 신뢰하는 것은 잘못일 것이다 — 우리가 감각으로 경험하는 모든 것이 거짓일 수 있다.</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글에 이어질 순서를 쓰시오</div>
+    <div class="q-block">
+      <div class="q-type">글의 순서 배열 (Paragraph Ordering)</div>
+      <div class="q-stem">주어진 단락 다음에 이어질 (A), (B), (C)의 순서를 쓰시오.</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">(C) → (A) → (B)</span></div>
+      <div class="order-box">
+        <span class="order-pill">도입</span>
+        <span class="order-arrow">→</span>
+        <span class="order-pill">(C)</span>
+        <span class="order-arrow">→</span>
+        <span class="order-pill">(A)</span>
+        <span class="order-arrow">→</span>
+        <span class="order-pill">(B)</span>
+      </div>
+      <div class="ans-exp">
+        <strong>순서 결정 논리:</strong><br><br>
+        <strong>도입 → (C):</strong> 도입에서 "우리의 감각이 우리를 속일 수 있다는 생각"을 제시 → (C)에서 "He realized that sometimes our senses give us a false impression" = 감각의 거짓 인상 구체적 예시(물 속 막대기). "He"가 도입의 Descartes를 받음.<br><br>
+        <strong>(C) → (A):</strong> (C) 마지막: "everything we experience with our senses might be false" → (A)에서 이를 더 확장: "It might even be that we are asleep ... we can never know anything for sure." = 의심의 급진적 확장<br><br>
+        <strong>(A) → (B):</strong> (A) 마지막: "we can never know anything for sure" → (B)에서 역접(But): "But Descartes then showed that there was one thing he could be sure of" = 반전: 확신할 수 있는 한 가지 → cogito ergo sum
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문 해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 완성된 지문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">[도입] The idea <span class="gr">[that our senses may be deceiving us]</span> was taken up by the French philosopher and mathematician René Descartes.</div>
+        <div class="sp-ko">우리의 감각이 우리를 속이고 있을 수 있다는 생각은 / 프랑스의 철학자이자 수학자인 René Descartes에 의해 다루어졌다. <span class="sp-note">★ The idea that ~ (동격 that절) / be taken up: "다루어지다" (수동태)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">[(C)] He realized <span class="gr">[that sometimes our senses give us a false impression]</span> — a straight stick in a glass of water appears to be bent, for example. And <span class="gr">if we know that they can be unreliable</span>, it would be wrong to trust them completely — everything <span class="gr">that we experience with our senses</span> might be false.</div>
+        <div class="sp-ko">그는 때때로 우리의 감각이 거짓 인상을 줄 수 있다는 것을 깨달았다 — 예를 들어 물 속의 곧은 막대기가 구부러진 것처럼 보인다. / 그리고 만약 우리가 감각이 신뢰할 수 없다는 것을 안다면, 그것들을 완전히 신뢰하는 것은 잘못일 것이다 — 우리가 감각으로 경험하는 모든 것이 거짓일 수 있다. <span class="sp-note">★ it would be wrong to V: 가주어·진주어 가정법 / everything that ~: 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">[(A)] It might even be <span class="gr">[that we are asleep, and that the world we are experiencing is no more than a dream, or that God or some mischievous power is making us believe things that are not really true]</span>. If that is the case, though, we can never know anything for sure.</div>
+        <div class="sp-ko">심지어 우리가 잠들어 있거나, 우리가 경험하는 세계가 꿈에 불과하거나, / 신이나 장난기 많은 힘이 우리로 하여금 사실이 아닌 것들을 믿게 만들고 있을 수도 있다. / 그러나 만약 그것이 사실이라면, 우리는 어떤 것도 확실하게 알 수 없다. <span class="sp-note">★ that절 3개 병렬: that we are asleep / that the world ~ / that God ~ / no more than: "~에 불과한"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">[(B)] But Descartes then showed <span class="gr">[that there was one thing he could be sure of]</span>: <span class="gr">In order to be deceived, he must exist, and exist as a thing that thinks</span>. So, although his senses could not be trusted, he could be sure he existed as something <span class="gr">that was capable of thinking and reasoning</span>.</div>
+        <div class="sp-ko">그러나 데카르트는 그가 확신할 수 있는 한 가지가 있다는 것을 보여주었다: / 속임을 당하기 위해서는 그는 존재해야 하고, 생각하는 것으로 존재해야 한다. / 따라서 비록 그의 감각은 신뢰할 수 없었지만, 그는 생각하고 추론할 수 있는 무언가로 존재한다는 것을 확신할 수 있었다. <span class="sp-note">★ in order to be deceived: "속임을 당하기 위해서는" / be capable of -ing: "~할 수 있는"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① The idea [that ~] (동격 that절)</strong> — idea의 내용을 that절이 설명</p>
+      <p><strong>② no more than (= only)</strong> — "~에 불과한": "the world is no more than a dream"</p>
+      <p><strong>③ it might even be that ~ (가주어·진주어)</strong> — "~일 수도 있다": that절 3개 병렬</p>
+      <p><strong>④ In order to be deceived (목적 부사절)</strong> — "속임을 당하기 위해서는": 조건처럼 해석 가능</p>
+      <p><strong>⑤ be capable of -ing</strong> — "~할 수 있는": "capable of thinking and reasoning"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      Descartes' philosophical inquiry into the <strong>r</strong>eliability of the senses and the <strong>c</strong>ertainty of existence
+      <div class="topic-ko">감각의 신뢰성과 존재의 확실성에 대한 데카르트의 철학적 탐구</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">도입</span></td><td>Descartes takes up the idea that our senses may be deceiving us</td><td class="fw-ko">데카르트가 감각의 기만 가능성을 주제로 삼는다.</td></tr>
+        <tr><td><span class="step-badge">(C) Support 1</span></td><td>Senses can give false impressions → if unreliable, everything experienced may be false</td><td class="fw-ko">감각이 거짓 인상을 줄 수 있으므로 감각 경험 전체가 거짓일 수 있다.</td></tr>
+        <tr><td><span class="step-badge">(A) Support 2</span></td><td>Radical doubt extended: we may be dreaming / deceptive power → nothing can be known for certain</td><td class="fw-ko">의심이 극단까지 확장되어 어떤 것도 확실히 알 수 없게 된다.</td></tr>
+        <tr><td><span class="step-badge">(B) Conclusion</span></td><td>Yet one thing is certain: being deceived requires a thinking, existing self → cogito ergo sum</td><td class="fw-ko">역전: 속임 당함 자체가 생각하는 자아의 존재를 증명한다 → 나는 생각한다, 고로 나는 존재한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p3 -->
+
+<!-- ════ P4 지문3 삽입 ════ -->
+<div class="sec" id="p4">
+  <div class="p-header">
+    <div class="p-code">Chapter 21 · 지문 3</div>
+    <div class="p-title">Ache Tribe &amp; Resource Sharing as Collective Insurance</div>
+    <div class="p-title-ko">아체 부족의 자원 공유 — 집단 보험 전략 · 문장 삽입</div>
+    <span class="p-badge">주어진 문장이 들어가기에 가장 적절한 곳</span>
+  </div>
+
+  <!-- 삽입 문장 -->
+  <div class="card">
+    <div class="card-lbl">삽입 문장 (주어진 문장)</div>
+    <div class="insert-box">
+      <div class="insert-label">주어진 문장</div>
+      Instead of living by a philosophy of "rugged individualism," however, hunters who have a lucky day share their meat with other families.
+      <div style="margin-top:8px;font-size:.81rem;color:var(--ink3);font-style:italic;">그러나 "단호한 개인주의" 철학에 따라 살기보다는, 운이 좋은 날을 보낸 사냥꾼들이 자신들의 고기를 다른 가족들과 나눈다.</div>
+    </div>
+  </div>
+
+  <!-- 본문 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Hunters in the Ache tribe, living in the Paraguayan jungle, have a lot of <span class="vw">ups and downs<span class="tt">기복, 좋을 때와 나쁠 때</span></span> in their success at the hunt.</p>
+      <p class="plain-sent">Some days they bring home much more food than they could possibly eat; other days they come home empty-handed.</p>
+      <p class="plain-sent">( <span class="nc">①</span> ) If a man caught a wild pig and hoarded it for himself and his family, much of it would go to waste (there are no deep-freeze refrigerators in the Paraguayan jungle).</p>
+      <p class="plain-sent">( <span class="nc">②</span> ) During unlucky periods, individual hunters and their families would starve.</p>
+      <p class="plain-sent">( <span class="nc">③</span> ) And they don't just share a little; they share a lot — fully 90%.</p>
+      <p class="plain-sent">( <span class="nc nc-ans">④</span> ) In exchange for this generosity, their neighbors share with them on days when the luck runs the other way.</p>
+      <p class="plain-sent">( <span class="nc">⑤</span> ) By exchanging resources, particularly those that are unpredictable and uncertain (like meat from the hunt, as opposed to vegetable crops), the group provides a mutual <span class="vw">insurance policy<span class="tt">보험 증서(증권)</span></span> against starvation.</p>
+      <div class="fn">* rugged individualism: 단호한 개인주의 &nbsp;&nbsp;** hoard: 비축하다</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">01 문항 — 주어진 문장이 들어가기에 가장 적절한 곳은?</div>
+    <div class="q-block">
+      <div class="q-type">문장 삽입 (Sentence Insertion)</div>
+      <div class="q-stem">주어진 문장이 들어가기에 가장 적절한 곳을 고르시오.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="choice"><span class="cn">②</span></div>
+        <div class="choice"><span class="cn">③</span></div>
+        <div class="choice correct"><span class="cn">④</span> ← 정답</div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">④</span></div>
+      <div class="ans-exp">
+        <strong>삽입 문장 핵심 단서:</strong><br>
+        • <strong>however</strong> (그러나) → 앞 내용과 대조 필요<br>
+        • <strong>Instead of living by "rugged individualism"</strong> → 개인주의(hoarding)와 대조되는 공유(sharing) 행동<br><br>
+        <strong>④ 앞 문장 (②번 위치):</strong> "During unlucky periods, individual hunters and their families would starve." + 개인주의적 비축의 결과(낭비 + 굶주림)<br>
+        <strong>삽입 문장:</strong> "Instead of [rugged individualism], hunters share their meat" = 개인주의(hoarding)에서 공유로 전환<br>
+        <strong>④ 뒤 문장:</strong> "And they don't just share a little; they share a lot — fully 90%" = 삽입 문장의 "share"를 받아 공유의 정도를 구체화<br><br>
+        <strong>③은 불가:</strong> ③ 뒤에 "And they don't just share a little" → 이미 sharing이 언급된 후. 삽입 문장이 먼저 공유를 소개해야 ③의 "they don't just share a little"이 자연스러움.
+      </div>
+    </div>
+  </div>
+
+  <!-- 완성된 지문 구문 해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 완성된 지문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Hunters in the Ache tribe, <span class="gr">living in the Paraguayan jungle</span>, have a lot of <span class="vw">ups and downs<span class="tt">기복</span></span> in their success at the hunt.</div>
+        <div class="sp-ko">파라과이 정글에 사는 아체 부족의 사냥꾼들은 / 사냥의 성공에 있어 많은 기복이 있다. <span class="sp-note">★ living in ~: 현재분사구, Hunters 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">( ① ) <span class="gr">If a man caught a wild pig and hoarded it for himself and his family</span>, much of it would go to waste (there are no deep-freeze refrigerators in the Paraguayan jungle). ( ② ) During unlucky periods, individual hunters and their families would starve.</div>
+        <div class="sp-ko">만약 어떤 남자가 멧돼지를 잡아 자신과 가족을 위해 비축한다면, 그것의 많은 부분이 낭비될 것이다 / (파라과이 정글에는 냉동 냉장고가 없다). / 운이 좋지 않은 기간에는 개인 사냥꾼들과 그 가족들이 굶주릴 것이다. <span class="sp-note">★ 가정법 과거: If ~ caught, ~ would go to waste</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">[ 삽입 ④ ] <span style="color:var(--accent2);">Instead of <span class="gr">living by a philosophy of "rugged individualism,"</span> however, hunters <span class="gr">who have a lucky day</span> share their meat with other families.</span></div>
+        <div class="sp-ko" style="color:var(--accent2);">그러나 "단호한 개인주의" 철학에 따라 살기보다는, 운이 좋은 날을 보낸 사냥꾼들이 다른 가족들과 고기를 나눈다. <span class="sp-note">★ Instead of -ing: "~하는 대신에" / however(역접) / who절: 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">( ③ ) And they don't just share a little; they share a lot — fully 90%. ( <span class="nc nc-ans">④</span> ) In exchange for this generosity, their neighbors share with them on days <span class="gr">when the luck runs the other way</span>.</div>
+        <div class="sp-ko">그리고 그들은 조금만 나누는 것이 아니라; 많이 나눈다 — 완전히 90%를. / 이 관대함의 대가로, 그들의 이웃들은 운이 반대로 흐르는 날에 그들과 나눈다. <span class="sp-note">★ In exchange for: "~의 대가로" / when절: days 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">( ⑤ ) By exchanging resources, particularly <span class="gr">those that are unpredictable and uncertain (like meat from the hunt, as opposed to vegetable crops)</span>, the group provides a mutual <span class="vw">insurance policy<span class="tt">보험 증서</span></span> against starvation.</div>
+        <div class="sp-ko">자원들, 특히 예측 불가능하고 불확실한 것들(채소 작물과 달리 사냥에서 나온 고기처럼)을 교환함으로써, / 그 집단은 기아에 대한 상호 보험 정책을 제공한다. <span class="sp-note">★ by -ing: 수단 / as opposed to: "~와는 달리, ~에 반해서"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 가정법 과거 (If ~ caught, ~ would go)</strong> — 현재 사실의 반대 가정: "만약 비축한다면 낭비될 것이다"</p>
+      <p><strong>② Instead of -ing</strong> — "~하는 대신에": "Instead of living by a philosophy of rugged individualism"</p>
+      <p><strong>③ In exchange for ~</strong> — "~의 대가로": "In exchange for this generosity, neighbors share"</p>
+      <p><strong>④ as opposed to ~</strong> — "~와는 달리, ~에 반해서": "meat from the hunt, as opposed to vegetable crops"</p>
+      <p><strong>⑤ by -ing (수단)</strong> — "~함으로써": "By exchanging resources, the group provides a mutual insurance"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">
+      <strong>R</strong>eciprocal sharing as a <strong>c</strong>ollective survival strategy among the Ache tribe
+      <div class="topic-ko">아체 부족의 집단적 생존 전략으로서의 상호 공유</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Claim</span></td><td>Ache hunters experience highly unpredictable outcomes — feast or famine</td><td class="fw-ko">아체 사냥꾼들은 매우 예측 불가능한 결과(풍요 또는 기아)를 경험한다.</td></tr>
+        <tr><td><span class="step-badge">② Support 1</span></td><td>Hoarding individually → waste on good days, starvation on bad days</td><td class="fw-ko">개인적 비축은 좋은 날 낭비, 나쁜 날 굶주림으로 이어진다.</td></tr>
+        <tr><td><span class="step-badge">③ Support 2</span><br><span style="font-size:.7rem;color:var(--ink3);">[삽입 후]</span></td><td>Instead, hunters share generously — up to 90% of their catch</td><td class="fw-ko">대신 사냥꾼들은 사냥감의 90%까지 관대하게 공유한다.</td></tr>
+        <tr><td><span class="step-badge">④ Support 3</span></td><td>Neighbors reciprocate on unlucky days → mutual benefit</td><td class="fw-ko">이웃들은 운이 없는 날 보답으로 공유 → 상호 이익.</td></tr>
+        <tr><td><span class="step-badge">⑤ Conclusion</span></td><td>Reciprocal sharing of variable resources functions as a collective insurance against starvation</td><td class="fw-ko">변동이 큰 자원의 상호 공유는 기아에 대한 집단 보험으로 기능한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p4 -->
+
+<!-- ════ VOCABULARY ════ -->
+<div class="sec" id="voca">
+  <div style="background:var(--ink);color:#fefcf8;padding:22px 28px;border-radius:8px 8px 0 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;">Chapter 21 · Word &amp; Phrase List</div>
+    <div style="font-family:'Crimson Pro',serif;font-size:1.3rem;font-weight:600;">단어장 — Philosophy, Religion, History, Custom, Geography</div>
+    <div style="font-size:.82rem;opacity:.62;margin-top:4px;">총 22개 단어 &amp; 숙어</div>
+  </div>
+  <div class="card" style="border-radius:0 0 8px 8px;">
+    <div class="card-lbl">Chapter 21 전체 단어 &amp; 숙어</div>
+    <table class="voca-table">
+      <thead>
+        <tr><th>단어 / 숙어</th><th>뜻</th><th>동의어 / 관련어</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="vw-word">get to</td><td class="vw-mean">~에 도달하다</td><td class="vw-syn">reach, arrive at</td></tr>
+        <tr><td class="vw-word">variation</td><td class="vw-mean">차이(변화) / 변형 / 변주곡</td><td class="vw-syn">difference, change, deviation</td></tr>
+        <tr><td class="vw-word">interconnection</td><td class="vw-mean">상호 연결</td><td class="vw-syn">linkage, interdependence</td></tr>
+        <tr><td class="vw-word">take A seriously</td><td class="vw-mean">A를 진지하게 고려하다</td><td class="vw-syn">consider carefully</td></tr>
+        <tr><td class="vw-word">appreciation</td><td class="vw-mean">이해, 인식 / 감상 / 감사</td><td class="vw-syn">awareness, understanding, gratitude</td></tr>
+        <tr><td class="vw-word">reasoned</td><td class="vw-mean">논리적인</td><td class="vw-syn">logical, rational, well-thought-out</td></tr>
+        <tr><td class="vw-word">grasp</td><td class="vw-mean">이해하다</td><td class="vw-syn">understand, comprehend, seize</td></tr>
+        <tr><td class="vw-word">migration</td><td class="vw-mean">이주</td><td class="vw-syn">movement, relocation</td></tr>
+        <tr><td class="vw-word">layout</td><td class="vw-mean">배치</td><td class="vw-syn">arrangement, design, organization</td></tr>
+        <tr><td class="vw-word">make reference to</td><td class="vw-mean">~을 언급하다</td><td class="vw-syn">refer to, mention, cite</td></tr>
+        <tr><td class="vw-word">informant</td><td class="vw-mean">정보 제공자</td><td class="vw-syn">source, contact, insider</td></tr>
+        <tr><td class="vw-word">confidentiality</td><td class="vw-mean">기밀성, 비밀 유지</td><td class="vw-syn">privacy, secrecy</td></tr>
+        <tr><td class="vw-word">unjustified</td><td class="vw-mean">정당화되지 않은</td><td class="vw-syn">unwarranted, indefensible</td></tr>
+        <tr><td class="vw-word">be that as it may</td><td class="vw-mean">그렇다 하더라도</td><td class="vw-syn">nevertheless, even so, regardless</td></tr>
+        <tr><td class="vw-word">persist</td><td class="vw-mean">지속하다, 고집하다</td><td class="vw-syn">continue, persevere, insist</td></tr>
+        <tr><td class="vw-word">revolutionize</td><td class="vw-mean">혁신하다</td><td class="vw-syn">transform, overhaul, reform</td></tr>
+        <tr><td class="vw-word">referent</td><td class="vw-mean">지시 대상, 준거점</td><td class="vw-syn">reference point</td></tr>
+        <tr><td class="vw-word">deceive</td><td class="vw-mean">속이다</td><td class="vw-syn">mislead, trick, fool</td></tr>
+        <tr><td class="vw-word">take up</td><td class="vw-mean">(주제를) 다루다, 이어받다</td><td class="vw-syn">address, deal with, pick up</td></tr>
+        <tr><td class="vw-word">bend (bent-bent)</td><td class="vw-mean">구부러지다</td><td class="vw-syn">curve, flex, distort</td></tr>
+        <tr><td class="vw-word">ups and downs</td><td class="vw-mean">기복, 좋을 때와 나쁠 때</td><td class="vw-syn">highs and lows, fluctuations</td></tr>
+        <tr><td class="vw-word">insurance policy</td><td class="vw-mean">보험 증서(증권)</td><td class="vw-syn">coverage, protection plan</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end voca -->
+
+</main>
+
+<script>
+const ids=['home','p1','p2','p3','p4','voca'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
