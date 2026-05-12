@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1(11-12) 어법·어휘 | SGHS 영어 비평적 읽기와 쓰기 B</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --purple:#5a2d82;--purple-bg:rgba(90,45,130,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1100px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.1rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.7rem;opacity:.55;margin-top:2px;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 12px;border-radius:4px;font-size:.7rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+
+.wrap{max-width:1100px;margin:0 auto;padding:28px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* TOC */
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:20px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);}
+.toc-badge{display:inline-block;color:#fff;font-size:.62rem;font-weight:700;padding:2px 9px;border-radius:20px;margin-bottom:8px;letter-spacing:.08em;}
+.badge-voca{background:#1a6b3a;}
+.badge-gram{background:#1a4b8c;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:.98rem;font-weight:600;margin-bottom:3px;line-height:1.35;}
+.toc-ko{font-size:.77rem;color:var(--ink3);}
+
+/* PASSAGE HEADER */
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 26px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.61rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.25rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.81rem;opacity:.62;margin-top:4px;font-style:italic;}
+.p-badge{display:inline-block;margin-top:8px;color:#fff;font-size:.62rem;font-weight:700;padding:2px 10px;border-radius:20px;letter-spacing:.08em;}
+
+/* CARD */
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:22px 26px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.61rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:13px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* PLAIN PASSAGE */
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:20px 24px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.61rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.03rem;line-height:1.92;color:var(--ink);}
+.fn{font-size:.76rem;color:var(--ink3);margin-top:11px;border-top:1px solid var(--border2);padding-top:9px;font-style:italic;line-height:1.6;}
+
+/* UNDERLINE WORDS in passage */
+.ul-word{text-decoration:underline;font-weight:700;}
+.ul-wrong{text-decoration:underline;font-weight:700;color:var(--red);}
+.ul-correct{color:var(--orange);font-weight:700;}
+.ww{color:var(--red);font-weight:700;text-decoration:line-through;}
+.rw{color:var(--orange);font-weight:700;}
+.num-circle{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--ink);font-size:.69rem;font-weight:700;margin:0 1px;vertical-align:middle;}
+
+/* QUESTION */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:16px 20px;margin-bottom:11px;}
+.q-type{font-size:.66rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;text-transform:uppercase;}
+.q-stem{font-size:.89rem;font-weight:700;color:var(--ink);line-height:1.55;margin-bottom:12px;}
+.choices{display:flex;flex-direction:column;gap:5px;}
+.choice{font-size:.86rem;line-height:1.55;padding:6px 11px;border-radius:5px;color:var(--ink2);}
+.cn{font-weight:700;color:var(--ink);margin-right:3px;}
+.correct{background:var(--orange-bg);border:1px solid rgba(192,80,16,.25);}
+.correct .cn{color:var(--orange);}
+.wrong-c{background:var(--red-bg);border:1px solid rgba(176,26,26,.2);}
+.wrong-c .cn{color:var(--red);}
+
+/* ANSWER */
+.ans-box{margin-top:11px;padding:14px 18px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-lbl{font-size:.63rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:6px;}
+.ans-num{font-size:1rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.82rem;color:var(--ink2);line-height:1.7;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+
+/* PASSAGE BOX (구문해석) */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:16px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.61rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:13px;padding-bottom:13px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.03rem;line-height:1.88;color:var(--ink);}
+.sp-ko{font-size:.80rem;color:var(--ink2);line-height:1.65;padding-left:11px;border-left:3px solid var(--border);margin-top:4px;}
+.sp-note{display:inline-block;font-size:.72rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 5px;border-radius:3px;margin-left:4px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:5px 8px;border-radius:5px;font-size:.71rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+
+/* GRAMMAR NOTE */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.2);border-radius:6px;padding:12px 16px;margin-top:8px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.76rem;letter-spacing:.06em;margin-bottom:7px;}
+.gr-note p{font-size:.82rem;color:var(--ink2);line-height:1.65;margin-bottom:5px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+
+/* TEXT STRUCTURE */
+.structure-box{background:#f8f4ff;border:1px solid rgba(90,45,130,.18);border-radius:8px;padding:14px 18px;font-size:.83rem;line-height:1.75;margin-bottom:11px;}
+.structure-box h4{color:var(--purple);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:9px;font-weight:700;}
+.s-item{margin-bottom:5px;padding-left:12px;border-left:3px solid #c0a8f0;}
+.s-arrow{color:var(--accent2);font-weight:700;margin:0 3px;}
+
+/* KEYWORDS BOX */
+.kw-box{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:11px 15px;font-size:.82rem;line-height:1.65;margin-bottom:11px;}
+.kw-box h4{color:var(--accent2);font-size:.71rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+.kw-tag{display:inline-block;background:var(--paper);border:1px solid var(--border2);border-radius:4px;padding:2px 8px;font-size:.78rem;margin:2px 3px;font-family:'Crimson Pro',serif;font-weight:600;color:var(--ink);}
+
+/* TOPIC BOX */
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:12px 16px;border-radius:0 7px 7px 0;margin-bottom:11px;font-size:.88rem;line-height:1.65;}
+.topic-ko{margin-top:6px;font-size:.78rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:6px;font-style:italic;}
+
+/* WRONG ANSWER HIGHLIGHT in passage */
+.irr{background:var(--red-bg);border-left:3px solid var(--red);padding:2px 6px;border-radius:0 4px 4px 0;}
+
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card{padding:14px;}.plain-box,.passage-box{padding:14px 16px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Chapter 1(11–12) · 어법 정확성 &amp; 어휘 적절성</div>
+      <div class="hdr-sub">SGHS 영어 비평적 읽기와 쓰기 B — 본문·문항·정답해설·구문분석·Text Structure</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('g1')">G · 어휘</button>
+      <button class="nb" onclick="show('p2')">2 · 어휘</button>
+      <button class="nb" onclick="show('g2')">G · 어법</button>
+      <button class="nb" onclick="show('p1')">1 · 어법</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.6rem;margin-bottom:8px;">Chapter 1(11–12)</h1>
+  <p style="font-size:.87rem;color:var(--ink3);margin-bottom:20px;">SGHS 영어 비평적 읽기와 쓰기 B · 총 4개 지문 · 어휘 적절성 2개 + 어법 정확성 2개</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('g1')">
+      <div class="toc-badge badge-voca">G · 어휘 적절성</div>
+      <div class="toc-en">Human Adaptive Intelligence &amp; Social Learning</div>
+      <div class="toc-ko">인간의 적응 지능과 사회적 학습 — 문맥상 맞지 않는 단어</div>
+    </a>
+    <a class="toc-card" onclick="show('p2')">
+      <div class="toc-badge badge-voca">2 · 어휘 적절성</div>
+      <div class="toc-en">Market Efficiency &amp; Social/Environmental Values</div>
+      <div class="toc-ko">시장 효율성과 사회·환경 가치 — 문맥상 맞지 않는 단어</div>
+    </a>
+    <a class="toc-card" onclick="show('g2')">
+      <div class="toc-badge badge-gram">G · 어법 정확성</div>
+      <div class="toc-en">Situational Ethics &amp; Competitive Behavior</div>
+      <div class="toc-ko">상황 윤리와 경쟁적 행동 — 문법상 틀린 표현</div>
+    </a>
+    <a class="toc-card" onclick="show('p1')">
+      <div class="toc-badge badge-gram">1 · 어법 정확성</div>
+      <div class="toc-en">Moral Outrage &amp; Cooperative Society</div>
+      <div class="toc-ko">도덕적 분노와 협동 사회 — 문법상 틀린 표현</div>
+    </a>
+  </div>
+</div>
+
+<!-- ════════════════ G1 어휘 ════════════════ -->
+<div class="sec" id="g1">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(11–12) · G · 어휘 적절성</div>
+    <div class="p-title">Human Adaptive Intelligence &amp; Social Learning</div>
+    <div class="p-title-ko">인간의 적응 지능과 사회적 학습</div>
+    <span class="p-badge badge-voca">문맥상 낱말의 쓰임이 적절하지 않은 것 고르기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">We are <span class="vw">exceptionally<span class="tt">매우, 예외적으로</span></span> smart, and this helps us <span class="num-circle">①</span> <span class="ul-word">adapt</span> to a wide range of environments.</p>
+      <p class="plain-sent">But we are not nearly smart enough as <span class="num-circle">②</span> <span class="ul-word">individuals</span> to solve the adaptive problems that <span class="vw">confronted<span class="tt">직면하다</span></span> modern humans as they spread across the globe.</p>
+      <p class="plain-sent">The package of tools, <span class="vw">foraging<span class="tt">구하러 다니다</span></span> techniques, ecological knowledge, and social arrangements used by any group of foragers is far too complex for any individual to create.</p>
+      <p class="plain-sent">We are able to learn all the things we need to know in each of the many different environments in which we live only because we <span class="num-circle">③</span> <span class="ul-word">acquire</span> information from others.</p>
+      <p class="plain-sent">We are much better at <span class="num-circle">④</span> <span class="ul-word">learning</span> from others than other species are, and we are motivated to learn from others even when we do not understand why our models are doing what they are doing.</p>
+      <p class="plain-sent">This psychology allows human populations to <span class="num-circle">⑤</span> <span class="ul-word">disperse</span> pools of adaptive information that greatly exceed the <span class="vw">inventive<span class="tt">창의적인</span></span> capacities of individuals.</p>
+      <div class="fn">* forage: 구하러 다니다</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항</div>
+    <div class="q-block">
+      <div class="q-type">어휘 적절성 (Q1 + Q2)</div>
+      <div class="q-stem">Q1. 밑줄 친 ①~⑤ 중 문맥상 낱말의 쓰임이 적절하지 않은 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> adapt</div>
+        <div class="choice"><span class="cn">②</span> individuals</div>
+        <div class="choice"><span class="cn">③</span> acquire</div>
+        <div class="choice"><span class="cn">④</span> learning</div>
+        <div class="choice wrong-c"><span class="cn">⑤</span> <span class="ww">disperse</span> → <span class="rw">accumulate</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">Q1 정답: <span class="ans">⑤ disperse → accumulate</span></div>
+      <div class="ans-exp">
+        <strong>오답 이유:</strong> "This psychology allows human populations to <span class="ww">disperse</span> pools of adaptive information that greatly exceed the inventive capacities of individuals."<br><br>
+        <strong>disperse</strong> = "분산시키다, 흩뜨리다" → 문맥상 인간이 집단적으로 개인 능력을 초과하는 적응 정보 <u>풀(pools)을 모아서 유지한다</u>는 내용이어야 함.<br><br>
+        <strong>accumulate</strong> = "축적하다, 모으다" → 개인의 창의적 능력을 훨씬 초과하는 적응 정보를 <u>축적할 수 있게</u> 한다 = 문맥에 적합.<br><br>
+        <strong>나머지 확인:</strong><br>
+        ① adapt(적응하다): "helps us adapt to a wide range of environments" ✓<br>
+        ② individuals(개인들): "not smart enough as individuals to solve" ✓<br>
+        ③ acquire(얻다): "because we acquire information from others" ✓<br>
+        ④ learning(학습하다): "much better at learning from others" ✓
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">We are <span class="vw">exceptionally<span class="tt">매우, 예외적으로</span></span> smart, and this helps us <span class="num-circle">①</span> <span class="ul-word">adapt</span> to a wide range of environments.</div>
+        <div class="sp-ko">우리는 매우 똑똑하고, 이것은 우리가 다양한 환경에 ① 적응하도록 돕는다. <span class="sp-note">★ help O V(원형): "O가 V하도록 돕다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But we are not nearly smart enough as <span class="num-circle">②</span> <span class="ul-word">individuals</span> / to solve the adaptive problems <span class="gr">[that <span class="vw">confronted<span class="tt">직면하다</span></span> modern humans as they spread across the globe]</span>.</div>
+        <div class="sp-ko">그러나 우리는 ② 개인으로서는 / 현대 인간들이 전 세계로 퍼져나가면서 직면했던 적응 문제들을 해결하기에 / 거의 충분히 영리하지 않다. <span class="sp-note">★ smart enough to V: "V하기에 충분히 영리한" / that절: 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The package of tools, <span class="vw">foraging<span class="tt">구하러 다니다</span></span> techniques, ecological knowledge, and social arrangements <span class="gr">{used by any group of foragers}</span> / is far too complex for any individual to create.</div>
+        <div class="sp-ko">어떤 채집인 집단이든 사용하는 도구, 채집 기술, 생태 지식, 사회적 배치의 패키지는 / 어떤 개인이 창조하기에는 훨씬 너무 복잡하다. <span class="sp-note">★ used by ~: 과거분사구, package 수식 / too ~ for O to V: "O가 V하기에 너무 ~한"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We are able to learn all the things we need to know / in each of the many different environments <span class="gr">[in which we live]</span> / only because we <span class="num-circle">③</span> <span class="ul-word">acquire</span> information from others.</div>
+        <div class="sp-ko">우리는 우리가 살고 있는 다양한 환경 각각에서 / 알아야 할 모든 것을 배울 수 있는데, / 오직 우리가 다른 사람들로부터 ③ 정보를 얻기 때문이다. <span class="sp-note">★ only because ~: "오직 ~ 때문에" / in which: 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We are much better at <span class="num-circle">④</span> <span class="ul-word">learning</span> from others than other species are, and we are motivated to learn from others / even when we do not understand <span class="gr">[why our models are doing what they are doing]</span>.</div>
+        <div class="sp-ko">우리는 다른 종들보다 다른 사람들로부터 ④ 학습하는 것을 훨씬 잘하고, / 우리의 모델들이 자신들이 하는 것을 왜 하는지 이해하지 못할 때도 / 다른 사람들로부터 배우도록 동기부여 된다. <span class="sp-note">★ be motivated to V: "V하도록 동기부여 되다" / even when ~: "~할 때도"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This psychology allows human populations to <span class="num-circle">⑤</span> <span class="ww">disperse</span> → <span class="rw">accumulate</span> pools of adaptive information <span class="gr">[that greatly exceed the <span class="vw">inventive<span class="tt">창의적인</span></span> capacities of individuals]</span>.</div>
+        <div class="sp-ko">이 심리는 인간 집단이 개인들의 창의적 능력을 크게 초과하는 적응 정보의 풀을 <span class="ww">분산시키는</span> → <span class="rw">축적하는</span> 것을 가능하게 한다. <span class="sp-note">★ allow O to V: "O가 V하는 것을 가능하게 하다" / that절: 관계절</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① too ~ for O to V</strong> — "O가 V하기에 너무 ~한": "far too complex for any individual to create"</p>
+      <p><strong>② in which (관계절)</strong> — "그 안에서": "environments in which we live" = environments where we live</p>
+      <p><strong>③ allow O to V (5형식)</strong> — "O가 V하는 것을 가능하게 하다": "allows human populations to accumulate"</p>
+      <p><strong>④ even when ~</strong> — "~할 때조차도": 양보의 부사절</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Keywords &amp; Text Structure</div>
+    <div class="kw-box">
+      <h4>Keywords</h4>
+      <span class="kw-tag">adapt</span><span class="kw-tag">individuals</span><span class="kw-tag">acquire information</span><span class="kw-tag">learn from others</span><span class="kw-tag">social learning</span><span class="kw-tag">adaptive information</span><span class="kw-tag">accumulate</span>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>1) Introduction</strong> (sent.1): Humans are intelligent enough to <u>adapt</u> to many environments.</div>
+      <div class="s-item"><strong>2) Development</strong> (sent.2-3): However, individuals alone are not <u>smart</u> enough to solve complex <u>adaptive</u> problems.</div>
+      <div class="s-item"><strong>3) Development</strong> (sent.4-5): Humans learn necessary knowledge from <u>others</u> through <u>social</u> learning.</div>
+      <div class="s-item"><strong>4) Conclusion</strong> (sent.6): As a result, humans <u>accumulate</u> adaptive information beyond <u>individual</u> capacities.</div>
+    </div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Humans survive and adapt by <u>acquiring and accumulating adaptive information through social learning from others</u>.
+      <div class="topic-ko">인간은 타인으로부터의 사회적 학습을 통해 적응 정보를 획득·축적함으로써 생존하고 적응한다.</div>
+    </div>
+  </div>
+</div><!-- end g1 -->
+
+<!-- ════════════════ P2 어휘 ════════════════ -->
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(11–12) · 2 · 어휘 적절성</div>
+    <div class="p-title">Market Efficiency &amp; Social/Environmental Values</div>
+    <div class="p-title-ko">시장 효율성과 사회·환경 가치의 충돌</div>
+    <span class="p-badge badge-voca">문맥상 낱말의 쓰임이 적절하지 않은 것 고르기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Reformist approaches assume that markets could operate in more <span class="vw">equitable<span class="tt">공정한</span></span> and environmentally reasonable ways, and that a market is the most <span class="num-circle">①</span> <span class="ul-word">efficient</span> option available.</p>
+      <p class="plain-sent">Yet the logic of market efficiencies generally rotates on purely <span class="num-circle">②</span> <span class="ul-word">monetary</span> calculations, effectively reasoning in a hall of mirrors and <span class="vw">marginalising<span class="tt">소외시키다</span></span> real social and environmental values.</p>
+      <p class="plain-sent">Familiar examples are conventional food retailers, such as supermarkets, which purchase fruit and vegetables as cheaply as possible.</p>
+      <p class="plain-sent"><span class="num-circle">③</span> <span class="ul-word">Inexpensive</span> produce might be grown using soil- and water-damaging fertilisers, by poorly paid illegal migrant workers, and transported long distances using more cheap labour and environmentally damaging practices.</p>
+      <p class="plain-sent">However, organic farmers can only follow ecologically sound practices and make sure they pay their workers fair wages if the food costs more, meaning supply for a(n) <span class="num-circle">④</span> <span class="ul-word">elite</span> demand.</p>
+      <p class="plain-sent">By its very nature, one never manages to escape the <span class="vw">conundrums<span class="tt">난제</span></span> that production for trade entails.</p>
+      <p class="plain-sent">Real social and environmental values involved in caring for people and Earth highlight the inequities and <span class="num-circle">⑤</span> <span class="ul-word">preservation</span> of market-oriented activities.</p>
+      <div class="fn">* equitable: 공정한 &nbsp;&nbsp;** conundrum: 난제</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항</div>
+    <div class="q-block">
+      <div class="q-type">어휘 적절성 (Q1 + Q2)</div>
+      <div class="q-stem">Q1. 밑줄 친 ①~⑤ 중 문맥상 낱말의 쓰임이 적절하지 않은 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> efficient</div>
+        <div class="choice"><span class="cn">②</span> monetary</div>
+        <div class="choice"><span class="cn">③</span> Inexpensive</div>
+        <div class="choice"><span class="cn">④</span> elite</div>
+        <div class="choice wrong-c"><span class="cn">⑤</span> <span class="ww">preservation</span> → <span class="rw">distortion</span> (또는 neglect / violation)</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">Q1 정답: <span class="ans">⑤ preservation → distortion</span></div>
+      <div class="ans-exp">
+        <strong>오답 이유:</strong> "Real social and environmental values ... highlight the inequities and <span class="ww">preservation</span> of market-oriented activities."<br><br>
+        <strong>preservation</strong> = "보존, 유지" → 사회적·환경적 가치가 시장 지향적 활동의 <u>불공평성과 보존</u>을 부각시킨다는 것은 문맥에 맞지 않음.<br><br>
+        <strong>distortion</strong> = "왜곡" (또는 <strong>neglect</strong> = "무시", <strong>limitation</strong> = "한계") → 진정한 사회적·환경적 가치는 시장 활동의 <u>불공평성과 왜곡</u>을 드러낸다 = 문맥 적합.<br><br>
+        <strong>나머지 확인:</strong><br>
+        ① efficient: 개혁주의적 접근의 전제로 "시장이 가장 효율적인 선택지" ✓<br>
+        ② monetary: "순수하게 금전적 계산에만 의존한다" ✓<br>
+        ③ Inexpensive: "저렴한 농산물이 환경 파괴적 방식으로 재배될 수 있다" ✓<br>
+        ④ elite: "음식 비용이 더 들면 소수 엘리트 수요만 충족한다" ✓
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Reformist approaches assume <span class="gr">[that markets could operate in more equitable and environmentally reasonable ways]</span>, and <span class="gr">[that a market is the most <span class="num-circle">①</span> efficient option available]</span>.</div>
+        <div class="sp-ko">개혁주의적 접근들은 시장이 더 공정하고 환경적으로 합리적인 방식으로 운영될 수 있고, / 시장이 이용 가능한 가장 ① 효율적인 선택지라고 가정한다. <span class="sp-note">★ assume that절 and that절: 두 개의 that절 병렬</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Yet the logic of market efficiencies generally rotates on purely <span class="num-circle">②</span> <span class="vw">monetary<span class="tt">금전적인</span></span> calculations, / effectively reasoning in a hall of mirrors / and <span class="vw">marginalising<span class="tt">소외시키다</span></span> real social and environmental values.</div>
+        <div class="sp-ko">그러나 시장 효율성의 논리는 일반적으로 순수하게 ② 금전적 계산에만 의존하며, / 사실상 거울의 방에서 추론하고 / 실제 사회적·환경적 가치를 소외시킨다. <span class="sp-note">★ reasoning / marginalising: 분사구문 (동시 상황) / "hall of mirrors": 자기 자신만을 반영하는 폐쇄적 논리 비유</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Familiar examples are conventional food retailers, such as supermarkets, <span class="gr">[which purchase fruit and vegetables as cheaply as possible]</span>.</div>
+        <div class="sp-ko">친숙한 예들은 일반적인 식품 소매업자들로, 슈퍼마켓과 같이, 가능한 한 저렴하게 과일과 채소를 구매하는 것들이다. <span class="sp-note">★ which: 계속적 관계절 / as ~ as possible: "가능한 한 ~하게"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="num-circle">③</span> <span class="vw">Inexpensive<span class="tt">저렴한</span></span> produce might be grown using soil- and water-damaging fertilisers, by poorly paid illegal migrant workers, and transported long distances using more cheap labour and environmentally damaging practices.</div>
+        <div class="sp-ko">③ 저렴한 농산물은 토양과 물에 해로운 비료를 사용하고, 급여가 적은 불법 이주 노동자들에 의해 재배되고, / 더 저렴한 노동력과 환경에 해로운 관행을 사용하여 장거리로 운반될 수 있다. <span class="sp-note">★ 수동구조: might be grown / transported (병렬)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, organic farmers can only follow ecologically sound practices and make sure they pay their workers fair wages / <span class="gr">if the food costs more</span>, meaning supply for a(n) <span class="num-circle">④</span> <span class="vw">elite<span class="tt">소수 상류층의</span></span> demand.</div>
+        <div class="sp-ko">그러나 유기농 농부들은 음식 비용이 더 많이 들어야만 / 생태학적으로 건전한 관행을 따르고 노동자들에게 공정한 임금을 지불할 수 있어서, / ④ 소수 엘리트의 수요를 위한 공급을 의미한다. <span class="sp-note">★ if절: 조건 부사절 / meaning ~: 결과의 분사구문</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Real social and environmental values involved in caring for people and Earth / highlight the inequities and <span class="num-circle">⑤</span> <span class="ww">preservation</span> → <span class="rw">distortion</span> of market-oriented activities.</div>
+        <div class="sp-ko">사람과 지구를 돌보는 데 관련된 실제 사회적·환경적 가치들은 / 시장 지향적 활동의 불공평성과 ⑤ <span class="ww">보존</span> → <span class="rw">왜곡</span>을 부각시킨다. <span class="sp-note">★ involved in ~: 과거분사구, values 수식</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① assume that절 and that절 (병렬)</strong> — "~라고 그리고 ~라고 가정하다": 두 개의 that절이 and로 병렬</p>
+      <p><strong>② reasoning / marginalising (분사구문)</strong> — "~하면서": 주절에 이어지는 동시 상황</p>
+      <p><strong>③ which (계속적 관계절)</strong> — "그것들은": 선행사 food retailers를 받아 추가 설명</p>
+      <p><strong>④ meaning ~ (결과 분사구문)</strong> — "그 결과 ~를 의미하면서": 앞 절의 결과</p>
+      <p><strong>⑤ involved in ~ (과거분사구)</strong> — "~에 관련된": Real social and environmental values를 수식</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Keywords &amp; Text Structure</div>
+    <div class="kw-box">
+      <h4>Keywords</h4>
+      <span class="kw-tag">market</span><span class="kw-tag">monetary</span><span class="kw-tag">social</span><span class="kw-tag">environmental</span><span class="kw-tag">values</span><span class="kw-tag">inequities</span>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>1) Introduction</strong> (sent.1): Premises of reformist approaches</div>
+      <div class="s-item"><strong>2) Topic</strong> (sent.2): <u>L</u>imitations of market efficiency logic</div>
+      <div class="s-item"><strong>3) Example</strong> (sent.3-5): Problems caused by <u>price</u> competition</div>
+      <div class="s-item"><strong>4) Conclusion</strong> (sent.6-7): Structural <u>contradictions</u> in market efficiency logic</div>
+    </div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Impact of market efficiency on <u>social and environmental values</u>.
+      <div class="topic-ko">시장 효율성이 사회적·환경적 가치에 미치는 영향.</div>
+    </div>
+  </div>
+</div><!-- end p2 -->
+
+<!-- ════════════════ G2 어법 ════════════════ -->
+<div class="sec" id="g2">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(11–12) · G · 어법 정확성</div>
+    <div class="p-title">Situational Ethics &amp; Competitive Behavior</div>
+    <div class="p-title-ko">상황 윤리와 경쟁적 행동</div>
+    <span class="p-badge badge-gram">문법상 틀린 표현 고르기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent"><span class="vw">Situational ethics<span class="tt">상황 윤리</span></span> <span class="num-circle">①</span> <span class="ul-word">is</span> an ethical theory that takes into account the context of a situation or an act when judging whether it is ethical.</p>
+      <p class="plain-sent">Supporters of this theory willingly permit casting aside absolute moral standards.</p>
+      <p class="plain-sent">In the absence of a universal standard or law, <span class="num-circle">②</span> <span class="ul-word">what</span> matters is the outcome or consequences; so, the end justifies the means.</p>
+      <p class="plain-sent">Possibly the following contrasting realities can help illustrate the application of situational ethics.</p>
+      <p class="plain-sent">In a pickup game of basketball played among friends, everyone is expected to call his or her own fouls or acknowledge <span class="num-circle">③</span> <span class="ul-word">knocking</span> the ball out-of-bounds.</p>
+      <p class="plain-sent">Caring about one's friends and maybe getting to keep playing with the group <span class="num-circle">④</span> <span class="ul-word">lead</span> to these actions.</p>
+      <p class="plain-sent">But, once an organized game is played with officials, most athletes will not admit to the same fouls or violations as the end goal of winning is more important than expressing concern for competitors.</p>
+      <p class="plain-sent">Situational ethics has been <span class="num-circle">⑤</span> <span class="ul-word">extended</span> by many athletes and coaches to mean trying to get away with as many actions on the field or court as possible to gain competitive advantages.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항</div>
+    <div class="q-block">
+      <div class="q-type">어법 정확성 (Q1 + Q2)</div>
+      <div class="q-stem">Q1. 밑줄 친 ①~⑤ 중 문법상 틀린 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> is</div>
+        <div class="choice"><span class="cn">②</span> what</div>
+        <div class="choice"><span class="cn">③</span> knocking</div>
+        <div class="choice wrong-c"><span class="cn">④</span> <span class="ww">lead</span> → <span class="rw">leads</span></div>
+        <div class="choice"><span class="cn">⑤</span> extended</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">Q1 정답: <span class="ans">④ lead → leads</span></div>
+      <div class="ans-exp">
+        <strong>오답 이유:</strong> "Caring about one's friends and maybe getting to keep playing with the group <span class="ww">lead</span> to these actions."<br><br>
+        <strong>주어 분석:</strong> "Caring about one's friends <strong>and</strong> maybe getting to keep playing with the group" → and로 연결된 두 동명사구가 주어.<br><br>
+        <strong>핵심:</strong> 동명사구 2개가 and로 연결되더라도, <u>하나의 통일된 개념</u>(친구를 아끼고 계속 함께 플레이하고 싶은 마음)으로 볼 때 단수 취급. 또는 문장 전체가 "이러한 행동들로 이어지는 것은 바로 ~이다"의 단수 주어 맥락 → <span class="rw">leads</span>(3인칭 단수).<br><br>
+        <strong>나머지 확인:</strong><br>
+        ① is: "Situational ethics is ~" — 단수 주어 → 단수 동사 ✓<br>
+        ② what: "what matters is ~" — 관계대명사 what이 이끄는 명사절이 주어 ✓<br>
+        ③ knocking: "acknowledge knocking ~" — acknowledge + 동명사(목적어) ✓<br>
+        ⑤ extended: "has been extended by ~" — 수동태 현재완료 ✓
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Situational ethics<span class="tt">상황 윤리</span></span> <span class="num-circle">①</span> <span class="ul-word">is</span> an ethical theory <span class="gr">[that takes into account the context of a situation or an act when judging whether it is ethical]</span>.</div>
+        <div class="sp-ko">상황 윤리는 어떤 상황이나 행위가 윤리적인지 판단할 때 / 그 상황이나 행위의 맥락을 고려하는 윤리 이론이다. <span class="sp-note">★ ① is: 단수 주어 "Situational ethics" → 단수 동사 ✓ / take into account: "고려하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Supporters of this theory willingly permit <span class="gr">casting aside absolute moral standards</span>. In the absence of a universal standard or law, <span class="num-circle">②</span> <span class="ul-word">what</span> matters is the outcome or consequences; so, the end justifies the means.</div>
+        <div class="sp-ko">이 이론의 지지자들은 절대적 도덕 기준을 제쳐두는 것을 기꺼이 허용한다. / 보편적 기준이나 법이 없는 상황에서, ② 중요한 것은 결과이다; 따라서 목적이 수단을 정당화한다. <span class="sp-note">★ ② what: 관계대명사 what = the thing that / "what matters": "중요한 것" (명사절, 주어)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">...everyone is expected to call his or her own fouls or acknowledge <span class="num-circle">③</span> <span class="ul-word">knocking</span> the ball out-of-bounds.</div>
+        <div class="sp-ko">...모든 사람이 자신의 파울을 선언하거나 공을 경계 밖으로 ③ 쳤다는 것을 인정할 것으로 기대된다. <span class="sp-note">★ ③ knocking: acknowledge + 동명사(목적어) ✓ "acknowledge knocking = 쳤음을 인정하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Caring about one's friends and maybe getting to keep playing with the group</span> <span class="num-circle">④</span> <span class="ww">lead</span> → <span class="rw">leads</span> to these actions.</div>
+        <div class="sp-ko">친구들을 아끼고 아마도 그룹과 계속 플레이하게 되는 것이 / 이러한 행동들로 이어진다. <span class="sp-note">★ ④ leads(단수): 동명사구 주어 "Caring ... and getting ..." → 단수 동사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But, once an organized game is played with officials, most athletes will not admit to the same fouls or violations / as the end goal of winning is more important than expressing concern for competitors.</div>
+        <div class="sp-ko">그러나 심판이 있는 조직된 경기가 열리면, 대부분의 운동선수들은 / 이기는 것의 최종 목표가 경쟁자들에 대한 관심을 표현하는 것보다 더 중요하기 때문에 / 같은 파울이나 반칙을 인정하지 않을 것이다. <span class="sp-note">★ once ~: "일단 ~하면" / as: "~이기 때문에" (이유 접속사)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Situational ethics has been <span class="num-circle">⑤</span> <span class="ul-word">extended</span> by many athletes and coaches to mean <span class="gr">trying to get away with as many actions on the field or court as possible to gain competitive advantages</span>.</div>
+        <div class="sp-ko">상황 윤리는 많은 운동선수들과 코치들에 의해 / 경쟁 우위를 얻기 위해 경기장에서 가능한 한 많은 행동을 빠져나가려고 하는 것을 의미하도록 ⑤ 확장되어 왔다. <span class="sp-note">★ ⑤ extended: "has been extended" = 수동태 현재완료 ✓ / to mean -ing: "~을 의미하도록"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① what matters (관계대명사 what)</strong> — "중요한 것": what = the thing that. 명사절로 주어 역할</p>
+      <p><strong>② acknowledge + -ing (동명사 목적어)</strong> — "~했음을 인정하다": "acknowledge knocking the ball out-of-bounds"</p>
+      <p><strong>③ 동명사구 주어의 수일치</strong> — "Caring ... and getting ..." → 통일된 개념 → 단수 동사 leads</p>
+      <p><strong>④ as (이유 접속사)</strong> — "~이기 때문에": "as the end goal of winning is more important"</p>
+      <p><strong>⑤ has been extended (수동태 현재완료)</strong> — "확장되어 왔다": be + p.p.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Keywords &amp; Text Structure</div>
+    <div class="kw-box">
+      <h4>Keywords</h4>
+      <span class="kw-tag">situational ethics</span><span class="kw-tag">moral standards</span><span class="kw-tag">consequences</span><span class="kw-tag">the end justifies the means</span><span class="kw-tag">competition</span><span class="kw-tag">fairness</span><span class="kw-tag">competitive advantages</span>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>1) Introduction</strong> (sent.1-3): Situational ethics emphasizes consequences over universal moral standards.</div>
+      <div class="s-item"><strong>2) Development 1</strong> (sent.4-6): In friendly games, people act <u>h</u>onestly because they value relationships and cooperation.</div>
+      <div class="s-item"><strong>3) Development 2</strong> (sent.7): In competitive games, <u>w</u>inning becomes more important than fairness or concern for others.</div>
+      <div class="s-item"><strong>4) Conclusion</strong> (sent.8): Situational ethics can justify unethical behavior for competitive advantages.</div>
+    </div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Situational ethics judges actions based on outcomes rather than <u>absolute moral standards</u>.
+      <div class="topic-ko">상황 윤리는 절대적 도덕 기준보다 결과에 기반하여 행동을 판단한다.</div>
+    </div>
+  </div>
+</div><!-- end g2 -->
+
+<!-- ════════════════ P1 어법 ════════════════ -->
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(11–12) · 1 · 어법 정확성</div>
+    <div class="p-title">Moral Outrage &amp; Cooperative Society</div>
+    <div class="p-title-ko">도덕적 분노와 협동 사회 유지</div>
+    <span class="p-badge badge-gram">문법상 틀린 표현 고르기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Moral outrage is the psychological tool that motivates people to punish <span class="vw">wrongdoers<span class="tt">잘못을 저지른 사람</span></span>, even at cost or risk to themselves.</p>
+      <p class="plain-sent">It is a "commitment device," something <span class="num-circle">①</span> <span class="ul-word">that</span> commits people to punishment, even though trying to punish someone can be dangerous.</p>
+      <p class="plain-sent">When we witness unjust harm, whether someone <span class="num-circle">②</span> <span class="ul-word">committing</span> interpersonal violence or obvious cheating, we have an embodied physical reaction.</p>
+      <p class="plain-sent">We get angry, our blood pressure spikes, our heart beats faster; we thirst for <span class="vw">retribution<span class="tt">징벌, 응징</span></span>.</p>
+      <p class="plain-sent">Outrage leads us to ignore the irrationality of risking our own safety to punish someone.</p>
+      <p class="plain-sent">In any single situation, there is <span class="num-circle">③</span> <span class="ul-word">rarely</span> an immediate personal benefit for <span class="vw">meting out<span class="tt">내리다</span></span> punishment, and often there is real risk, because the person you are serving justice against could <span class="vw">lash out at<span class="tt">공격하다</span></span> you or get <span class="num-circle">④</span> <span class="ul-word">revenged</span> in the future.</p>
+      <p class="plain-sent">But the powerful feeling of outrage leads us to momentarily forget this unfavorable evaluation and get <span class="num-circle">⑤</span> <span class="ul-word">involved</span> in a situation we would be better off avoiding, and science reveals how this feeling and forgetting is essential for maintaining a cooperative society.</p>
+      <div class="fn">* retribution: 징벌, 응징 &nbsp;&nbsp;** mete out: (벌 등을) 내리다 &nbsp;&nbsp;*** lash out at: ~을 공격[비난]하다</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항</div>
+    <div class="q-block">
+      <div class="q-type">어법 정확성 (Q1 + Q2)</div>
+      <div class="q-stem">Q1. 밑줄 친 ①~⑤ 중 문법상 틀린 것은? (⑤ involved는 선택지에 없음)</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> that</div>
+        <div class="choice"><span class="cn">②</span> committing</div>
+        <div class="choice"><span class="cn">③</span> rarely</div>
+        <div class="choice wrong-c"><span class="cn">④</span> <span class="ww">revenged</span> → <span class="rw">revenge</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">Q1 정답: <span class="ans">④ revenged → revenge</span></div>
+      <div class="ans-exp">
+        <strong>오답 이유:</strong> "...could lash out at you or get <span class="ww">revenged</span> in the future."<br><br>
+        <strong>구조 분석:</strong> "get + 과거분사" 구문 → get revenged = "복수당하다"처럼 보이지만,<br>
+        <strong>revenge</strong>는 자동사·타동사 둘 다 가능하나 "get revenge (on)" = "복수하다"가 관용 표현.<br>
+        문맥상 "상대방이 당신에게 <u>복수할 수 있다</u>"는 의미 → <span class="rw">get revenge</span> (on you) = 올바른 표현.<br><br>
+        <strong>핵심 구별:</strong><br>
+        • <span class="ww">get revenged</span> → 비표준 표현<br>
+        • <span class="rw">get revenge</span> → "복수하다" (관용 표현) ✓<br>
+        • be revenged (on) → "복수하다" (격식체, 드문 표현)<br><br>
+        <strong>나머지 확인:</strong><br>
+        ① that: "something that commits people to punishment" → that은 something을 선행사로 받는 관계대명사 ✓<br>
+        ② committing: "whether someone committing interpersonal violence" → whether절 안의 분사구문 (= is committing) ✓<br>
+        ③ rarely: "there is rarely an immediate personal benefit" → 부사, 동사 수식 ✓<br>
+        ⑤ involved: "get involved in a situation" → get + 과거분사 (수동 의미) ✓
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Moral outrage is the psychological tool <span class="gr">[that motivates people to punish <span class="vw">wrongdoers<span class="tt">잘못을 저지른 사람</span></span>, even at cost or risk to themselves]</span>.</div>
+        <div class="sp-ko">도덕적 분노는 자신에게 비용이나 위험이 되더라도 / 사람들이 잘못을 저지른 사람들을 처벌하도록 동기부여하는 심리적 도구이다. <span class="sp-note">★ that절: 관계절 / motivate O to V: "O가 V하도록 동기부여하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It is a "commitment device," something <span class="num-circle">①</span> <span class="ul-word">that</span> commits people to punishment, even though <span class="gr">trying to punish someone can be dangerous</span>.</div>
+        <div class="sp-ko">그것은 "헌신 장치"이며, 누군가를 처벌하려 하는 것이 위험할 수 있음에도 / 사람들이 처벌에 전념하게 만드는 것이다. <span class="sp-note">★ ① that: 관계대명사, something 수식 ✓ / even though ~: "비록 ~이더라도" (양보절)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">When we witness unjust harm, <span class="gr">whether someone <span class="num-circle">②</span> <span class="ul-word">committing</span> interpersonal violence or obvious cheating</span>, we have an embodied physical reaction.</div>
+        <div class="sp-ko">우리가 부당한 해를 목격할 때, 누군가가 대인 폭력을 저지르거나 명백한 속임수를 쓰는 경우, / 우리는 구현된 신체적 반응을 가진다. <span class="sp-note">★ ② committing: whether someone [is] committing ~ → 분사구문(생략) ✓ / whether A or B: "A이든 B이든"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We get angry, our blood pressure spikes, our heart beats faster; we thirst for <span class="vw">retribution<span class="tt">징벌, 응징</span></span>.</div>
+        <div class="sp-ko">우리는 화가 나고, 혈압이 치솟고, 심장이 더 빨리 뛴다; 우리는 응징을 갈망한다. <span class="sp-note">★ 세미콜론(;): 관련된 두 절 연결 / thirst for ~: "~을 갈망하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In any single situation, there is <span class="num-circle">③</span> <span class="ul-word">rarely</span> an immediate personal benefit for <span class="vw">meting out<span class="tt">내리다</span></span> punishment, and often there is real risk, / because the person <span class="gr">[you are serving justice against]</span> could <span class="vw">lash out at<span class="tt">공격하다</span></span> you or get <span class="num-circle">④</span> <span class="ww">revenged</span> → <span class="rw">revenge</span> in the future.</div>
+        <div class="sp-ko">어떤 단일 상황에서도, 처벌을 내리는 것에 즉각적인 개인적 이익이 ③ 거의 없고, / 종종 실제 위험이 있는데, / 당신이 정의를 실현하려는 그 사람이 당신을 공격하거나 / 미래에 ④ <span class="ww">복수당할 수 있다</span> → <span class="rw">복수할 수 있다</span>. <span class="sp-note">★ ③ rarely: 부사 ✓ / ④ get revenge: "복수하다" (관용 표현)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But the powerful feeling of outrage leads us to momentarily forget this unfavorable evaluation / and get <span class="num-circle">⑤</span> <span class="ul-word">involved</span> in a situation <span class="gr">[we would be better off avoiding]</span>, / and science reveals <span class="gr">[how this feeling and forgetting is essential for maintaining a cooperative society]</span>.</div>
+        <div class="sp-ko">그러나 분노의 강력한 감정은 우리로 하여금 이 불리한 평가를 잠시 잊게 하고, / 피하는 것이 더 나을 상황에 ⑤ 개입하게 만들며, / 과학은 이 감정과 망각이 협동 사회를 유지하는 데 어떻게 필수적인지를 밝힌다. <span class="sp-note">★ ⑤ get involved: get + 과거분사 (수동 의미) ✓ / be better off -ing: "~하는 것이 더 낫다"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① get + 과거분사 vs get + 명사</strong> — get revenged(비표준) vs <strong>get revenge</strong>(관용) / get involved(관용) ✓</p>
+      <p><strong>② whether A or B</strong> — "A이든 B이든": "whether someone committing violence or obvious cheating"</p>
+      <p><strong>③ lead O to V (5형식)</strong> — "O가 V하도록 이끌다": "Outrage leads us to ignore ~ and get involved ~" (동사원형 병렬)</p>
+      <p><strong>④ be better off -ing</strong> — "~하는 것이 더 낫다": "a situation we would be better off avoiding"</p>
+      <p><strong>⑤ how절 (간접의문문)</strong> — "어떻게 ~인지": "science reveals how this feeling is essential"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Keywords &amp; Text Structure</div>
+    <div class="kw-box">
+      <h4>Keywords</h4>
+      <span class="kw-tag">moral outrage</span><span class="kw-tag">punish</span><span class="kw-tag">risk</span><span class="kw-tag">justice</span><span class="kw-tag">cooperative society</span>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>1) Introduction</strong> (sent.1-2): Definition of the key concept — moral outrage as a "commitment device"</div>
+      <div class="s-item"><strong>2) Development</strong> (sent.3-6): Physical and emotional responses (anger, blood pressure, thirst for retribution) + risks of punishment</div>
+      <div class="s-item"><strong>3) Conclusion</strong> (sent.7): The socially sustaining function of moral outrage — essential for maintaining a cooperative society</div>
+    </div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Punishment triggered by <u>moral outrage</u>.
+      <div class="topic-ko">도덕적 분노에 의해 촉발되는 처벌.</div>
+    </div>
+  </div>
+</div><!-- end p1 -->
+
+</main>
+
+<script>
+const ids=['home','g1','p2','g2','p1'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
