@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Focus Framework · 6강 완전 분석 | 2026 심화영어독해 II</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.15rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.7rem;opacity:.55;margin-top:2px;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 10px;border-radius:4px;font-size:.7rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:20px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);}
+.toc-code{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:.98rem;font-weight:600;margin-bottom:3px;line-height:1.35;}
+.toc-ko{font-size:.77rem;color:var(--ink3);}
+.toc-badge{display:inline-block;background:var(--bg);border:1px solid var(--border);color:var(--ink3);font-size:.62rem;padding:1px 7px;border-radius:10px;margin-top:6px;}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.3rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;font-style:italic;}
+.p-badge{display:inline-block;margin-top:8px;background:var(--accent2);color:#fff;font-size:.63rem;font-weight:700;padding:2px 10px;border-radius:20px;letter-spacing:.08em;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:24px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+/* PLAIN PASSAGE */
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:22px 26px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.92;color:var(--ink);}
+.bk{display:inline-block;border-bottom:2.5px solid var(--ink);min-width:180px;margin:0 3px;vertical-align:bottom;}
+.fn{font-size:.77rem;color:var(--ink3);margin-top:12px;border-top:1px solid var(--border2);padding-top:9px;font-style:italic;line-height:1.6;}
+/* NUM CIRCLE */
+.nc{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--ink);font-size:.7rem;font-weight:700;margin:0 2px;vertical-align:middle;}
+.nc-wrong{border-color:var(--red);color:var(--red);}
+.nc-right{border-color:var(--orange);color:var(--orange);}
+/* UNDERLINE FOR VOCAB Q */
+.vq-ul{text-decoration:underline;font-weight:700;}
+/* WRONG WORD */
+.ww{color:var(--red);font-weight:700;text-decoration:line-through;}
+.rw{color:var(--orange);font-weight:700;}
+/* IRRELEVANT SENT */
+.irr-sent{background:var(--red-bg);border-left:4px solid var(--red);padding:8px 14px;margin:6px 0;border-radius:0 6px 6px 0;}
+/* INSERT SENT */
+.insert-box{background:#fdf0e8;border-left:4px solid var(--accent2);padding:14px 18px;border-radius:0 6px 6px 0;margin-bottom:16px;}
+/* Q BLOCK */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:18px 22px;margin-bottom:12px;}
+.q-type{font-size:.67rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;text-transform:uppercase;}
+.q-stem{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:12px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;line-height:1.55;padding:7px 12px;border-radius:5px;color:var(--ink2);}
+.cn{font-weight:700;color:var(--ink);margin-right:4px;}
+.correct{background:var(--orange-bg);border:1px solid rgba(192,80,16,.25);}
+.correct .cn{color:var(--orange);}
+.wrong-c{background:var(--red-bg);border:1px solid rgba(176,26,26,.2);}
+.wrong-c .cn{color:var(--red);}
+/* ANSWER */
+.ans-box{margin-top:12px;padding:16px 20px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-lbl{font-size:.64rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:6px;}
+.ans-num{font-size:1rem;font-weight:700;color:var(--orange);margin-bottom:8px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.7;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+/* GRAMMAR DRILL */
+.drill-box{background:#f0f4ff;border:1px solid rgba(26,75,140,.2);border-radius:6px;padding:14px 18px;margin-top:10px;}
+.drill-box h4{color:var(--blue);font-size:.76rem;font-weight:700;letter-spacing:.1em;margin-bottom:10px;}
+.drill-item{font-size:.84rem;color:var(--ink2);line-height:1.65;margin-bottom:6px;padding-left:10px;border-left:2px solid var(--blue-light);}
+.drill-ans{color:var(--green);font-weight:700;}
+/* PASSAGE BOX (구문) */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:22px 26px;margin-bottom:18px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.88;color:var(--ink);}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.73rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 5px;border-radius:3px;margin-left:5px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:5px 9px;border-radius:5px;font-size:.72rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+/* GRAMMAR NOTE */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.2);border-radius:6px;padding:13px 17px;margin-top:8px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.77rem;letter-spacing:.06em;margin-bottom:7px;}
+.gr-note p{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:5px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+/* TOPIC */
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:14px 18px;border-radius:0 7px 7px 0;margin-bottom:12px;font-size:.9rem;line-height:1.65;}
+.topic-ko{margin-top:7px;font-size:.79rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:7px;font-style:italic;}
+/* FRAMEWORK */
+.fw-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:8px 14px;text-align:left;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:12px 14px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.61rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:3px;}
+.fw-ko{margin-top:7px;font-size:.78rem;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:7px;}
+/* VOCAB TABLE */
+.voca-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.voca-table th{background:var(--bg);padding:8px 12px;text-align:left;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:7px 12px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.55;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.93rem;}
+.vw-mean{color:var(--ink2);}
+.vw-syn{font-size:.76rem;color:var(--ink3);margin-top:2px;}
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card{padding:16px;}.plain-box,.passage-box{padding:16px 18px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · 6강 완전 분석</div>
+      <div class="hdr-sub">2026 고3 1학기 심화영어독해 II — 본문·문항·정답해설·구문분석·Topic·Logical Framework</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">001</button>
+      <button class="nb" onclick="show('p2')">002</button>
+      <button class="nb" onclick="show('p3')">003</button>
+      <button class="nb" onclick="show('p4')">004</button>
+      <button class="nb" onclick="show('p5')">005</button>
+      <button class="nb" onclick="show('p6')">006</button>
+      <button class="nb" onclick="show('p7')">007</button>
+      <button class="nb" onclick="show('p8')">008</button>
+      <button class="nb" onclick="show('p9')">009</button>
+      <button class="nb" onclick="show('p10')">010</button>
+      <button class="nb" onclick="show('p11')">011</button>
+      <button class="nb" onclick="show('p12')">012</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.65rem;margin-bottom:8px;">Focus Framework · 6강 전체 목록</h1>
+  <p style="font-size:.87rem;color:var(--ink3);margin-bottom:20px;">총 12개 지문 · 본문 원문 → 문항 &amp; 정답해설 → 구문해석 → Topic → Logical Framework</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')">
+      <div class="toc-code">#001 · 26007-0061 · 쪽 066</div>
+      <div class="toc-en">Blowback of Arms Exports</div>
+      <div class="toc-ko">무기 수출의 역타격 — 통제 불가능성</div>
+      <div class="toc-badge">어법 (5택 1)</div>
+    </a>
+    <a class="toc-card" onclick="show('p2')">
+      <div class="toc-code">#002 · 26007-0062 · 쪽 067</div>
+      <div class="toc-en">The Role of the Wholesaler</div>
+      <div class="toc-ko">도매상의 역할 — 중간 유통의 가치</div>
+      <div class="toc-badge">주제 추론</div>
+    </a>
+    <a class="toc-card" onclick="show('p3')">
+      <div class="toc-code">#003 · 26007-0063 · 쪽 068</div>
+      <div class="toc-en">Reality Testing &amp; Emotion</div>
+      <div class="toc-ko">감정·논리·현실 검증의 통합</div>
+      <div class="toc-badge">제목 추론</div>
+    </a>
+    <a class="toc-card" onclick="show('p4')">
+      <div class="toc-code">#004 · 26007-0064 · 쪽 069</div>
+      <div class="toc-en">Imitation Across Species</div>
+      <div class="toc-ko">종을 초월한 모방 — 동물의 학습</div>
+      <div class="toc-badge">어법 (5택 1)</div>
+    </a>
+    <a class="toc-card" onclick="show('p5')">
+      <div class="toc-code">#005 · 26007-0065 · 쪽 070</div>
+      <div class="toc-en">Assimilated Delight</div>
+      <div class="toc-ko">동화된 즐거움 — 정체성 구성</div>
+      <div class="toc-badge">흐름무관 문장</div>
+    </a>
+    <a class="toc-card" onclick="show('p6')">
+      <div class="toc-code">#006 · 26007-0066 · 쪽 071</div>
+      <div class="toc-en">Counterexamples in Theory</div>
+      <div class="toc-ko">반례와 이론의 정밀화 — 좁힘과 넓힘</div>
+      <div class="toc-badge">요지 / 구문 분석</div>
+    </a>
+    <a class="toc-card" onclick="show('p7')">
+      <div class="toc-code">#007 · 26007-0067 · 쪽 072</div>
+      <div class="toc-en">Episodic Memory in Wasps</div>
+      <div class="toc-ko">기생벌의 일화적 기억 — 동물 인지</div>
+      <div class="toc-badge">어법 (5택 1)</div>
+    </a>
+    <a class="toc-card" onclick="show('p8')">
+      <div class="toc-code">#008 · 26007-0068 · 쪽 073</div>
+      <div class="toc-en">The Ageing Viewer</div>
+      <div class="toc-ko">고령 시청자와 자전적 기억</div>
+      <div class="toc-badge">주제 추론</div>
+    </a>
+    <a class="toc-card" onclick="show('p9')">
+      <div class="toc-code">#009 · 26007-0069 · 쪽 074</div>
+      <div class="toc-en">Learned Satiety</div>
+      <div class="toc-ko">학습된 포만감 — 식습관 형성</div>
+      <div class="toc-badge">제목 추론</div>
+    </a>
+    <a class="toc-card" onclick="show('p10')">
+      <div class="toc-code">#010 · 26007-0070 · 쪽 075</div>
+      <div class="toc-en">Decision-Making &amp; Habit</div>
+      <div class="toc-ko">의사 결정과 습관 — 인지적 자동화</div>
+      <div class="toc-badge">어법 (5택 1)</div>
+    </a>
+    <a class="toc-card" onclick="show('p11')">
+      <div class="toc-code">#011 · 26007-0071 · 쪽 076</div>
+      <div class="toc-en">Minority Influence Online</div>
+      <div class="toc-ko">온라인 상의 소수 의견의 영향</div>
+      <div class="toc-badge">흐름무관 문장</div>
+    </a>
+    <a class="toc-card" onclick="show('p12')">
+      <div class="toc-code">#012 · 26007-0072 · 쪽 077</div>
+      <div class="toc-en">Essentialism &amp; the Chair</div>
+      <div class="toc-ko">본질주의 — 형태와 기능</div>
+      <div class="toc-badge">요지 / 구문 분석</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ ALL 12 PASSAGES WILL BE INSERTED HERE ═══ -->
+
+<!-- ═══ P001 ═══ -->
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 066 · #번 001 · #문항코드 26007-0061</div>
+    <div class="p-title">Blowback of Arms Exports</div>
+    <div class="p-title-ko">무기 수출의 역타격 — 통제 불가능성 · 어법</div>
+    <span class="p-badge">어법 (밑줄 ①~⑤ 중 어색한 것)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">The <span class="vw">inability<span class="tt">~할 수 없음</span></span> of arms <span class="vw">supplier<span class="tt">공급국, 공급자</span></span>s <span class="vq-ul">① to control</span> the uses {to which their military <span class="vw">hardware<span class="tt">장비, 도구</span></span> will be put} is troubling.</p>
+      <p class="plain-sent">Friends can become enemies, and supplying weapons can <span class="vw">backfire<span class="tt">역효과를 낳다</span></span> ― <span class="vw">generate<span class="tt">만들어 내다</span></span>ing [<span class="vq-ul">② what</span> the CIA calls <span class="vw">blowback<span class="tt">역타격, 역풍</span></span>] to describe [what can happen 〈when foreign activities such as <span class="vw">covert<span class="tt">비밀리의</span></span> shipments of arms are later used〉 in <span class="vw">retaliation<span class="tt">보복</span></span>s against the supplier].</p>
+      <p class="plain-sent">The United States learned this painful lesson the hard way. The weapons {it(= The United States) shipped to Iraq when Saddam Hussein was fighting Iran in the 1980s} <span class="vq-ul">③ were</span> later used against U.S. forces in the Persian Gulf War.</p>
+      <p class="plain-sent">This also happened 〈when the Stinger missiles {the United States supplied to Taliban forces <span class="vq-ul">④ resisting</span> the Soviet Union's 1979 <span class="vw">invasion<span class="tt">침공</span></span> in Afghanistan} <span class="vw">fall into the hands of<span class="tt">~의 손에 들어가다</span></span> terrorists later {<span class="vw">oppose<span class="tt">반대하다</span></span>ing the United States}〉.</p>
+      <p class="plain-sent">Likewise, in 1982, Great Britain found <span class="vq-ul">⑤ <span class="ww">it</span> → <span class="rw">itself</span></span> shipping military <span class="vw">equipment<span class="tt">장비</span></span> to Argentina just eight days before Argentina's attack on the British-controlled Falkland Islands; and in 1998, U.S. military technology {sold to China} was exported to Pakistan, making possible its nuclear weapons test.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+    <div class="q-block">
+      <div class="q-type">어법성 판단 (Grammar)</div>
+      <div class="q-stem">다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> <span class="vq-ul">to control</span> — to부정사 형용사적 용법: inability 수식 ("통제할 수 없음")</div>
+        <div class="choice"><span class="cn">②</span> <span class="vq-ul">what</span> — 관계대명사 what(= the thing that): calls의 목적어. "the CIA가 blowback이라고 부르는 것"</div>
+        <div class="choice"><span class="cn">③</span> <span class="vq-ul">were</span> — 주어 The weapons (복수) → 복수동사. {it shipped~}는 관계절 (목적격 that 생략)</div>
+        <div class="choice"><span class="cn">④</span> <span class="vq-ul">resisting</span> — 현재분사 후치 수식: Taliban forces를 수식 ("저항하는 탈레반 세력")</div>
+        <div class="choice wrong-c"><span class="cn">⑤</span> <span class="ww">it</span> → <span class="rw">itself</span> — find의 목적어와 주어(Great Britain)가 동일 → <strong>재귀대명사</strong> itself가 와야 함</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> "Great Britain found <span class="ww">it</span> shipping..." → 동사 found의 목적어가 주어 Great Britain과 동일인물(영국 자신이 무기를 수출하는 상황을 발견)이므로 재귀대명사 <span class="rw">itself</span>를 써야 한다.<br><br>
+        <strong>참고:</strong> "find oneself + V-ing" = "자신이 ~하고 있음을 발견하다, ~한 상황에 처해 있음을 알게 되다"는 빈출 표현.<br><br>
+        <strong>오답 확인:</strong> ① to control(O, inability 수식) / ② what(O, calls의 목적어) / ③ were(O, weapons 복수) / ④ resisting(O, forces 수식)
+      </div>
+    </div>
+    <div class="drill-box">
+      <h4>📝 Grammar Drill — 재귀대명사 vs 인칭대명사</h4>
+      <div class="drill-item">1. She blamed <span class="drill-ans">(herself)</span> for the accident. (주어 = 목적어)</div>
+      <div class="drill-item">2. He found <span class="drill-ans">(himself)</span> alone in the dark room.</div>
+      <div class="drill-item">3. The cat saw <span class="drill-ans">(itself)</span> in the mirror.</div>
+      <div class="drill-item">4. They prepared the meal by <span class="drill-ans">(themselves)</span>.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The <span class="vw">inability<span class="tt">~할 수 없음</span></span> of arms suppliers / <span class="gr">to control the uses {to which their military hardware will be put}</span> / is troubling.</div>
+        <div class="sp-ko">무기 공급국들이 / 그들의 군사 장비가 사용될 용도들을 / 통제할 수 없다는 것은 / 우려스럽다. <span class="sp-note">★ to control: 형용사적 용법(inability 수식) / to which ~: 관계절 (put A to use = A를 사용하다의 변형)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Friends can become enemies, and supplying weapons can <span class="vw">backfire<span class="tt">역효과를 낳다</span></span> ― / <span class="gr">generating [what the CIA calls "blowback"]</span> / to describe [what can happen 〈when foreign activities such as <span class="vw">covert<span class="tt">비밀리의</span></span> shipments of arms are later used〉 in retaliations against the supplier].</div>
+        <div class="sp-ko">친구가 적이 될 수 있고, 무기 공급은 역효과를 낳을 수 있다 ― / CIA가 "역타격"이라고 부르는 것을 만들어 내면서, / 무기의 비밀스러운 수송과 같은 해외 활동이 / 나중에 공급국에 대한 보복으로 사용될 때 일어날 수 있는 것을 묘사하기 위해서이다. <span class="sp-note">★ generating ~: 결과의 분사구문 / what절(2회): 관계대명사 what절(명사절)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The weapons <span class="gr">{(that) it shipped to Iraq when Saddam Hussein was fighting Iran in the 1980s}</span> / were later used against U.S. forces in the Persian Gulf War.</div>
+        <div class="sp-ko">미국이 1980년대 사담 후세인이 이란과 싸울 때 이라크에 보낸 무기들은 / 나중에 페르시아 만 전쟁에서 미군에 대항하여 사용되었다. <span class="sp-note">★ {it shipped~}: 목적격 관계대명사 that 생략 / weapons(복수) ↔ were(복수동사)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This also happened 〈when the Stinger missiles {the United States supplied to Taliban forces <span class="gr">resisting the Soviet Union's 1979 invasion in Afghanistan</span>} fell into the hands of terrorists later <span class="gr">{opposing the United States}</span>〉.</div>
+        <div class="sp-ko">이것은 또한 미국이 1979년 소련의 아프가니스탄 침공에 저항하던 / 탈레반 세력에게 공급한 스팅어 미사일이 / 나중에 미국에 반대하는 테러리스트의 손에 들어갔을 때에도 일어났다. <span class="sp-note">★ resisting / opposing: 현재분사구, 각각 forces와 terrorists 후치 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Likewise, in 1982, Great Britain found <span class="gr"><span class="rw">itself</span>(← <span class="ww">it</span>) shipping military equipment to Argentina</span> just eight days before Argentina's attack on the British-controlled Falkland Islands; and in 1998, U.S. military technology {sold to China} was exported to Pakistan, <span class="gr">making possible its nuclear weapons test</span>.</div>
+        <div class="sp-ko">마찬가지로, 1982년에 영국은 / 영국이 통제하는 포클랜드 제도에 대한 아르헨티나의 공격이 있기 단 8일 전에 / 자국이 아르헨티나에 군사 장비를 수출하고 있음을 발견했다; / 그리고 1998년에는 중국에 판매된 미국 군사 기술이 / 파키스탄에 수출되었고, / 그 결과 파키스탄의 핵무기 시험이 가능해졌다. <span class="sp-note">★ find + oneself + -ing: "자신이 ~하고 있음을 발견하다" / making ~: 결과의 분사구문</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① find + oneself + -ing</strong> — "자신이 ~한 상황에 처해 있음을 알게 되다": 주어 = 목적어 → 재귀대명사 필수</p>
+      <p><strong>② what절 (관계대명사 what)</strong> — "~하는 것": "what the CIA calls blowback", "what can happen ~" 둘 다 명사절</p>
+      <p><strong>③ generating ~ / making ~ (결과의 분사구문)</strong> — "그 결과 ~하면서": 주절의 자연스러운 결과를 묘사</p>
+      <p><strong>④ {(that) it shipped to Iraq~}</strong> — 목적격 관계대명사 that 생략. The weapons를 후치 수식</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">The lack of end-use control turns military supplies into "blowback" against the supplier.
+      <div class="topic-ko">최종 용도 통제의 부재가 군사 공급품을 공급국 자신에 대한 '역타격'으로 변모시킨다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>The inability to control the end-use of exported arms; definition of "blowback." Suppliers cannot dictate how military hardware is used once shipped — friends turn into enemies, and arms return as a tool for retaliation.</td><td class="fw-ko">수출된 무기의 최종 용도를 통제할 수 없는 점과 '역타격'의 정의가 제시되며, 친구가 적이 되고 무기가 보복 수단으로 돌아온다.</td></tr>
+        <tr><td><span class="step-badge">② Example 1</span></td><td>U.S. cases: Arms to Iraq (1980s) used in the Gulf War; Stinger missiles to Taliban used by terrorists.</td><td class="fw-ko">미국 사례 — 1980년대 이라크 무기는 걸프전에서, 탈레반에 제공된 스팅어 미사일은 테러리스트에게 사용되었다.</td></tr>
+        <tr><td><span class="step-badge">③ Example 2</span></td><td>UK to Argentina prior to the Falkland War; tech transfer from China to Pakistan's nuclear program.</td><td class="fw-ko">영국은 포클랜드 전쟁 직전 아르헨티나에 수출했고, 중국 경유 기술이 파키스탄 핵무기로 전이되었다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p1 -->
+
+<!-- ═══ P002 ═══ -->
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 067 · #번 002 · #문항코드 26007-0062</div>
+    <div class="p-title">The Role of the Wholesaler</div>
+    <div class="p-title-ko">도매상의 역할 — 중간 유통의 가치 · 주제 추론</div>
+    <span class="p-badge">주제 추론 (Topic Inference)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">A <span class="vw">wholesaler<span class="tt">도매상, 도매업자</span></span> is an organisation or individual acting as the middle step between a producer and a <span class="vw">retailer<span class="tt">소매상, 소매업자</span></span>. It is <span class="vw">reasonable<span class="tt">타당한</span></span> to ask [what the point might be of having a wholesaler in the <span class="vw">distribution<span class="tt">유통</span></span> channel]. Why would the <span class="vw">manufacturer<span class="tt">제조업체</span></span> not simply pass the sporting goods straight on to the retailer?</p>
+      <p class="plain-sent">However, a wholesaler can be important in helping other channel members. First, they usually buy goods <span class="vw">in bulk<span class="tt">대량으로</span></span> from the manufacturer and then store them. When the retailer is ready to order some goods, the wholesaler <span class="vw">transport<span class="tt">운송하다</span></span>s the sporting goods to them(= retailers).</p>
+      <p class="plain-sent">A wholesaler can also <span class="vw">stock<span class="tt">(상품을) 갖추다</span></span> a large range of goods from a variety of different manufacturers. As a result, instead of having to <span class="vw">contact<span class="tt">연락하다</span></span> all of these producers, the retailer only has to talk to the one wholesaler to <span class="vw">gain access to<span class="tt">~을 입수하다</span></span> a range of different sporting goods.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 주제로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">주제 추론 (Topic Inference)</div>
+      <div class="q-stem">다음 글의 주제로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> problems of bulk purchasing by manufacturers</div>
+        <div class="choice correct"><span class="cn">②</span> <span class="ans">the role of wholesalers in the distribution process</span></div>
+        <div class="choice"><span class="cn">③</span> shifts in the concept of wholesaler in the modern market</div>
+        <div class="choice"><span class="cn">④</span> strategies retailers use to minimize distribution costs</div>
+        <div class="choice"><span class="cn">⑤</span> the impact of wholesalers on product pricing</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">②</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> 글 전체는 도매상이 유통 채널에서 어떤 역할을 하는지를 설명함. (1) 대량 구매 + 저장 + 운송, (2) 다양한 제조사의 상품을 한 곳에 모아 소매상에게 일원화된 접근 제공 → <strong>유통 과정에서의 도매상의 역할</strong>이 주제.<br><br>
+        <strong>오답 분석:</strong><br>
+        ① 제조업체의 대량 구매 '문제' — 본문은 제조업체의 문제가 아니라 도매상의 기능을 설명<br>
+        ③ '현대 시장에서의 도매상 개념의 변화' — 변화에 대한 언급 없음<br>
+        ④ '소매상의 비용 최소화 전략' — 소매상 전략이 아니라 도매상의 역할<br>
+        ⑤ '제품 가격에 미치는 영향' — 가격 영향은 언급되지 않음
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">A <span class="vw">wholesaler<span class="tt">도매상</span></span> is an organisation or individual <span class="gr">acting as the middle step between a producer and a retailer</span>.</div>
+        <div class="sp-ko">도매상은 생산자와 소매상 사이의 중간 단계 역할을 하는 조직이나 개인이다. <span class="sp-note">★ acting as ~: 현재분사구 (organisation/individual 후치 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It is reasonable to ask <span class="gr">[what the point might be of having a wholesaler in the distribution channel]</span>.</div>
+        <div class="sp-ko">유통 채널에 도매상을 두는 것의 요점이 무엇일 수 있는지 묻는 것은 / 타당하다. <span class="sp-note">★ It is ~ to V (가주어·진주어) / [what ~ might be]: 간접의문문 (ask의 목적어) / of having ~: the point를 수식하는 전치사구</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Why would the manufacturer not simply <span class="gr">pass the sporting goods straight on to the retailer</span>?</div>
+        <div class="sp-ko">왜 제조업체는 단순히 스포츠 용품을 / 소매상에게 곧바로 넘기지 않는가? <span class="sp-note">★ pass A straight on to B: "A를 B에게 곧바로 전달하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">First, they usually buy goods <span class="vw">in bulk<span class="tt">대량으로</span></span> from the manufacturer / and then <span class="vw">store<span class="tt">저장하다</span></span> them.</div>
+        <div class="sp-ko">먼저, 그들(도매상)은 보통 제조업체로부터 대량으로 상품을 구매하고 / 그것들을 저장한다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A wholesaler can also stock a large range of goods <span class="gr">from a variety of different manufacturers</span>.</div>
+        <div class="sp-ko">도매상은 또한 다양한 제조업체로부터 / 광범위한 상품을 비축할 수 있다. <span class="sp-note">★ a variety of + 복수명사: "다양한 ~"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As a result, <span class="gr">instead of having to contact all of these producers</span>, / the retailer only has to talk to the one wholesaler / <span class="gr">to gain access to a range of different sporting goods</span>.</div>
+        <div class="sp-ko">그 결과, 이러한 모든 생산자들에게 연락해야 하는 대신, / 소매상은 한 도매상에게만 이야기하면 된다 / 다양한 스포츠 용품에 접근하기 위해서. <span class="sp-note">★ instead of -ing: "~하는 대신에" / to gain ~: 부사적 용법(목적)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① It is reasonable to V (가주어·진주어)</strong> — "V하는 것이 타당하다": "It is reasonable to ask ~"</p>
+      <p><strong>② [what the point might be of having ~] (간접의문문 + 후치 of구)</strong> — "도매상을 두는 것의 요점이 무엇인지". what절 내부 "of having ~"는 the point를 수식</p>
+      <p><strong>③ acting as ~ (현재분사구)</strong> — 명사 후치 수식: "an organisation or individual {acting as ~}"</p>
+      <p><strong>④ instead of -ing</strong> — "~하는 대신에": 전치사 of 뒤에는 동명사</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Wholesalers play a vital role in the distribution channel by streamlining the supply process and providing logistical support to both manufacturers and retailers.
+      <div class="topic-ko">도매상은 공급 과정을 간소화하고 제조업체와 소매상 모두에게 물류 지원을 제공함으로써 유통 채널에서 핵심적인 역할을 한다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Wholesaler as the link between Producer and Retailer. Why not direct sales? (Manufacturer → Retailer)</td><td class="fw-ko">도매상은 생산자와 소매상 사이의 중간 연결고리이며, 왜 직거래가 아닌지 의문이 제기된다.</td></tr>
+        <tr><td><span class="step-badge">② Development 1</span></td><td>Logistics Support — Buying in bulk, storing, and transporting goods.</td><td class="fw-ko">도매상은 물류 지원으로서 대량 구매·저장·운송을 담당한다.</td></tr>
+        <tr><td><span class="step-badge">③ Development 2</span></td><td>Simplified Access — One-stop access to products from multiple manufacturers. System efficiency by reducing complexity in the distribution channel.</td><td class="fw-ko">도매상은 다수 제조사의 상품에 일원화된 접근을 제공해 유통 채널의 복잡성을 줄인다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p2 -->
+
+<!-- ═══ P003 ═══ -->
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 068 · #번 003 · #문항코드 26007-0063</div>
+    <div class="p-title">Reality Testing &amp; Emotion</div>
+    <div class="p-title-ko">감정·논리·현실 검증의 통합 · 제목 추론</div>
+    <span class="p-badge">제목 추론 (Title Inference)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent"><span class="vw">Connecting<span class="tt">연결하기</span></span> ideas logically is the basis for <span class="vw">reality testing<span class="tt">현실 검증</span></span>, because a child {around thirty to forty months old} connects experiences inside herself with those(= experiences) outside and <span class="vw">categorize<span class="tt">분류하다</span></span>s [which are which] (fantasy versus reality).</p>
+      <p class="plain-sent">Her <span class="vw">ongoing<span class="tt">계속 진행 중인</span></span> emotional <span class="vw">interaction<span class="tt">상호작용</span></span>s support this ability to form a category of reality because they(= interactions) continuously put a "me" in contact (through the interactions) with a "not me or you." This ongoing contact with someone {who is "not me"} provides constant contact with an <span class="vw">external<span class="tt">외부의</span></span> reality outside oneself. The emotional <span class="vw">investment<span class="tt">투자</span></span> in relationships enables the child to recognize the difference between her <span class="vw">fantasy<span class="tt">환상</span></span>ies and the actual behavior of others.</p>
+      <p class="plain-sent">While "reality testing" might appear to be a purely <span class="vw">cognitive<span class="tt">인지적인</span></span> capacity, it(= reality testing) requires an ability to organize an emotional sense of self {that is <span class="vw">distinct<span class="tt">구별되는</span></span> from one's sense of others.} Such "reality testing" is a critical <span class="vw">foundation<span class="tt">토대</span></span> for logical thinking. Without it(→ 현실과 환상을 구분하는 현실 검증 능력), facts are often used to support <span class="vw">irrational<span class="tt">비이성적인</span></span> beliefs.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 제목으로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">제목 추론 (Title Inference)</div>
+      <div class="q-stem">다음 글의 제목으로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> Is Rational Thinking Learned or Inherited?</div>
+        <div class="choice"><span class="cn">②</span> Can Imaginative Play Strengthen Social Understanding?</div>
+        <div class="choice"><span class="cn">③</span> Facts over Feelings: Don't Let Emotions Cloud Rationality</div>
+        <div class="choice"><span class="cn">④</span> Social Interaction: How Mimicking Shapes Early Social Skills</div>
+        <div class="choice correct"><span class="cn">⑤</span> <span class="ans">Emotion as the Foundation of Reality Testing and Logical Thinking</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤</span></div>
+      <div class="ans-exp">
+        <strong>핵심 논리:</strong> 글은 (1) 감정적 상호작용이 현실 검증의 토대 → (2) 현실 검증이 논리적 사고의 토대 → 따라서 <strong>감정이 현실 검증과 논리적 사고의 토대</strong>. ⑤가 이 흐름을 모두 포괄.<br><br>
+        <strong>핵심 문장:</strong> "reality testing might appear to be a purely cognitive capacity, [but] it requires an ability to organize an emotional sense of self" → 감정이 인지/논리의 기반임을 명시.<br><br>
+        <strong>오답 분석:</strong><br>
+        ① 이성적 사고가 학습/유전 — 학습/유전 논의 없음<br>
+        ② 상상 놀이 / 사회적 이해 — 상상 놀이는 본문 주제가 아님<br>
+        ③ "감정보다 사실, 감정이 합리성을 흐리게 하지 마라" — 글의 주장과 <u>정반대</u> (감정이 합리성의 기반)<br>
+        ④ 모방을 통한 사회적 기술 — 모방 언급 없음
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Connecting ideas logically</span> is the basis for reality testing, / because a child {around thirty to forty months old} connects experiences inside herself with those outside / and <span class="gr">categorizes [which are which]</span> (fantasy versus reality).</div>
+        <div class="sp-ko">생각들을 논리적으로 연결하는 것이 현실 검증의 기초인데, / 왜냐하면 약 30~40개월 된 아이는 / 자기 내부의 경험을 외부의 경험과 연결하고 / 어느 것이 어느 것인지(환상 대 현실) 분류하기 때문이다. <span class="sp-note">★ Connecting ~: 동명사 주어 / [which are which]: 간접의문문 (categorizes의 목적어)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Her ongoing emotional interactions support this ability to form a category of reality / because they continuously put a "me" in contact (through the interactions) with a "not me or you."</div>
+        <div class="sp-ko">그녀의 지속적인 감정적 상호작용은 현실 범주를 형성하는 이 능력을 지원한다 / 왜냐하면 그것들(상호작용)이 끊임없이 (상호작용을 통해) '나'를 '나도 너도 아닌 것'과 접촉시키기 때문이다. <span class="sp-note">★ put A in contact with B: "A를 B와 접촉시키다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This ongoing contact with someone <span class="gr">{who is "not me"}</span> provides constant contact with an external reality outside oneself.</div>
+        <div class="sp-ko">'내가 아닌' 누군가와의 지속적인 접촉은 / 자기 자신 외부의 외부 현실과의 끊임없는 접촉을 제공한다. <span class="sp-note">★ who절: someone을 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The emotional investment in relationships <span class="gr">enables the child to recognize the difference between her fantasies and the actual behavior of others</span>.</div>
+        <div class="sp-ko">관계에 대한 감정적 투자는 / 아이로 하여금 자신의 환상과 타인의 실제 행동 사이의 차이를 인식할 수 있게 한다. <span class="sp-note">★ enable + O + to V: "O가 V할 수 있게 하다" / the difference between A and B: "A와 B 사이의 차이"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">While "reality testing" might appear to be a purely cognitive capacity</span>, it requires an ability <span class="gr">to organize an emotional sense of self {that is distinct from one's sense of others}</span>.</div>
+        <div class="sp-ko">'현실 검증'은 순전히 인지적인 능력처럼 보일 수 있지만, / 그것은 / 타인에 대한 감각과 구별되는 / 자기에 대한 감정적 감각을 조직화하는 능력을 / 필요로 한다. <span class="sp-note">★ While + S+V: "~이지만" (양보) / to organize: 형용사적 용법 (ability 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Such "reality testing" is a critical foundation for logical thinking. <span class="gr">Without it</span>, facts are often used to support irrational beliefs.</div>
+        <div class="sp-ko">그러한 '현실 검증'은 논리적 사고에 대한 중요한 토대이다. / 그것 없이는, 사실이 종종 비이성적인 신념을 지지하는 데 사용된다. <span class="sp-note">★ Without it: 가정법 의미 ("그것이 없다면")</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 동명사 주어 + 단수 동사</strong> — "Connecting ideas logically <u>is</u> the basis ~": 동명사구는 단수 취급</p>
+      <p><strong>② [which are which] (간접의문문)</strong> — "어느 것이 어느 것인지": categorizes의 목적어</p>
+      <p><strong>③ enable + O + to V</strong> — "O가 V할 수 있게 하다": "enables the child to recognize ~"</p>
+      <p><strong>④ While + S+V (양보 부사절)</strong> — "~이지만": "While reality testing might appear ~"</p>
+      <p><strong>⑤ {that is distinct from ~} (주격 관계절)</strong> — "~과 구별되는". an emotional sense of self를 수식</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Reality testing, rooted in emotional interactions and the distinction between self and others, serves as the essential foundation for logical thinking.
+      <div class="topic-ko">감정적 상호작용과 자아·타인의 구분에 뿌리를 둔 현실 검증은 논리적 사고를 위한 필수적 토대로 작용한다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Children begin to categorize internal fantasies and external realities as they connect their experiences.</td><td class="fw-ko">아이들은 경험을 연결하면서 내부의 환상과 외부의 현실을 범주화하기 시작한다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>Continuous emotional interactions with others enable children to develop a sense of self that is distinct from others. → Using emotional investment to strengthen the contact with actual reality versus personal fantasy.</td><td class="fw-ko">지속적인 감정적 상호작용이 자기와 타인을 구분하게 하며, 감정적 투자가 현실과 환상의 구별을 강화한다.</td></tr>
+        <tr><td><span class="step-badge">③ Conclusion</span></td><td>This established reality testing serves as a critical foundation for logical thinking. → Preventing the misuse of facts to support irrational beliefs and ensuring sound reasoning.</td><td class="fw-ko">확립된 현실 검증은 논리적 사고의 토대가 되어 비이성적 신념을 지지하기 위한 사실 오용을 방지한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p3 -->
+
+<!-- ═══ P004 ═══ -->
+<div class="sec" id="p4">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 069 · #번 004 · #문항코드 26007-0064</div>
+    <div class="p-title">Imitation Across Species</div>
+    <div class="p-title-ko">종을 초월한 모방 — 동물의 사회적 학습 · 어법</div>
+    <span class="p-badge">어법 (밑줄 ①~⑤ 중 어색한 것)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent"><span class="vw">Procedure<span class="tt">절차, 기법</span></span>s have recently been developed {that separate <span class="vw">imitation<span class="tt">모방</span></span> from other forms of social influence and social learning}, and the results of initial studies indicate [<span class="vq-ul">① that</span> species 〈from chimpanzees to quail〉 can imitate]. Such findings should not be surprising because social learning, 〈whether by imitation or some other process,〉 often <span class="vq-ul">② provides</span> greater benefits than genetically <span class="vw">predispose<span class="tt">미리 결정짓다</span></span>d behavior or trial-and-error learning.</p>
+      <p class="plain-sent">However, the processes {involved} {that enable animals to match their behavior to that(= the behavior) of a <span class="vw">demonstrator<span class="tt">시범자</span></span>} <span class="vq-ul">③ <span class="ww">being</span> → <span class="rw">are</span></span> poorly understood. Imitation may involve some form of <span class="vw">coordination<span class="tt">조율, 협응</span></span> of visual and touch-based sensory <span class="vw">modality<span class="tt">양상</span></span>ies, perspective taking, or response <span class="vw">facilitation<span class="tt">촉진</span></span>. However, the role of such processes in <span class="vw">opaque<span class="tt">불투명한</span></span> imitation is still unknown. A reasonable strategy to better understand the mechanisms {involved in imitation} would be to determine the necessary and sufficient conditions for opaque imitation to occur and <span class="vq-ul">④ to explore</span> the range of behaviors {that animals can imitate}.</p>
+      <p class="plain-sent">Finally, the ability to learn from others may not only be <span class="vw">adaptive<span class="tt">적응적인</span></span> in making more efficient [the <span class="vw">acquisition<span class="tt">습득</span></span> of behavior {<span class="vq-ul">⑤ important</span> for survival and reproduction}] but it(= the ability to learn from others) may also free the animal from trial-and-error learning to engage in innovative <span class="vw">variant<span class="tt">변형</span></span>s {that may be adopted by others}.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+    <div class="q-block">
+      <div class="q-type">어법성 판단 (Grammar)</div>
+      <div class="q-stem">다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> <span class="vq-ul">that</span> — indicate의 목적어절 도입. that절 = "~라는 것을"</div>
+        <div class="choice"><span class="cn">②</span> <span class="vq-ul">provides</span> — 주어 "social learning"(단수, 삽입구 whether절은 무시) → 단수동사 provides ✓</div>
+        <div class="choice wrong-c"><span class="cn">③</span> <span class="ww">being</span> → <span class="rw">are</span> — 문장의 본동사가 필요. 주어 "the processes" (복수) → <strong>are</strong> (복수 본동사)</div>
+        <div class="choice"><span class="cn">④</span> <span class="vq-ul">to explore</span> — to determine ~ and to explore ~: to부정사 병렬 구조</div>
+        <div class="choice"><span class="cn">⑤</span> <span class="vq-ul">important</span> — behavior를 후치 수식하는 형용사구 (= which is important)</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">③</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> 문장 "the processes {involved} {that enable animals to match their behavior to that of a demonstrator} ___ poorly understood"는 본동사가 필요. <span class="ww">being</span>은 분사 → 본동사가 될 수 없음. 주어 "the processes"가 복수이므로 <span class="rw">are</span> (수동태 본동사).<br><br>
+        <strong>문장 구조:</strong> 주어 = the processes / 수식 1 = {involved} (과거분사구) / 수식 2 = {that enable animals to match ~} (관계절) / 본동사 = <span class="rw">are</span> poorly understood.<br><br>
+        <strong>오답 확인:</strong><br>
+        ① that(O) — indicate의 목적어절<br>
+        ② provides(O) — 주어 social learning은 단수<br>
+        ④ to explore(O) — to determine과 병렬<br>
+        ⑤ important(O) — behavior 후치 수식
+      </div>
+    </div>
+    <div class="drill-box">
+      <h4>📝 Grammar Drill — 본동사 vs 분사 구별</h4>
+      <div class="drill-item">1. The students {studying in the library} <span class="drill-ans">(are)</span> preparing for the exam. (본동사 필요)</div>
+      <div class="drill-item">2. The book {written by the famous author} <span class="drill-ans">(was)</span> sold out yesterday. (본동사 필요)</div>
+      <div class="drill-item">3. People {living in coastal areas} <span class="drill-ans">(face)</span> the risk of flooding. (본동사 필요)</div>
+      <div class="drill-item">4. The mechanisms {involved in imitation} <span class="drill-ans">(remain)</span> poorly understood. (본동사 필요)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Procedures have recently been developed <span class="gr">{that separate imitation from other forms of social influence and social learning}</span>, / and the results of initial studies indicate <span class="gr">[that species 〈from chimpanzees to quail〉 can imitate]</span>.</div>
+        <div class="sp-ko">모방을 다른 형태의 사회적 영향과 사회적 학습으로부터 분리시키는 / 절차들이 최근에 개발되었고, / 초기 연구의 결과는 / 침팬지에서 메추라기까지의 종들이 모방할 수 있다는 것을 나타낸다. <span class="sp-note">★ {that ~}: Procedures를 수식하는 관계절 (분리 도치) / [that ~]: indicate의 목적어절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Such findings should not be surprising / because social learning, 〈whether by imitation or some other process,〉 / often <span class="rw">provides</span> greater benefits / than genetically predisposed behavior or trial-and-error learning.</div>
+        <div class="sp-ko">그러한 발견은 놀라울 것이 없는데, / 왜냐하면 사회적 학습은 / 모방에 의한 것이든 다른 어떤 과정에 의한 것이든 간에 / 유전적으로 미리 결정된 행동이나 시행착오 학습보다 / 더 큰 이익을 제공하기 때문이다. <span class="sp-note">★ whether A or B: "A이든 B이든" (양보 삽입구) / 주어 social learning은 단수 → provides</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, the processes {involved} {that enable animals to match their behavior to that of a <span class="vw">demonstrator<span class="tt">시범자</span></span>} <span class="gr"><span class="rw">are</span>(← <span class="ww">being</span>) poorly understood</span>.</div>
+        <div class="sp-ko">그러나, 동물들로 하여금 자신의 행동을 / 시범자의 행동과 일치시키게 하는 / 관련된 과정들은 / 잘 이해되지 못하고 있다. <span class="sp-note">★ 주어: the processes {involved} {that ~} → 본동사 are 필수 / match A to B: "A를 B와 일치시키다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A reasonable strategy <span class="gr">to better understand the mechanisms {involved in imitation}</span> would be <span class="gr">to determine the necessary and sufficient conditions for opaque imitation to occur</span> and <span class="gr">to explore the range of behaviors {that animals can imitate}</span>.</div>
+        <div class="sp-ko">모방에 관련된 기제를 더 잘 이해하기 위한 합리적인 전략은 / 불투명 모방이 일어나기 위한 필요충분조건을 결정하고 / 동물들이 모방할 수 있는 행동의 범위를 탐구하는 것이다. <span class="sp-note">★ would be + to determine ~ and to explore ~: to부정사 병렬 (be의 보어)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Finally, the ability to learn from others <span class="gr">may not only be adaptive in making more efficient [the acquisition of behavior {important for survival and reproduction}]</span> but it may also free the animal from trial-and-error learning / to engage in innovative variants {that may be adopted by others}.</div>
+        <div class="sp-ko">마지막으로, 타인으로부터 학습하는 능력은 / 생존과 번식에 중요한 행동의 습득을 더 효율적으로 만드는 데 적응적일 뿐만 아니라 / 동물을 시행착오 학습에서 자유롭게 하여 / 다른 개체에 의해 채택될 수 있는 혁신적인 변형에 참여하게 할 수도 있다. <span class="sp-note">★ not only A but (also) B: "A뿐만 아니라 B도" / make + O + 형용사 (5형식): "O를 ~하게 만들다"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 분리 도치 관계절</strong> — "Procedures have recently been developed {that separate ~}": 선행사 Procedures와 관계절 that ~ 사이에 동사 have been developed 삽입</p>
+      <p><strong>② 본동사 vs 분사 구별</strong> — 주어+긴 수식어 뒤에는 반드시 본동사. "the processes {involved} {that ~} <u>are</u> poorly understood"</p>
+      <p><strong>③ whether A or B (양보 삽입구)</strong> — "A이든 B이든": 주어와 동사 사이에 콤마(,)로 삽입</p>
+      <p><strong>④ to부정사 병렬</strong> — "would be <u>to determine</u> ~ and <u>to explore</u> ~"</p>
+      <p><strong>⑤ make + O + 형용사 (5형식)</strong> — "make more efficient [the acquisition ~]": 형용사가 목적어 앞으로 도치 (목적어가 길어서)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">The mechanisms and evolutionary significance of imitation as a sophisticated form of social learning in animals.
+      <div class="topic-ko">동물의 정교한 사회적 학습 형태로서 모방이 가진 기제와 진화적 의의.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Evidence of imitation across diverse species (chimps to quail) and its adaptive superiority over trial-and-error learning.</td><td class="fw-ko">침팬지부터 메추라기까지 다양한 종에서 모방이 입증되었고, 시행착오 학습보다 더 적응적이다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>The poorly understood mechanisms of imitation and the proposal of a strategic research direction (focusing on opaque imitation).</td><td class="fw-ko">모방의 기제는 아직 잘 이해되지 못하며, 불투명 모방의 조건과 행동 범위를 연구해야 한다.</td></tr>
+        <tr><td><span class="step-badge">③ Closing</span></td><td>The dual role of social learning: Efficiency in survival and providing a foundation for innovation.</td><td class="fw-ko">사회적 학습은 생존 효율성과 혁신의 토대라는 이중 역할을 한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p4 -->
+
+<!-- ═══ P005 ═══ -->
+<div class="sec" id="p5">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 070 · #번 005 · #문항코드 26007-0065</div>
+    <div class="p-title">Assimilated Delight</div>
+    <div class="p-title-ko">동화된 즐거움 — 정체성 구성 · 흐름무관 문장</div>
+    <span class="p-badge">전체 흐름과 관계없는 문장 고르기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">In the sports industry, feelings of <span class="vw">delight<span class="tt">즐거움, 기쁨</span></span> do not stay <span class="vw">permanently<span class="tt">영구적으로</span></span> with a customer; they will not continue to feel the physical <span class="vw">intensity<span class="tt">강렬함</span></span> of delight (such as excitement or <span class="vw">exhilaration<span class="tt">활기, 들뜸</span></span>) <span class="vw">indefinitely<span class="tt">무한히</span></span>, although they are likely to remember the experience. If, for example, fitness centre customers remember being delighted the last time {they used a service}, their expectations may be raised well above normal.</p>
+      <p class="plain-sent"><span class="nc">①</span> This may be <span class="vw">term<span class="tt">~로 부르다</span></span>ed <span class="vw">assimilated<span class="tt">동화된</span></span> delight, because the customer has <span class="vw">incorporate<span class="tt">포함시키다</span></span>d the things {that delighted them into their expectations of [what is normal]}.</p>
+      <p class="plain-sent"><span class="nc">②</span> The customer may even tell others about the features of the service, and as a result others may also come to expect a high level of performance as normal.</p>
+      <p class="plain-sent irr-sent"><span class="nc nc-wrong">③</span> When customers have difficulties interpreting outcome quality, they tend to rely on service delivery aspects like friendliness and responsiveness.</p>
+      <p class="plain-sent"><span class="nc">④</span> Worse, competing organisations may hear about [what is being offered] and <span class="vw">duplicate<span class="tt">복제하다</span></span> it themselves, which of course will mean [that there is nothing <span class="vw">unique<span class="tt">독특한</span></span> about the original service].</p>
+      <p class="plain-sent"><span class="nc">⑤</span> As a result, sport organisations must carefully consider [whether the cost of providing a delighting feature is worth it].</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 전체 흐름과 관계없는 문장을 고르시오</div>
+    <div class="q-block">
+      <div class="q-type">무관한 문장 (Irrelevant Sentence)</div>
+      <div class="q-stem">다음 글에서 전체 흐름과 관계 없는 문장은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="choice"><span class="cn">②</span></div>
+        <div class="choice wrong-c"><span class="cn">③</span> <span style="color:var(--red);">← 무관한 문장</span></div>
+        <div class="choice"><span class="cn">④</span></div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">③</span></div>
+      <div class="ans-exp">
+        <strong>글의 흐름:</strong> 도입 — 즐거움이 영구적이지 않지만 기억은 남아 기대치가 높아짐 → ① 이를 "동화된 즐거움(assimilated delight)"이라 명명 → ② 입소문으로 타인의 기대치도 상승 → ④ 경쟁사가 따라하여 독특성 상실 → ⑤ 따라서 비용 대비 가치 평가 필요<br><br>
+        <strong>③이 무관한 이유:</strong> "고객이 결과 품질을 해석하기 어려울 때, 친절도·반응성 같은 <u>서비스 전달 측면</u>에 의존한다"는 내용은 <u>결과 평가의 어려움 → 과정에 의존</u>이라는 별개의 주제. 글의 흐름(즐거움이 동화되어 기대치 상승 → 독특성 상실)과는 직접 관련이 없음.<br><br>
+        <strong>연결 확인:</strong> ②의 끝 "others may come to expect a high level of performance" → ④의 "Worse, competing organisations may ... duplicate it" → 자연스럽게 연결됨. ③을 빼면 ②→④로 매끄럽게 이어진다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In the sports industry, feelings of delight <span class="gr">do not stay permanently with a customer</span>; / they will not continue to feel the physical intensity of delight (such as excitement or exhilaration) indefinitely, / <span class="gr">although they are likely to remember the experience</span>.</div>
+        <div class="sp-ko">스포츠 산업에서, 즐거움의 감정은 / 고객에게 영구적으로 머물지 않는다; / 그들은 즐거움의 신체적 강렬함(흥분이나 활기 같은)을 / 무한히 느끼지는 않을 것이지만, / 그 경험을 기억하기는 쉽다. <span class="sp-note">★ although + S+V: "~이지만" (양보) / be likely to V: "V할 가능성이 높다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">If, for example, fitness centre customers remember <span class="gr">being delighted the last time {they used a service}</span>, / their expectations may be raised well above normal.</div>
+        <div class="sp-ko">예를 들어, 피트니스 센터 고객이 / 그들이 서비스를 마지막으로 사용했을 때 즐거웠던 것을 기억한다면, / 그들의 기대치는 정상보다 훨씬 위로 올라갈 수 있다. <span class="sp-note">★ remember + V-ing: "(과거에) ~했던 것을 기억하다" (반면 remember + to V: "~할 것을 기억하다") / well above ~: "~보다 훨씬 위로"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This may be termed <span class="vw">assimilated<span class="tt">동화된</span></span> delight, / because the customer has incorporated the things {that delighted them} <span class="gr">into their expectations of [what is normal]</span>.</div>
+        <div class="sp-ko">이것은 '동화된 즐거움'이라 불릴 수 있는데, / 왜냐하면 고객이 자신을 즐겁게 한 것들을 / 정상적인 것에 대한 기대 속에 포함시켜 버렸기 때문이다. <span class="sp-note">★ incorporate A into B: "A를 B 속에 포함시키다" / [what is normal]: 관계대명사 what절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Worse, competing organisations may hear about [what is being offered] / and duplicate it themselves, / <span class="gr">which of course will mean [that there is nothing unique about the original service]</span>.</div>
+        <div class="sp-ko">더 나쁘게는, 경쟁 조직이 제공되고 있는 것에 대해 듣고 / 스스로 그것을 복제할 수도 있는데, / 이는 물론 원래 서비스에 독특한 점이 아무것도 없다는 것을 의미할 것이다. <span class="sp-note">★ which: 계속적 관계절 (앞 절 전체 받음) / themselves: 강조 재귀대명사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As a result, sport organisations must carefully consider <span class="gr">[whether the cost of providing a delighting feature is worth it]</span>.</div>
+        <div class="sp-ko">그 결과로, 스포츠 조직은 / 즐거움을 주는 기능을 제공하는 비용이 그만한 가치가 있는지 / 신중히 고려해야 한다. <span class="sp-note">★ [whether ~]: consider의 목적어절 / be worth it: "그만한 가치가 있다"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① be termed + N (수동태 5형식)</strong> — "~라고 불리다": "This may be termed assimilated delight"</p>
+      <p><strong>② incorporate A into B</strong> — "A를 B 속에 포함시키다": "incorporated the things into their expectations"</p>
+      <p><strong>③ remember + V-ing vs remember + to V</strong> — V-ing: "과거에 V했음을 기억하다" / to V: "V할 것을 기억하다"</p>
+      <p><strong>④ which (계속적 관계절, 앞 절 전체 받음)</strong> — "duplicate it themselves, <u>which</u> ~ will mean ~"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">The transitory nature of customer delight and the "Assimilated Delight" trap in the sports industry.
+      <div class="topic-ko">스포츠 산업에서 고객 즐거움의 일시적 본질과 '동화된 즐거움'의 함정.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Physical delight fades over time, but the memory of it raises the bar for future expectations.</td><td class="fw-ko">즐거움의 신체적 강렬함은 사라지지만, 기억은 미래의 기대치를 높인다.</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>As these raised expectations spread to others and rival companies copy the delighting features, the original service is no longer unique.</td><td class="fw-ko">상승한 기대가 타인에게 퍼지고 경쟁사가 모방하면서 원래 서비스의 독특성이 사라진다.</td></tr>
+        <tr><td><span class="step-badge">③ Closing</span></td><td>Organizations must evaluate the cost-effectiveness of providing "delight" (since its value is short-lived).</td><td class="fw-ko">'즐거움'의 가치는 단기적이므로 조직은 그 비용 효과성을 평가해야 한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p5 -->
+
+<!-- ═══ P006 ═══ -->
+<div class="sec" id="p6">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 071 · #번 006 · #문항코드 26007-0066</div>
+    <div class="p-title">Counterexamples in Theory</div>
+    <div class="p-title-ko">반례와 이론의 정밀화 — 좁힘과 넓힘 · 구문분석형</div>
+    <span class="p-badge">요지 / 구문 분석</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">We can tell [whether a <span class="vw">definition<span class="tt">정의</span></span> is too broad or too narrow] by looking for <span class="vw">counterexample<span class="tt">반례</span></span>s. A counterexample is a particular <span class="vw">instance<span class="tt">사례</span></span> {that proves a definition wrong}.</p>
+      <p class="plain-sent">If a definition is too narrow, a counterexample is something {that <span class="vw">belong<span class="tt">속하다</span></span>s in the concept but is <span class="vw">exclude<span class="tt">제외하다</span></span>d by the definition}. <span class="vw">Atheist<span class="tt">무신론자</span></span>s are counterexamples to the definition of humans as religious animals.</p>
+      <p class="plain-sent">However, if a definition is too broad, a counterexample is something {that does not belong in the concept but is <span class="vw">include<span class="tt">포함하다</span></span>d in the definition}. Birds are counterexamples to the definition of humans as two-legged animals.</p>
+      <p class="plain-sent">Let's look at a few other cases. "A college is a <span class="vw">degree-granting<span class="tt">학위를 수여하는</span></span> educational <span class="vw">institution<span class="tt">기관</span></span>." A counterexample would be a law school. Law schools are degree-granting educational institutions, but they are not colleges. So this definition includes too much; it's too broad.</p>
+      <p class="plain-sent">"A cigarette is a <span class="vw">sheaf<span class="tt">묶음, 다발</span></span> of <span class="vw">chopped<span class="tt">잘게 썬</span></span> tobacco rolled in white paper." What about the brands {that are rolled in brown paper}? They are counterexamples {proving [that the definition does not include enough]}; it's too narrow.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 요지 / 구문 분석</div>
+    <div class="q-block">
+      <div class="q-type">요지 추론 + 구문 분석</div>
+      <div class="q-stem">다음 글의 요지를 정리하고 핵심 구문을 분석하시오.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">A</span> <strong>요지:</strong> 정의가 너무 넓거나 너무 좁은지를 <strong>반례(counterexample)</strong>를 통해 판별할 수 있다.</div>
+        <div class="choice"><span class="cn">B</span> "tell [whether ~ or ~]" — tell의 목적어절 도입 whether. "~인지 ~인지 알 수 있다"</div>
+        <div class="choice"><span class="cn">C</span> "by looking for ~" — 수단의 by + 동명사. "~을 찾음으로써"</div>
+        <div class="choice"><span class="cn">D</span> "Atheists are counterexamples to the definition of humans as religious animals." — define A as B: "A를 B로 정의하다"</div>
+        <div class="choice"><span class="cn">E</span> "counterexamples {proving [that the definition does not include enough]}" — 현재분사구가 counterexamples 후치 수식, 그 안에 that절(proving의 목적어)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">We can tell <span class="gr">[whether a definition is too broad or too narrow]</span> / <span class="gr">by looking for counterexamples</span>.</div>
+        <div class="sp-ko">우리는 어떤 정의가 너무 넓은지 너무 좁은지를 / 반례를 찾음으로써 알아낼 수 있다. <span class="sp-note">★ tell + whether절: "~인지 ~인지 식별하다" / by + V-ing: "~함으로써" (수단)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A counterexample is a particular instance <span class="gr">{that proves a definition wrong}</span>.</div>
+        <div class="sp-ko">반례란 어떤 정의가 틀렸음을 증명하는 / 특정 사례이다. <span class="sp-note">★ prove + O + 형용사 (5형식): "O가 ~함을 증명하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">If a definition is too narrow, / a counterexample is something <span class="gr">{that belongs in the concept but is excluded by the definition}</span>.</div>
+        <div class="sp-ko">정의가 너무 좁다면, / 반례는 그 개념에 속하지만 정의에 의해 배제되는 무언가이다. <span class="sp-note">★ that절 내부 belongs ~ but is excluded ~: 두 술부의 등위 병렬</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Atheists are counterexamples to <span class="gr">the definition of humans as religious animals</span>.</div>
+        <div class="sp-ko">무신론자는 인간을 종교적 동물로 정의하는 것에 대한 / 반례이다. <span class="sp-note">★ the definition of A as B: "A를 B로 정의하기" (= define A as B의 명사화)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, if a definition is too broad, / a counterexample is something <span class="gr">{that does not belong in the concept but is included in the definition}</span>.</div>
+        <div class="sp-ko">그러나 정의가 너무 넓다면, / 반례는 그 개념에 속하지 않지만 정의에 포함되는 무언가이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Birds are counterexamples to the definition of humans as two-legged animals.</div>
+        <div class="sp-ko">새는 인간을 두 다리 동물로 정의하는 것에 대한 반례이다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">"A cigarette is a sheaf of chopped tobacco <span class="gr">rolled in white paper</span>." / What about the brands <span class="gr">{that are rolled in brown paper}</span>? / They are counterexamples <span class="gr">{proving [that the definition does not include enough]}</span>; it's too narrow.</div>
+        <div class="sp-ko">"담배는 흰 종이로 말아진 잘게 썬 담뱃잎의 묶음이다." / 갈색 종이로 말아진 브랜드는 어떤가? / 그것들은 그 정의가 충분히 포함하지 않음을 증명하는 반례이다; / 너무 좁다. <span class="sp-note">★ rolled in ~: 과거분사구 (tobacco 후치 수식) / proving [that ~]: 현재분사구, 목적어로 that절 (counterexamples 수식)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① tell + whether절</strong> — "~인지 ~인지를 식별하다, 알아내다": "tell whether a definition is too broad or too narrow"</p>
+      <p><strong>② by + V-ing (수단의 by)</strong> — "~함으로써": "by looking for counterexamples"</p>
+      <p><strong>③ prove + O + 형용사 (5형식)</strong> — "O가 ~함을 증명하다": "prove a definition wrong"</p>
+      <p><strong>④ define A as B / the definition of A as B</strong> — "A를 B로 정의하다" / "A를 B로 정의하기"</p>
+      <p><strong>⑤ 분사 + that절 (목적어)</strong> — "counterexamples {proving [that ~]}": 현재분사구가 명사 후치 수식, 그 안에 that절을 목적어로 가짐</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Identifying the Flaws in Definitions: Testing for "Overly Broad" or "Too Narrow" Concepts Using Counterexamples.
+      <div class="topic-ko">반례를 사용하여 '지나치게 넓거나' '너무 좁은' 개념을 검증함으로써 정의의 결함을 식별하기.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>A counterexample is a particular instance that proves a definition wrong by showing it is either too broad or too narrow.</td><td class="fw-ko">반례는 정의가 너무 넓거나 좁음을 보여 정의의 오류를 입증하는 특정 사례이다.</td></tr>
+        <tr><td><span class="step-badge">② Development 1</span></td><td>Two Types of Flaws — Narrow: Excludes valid members (Atheists excluded from "humans as religious animals"). Broad: Includes irrelevant items (Birds included in "humans as two-legged animals").</td><td class="fw-ko">두 유형의 결함 — 좁은 정의는 적법 구성원을 배제(무신론자), 넓은 정의는 무관한 항목을 포함(새).</td></tr>
+        <tr><td><span class="step-badge">③ Development 2</span></td><td>Practical Application — College: Too broad (includes Law schools). Cigarette: Too narrow (excludes brown-paper brands).</td><td class="fw-ko">실제 적용 — '대학(college)' 정의는 법학대학원까지 포함하여 너무 넓고, '담배' 정의는 갈색 종이 담배를 배제하여 너무 좁다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p6 -->
+
+<!-- ═══ P007 ═══ -->
+<div class="sec" id="p7">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 072 · #번 007 · #문항코드 26007-0067</div>
+    <div class="p-title">Episodic Memory in Wasps</div>
+    <div class="p-title-ko">기생벌의 일화적 기억 — 동물 인지 · 어법</div>
+    <span class="p-badge">어법 (밑줄 ①~⑤ 중 어색한 것)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">While insects are usually <span class="vw">depict<span class="tt">묘사하다</span></span>ed as {displaying genetically fixed, <span class="vw">stereotyped<span class="tt">정형화된</span></span> behaviors}, recent research has shown [that they can have quite <span class="vw">elaborate<span class="tt">정교한</span></span> conducts], {<span class="vq-ul">① indicating</span> a high degree of learning capacity and flexibility}, {displaying <span class="vw">attentional<span class="tt">주의의</span></span> capacities, navigational skills, and a good <span class="vw">spatial<span class="tt">공간의</span></span> memory}.</p>
+      <p class="plain-sent">For instance, some species of <span class="vw">wasp<span class="tt">말벌, 기생벌</span></span>s hide their nests in several places {<span class="vq-ul">② <span class="ww">where</span> → <span class="rw">that/which</span></span> they keep hidden and visit regularly to provide them with food}. They apparently remember the quality of the <span class="vw">supplies<span class="tt">공급품</span></span> {<span class="vq-ul">③ provided</span> to each nest} and the time {when these were delivered} in order to visit them again timely.</p>
+      <p class="plain-sent">This kind of memory (remembering the three wh's: what, where, and when something happened) was <span class="vq-ul">④ traditionally considered</span> to be <span class="vw">exclusive<span class="tt">독점적인</span></span> to higher <span class="vw">vertebrate<span class="tt">척추동물</span></span>s and is supposed to be a fundamental <span class="vw">precursor<span class="tt">전조, 선구자</span></span> of planning abilities and for the development of a complex <span class="vw">representation<span class="tt">표상</span></span> of the world.</p>
+      <p class="plain-sent">In humans, this capacity has <span class="vq-ul">⑤ been termed</span> <span class="vw">episodic<span class="tt">일화적인</span></span> memory, but it critically differs from its nonhuman <span class="vw">counterpart<span class="tt">상응하는 것</span></span>s in being a form of <span class="vw">explicit<span class="tt">명시적인</span></span> memory; that is, it can be <span class="vw">verbally<span class="tt">언어적으로</span></span> communicated to others (like when you tell your friend [what happened last night] at someone else's party).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+    <div class="q-block">
+      <div class="q-type">어법성 판단 (Grammar)</div>
+      <div class="q-stem">다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> <span class="vq-ul">indicating</span> — 분사구문 (결과/부연): 주절을 부연 설명</div>
+        <div class="choice wrong-c"><span class="cn">②</span> <span class="ww">where</span> → <span class="rw">that/which</span> — 뒤 절 "they keep hidden and visit regularly"에서 keep의 목적어와 visit의 목적어가 모두 빠짐 → <strong>목적격 관계대명사</strong> that/which 필요. where는 부사적 관계로 뒤 절이 완전해야 함</div>
+        <div class="choice"><span class="cn">③</span> <span class="vq-ul">provided</span> — 과거분사구: supplies 후치 수식 ("각 둥지에 제공된")</div>
+        <div class="choice"><span class="cn">④</span> <span class="vq-ul">traditionally considered</span> — be considered + to부정사: "~로 여겨지다". 부사 traditionally가 수식</div>
+        <div class="choice"><span class="cn">⑤</span> <span class="vq-ul">been termed</span> — 현재완료 수동태: "~로 불려왔다"</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">②</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> 관계절 "they keep hidden and visit regularly to provide them with food" 분석<br>
+        → keep <u>(목적어 X)</u> hidden / visit <u>(목적어 X)</u> regularly → 두 동사 모두 목적어가 빠져 있음 → <strong>목적격 관계대명사</strong> that/which 필요<br><br>
+        <strong>관계부사 where</strong>는 뒤 절이 <u>완전한 문장</u>이어야 함 (목적어 결여 없이). 본 문장은 목적어가 결여되었으므로 where는 부적합.<br><br>
+        <strong>수정:</strong> "places <span class="rw">that/which</span> they keep hidden and visit regularly ~"<br>
+        → "그들이 숨겨두고 정기적으로 방문하는 / 장소들"<br><br>
+        <strong>오답 확인:</strong> ①③④⑤ 모두 문맥과 형태 적절
+      </div>
+    </div>
+    <div class="drill-box">
+      <h4>📝 Grammar Drill — 관계대명사 vs 관계부사</h4>
+      <div class="drill-item">1. The place <span class="drill-ans">(where)</span> I was born is small. (뒤 절 완전: I was born) → 관계부사</div>
+      <div class="drill-item">2. The place <span class="drill-ans">(that/which)</span> I visited yesterday is famous. (visited의 목적어 X) → 관계대명사</div>
+      <div class="drill-item">3. The room <span class="drill-ans">(where)</span> she stayed had a balcony. (뒤 절 완전) → 관계부사</div>
+      <div class="drill-item">4. The room <span class="drill-ans">(that/which)</span> she decorated last week is beautiful. (decorated의 목적어 X) → 관계대명사</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="gr">While insects are usually depicted as {displaying genetically fixed, stereotyped behaviors}</span>, / recent research has shown [that they can have quite elaborate conducts], <span class="gr">{indicating a high degree of learning capacity and flexibility}</span>, {displaying attentional capacities, navigational skills, and a good spatial memory}.</div>
+        <div class="sp-ko">곤충은 보통 유전적으로 고정된, 정형화된 행동을 보이는 것으로 묘사되지만, / 최근 연구는 그들이 상당히 정교한 행동을 가질 수 있음을 보여주었는데, / 이는 높은 수준의 학습 능력과 유연성을 나타내며, / 주의 능력, 항행 기술, 그리고 좋은 공간 기억력을 보여준다. <span class="sp-note">★ While + S+V: "~이지만" (양보) / depict A as B: "A를 B로 묘사하다" / indicating ~, displaying ~: 분사구문 병렬</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For instance, some species of wasps hide their nests in several places <span class="gr">{<span class="rw">that/which</span>(← <span class="ww">where</span>) they keep hidden and visit regularly to provide them with food}</span>.</div>
+        <div class="sp-ko">예를 들어, 어떤 종의 기생벌은 / 자신이 숨겨두고 먹이를 공급하기 위해 정기적으로 방문하는 / 여러 장소에 둥지를 숨긴다. <span class="sp-note">★ 목적격 관계대명사 that/which: keep ~ hidden과 visit ~ 두 동사의 공동 목적어 / provide A with B: "A에게 B를 공급하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They apparently remember the quality of the supplies <span class="gr">{provided to each nest}</span> and the time <span class="gr">{when these were delivered}</span> / in order to visit them again timely.</div>
+        <div class="sp-ko">그들은 분명히 / 각 둥지에 제공된 공급품의 질과 / 이것들이 배달된 시점을 기억하는 것 같다 / 그것들을 다시 적시에 방문하기 위해. <span class="sp-note">★ {provided to each nest}: 과거분사구 (supplies 후치 수식) / when: 관계부사 (time 수식, 완전한 절) / in order to V: "V하기 위해서"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This kind of memory (remembering the three wh's: what, where, and when something happened) / <span class="gr">was traditionally considered to be exclusive to higher vertebrates</span> / and is supposed to be a fundamental precursor of planning abilities / and for the development of a complex representation of the world.</div>
+        <div class="sp-ko">이런 종류의 기억(무엇이, 어디서, 언제 일어났는지의 세 wh를 기억하는 것)은 / 전통적으로 더 고등한 척추동물에게만 있는 것으로 여겨졌고 / 계획 능력의 근본적인 전조이며 / 세계에 대한 복잡한 표상의 발달을 위한 것으로 추정된다. <span class="sp-note">★ be considered + to V: "~로 여겨지다" / be supposed to V: "~로 추정된다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In humans, this capacity <span class="gr">has been termed episodic memory</span>, / but it critically differs from its nonhuman counterparts in being a form of explicit memory; / that is, it can be verbally communicated to others (like when you tell your friend [what happened last night] at someone else's party).</div>
+        <div class="sp-ko">인간에서, 이 능력은 일화적 기억(episodic memory)이라고 불려 왔지만, / 그것은 명시적 기억의 한 형태라는 점에서 / 비인간 상응물과 결정적으로 다르다; / 즉, 그것은 다른 사람에게 언어적으로 전달될 수 있다 (당신이 다른 사람의 파티에서 어젯밤에 무슨 일이 있었는지 친구에게 말할 때처럼). <span class="sp-note">★ has been termed: 현재완료 수동태 / differ from A in -ing: "A와 ~한다는 점에서 다르다" / [what happened ~]: 명사절(tell의 직접 목적어)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 관계대명사 vs 관계부사</strong> — 뒤 절에 목적어/주어가 빠지면 관계대명사(that/which), 빠진 자리가 없으면 관계부사(where/when)</p>
+      <p><strong>② depict A as B / be considered + to V / be supposed to V</strong> — "A를 B로 묘사하다 / ~로 여겨지다 / ~로 추정된다"</p>
+      <p><strong>③ provide A with B</strong> — "A에게 B를 공급하다"</p>
+      <p><strong>④ differ from A in -ing</strong> — "A와 ~한다는 점에서 다르다"</p>
+      <p><strong>⑤ indicating ~, displaying ~ (분사구문 병렬)</strong> — 주절을 부연·결과 설명하는 분사구문이 콤마로 병렬</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">The discovery of elaborate learning and episodic-like memory in insects, traditionally reserved for higher vertebrates.
+      <div class="topic-ko">전통적으로 더 고등한 척추동물에게만 있다고 여겨졌던 정교한 학습과 일화적 기억이 곤충에서 발견됨.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Contrary to the belief that insects have fixed behaviors, research reveals their high learning capacity, spatial memory, and flexibility.</td><td class="fw-ko">곤충이 고정된 행동만 한다는 통념과 달리, 연구는 높은 학습 능력·공간 기억·유연성을 보여준다.</td></tr>
+        <tr><td><span class="step-badge">② Example</span></td><td>Strategic nest management by wasps — Specific species of wasps manage multiple hidden nests by remembering the quality of food, precise locations, and timing of visits.</td><td class="fw-ko">특정 종의 기생벌은 먹이 질·위치·방문 시점을 기억하여 여러 둥지를 전략적으로 관리한다.</td></tr>
+        <tr><td><span class="step-badge">③ Development</span></td><td>"What-Where-When" memory — This complex memory is a precursor to planning abilities; it was once considered unique to higher vertebrates but is now found in insects.</td><td class="fw-ko">'무엇·어디·언제' 기억은 계획 능력의 전조이며, 고등 척추동물 전유로 여겨졌으나 곤충에서도 발견된다.</td></tr>
+        <tr><td><span class="step-badge">④ Conclusion</span></td><td>Explicit nature of human episodic memory — Human episodic memory is explicit and can be verbally communicated, which is the critical difference from the insect version.</td><td class="fw-ko">인간의 일화적 기억은 명시적이고 언어로 전달 가능하다는 점에서 곤충의 것과 결정적으로 다르다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p7 -->
+
+<!-- ═══ P008 ═══ -->
+<div class="sec" id="p8">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 073 · #번 008 · #문항코드 26007-0068</div>
+    <div class="p-title">The Ageing Viewer</div>
+    <div class="p-title-ko">고령 시청자와 스포츠 마케팅의 재편 · 주제 추론</div>
+    <span class="p-badge">주제 추론 (Topic Inference)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">〈With people living longer and the average age increasing <span class="vw">markedly<span class="tt">현저하게</span></span>〉, the <span class="vw">ramification<span class="tt">결과, 영향</span></span>s for sport are <span class="vw">substantial<span class="tt">상당한</span></span>.</p>
+      <p class="plain-sent">Fewer people are likely to engage in the most popular traditional and, <span class="vw">incidentally<span class="tt">부수적으로</span></span>, most <span class="vw">athletic<span class="tt">운동의, 활동적인</span></span> sports, such as soccer, other forms of football, and basketball. These sports will need to market their products differently in order to satisfy the requirements of the older <span class="vw">spectator<span class="tt">관중</span></span> or supporter. This may mean far more comfortable sport areas 〈with greater and better access to car parks, bars, and restaurants〉. It may mean showing top sports during the day or much earlier in the evening, 〈with far less television coverage on Fridays and Saturdays {when older viewers prefer to visit friends, go to restaurants or spend time at the local pub or club}〉.</p>
+      <p class="plain-sent">The 'ageing viewer' <span class="vw">syndrome<span class="tt">증후군</span></span>, 〈for such it may well be〉, will probably <span class="vw">herald<span class="tt">예고하다</span></span> a <span class="vw">realisation<span class="tt">인식</span></span> [that new <span class="vw">sponsor<span class="tt">후원자</span></span>s will be required for sport]. Colas and sport shoes may be fine for the under-35s, but the older generation may prefer a good red wine and comfortable slippers.</p>
+      <p class="plain-sent">It will be the sporting organisations and sponsors {who can create the idea of youth 〈combined with the comfort of older age〉} {which(that) will be most successful in the next half century}.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 주제로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">주제 추론 (Topic Inference)</div>
+      <div class="q-stem">다음 글의 주제로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> role of sport in bridging the generational gaps</div>
+        <div class="choice correct"><span class="cn">②</span> <span class="ans">necessity for sport to adapt to an ageing fan base</span></div>
+        <div class="choice"><span class="cn">③</span> ways of reaching and retaining younger sports fans</div>
+        <div class="choice"><span class="cn">④</span> importance of age-appropriate sport and exercise programs</div>
+        <div class="choice"><span class="cn">⑤</span> factors causing the older generation to lose interest in sport</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">②</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> 글 전체가 (1) 인구 고령화 → (2) 스포츠가 고령 팬에 맞게 시설/일정/마케팅을 바꿔야 함 → (3) 새 후원자 필요 → (4) "젊음 + 노년의 편안함"을 결합한 조직이 성공. 즉 <strong>고령 팬 기반에 적응할 필요성</strong>이 주제.<br><br>
+        <strong>오답 분석:</strong><br>
+        ① 세대 간격 다리 놓기 — 세대 통합이 주제가 아님<br>
+        ③ 젊은 팬 접근/유지 — 글의 방향과 <u>반대</u> (글은 고령 팬 적응)<br>
+        ④ 연령별 스포츠 프로그램 중요성 — 운동 프로그램이 아니라 시청·관전 적응<br>
+        ⑤ 노년 세대가 스포츠 흥미를 잃는 원인 — 흥미 상실이 아니라 적응 전략
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="gr">〈With people living longer and the average age increasing markedly〉</span>, / the ramifications for sport are substantial.</div>
+        <div class="sp-ko">사람들이 더 오래 살고 평균 연령이 현저히 증가함에 따라, / 스포츠에 미치는 영향은 상당하다. <span class="sp-note">★ With + 명사 + 분사 (부대상황): "~한 채로, ~하면서". 두 개의 with절 병렬: people living, the age increasing</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Fewer people are likely to engage in the most popular traditional and, incidentally, most athletic sports, / such as soccer, other forms of football, and basketball.</div>
+        <div class="sp-ko">더 적은 사람들이 / 가장 인기 있는 전통적이고, 부수적으로도 가장 활동적인 스포츠에 참여할 가능성이 높다 / 예를 들어 축구, 다른 형태의 풋볼, 그리고 농구. <span class="sp-note">★ be likely to V: "V할 가능성이 높다" / such as ~: "예를 들어 ~"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This may mean showing top sports during the day or much earlier in the evening, / <span class="gr">〈with far less television coverage on Fridays and Saturdays {when older viewers prefer to visit friends, go to restaurants or spend time at the local pub or club}〉</span>.</div>
+        <div class="sp-ko">이것은 낮 동안이나 훨씬 이른 저녁에 / 주요 스포츠를 방송하는 것을 의미할 수 있다 / — 더 나이 든 시청자들이 친구를 방문하거나, 식당에 가거나, 지역 술집이나 클럽에서 시간을 보내는 것을 선호하는 / 금요일과 토요일에는 / 훨씬 적은 텔레비전 중계와 함께. <span class="sp-note">★ With + 명사 + on ~ when ~ (부대상황) / when: 관계부사 (Fridays and Saturdays 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The 'ageing viewer' syndrome, <span class="gr">〈for such it may well be〉</span>, will probably <span class="vw">herald<span class="tt">예고하다</span></span> a realisation <span class="gr">[that new sponsors will be required for sport]</span>.</div>
+        <div class="sp-ko">'고령화 시청자' 증후군은 — 그것이 그러한 것일 수 있으므로 — / 새로운 후원자가 스포츠를 위해 필요할 것이라는 인식을 예고할 것이다. <span class="sp-note">★ 〈for such it may well be〉: 삽입절, for(이유) "그것이 그러할 가능성이 매우 높으므로" / [that ~]: 동격 that절 (realisation의 내용)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">It will be the sporting organisations and sponsors</span> {who can create the idea of youth 〈combined with the comfort of older age〉} {which(that) will be most successful in the next half century}.</div>
+        <div class="sp-ko">젊음과 노년의 편안함이 결합된 / 아이디어를 만들 수 있는 스포츠 조직과 후원자들이 / 향후 반세기 동안 가장 성공할 것이다. <span class="sp-note">★ It is/will be ~ that/who ~ (강조구문): "~인 것이 바로 ~이다" / 두 개의 관계절이 sponsors를 차례로 수식</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① With + 명사 + 분사 (부대상황 with구문)</strong> — "~한 채로, ~하면서": "With people living longer and the average age increasing markedly"</p>
+      <p><strong>② It is ~ that/who ~ (강조구문)</strong> — "~인 것은 바로 ~이다": "It will be the sporting organisations and sponsors {who ~} {that ~}"</p>
+      <p><strong>③ herald + 명사 + that절</strong> — "~라는 ~을 예고하다": "herald a realisation [that ~]" (동격 that절)</p>
+      <p><strong>④ be likely to V</strong> — "V할 가능성이 높다"</p>
+      <p><strong>⑤ combined with ~ (과거분사구)</strong> — "~과 결합된": idea를 후치 수식</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">The aging of the population is bringing substantial ramifications that require a total restructuring of sports marketing and facilities.
+      <div class="topic-ko">인구 고령화는 스포츠 마케팅과 시설의 전면적 재편을 요구하는 상당한 영향을 가져오고 있다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Aging populations create substantial ramifications for the entire sports industry.</td><td class="fw-ko">고령화 인구는 스포츠 산업 전반에 상당한 영향을 만들어낸다.</td></tr>
+        <tr><td><span class="step-badge">② Development 1</span></td><td>Facility & Scheduling — Modification of physical environments and viewing schedules for older fans.</td><td class="fw-ko">시설·일정 — 고령 팬을 위한 환경과 시청 시간대를 조정해야 한다.</td></tr>
+        <tr><td><span class="step-badge">③ Development 2</span></td><td>Sponsorship Shift — Transformation of marketing targets from under-35s to the older generation.</td><td class="fw-ko">후원 전환 — 35세 미만에서 노년 세대로 마케팅 표적을 이동해야 한다.</td></tr>
+        <tr><td><span class="step-badge">④ Conclusion</span></td><td>Achieving success by integrating youthful energy with senior-focused comfort.</td><td class="fw-ko">젊은 에너지와 노년 중심 편안함을 통합하는 조직이 성공하게 된다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p8 -->
+
+<!-- ═══ P009 ═══ -->
+<div class="sec" id="p9">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 074 · #번 009 · #문항코드 26007-0069</div>
+    <div class="p-title">Learned Satiety</div>
+    <div class="p-title-ko">학습된 포만감 — 식습관 형성 · 제목 추론</div>
+    <span class="p-badge">제목 추론 (Title Inference)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">How often do you eat three-fourths of a sandwich or cookie? <span class="vw">Typically<span class="tt">전형적으로</span></span>, we completely <span class="vw">consume<span class="tt">소비하다, 먹다</span></span> items of defined quantity and have experience with these particular quantities. We can assume that, 〈in early <span class="vw">exposure<span class="tt">노출</span></span>s to a sandwich〉, for example, consumption of one sandwich was followed by comfortable <span class="vw">satiety<span class="tt">포만감</span></span> and an <span class="vw">adequate<span class="tt">충분한</span></span> level of energy.</p>
+      <p class="plain-sent">We also tend to consume entire portions, often completely unaware of how energy <span class="vw">dense<span class="tt">밀도가 높은</span></span> or <span class="vw">dilute<span class="tt">희석된</span></span> they(= entire portions) are. For example, many of us consume a "bowlful" of cereal in the morning, regardless of the type of cereal (high or low in calories or other <span class="vw">nutrient<span class="tt">영양소</span></span>s). Indeed, the popular individual serving bowls of cereals from one commercial source vary between 70 and 130 kcal, and the fat content of the milk {you probably add} will make even larger differences.</p>
+      <p class="plain-sent">We learn, in early experiences with particular foods, what quantities <span class="vw">yield<span class="tt">산출하다, 가져오다</span></span> satiety.</p>
+      <p class="plain-sent">However, we can easily be "tricked," especially when eating at restaurants, because <span class="vw">portion<span class="tt">1인분</span></span> sizes are often larger and more fat and calorie dense than we expect.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 제목으로 가장 적절한 것은?</div>
+    <div class="q-block">
+      <div class="q-type">제목 추론 (Title Inference)</div>
+      <div class="q-stem">다음 글의 제목으로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> Is Satiety a Subjective Feeling or a Number of Calories?</div>
+        <div class="choice"><span class="cn">②</span> Enjoy Your Favorite Foods Guilt-Free: Smart Portioning Strategies</div>
+        <div class="choice"><span class="cn">③</span> Can You Be Satisfied with Less?: Food Quantity and Mindful Eating</div>
+        <div class="choice"><span class="cn">④</span> Judging a Food by Its Cover: Misconceptions About Energy Density in Food</div>
+        <div class="choice correct"><span class="cn">⑤</span> <span class="ans">Learned Fullness: How Predetermined Food Quantity Shapes Our Food Intake</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">⑤</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> 글의 핵심은 (1) 우리는 음식을 단위 단위로 다 먹는 경향이 있고 → (2) 칼로리 밀도와 상관없이 동일 부피 섭취 → (3) "초기 경험"을 통해 어떤 양이 포만감을 주는지 학습 → (4) 이 학습된 양 때문에 외식 시 속을 수 있음. 즉 <strong>"미리 정해진 음식 양"이 우리 식이 섭취를 형성한다</strong>는 것이 핵심 → ⑤가 일치.<br><br>
+        <strong>핵심 문장:</strong> "We learn, in early experiences with particular foods, what quantities yield satiety." → "Learned Fullness(=학습된 포만감)" 직접 등치.<br><br>
+        <strong>오답 분석:</strong><br>
+        ① 포만감이 주관적 느낌인지 칼로리 수인지 — 양자택일 논의 없음<br>
+        ② 좋아하는 음식을 죄책감 없이 즐기기 — 글의 주제와 무관<br>
+        ③ 더 적게 만족하기 / 마음챙김 식사 — 처방·해결책이 주제가 아님<br>
+        ④ 에너지 밀도 오해 — 부분적 언급이지만 핵심은 "학습된 양"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">How often do you eat three-fourths of a sandwich or cookie? / Typically, we completely consume items of defined quantity / and have experience with these particular quantities.</div>
+        <div class="sp-ko">얼마나 자주 샌드위치나 쿠키의 4분의 3을 먹는가? / 보통 우리는 정해진 양의 항목들을 완전히 소비하고 / 이러한 특정 양에 대한 경험을 갖고 있다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We can assume <span class="gr">that, 〈in early exposures to a sandwich〉, for example, consumption of one sandwich was followed by comfortable satiety and an adequate level of energy</span>.</div>
+        <div class="sp-ko">우리는 가정할 수 있다, / 예를 들어, 샌드위치에 대한 초기 노출에서, / 샌드위치 한 개의 섭취가 / 편안한 포만감과 충분한 에너지 수준으로 이어졌다고. <span class="sp-note">★ A is followed by B: "A 다음에 B가 따라온다, A의 결과로 B가 온다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We also tend to consume entire portions, / often <span class="gr">completely unaware of how energy dense or dilute they are</span>.</div>
+        <div class="sp-ko">우리는 또한 전체 1인분을 소비하는 경향이 있는데, / 종종 그것들이 얼마나 에너지 밀도가 높은지 또는 희석된지 완전히 인식하지 못한 채로 그렇게 한다. <span class="sp-note">★ unaware of how ~ (간접의문문이 of의 목적어): "얼마나 ~인지 인식하지 못한 채" / 분사구문 (being 생략)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Indeed, the popular individual serving bowls of cereals from one commercial source / vary between 70 and 130 kcal, / and the fat content of the milk <span class="gr">{you probably add}</span> will make even larger differences.</div>
+        <div class="sp-ko">실제로, 한 상업적 출처의 인기 있는 개별 시리얼 그릇은 / 70에서 130kcal 사이에서 다양하며, / 당신이 아마도 추가하는 우유의 지방 함량은 / 훨씬 더 큰 차이를 만들 것이다. <span class="sp-note">★ {(that) you probably add}: 목적격 관계대명사 that 생략 / make + 비교급: "훨씬 더 큰 ~을 만들다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We learn, in early experiences with particular foods, <span class="gr">what quantities yield satiety</span>.</div>
+        <div class="sp-ko">우리는 특정 음식과의 초기 경험에서 / 어떤 양이 포만감을 가져오는지 배운다. <span class="sp-note">★ [what quantities yield satiety]: 명사절 (learn의 목적어). what이 형용사처럼 quantities를 수식 ("어떤 양이")</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">However, we can easily be "tricked," <span class="gr">especially when eating at restaurants</span>, / because portion sizes are often larger and more fat and calorie dense than we expect.</div>
+        <div class="sp-ko">그러나, 우리는 쉽게 "속을" 수 있는데, / 특히 식당에서 식사할 때, / 왜냐하면 1인분 크기가 우리가 예상하는 것보다 / 종종 더 크고 더 지방과 칼로리 밀도가 높기 때문이다. <span class="sp-note">★ when eating: 분사구문 ((we are) when eating에서 we are 생략) / than we expect: 비교 부사절</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① be followed by</strong> — "그 결과 ~로 이어지다, ~이 따라오다": "consumption was followed by satiety"</p>
+      <p><strong>② [what + 명사 + V] (의문 형용사 + 명사)</strong> — "어떤 ~이 V하는지": "what quantities yield satiety"</p>
+      <p><strong>③ unaware of how ~ (간접의문문)</strong> — "얼마나 ~인지 인식하지 못한 채": of 뒤에 how절</p>
+      <p><strong>④ when eating (분사구문, 주어 생략)</strong> — = when we are eating: "식사할 때"</p>
+      <p><strong>⑤ 목적격 관계대명사 that 생략</strong> — "the milk {(that) you probably add}"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Our learned habit of consuming foods in fixed units often blinds us to actual energy density, making us vulnerable to overeating when faced with larger portions.
+      <div class="topic-ko">고정된 단위로 음식을 섭취하는 학습된 습관은 종종 실제 에너지 밀도에 대한 인식을 가리고, 더 큰 1인분에 직면했을 때 과식에 취약하게 만든다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>The Habit of Unit Consumption — We typically consume items in whole units (like a full sandwich) rather than fractions.</td><td class="fw-ko">단위 소비 습관 — 우리는 음식을 분수가 아닌 통째 단위로 섭취한다.</td></tr>
+        <tr><td><span class="step-badge">② Development 1</span></td><td>Unawareness of Energy Density — Examples like a "bowlful" of cereal show we eat the same volume regardless of calorie variations (70–130 kcal).</td><td class="fw-ko">에너지 밀도 무지각 — '한 그릇'의 시리얼처럼 칼로리와 무관하게 같은 부피를 먹는다.</td></tr>
+        <tr><td><span class="step-badge">③ Development 2</span></td><td>Learned Satiety and Portion Size — Early experiences with specific foods teach us what quantity yields a feeling of comfortable fullness.</td><td class="fw-ko">학습된 포만감 — 초기 경험이 어떤 양이 편안한 포만감을 주는지 가르친다.</td></tr>
+        <tr><td><span class="step-badge">④ Conclusion</span></td><td>Mismatch in restaurants — We are easily "tricked" because restaurant portion sizes are larger and more calorie-dense than our learned expectations.</td><td class="fw-ko">식당에서의 불일치 — 식당의 1인분이 학습된 기대보다 커서 우리는 쉽게 속는다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p9 -->
+
+<!-- ═══ P010 ═══ -->
+<div class="sec" id="p10">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 075 · #번 010 · #문항코드 26007-0070</div>
+    <div class="p-title">Decision-Making in Performance</div>
+    <div class="p-title-ko">의사 결정과 수행 — 인지적 자동화 · 어법</div>
+    <span class="p-badge">어법 (밑줄 ①~⑤ 중 어색한 것)</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Across different performance <span class="vw">domain<span class="tt">영역</span></span>s, successful performance is not just dependent on <span class="vw">proficient<span class="tt">능숙한</span></span> movement control and the successful <span class="vw">execution<span class="tt">실행</span></span> of skills; often effective decision-making is also a core <span class="vw">requirement<span class="tt">요건</span></span>.</p>
+      <p class="plain-sent">In this context, decision-making can generally be viewed as the process of <span class="vq-ul">① committing</span> to a particular course of action (choosing one option over another) and relates to the choices {that are made 〈when a number of options are available to the performer for selection〉}.</p>
+      <p class="plain-sent">In all cases, the decisions {that are made} <span class="vq-ul">② <span class="ww">to be</span> → <span class="rw">are</span></span> influenced by past experiences and the knowledge base {the individual performer has of the specific situation}. These past experiences can help or hinder decision-making but, generally speaking, will <span class="vw">bias<span class="tt">편향시키다</span></span> the decision-maker either for or against a certain course of action {depending on <span class="vq-ul">③ whether</span> that course of action was successful in the past}.</p>
+      <p class="plain-sent">Another important aspect of making decisions in performance settings <span class="vq-ul">④ is</span> [that there is often more than one right decision, and the 'right' decision will often differ from individual to individual {depending upon their skill level and <span class="vw">expertise<span class="tt">전문성</span></span>}]. Also, the timescale {within which a decision is made} also varies, as <span class="vq-ul">⑤ does</span> the <span class="vw">underpinning<span class="tt">근간이 되는</span></span> explanation of process {which differs depending on 〈whether the decision is time-<span class="vw">constrained<span class="tt">제한된</span></span> or not〉}.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+    <div class="q-block">
+      <div class="q-type">어법성 판단 (Grammar)</div>
+      <div class="q-stem">다음 글의 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> <span class="vq-ul">committing</span> — process of + V-ing: "~하는 과정". 전치사 of 뒤 동명사 ✓</div>
+        <div class="choice wrong-c"><span class="cn">②</span> <span class="ww">to be</span> → <span class="rw">are</span> — 주어 "the decisions" (복수) 뒤 본동사가 필요. {that are made}는 관계절. 본동사 자리에 to부정사는 올 수 없음 → <strong>are influenced</strong> (복수 본동사 수동태)</div>
+        <div class="choice"><span class="cn">③</span> <span class="vq-ul">whether</span> — depending on의 목적어 자리 "~인지 아닌지"</div>
+        <div class="choice"><span class="cn">④</span> <span class="vq-ul">is</span> — 주어 "Another important aspect" (단수) → 단수동사 is ✓</div>
+        <div class="choice"><span class="cn">⑤</span> <span class="vq-ul">does</span> — "as does ~" 도치 구문 ("~도 그러하다"): the timescale ~ varies와 동일 동사로 도치</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">②</span></div>
+      <div class="ans-exp">
+        <strong>핵심 근거:</strong> "In all cases, the decisions {that are made} ___ influenced by past experiences and the knowledge base ~"<br>
+        → 주어 = the decisions (복수) / {that are made} = 관계절 (수식) / 본동사 = ?<br>
+        → <span class="ww">to be</span>는 부정사 → 본동사가 될 수 없음 → <span class="rw">are</span> (복수 본동사 수동태) 필요<br><br>
+        <strong>패턴 확인:</strong> "주어 + 관계절 + <u>본동사</u>" 구조에서 본동사 자리에는 항상 시제·인칭 갖춘 동사가 와야 한다. (분사·부정사 X)<br><br>
+        <strong>오답 확인:</strong> ① of + V-ing(O) / ③ depending on whether(O) / ④ aspect(단수)+is(O) / ⑤ as does ~ 도치(O)
+      </div>
+    </div>
+    <div class="drill-box">
+      <h4>📝 Grammar Drill — 본동사 vs 부정사/분사</h4>
+      <div class="drill-item">1. The questions {that were asked} <span class="drill-ans">(were)</span> too difficult. (본동사 필요)</div>
+      <div class="drill-item">2. The students {invited to the event} <span class="drill-ans">(arrived)</span> on time. (본동사 필요)</div>
+      <div class="drill-item">3. The book {that he wrote} <span class="drill-ans">(became)</span> a bestseller. (본동사 필요)</div>
+      <div class="drill-item">4. The decisions {made by the committee} <span class="drill-ans">(are)</span> binding. (본동사 필요)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Across different performance domains, / successful performance is not just dependent on proficient movement control and the successful execution of skills; / often effective decision-making is also a core requirement.</div>
+        <div class="sp-ko">다양한 수행 영역에 걸쳐, / 성공적인 수행은 능숙한 움직임 통제와 기술의 성공적 실행에만 의존하는 것은 아니다; / 종종 효과적인 의사 결정 또한 핵심 요건이다. <span class="sp-note">★ be dependent on ~: "~에 의존하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In this context, decision-making can generally be viewed as <span class="gr">the process of committing to a particular course of action</span> / (choosing one option over another) / and <span class="gr">relates to the choices {that are made 〈when a number of options are available to the performer for selection〉}</span>.</div>
+        <div class="sp-ko">이 맥락에서, 의사 결정은 일반적으로 / 특정 행동 방침에 전념하는 과정으로 볼 수 있으며 / (한 선택지를 다른 것보다 선택하는 것) / 수행자에게 선택할 수 있는 여러 옵션이 있을 때 / 내려지는 선택과 관련된다. <span class="sp-note">★ be viewed as ~: "~로 여겨지다" / process of + V-ing: "~하는 과정"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In all cases, the decisions {that are made} <span class="rw">are</span>(← <span class="ww">to be</span>) influenced by past experiences and the knowledge base <span class="gr">{(that) the individual performer has of the specific situation}</span>.</div>
+        <div class="sp-ko">모든 경우에, 내려지는 결정은 / 과거 경험과 / 개별 수행자가 특정 상황에 대해 가진 지식 기반에 / 영향을 받는다. <span class="sp-note">★ 주어: the decisions / 본동사: are influenced / {(that) ~ has}: 목적격 that 생략 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">These past experiences can help or hinder decision-making / but, generally speaking, / will bias the decision-maker either for or against a certain course of action <span class="gr">{depending on whether that course of action was successful in the past}</span>.</div>
+        <div class="sp-ko">이러한 과거 경험은 의사 결정을 돕거나 방해할 수 있지만, / 일반적으로 말해서, / 그 행동 방침이 과거에 성공적이었는지에 따라 / 의사 결정자를 어떤 행동 방침에 찬성하거나 반대하도록 편향시킬 것이다. <span class="sp-note">★ depending on + whether절: "~인지에 따라" / bias A for/against B: "A를 B에 찬성/반대로 편향시키다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Another important aspect of making decisions in performance settings <span class="rw">is</span> <span class="gr">[that there is often more than one right decision, and the 'right' decision will often differ from individual to individual {depending upon their skill level and expertise}]</span>.</div>
+        <div class="sp-ko">수행 환경에서 결정을 내리는 또 다른 중요한 측면은 / 종종 하나 이상의 옳은 결정이 있고, / '옳은' 결정이 / 그들의 기술 수준과 전문성에 따라 / 개인마다 다를 것이라는 점이다. <span class="sp-note">★ 주어: Another aspect (단수) → is / [that ~]: be의 보어절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Also, the timescale {within which a decision is made} also varies, / as <span class="rw">does</span> the underpinning explanation of process {which differs depending on 〈whether the decision is time-constrained or not〉}.</div>
+        <div class="sp-ko">또한, 결정이 내려지는 시간 척도도 다양한데, / 결정이 시간 제약이 있는지 없는지에 따라 다른 / 그 과정의 근간이 되는 설명도 그러하다. <span class="sp-note">★ as does + 주어 (도치): "~도 그러하다" / within which: 전치사+관계대명사</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 본동사 vs 부정사/분사 구별</strong> — "주어 + 수식어 + 본동사" 구조에서 본동사 자리에 부정사(to be)는 올 수 없음</p>
+      <p><strong>② as does + 주어 (도치)</strong> — "~도 그러하다": 앞 문장의 동사(varies)를 받아 does로 대체, 도치</p>
+      <p><strong>③ depending on + 명사/whether절</strong> — "~에 따라"</p>
+      <p><strong>④ within which + 절</strong> — 전치사+관계대명사 ("~ 안에서 ~하는"): "the timescale {within which a decision is made}"</p>
+      <p><strong>⑤ either A or B / bias A for or against B</strong> — "A 또는 B" / "A를 B 찬성·반대로 편향시키다"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Beyond physical skill execution, effective decision-making — shaped by experience, individual expertise, and time constraints — is a core requirement for successful performance.
+      <div class="topic-ko">신체적 기술 실행을 넘어, 경험·개인적 전문성·시간 제약에 의해 형성되는 효과적인 의사 결정이 성공적 수행의 핵심 요건이다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Performance ⇒ Skill Execution + Effective Decision-making.</td><td class="fw-ko">수행 = 기술 실행 + 효과적 의사 결정.</td></tr>
+        <tr><td><span class="step-badge">② Definition</span></td><td>Choosing One Option among many available alternatives.</td><td class="fw-ko">의사 결정은 여러 가용한 대안 중 하나를 선택하는 것이다.</td></tr>
+        <tr><td><span class="step-badge">③ Elaboration I</span></td><td>Internal Factor — Past Experience, Knowledge Base ⇒ Decision Bias.</td><td class="fw-ko">내부 요인 — 과거 경험·지식 기반이 결정의 편향을 만든다.</td></tr>
+        <tr><td><span class="step-badge">④ Elaboration II</span></td><td>Variable Factor — Expertise (Subjective 'Right') + Time (Temporal Constraint).</td><td class="fw-ko">가변 요인 — 전문성(주관적 '옳음')과 시간 제약이 결정을 좌우한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p10 -->
+
+<!-- ═══ P011 ═══ -->
+<div class="sec" id="p11">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 076 · #번 011 · #문항코드 26007-0071</div>
+    <div class="p-title">Minority Influence Online</div>
+    <div class="p-title-ko">온라인 상의 소수 의견의 영향 · 흐름무관 문장</div>
+    <span class="p-badge">전체 흐름과 관계없는 문장 고르기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent"><span class="vw">Emerging<span class="tt">새로 떠오르는</span></span> findings suggest [that <span class="vw">minorities<span class="tt">소수파</span></span> {arguing their point of view <span class="vw">electronically<span class="tt">전자적으로</span></span>} can be <span class="vw">influential<span class="tt">영향력 있는</span></span> in ways {that improve group performance}, 〈as long as they claim in-group <span class="vw">affiliation<span class="tt">소속</span></span> and maintain their views <span class="vw">consistently<span class="tt">일관되게</span></span>〉].</p>
+      <p class="plain-sent"><span class="nc">①</span> Several <span class="vw">fascinating<span class="tt">매우 흥미로운</span></span> studies have also demonstrated a <span class="vw">persuasive<span class="tt">설득력 있는</span></span> and performance advantage for <span class="vw">remote<span class="tt">멀리 있는</span></span> or geographically <span class="vw">removed<span class="tt">떨어져 있는</span></span> minorities.</p>
+      <p class="plain-sent"><span class="nc">②</span> In these cases, groups with a minority <span class="vw">advocate<span class="tt">옹호자</span></span> {who is geographically remote} seemed to perform better because the minority was able to play devil's advocate, effectively <span class="vw">inducing<span class="tt">유도하다</span></span> the majority to think about alternatives.</p>
+      <p class="plain-sent irr-sent"><span class="nc nc-wrong">③</span> The <span class="vw">clash<span class="tt">충돌</span></span> between mainstream <span class="vw">narrative<span class="tt">서사</span></span>s and strongly-held minority opinions can rapidly <span class="vw">escalate<span class="tt">고조되다</span></span> into widespread and <span class="vw">toxic<span class="tt">유독한</span></span> debates and conflicts online.</p>
+      <p class="plain-sent"><span class="nc">④</span> Perhaps being removed 〈from the anxiety and <span class="vw">discomfort<span class="tt">불편</span></span> of face-to-face disagreements〉 makes it easier for the minority to <span class="vw">assert<span class="tt">주장하다</span></span> an <span class="vw">atypical<span class="tt">비전형적인</span></span> view without fear of <span class="vw">reprisal<span class="tt">보복</span></span>, and makes it easier for majorities to accept minority input without worrying about the identity consequences of publicly accepting it.</p>
+      <p class="plain-sent"><span class="nc">⑤</span> Thus, increased opportunity {for minority points of view to improve group decisions} should be counted among the benefits of electronic or technology-<span class="vw">mediated<span class="tt">매개되는</span></span> communication.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 전체 흐름과 관계없는 문장을 고르시오</div>
+    <div class="q-block">
+      <div class="q-type">무관한 문장 (Irrelevant Sentence)</div>
+      <div class="q-stem">다음 글에서 전체 흐름과 관계 없는 문장은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="choice"><span class="cn">②</span></div>
+        <div class="choice wrong-c"><span class="cn">③</span> <span style="color:var(--red);">← 무관한 문장</span></div>
+        <div class="choice"><span class="cn">④</span></div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답: <span class="ans">③</span></div>
+      <div class="ans-exp">
+        <strong>글의 흐름:</strong> 도입 — 전자적 의사소통이 소수파의 영향력을 키워 그룹 성과를 향상시킴 → ① 원거리 소수파의 설득·성과 이점 입증 → ② 거리 있는 옹호자가 다수에게 대안을 고려하게 유도 → ④ 대면 불편 제거로 양측 모두 심리적 부담 감소 → ⑤ 따라서 전자 의사소통의 이점에 소수 의견 기회 증가가 포함되어야 함<br><br>
+        <strong>③이 무관한 이유:</strong> "주류 서사와 강한 소수 의견 간 충돌이 온라인에서 광범위하고 유독한 논쟁/갈등으로 빠르게 고조될 수 있다"는 내용은 <u>온라인 의사소통의 부정적 측면</u>(독성·갈등). 글 전체는 일관되게 <u>긍정적 영향(그룹 성과 향상)</u>을 다루므로, ③만이 흐름과 반대.<br><br>
+        <strong>연결 확인:</strong> ②의 "play devil's advocate, ... think about alternatives" → ④의 "Perhaps being removed from ... makes it easier ~"로 자연스럽게 인과로 이어진다. ③을 빼면 흐름이 매끄러워진다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Emerging findings suggest <span class="gr">[that minorities {arguing their point of view electronically} can be influential in ways {that improve group performance}, 〈as long as they claim in-group affiliation and maintain their views consistently〉]</span>.</div>
+        <div class="sp-ko">새롭게 떠오르는 연구 결과는 시사한다 / 자신의 관점을 전자적으로 주장하는 소수파가 / 그룹 성과를 향상시키는 방식으로 / 영향력을 가질 수 있다는 것을, / 그들이 내집단 소속을 주장하고 자신의 견해를 일관되게 유지하는 한. <span class="sp-note">★ suggest + that절 / {arguing ~}: 현재분사구 (minorities 수식) / as long as: "~하는 한"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In these cases, groups with a minority advocate {who is geographically remote} seemed to perform better / because the minority was able to play devil's advocate, / <span class="gr">effectively inducing the majority to think about alternatives</span>.</div>
+        <div class="sp-ko">이러한 경우, 지리적으로 멀리 있는 소수 옹호자를 가진 그룹은 / 더 잘 수행하는 것처럼 보였는데, / 왜냐하면 소수파가 의도적 반대자(devil's advocate) 역할을 할 수 있어 / 효과적으로 다수가 대안을 생각하도록 유도했기 때문이다. <span class="sp-note">★ inducing ~: 결과의 분사구문 / induce + O + to V: "O가 V하도록 유도하다" / play devil's advocate: "(논의를 위해) 일부러 반대 입장을 취하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Perhaps <span class="gr">being removed 〈from the anxiety and discomfort of face-to-face disagreements〉</span> makes it easier <span class="gr">for the minority to assert an atypical view without fear of reprisal</span>, / and makes it easier for majorities to accept minority input without worrying about the identity consequences of publicly accepting it.</div>
+        <div class="sp-ko">아마도 대면 의견 충돌의 불안과 불편으로부터 떨어져 있는 것이 / 소수파가 보복에 대한 두려움 없이 비전형적 견해를 주장하기를 더 쉽게 만들고, / 다수파가 그것을 공개적으로 받아들이는 것의 정체성 결과에 대해 걱정하지 않고 / 소수 의견을 받아들이기를 더 쉽게 만든다. <span class="sp-note">★ 동명사 주어 (being removed ~) / make + it(가목적어) + 형용사 + for sb to V (진목적어): "sb가 V하기를 ~하게 만든다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Thus, increased opportunity <span class="gr">{for minority points of view to improve group decisions}</span> / should be counted among the benefits of electronic or technology-mediated communication.</div>
+        <div class="sp-ko">따라서, 소수파의 관점이 그룹 결정을 향상시킬 수 있는 / 증가된 기회는 / 전자적 또는 기술 매개 의사소통의 이점 중 하나로 간주되어야 한다. <span class="sp-note">★ {for ~ to V}: 의미상 주어가 있는 to부정사구 (opportunity 수식) / be counted among ~: "~ 중 하나로 간주되다"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① as long as + S+V</strong> — "~하는 한, ~하기만 한다면": 조건의 부사절</p>
+      <p><strong>② induce + O + to V</strong> — "O가 V하도록 유도하다": "inducing the majority to think ~"</p>
+      <p><strong>③ make + it + 형용사 + for sb + to V (가목적어·진목적어)</strong> — "sb가 V하기를 ~하게 만든다"</p>
+      <p><strong>④ {for + 의미상 주어 + to V} (의미상 주어 있는 to부정사구)</strong> — opportunity 수식: "소수 의견이 V할 (기회)"</p>
+      <p><strong>⑤ 분사구문 (inducing ~)</strong> — 주절의 결과·부연 설명</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">Technology-mediated communication enhances the influence of minority opinions on group performance by reducing social discomfort and encouraging the consideration of alternative views.
+      <div class="topic-ko">기술 매개 의사소통은 사회적 불편을 줄이고 대안적 견해의 고려를 장려함으로써 그룹 성과에 미치는 소수 의견의 영향력을 강화한다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Thesis</span></td><td>Minority influence grows through electronic channels, improving group output.</td><td class="fw-ko">소수 영향력은 전자적 채널을 통해 커져 그룹 성과를 향상시킨다.</td></tr>
+        <tr><td><span class="step-badge">② Finding 1 (Action)</span></td><td>Distance allows minorities to play devil's advocate and trigger new thinking.</td><td class="fw-ko">거리가 소수파로 하여금 의도적 반대자 역할을 하게 하여 새로운 사고를 유발한다.</td></tr>
+        <tr><td><span class="step-badge">③ Finding 2 (Reason)</span></td><td>Lack of face-to-face contact removes social anxiety and fear of reprisal.</td><td class="fw-ko">대면 접촉의 부재가 사회적 불안과 보복 두려움을 제거한다.</td></tr>
+        <tr><td><span class="step-badge">④ Implication (Value)</span></td><td>Technology fosters better decision-making by empowering diverse opinions.</td><td class="fw-ko">기술은 다양한 의견에 힘을 실어 더 나은 의사결정을 촉진한다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p11 -->
+
+<!-- ═══ P012 ═══ -->
+<div class="sec" id="p12">
+  <div class="p-header">
+    <div class="p-code">#강 06 · #쪽 077 · #번 012 · #문항코드 26007-0072</div>
+    <div class="p-title">Essentialism &amp; the Chair</div>
+    <div class="p-title-ko">본질주의 — 형태와 기능 · 구문분석형</div>
+    <span class="p-badge">요지 / 구문 분석</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Consider the concept of a "chair." According to <span class="vw">essentialism<span class="tt">본질주의</span></span>, a chair has specific <span class="vw">properties<span class="tt">특성</span></span> necessary to be recognized and identified as a chair.</p>
+      <p class="plain-sent">These properties may include having a seat, <span class="vw">backrest<span class="tt">등받이</span></span>, and legs, {which allow for sitting}. In other words, these <span class="vw">essential<span class="tt">본질적인</span></span> characteristics <span class="vw">define<span class="tt">정의하다</span></span> the <span class="vw">essence<span class="tt">본질</span></span> of a chair.</p>
+      <p class="plain-sent">Under the <span class="vw">essentialist<span class="tt">본질주의자의</span></span> viewpoint, it would not be considered a chair 〈if an object <span class="vw">lack<span class="tt">결여하다</span></span>s any <span class="vw">defining<span class="tt">규정하는</span></span> properties〉. For instance, if we have an object with a seat and backrest but without legs, it would not fit the essentialist definition of a chair. The <span class="vw">presence<span class="tt">존재</span></span> of legs is considered essential for an object to be <span class="vw">classified<span class="tt">분류된</span></span> as a chair.</p>
+      <p class="plain-sent">Non-essentialism, on the other hand, would <span class="vw">challenge<span class="tt">이의를 제기하다</span></span> the <span class="vw">notion<span class="tt">개념</span></span> [that a chair requires specific essential properties]. Instead, it might argue [that any object can be considered a chair if it <span class="vw">fulfill<span class="tt">충족시키다</span></span>s a <span class="vw">functional<span class="tt">기능적인</span></span> purpose, such as providing a platform for sitting]. According to non-essentialism, an object's essence or specific properties are not necessary for its identification or <span class="vw">classification<span class="tt">분류</span></span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 요지 / 구문 분석</div>
+    <div class="q-block">
+      <div class="q-type">요지 추론 + 구문 분석</div>
+      <div class="q-stem">다음 글의 요지를 정리하고 핵심 구문을 분석하시오.</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">A</span> <strong>요지:</strong> 본질주의는 사물을 <strong>필요한 물리적 특성</strong>으로 정의하는 반면, 비본질주의는 <strong>기능적 목적</strong>으로 정의한다. (예: 의자)</div>
+        <div class="choice"><span class="cn">B</span> "necessary to be recognized and identified as a chair" — 형용사구가 properties를 후치 수식. necessary + to V 구조</div>
+        <div class="choice"><span class="cn">C</span> "{which allow for sitting}" — 계속적 용법 관계대명사: a seat, backrest, and legs 전체를 받음</div>
+        <div class="choice"><span class="cn">D</span> "it would not be considered a chair if ~" — 가정법 과거 (현재 사실 반대 가정)</div>
+        <div class="choice"><span class="cn">E</span> "challenge the notion [that ~]" — notion 뒤 동격 that절</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Consider the concept of a "chair." / According to essentialism, a chair has specific properties <span class="gr">necessary to be recognized and identified as a chair</span>.</div>
+        <div class="sp-ko">'의자'라는 개념을 생각해 보라. / 본질주의에 따르면, / 의자는 / 의자로 인식되고 식별되기 위해 필요한 / 특정한 특성을 가지고 있다. <span class="sp-note">★ properties [necessary to V]: 형용사구가 properties 후치 수식 / be recognized/identified as ~: "~으로 인식/식별되다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">These properties may include having a seat, backrest, and legs, <span class="gr">{which allow for sitting}</span>. / In other words, these essential characteristics define the essence of a chair.</div>
+        <div class="sp-ko">이러한 특성에는 좌석, 등받이, 다리를 갖는 것이 포함될 수 있는데, / 이것들은 앉는 것을 가능하게 한다. / 다시 말해, 이러한 본질적 특성들이 의자의 본질을 정의한다. <span class="sp-note">★ which: 계속적 관계대명사 (앞 명사구 전체를 받음) / allow for + 명사: "~을 가능하게 하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Under the essentialist viewpoint, / <span class="gr">it would not be considered a chair 〈if an object lacks any defining properties〉</span>.</div>
+        <div class="sp-ko">본질주의적 관점에서는, / 어떤 사물이 규정하는 특성을 결여한다면 / 그것은 의자로 간주되지 않을 것이다. <span class="sp-note">★ would + V (가정법 과거): "만약 ~라면 ~할 것이다" / be considered + N (수동태 5형식): "~로 간주되다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For instance, if we have an object with a seat and backrest but without legs, / it would not fit the essentialist definition of a chair. / The presence of legs is considered essential <span class="gr">for an object to be classified as a chair</span>.</div>
+        <div class="sp-ko">예를 들어, 좌석과 등받이는 있지만 다리가 없는 사물이 있다면, / 그것은 의자의 본질주의적 정의에 부합하지 않을 것이다. / 다리의 존재는 / 사물이 의자로 분류되기 위해 / 필수적인 것으로 간주된다. <span class="sp-note">★ for + 의미상 주어 + to V: "~가 V하기 위해" / be classified as ~: "~로 분류되다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Non-essentialism, on the other hand, would <span class="vw">challenge<span class="tt">이의를 제기하다</span></span> the notion <span class="gr">[that a chair requires specific essential properties]</span>.</div>
+        <div class="sp-ko">반면, 비본질주의는 / 의자가 특정한 본질적 특성을 요구한다는 개념에 / 이의를 제기할 것이다. <span class="sp-note">★ [that S+V]: 동격 that절 (notion의 내용)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Instead, it might argue <span class="gr">[that any object can be considered a chair if it fulfills a functional purpose, such as providing a platform for sitting]</span>.</div>
+        <div class="sp-ko">대신, 그것(비본질주의)은 / 어떤 사물이든 / 앉을 수 있는 발판을 제공하는 것과 같은 기능적 목적을 충족시킨다면 / 의자로 간주될 수 있다고 / 주장할 수도 있다. <span class="sp-note">★ argue + that절 / such as ~: "예를 들어 ~"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">According to non-essentialism, an object's essence or specific properties / <span class="gr">are not necessary for its identification or classification</span>.</div>
+        <div class="sp-ko">비본질주의에 따르면, / 사물의 본질이나 특정 특성은 / 그것의 식별이나 분류에 필요하지 않다. <span class="sp-note">★ be necessary for + 명사: "~에 필요하다"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① necessary + to V (형용사 + to부정사)</strong> — "~하기 위해 필요한": 명사 후치 수식 "properties necessary to be recognized ~"</p>
+      <p><strong>② 계속적 관계대명사 which (앞 명사구 받음)</strong> — "a seat, backrest, and legs, {which allow for sitting}"</p>
+      <p><strong>③ 동격 that절 (the notion that ~)</strong> — notion의 내용을 that절이 설명</p>
+      <p><strong>④ be considered + 명사/형용사 (수동태 5형식)</strong> — "~로/~하다고 간주되다"</p>
+      <p><strong>⑤ for + 의미상 주어 + to V</strong> — "~가 V하기 위해": "essential for an object to be classified"</p>
+      <p><strong>⑥ 가정법 과거 (would + V, if ~ 현재시제)</strong> — 현재 사실에 반대되는 가정 / 조건 표현</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic</div>
+    <div class="topic-box">While essentialism defines an object by its necessary physical properties, non-essentialism classifies it based on its functional purpose regardless of its specific form.
+      <div class="topic-ko">본질주의는 사물을 필요한 물리적 특성으로 정의하는 반면, 비본질주의는 특정 형태와 무관하게 기능적 목적에 근거해 분류한다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>My Summary</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>Essentialism: Identification is based on specific, necessary properties.</td><td class="fw-ko">본질주의 — 식별은 특정한 필수 특성에 근거한다.</td></tr>
+        <tr><td><span class="step-badge">② Development I</span></td><td>Physical Essence: Must have a seat, backrest, and legs to be a "chair."</td><td class="fw-ko">물리적 본질 — '의자'가 되려면 좌석·등받이·다리를 갖춰야 한다.</td></tr>
+        <tr><td><span class="step-badge">③ Development II</span></td><td>Strict Exclusion: No legs = Not a chair (Specific form is mandatory).</td><td class="fw-ko">엄격한 배제 — 다리가 없으면 의자가 아니다 (특정 형태가 필수).</td></tr>
+        <tr><td><span class="step-badge">④ Transition</span></td><td>Non-essentialism: Focuses on functional purpose over physical form. Any object that fulfills the function of sitting can be a chair.</td><td class="fw-ko">비본질주의 — 물리적 형태보다 기능적 목적에 집중하며, 앉는 기능을 충족하는 어떤 사물도 의자가 될 수 있다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p12 -->
+
+
+</main>
+
+<script>
+const ids=['home','p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
