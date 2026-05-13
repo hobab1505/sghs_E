@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digitalisation Has Altered Our World — Critical Reading | SGHS</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1160px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.15rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.7rem;opacity:.55;margin-top:2px;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 10px;border-radius:4px;font-size:.7rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.wrap{max-width:1160px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:20px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 20px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);}
+.toc-code{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--accent2);margin-bottom:5px;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:.98rem;font-weight:600;margin-bottom:3px;line-height:1.35;}
+.toc-ko{font-size:.77rem;color:var(--ink3);}
+.toc-badge{display:inline-block;background:var(--bg);border:1px solid var(--border);color:var(--ink3);font-size:.62rem;padding:1px 7px;border-radius:10px;margin-top:6px;}
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.3rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;font-style:italic;}
+.p-badge{display:inline-block;margin-top:8px;background:var(--accent2);color:#fff;font-size:.63rem;font-weight:700;padding:2px 10px;border-radius:20px;letter-spacing:.08em;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:24px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:22px 26px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.92;color:var(--ink);margin-bottom:14px;}
+.plain-sent:last-child{margin-bottom:0;}
+.fn{font-size:.77rem;color:var(--ink3);margin-top:12px;border-top:1px solid var(--border2);padding-top:9px;font-style:italic;line-height:1.6;}
+.bk{display:inline-block;border-bottom:2.5px solid var(--ink);min-width:120px;margin:0 3px;vertical-align:bottom;color:var(--accent2);font-weight:700;font-family:'Noto Sans KR',sans-serif;font-size:.95rem;padding:0 6px;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:18px 22px;margin-bottom:12px;}
+.q-type{font-size:.67rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;text-transform:uppercase;}
+.q-stem{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:12px;}
+.ans-box{margin-top:12px;padding:16px 20px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-lbl{font-size:.64rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:6px;}
+.ans-num{font-size:1rem;font-weight:700;color:var(--orange);margin-bottom:8px;}
+.ans-exp{font-size:.85rem;color:var(--ink2);line-height:1.72;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:22px 26px;margin-bottom:18px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.88;color:var(--ink);}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.73rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 5px;border-radius:3px;margin-left:5px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:5px 9px;border-radius:5px;font-size:.72rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.2);border-radius:6px;padding:13px 17px;margin-top:8px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.77rem;letter-spacing:.06em;margin-bottom:7px;}
+.gr-note p{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:5px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:14px 18px;border-radius:0 7px 7px 0;margin-bottom:12px;font-size:.9rem;line-height:1.65;}
+.topic-ko{margin-top:7px;font-size:.79rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:7px;font-style:italic;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.86rem;}
+.voca-table th{background:var(--bg);padding:9px 14px;text-align:left;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:9px 14px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.6;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.95rem;}
+.vw-mean{color:var(--ink2);}
+.cite{font-size:.78rem;color:var(--ink3);font-style:italic;margin-top:18px;padding-top:14px;border-top:1px dashed var(--border);}
+.hero{padding:0 0 8px;}
+.hero h1{font-family:'Crimson Pro',serif;font-size:1.85rem;line-height:1.3;font-weight:700;letter-spacing:-.01em;}
+.hero .author{font-style:italic;color:var(--ink3);font-size:.92rem;margin-top:8px;font-family:'Crimson Pro',serif;}
+.hero .chips{margin-top:14px;display:flex;gap:6px;flex-wrap:wrap;}
+.chip{display:inline-block;background:var(--paper);border:1px solid var(--border);color:var(--ink2);font-size:.7rem;padding:3px 9px;border-radius:14px;}
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card{padding:16px;}.plain-box,.passage-box{padding:16px 18px;}.hero h1{font-size:1.4rem;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">SGHS Critical Reading &amp; Writing</div>
+      <div class="hdr-sub">Digitalisation Has Altered Our World — A Geographical Perspective · Sophia Maalsen (2025)</div>
+    </div>
+    <nav class="hdr-nav" id="nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('article')">본문</button>
+      <button class="nb" onclick="show('vocab')">어휘</button>
+      <button class="nb" onclick="show('comp')">독해</button>
+      <button class="nb" onclick="show('syntax')">구문</button>
+      <button class="nb" onclick="show('compare')">비교</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ═══ HOME ═══ -->
+<div class="sec on" id="home">
+  <div class="hero">
+    <h1>Digitalisation Has Altered Our World</h1>
+    <div class="author">Sophia Maalsen · <i>Dialogues on Digital Society</i>, Vol. 1, No. 1 (2025), pp. 21–23</div>
+    <div class="chips">
+      <span class="chip">Critical Reading</span>
+      <span class="chip">Geography · Digital Society</span>
+      <span class="chip">Algorithmic Violence</span>
+      <span class="chip">Comparative Analysis</span>
+    </div>
+  </div>
+
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('article')">
+      <div class="toc-code">SECTION 01 · Reading Passage</div>
+      <div class="toc-en">The Full Article</div>
+      <div class="toc-ko">본문 — 어휘 툴팁 포함 (단어에 마우스를 올리면 뜻 표시)</div>
+      <div class="toc-badge">8 paragraphs</div>
+    </a>
+    <a class="toc-card" onclick="show('vocab')">
+      <div class="toc-code">SECTION 02 · Vocabulary</div>
+      <div class="toc-en">Focus Vocabulary</div>
+      <div class="toc-ko">핵심 어휘 28개 — 다의어 포함</div>
+      <div class="toc-badge">28 entries</div>
+    </a>
+    <a class="toc-card" onclick="show('comp')">
+      <div class="toc-code">SECTION 03 · Reading Comprehension</div>
+      <div class="toc-en">Topic · Main Idea · 5 Questions</div>
+      <div class="toc-ko">주제·요지 빈칸 + 5개 독해 질문 모범답안</div>
+      <div class="toc-badge">5 Q &amp; A</div>
+    </a>
+    <a class="toc-card" onclick="show('syntax')">
+      <div class="toc-code">SECTION 04 · Sentence Analysis</div>
+      <div class="toc-en">Key Sentence Structures</div>
+      <div class="toc-ko">핵심 구문 8문장 분석 — 분사구문·관계절·강조구문</div>
+      <div class="toc-badge">8 sentences</div>
+    </a>
+    <a class="toc-card" onclick="show('compare')">
+      <div class="toc-code">SECTION 05 · Comparative Reading</div>
+      <div class="toc-en">Maalsen × Online Maps</div>
+      <div class="toc-ko">'Online Maps' 글과의 비교 독해 질문 3개</div>
+      <div class="toc-badge">3 questions</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ ARTICLE ═══ -->
+<div class="sec" id="article">
+  <div class="p-header">
+    <div class="p-code">SGHS Critical Reading &amp; Writing · Sophia Maalsen (2025)</div>
+    <div class="p-title">Digitalisation Has Altered Our World: A Geographical Perspective</div>
+    <div class="p-title-ko">디지털화가 우리 세계를 바꾸어 놓았다 — 지리학적 관점</div>
+    <span class="p-badge">Reading Passage</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 본문 — 원문 (Vocab Tooltips)</div>
+    <div class="plain-box">
+      <p class="plain-sent">Geographical thought and practice are fundamentally concerned with the way we make and experience the world — both things which digital technologies have promised to alter. But have digital technologies fundamentally changed our understanding of and engagement with <span class="vw">space<span class="tt">공간</span></span>? Or have they simply reproduced existing spatial relationships in digital form? The answer, as this <span class="vw">commentary<span class="tt">논평, 해설</span></span> argues, is not as simple as it might first appear.</p>
+
+      <p class="plain-sent">Geographers have long held an interest in technology's role in the production and experience of space. From the compass to Geographic Information Systems (GIS), from analogue mapping to artificial intelligence, the <span class="vw">discipline<span class="tt">학문 분야</span></span> has consistently relied on technology to expand and deepen our knowledge of the world. In this sense, digitalisation is not a <span class="vw">rupture<span class="tt">단절, 균열</span></span> from geographical tradition but rather its latest chapter — one that is, however, unfolding at an <span class="vw">unprecedented<span class="tt">전례 없는</span></span> pace and scale.</p>
+
+      <p class="plain-sent">Digitalisation has, without question, <span class="vw">accelerate<span class="tt">가속화하다</span></span>d the technological <span class="vw">mediation<span class="tt">매개, 중재</span></span> of our world. For those interested in space and place, it has generated entirely new worlds and infrastructures — cyberspace, the online, the so-called information superhighway — that challenge our ability to know and describe. It has altered our encounters with space and place in all kinds of explicit and <span class="vw">subtle<span class="tt">미묘한</span></span> ways: the questions we ask, how we ask and answer them, the ways in which knowledge is constructed and communicated, and the material geographies of how information is produced, transmitted, and <span class="vw">appropriated<span class="tt">전용된, 도용된</span></span>.</p>
+
+      <p class="plain-sent">One significant shift has been the collapse of the boundary between the digital and the physical. Early discussions treated these as <span class="vw">opposing binaries<span class="tt">이항 대립, 이분법적 구도</span></span>: virtual versus real, online versus offline, cyberspace versus physical space. Yet geographers have moved well beyond this framing. Digital spaces are now understood to be <span class="vw">no less<span class="tt">~에 못지않게</span></span> real than so-called "real" spaces. To <span class="vw">grasp<span class="tt">이해하다</span></span> this, we must attend to the material conditions that support digital technologies — server farms, undersea cables, microchips — as well as to the social, political, and economic structures within which those technologies operate. The digital does not <span class="vw">float<span class="tt">자유롭게 떠돌다, 분리되다</span></span> free of the physical world; it is <span class="vw">embed<span class="tt">내재되다, 깊이 자리잡다</span></span>ded in it.</p>
+
+      <p class="plain-sent">Consider how digital platforms have reshaped our encounters with other people and other places. Apps that mediate dating, ridesharing, or short-term rentals have transformed what were once <span class="vw">chance<span class="tt">우연한</span></span> encounters into <span class="vw">deliberate<span class="tt">의도적인, 계획된</span></span>, choice-driven interactions. Messaging platforms such as WhatsApp and WeChat enable us to maintain relationships across vast geographical distances with an ease unimaginable a generation ago. In each case, spatial distance and <span class="vw">proximity<span class="tt">근접성, 가까움</span></span> are experienced differently — not eliminated, but profoundly <span class="vw">reconfigure<span class="tt">재구성하다</span></span>d.</p>
+
+      <p class="plain-sent">Yet digitalisation does not resolve spatial <span class="vw">inequality<span class="tt">불평등</span></span> — it can <span class="vw">intensify<span class="tt">심화하다, 강화하다</span></span> it. This is perhaps the most <span class="vw">sobering<span class="tt">냉정하게 생각하게 만드는</span></span> finding of recent geographical work. The data used to train algorithmic systems carry within them the biases and inequalities of the societies that produced them. When planning decisions, loan approvals, or housing <span class="vw">allocation<span class="tt">배분, 할당</span></span>s are guided by such systems, the result can be what researchers have called <strong style="color:var(--red);">algorithmic violence</strong>: the reproduction, and sometimes <span class="vw">amplification<span class="tt">증폭, 심화</span></span>, of spatial disadvantage through <span class="vw">ostensibly<span class="tt">표면상, 겉으로 보기에</span></span> neutral <span class="vw">computational<span class="tt">컴퓨터 기반의, 연산의</span></span> processes. In other words, a more precise and data-rich geography does not automatically produce a more just one.</p>
+
+      <p class="plain-sent">This has prompted geographers to ask not only "where?" — the discipline's founding question — but also "for whom?" and "at what cost?" The rise of GeoAI and big-data platforms has given spatial analysis capacities that would have seemed extraordinary even two decades ago: real-time tracking of population movement, AI-assisted identification of flood risk zones, satellite monitoring of <span class="vw">deforestation<span class="tt">삼림 벌채</span></span> at global scale. These are genuine advances. But the same technologies that enable <span class="vw">surveillance<span class="tt">감시</span></span> and <span class="vw">extraction<span class="tt">추출, 수탈</span></span> can also, in other hands, become tools of resistance and care — <span class="vw">map<span class="tt">지도화하다, 파악하다</span></span>ping environmental injustice, documenting <span class="vw">displacement<span class="tt">강제 이주, 퇴출</span></span>, or building digital networks that support vulnerable communities.</p>
+
+      <p class="plain-sent">Geography, then, finds itself at a productive but uncomfortable crossroads. Digitalisation has expanded the discipline's methodological toolkit beyond recognition, and has confirmed — more <span class="vw">decisively<span class="tt">결정적으로</span></span> than any previous technology — that place is fundamental to how we live and how power operates. But it has also raised questions that no algorithm can answer alone: questions about justice, interpretation, and whose spatial knowledge <span class="vw">counts<span class="tt">중요하다, 인정받다</span></span>. In responding to these questions, geography is not merely studying the digital world. It is helping to shape it.</p>
+
+      <p class="fn"><strong>Footnote 1:</strong> <em>algorithmic violence</em> — the reinforcement of social inequity through biased data-driven systems (편향된 데이터 기반 시스템을 통한 사회적 불평등의 강화)</p>
+
+      <p class="cite">Adapted from Source: Maalsen, S. (2025). Digitalisation has altered our world: A geographical perspective. <i>Dialogues on Digital Society</i>, 1(1), 21–23. https://doi.org/10.1177/29768640241250262</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Topic &amp; Main Idea (with answers)</div>
+    <div class="topic-box"><strong>* Topic:</strong> the <span class="bk">geographical</span> implications of digitalization
+      <div class="topic-ko">디지털화의 <strong>지리학적</strong> 함의.</div>
+    </div>
+    <div class="topic-box" style="background:#fdfaf6;"><strong>* Main Idea:</strong> Digital technologies have reshaped how we understand and experience <span class="bk">space</span> and <span class="bk">place</span> — collapsing the digital/physical <span class="bk">divide</span>, reconfiguring spatial relationships, and expanding geography's methodological toolkit — but also intensified spatial <span class="bk">inequality</span> through algorithmic systems.
+      <div class="topic-ko">디지털 기술은 우리가 <strong>공간(space)</strong>과 <strong>장소(place)</strong>를 이해·경험하는 방식을 재구성했다. 디지털/물리의 <strong>경계(divide)</strong>를 무너뜨리고, 공간 관계를 재배열하며, 지리학의 방법론적 도구를 확장했다 — 그러나 알고리즘 시스템을 통해 공간적 <strong>불평등(inequality)</strong> 또한 심화시켰다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VOCABULARY ═══ -->
+<div class="sec" id="vocab">
+  <div class="p-header">
+    <div class="p-code">SECTION 02 · Focus Vocabulary</div>
+    <div class="p-title">Focus Vocabulary</div>
+    <div class="p-title-ko">핵심 어휘 28개 — 다의어 포함</div>
+    <span class="p-badge">28 entries</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">어휘 표 (Vocabulary Table)</div>
+    <table class="voca-table">
+      <thead><tr><th>Word</th><th>Meaning</th><th>Word</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">space</td><td class="vw-mean">공간 / (생각할 수 있는) 시간 / 자유 / 간격을 두다</td><td class="vw-word">proximity</td><td class="vw-mean">근접성, 가까움</td></tr>
+        <tr><td class="vw-word">commentary</td><td class="vw-mean">해설 / 비판 / 논평 / 실황 방송</td><td class="vw-word">reconfigure</td><td class="vw-mean">재구성하다</td></tr>
+        <tr><td class="vw-word">discipline</td><td class="vw-mean">학문 분야 / 훈련 / 규율 / 징계하다</td><td class="vw-word">inequality</td><td class="vw-mean">불평등</td></tr>
+        <tr><td class="vw-word">rupture</td><td class="vw-mean">단절, 균열</td><td class="vw-word">intensify</td><td class="vw-mean">심화하다, 강화하다</td></tr>
+        <tr><td class="vw-word">unprecedented</td><td class="vw-mean">전례 없는</td><td class="vw-word">sobering</td><td class="vw-mean">냉정하게 생각하게 만드는</td></tr>
+        <tr><td class="vw-word">accelerate</td><td class="vw-mean">가속화하다</td><td class="vw-word">allocation</td><td class="vw-mean">배분, 할당</td></tr>
+        <tr><td class="vw-word">mediation</td><td class="vw-mean">매개, 중재</td><td class="vw-word">amplification</td><td class="vw-mean">증폭, 심화</td></tr>
+        <tr><td class="vw-word">subtle</td><td class="vw-mean">미묘한</td><td class="vw-word">ostensible</td><td class="vw-mean">표면상의, 겉으로 보기에는</td></tr>
+        <tr><td class="vw-word">appropriate</td><td class="vw-mean">적절한 / 전용하다, 도용하다</td><td class="vw-word">computational</td><td class="vw-mean">컴퓨터 기반의, 연산의</td></tr>
+        <tr><td class="vw-word">opposing binary</td><td class="vw-mean">이분법적 구도, 이항 대립</td><td class="vw-word">deforestation</td><td class="vw-mean">삼림 벌채</td></tr>
+        <tr><td class="vw-word">no less than</td><td class="vw-mean">~에 못지않게, 똑같이</td><td class="vw-word">surveillance</td><td class="vw-mean">감시</td></tr>
+        <tr><td class="vw-word">grasp</td><td class="vw-mean">이해하다 / 이해(력) / 붙잡다</td><td class="vw-word">extraction</td><td class="vw-mean">추출, 수탈</td></tr>
+        <tr><td class="vw-word">float</td><td class="vw-mean">자유롭게 떠돌다, 분리되다</td><td class="vw-word">map</td><td class="vw-mean">지도화하다, 파악하다 / 지도</td></tr>
+        <tr><td class="vw-word">embed</td><td class="vw-mean">내재하다, 깊이 자리잡다</td><td class="vw-word">displacement</td><td class="vw-mean">강제 이주, 퇴출</td></tr>
+        <tr><td class="vw-word">chance</td><td class="vw-mean">우연한 / 기회 / 가능성</td><td class="vw-word">decisively</td><td class="vw-mean">결정적으로</td></tr>
+        <tr><td class="vw-word">deliberate</td><td class="vw-mean">의도적인, 계획된 / 숙고하다</td><td class="vw-word">count</td><td class="vw-mean">중요하다, 인정받다 / 세다; 수</td></tr>
+      </tbody>
+    </table>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 다의어 주의 (Polysemous Words)</div>
+      <p><strong>space</strong> — 단순한 '공간'이 아니라 <i>생각·자유의 여지</i>, 또는 동사로 <i>간격을 두다</i> 의미도 가능</p>
+      <p><strong>discipline</strong> — '학문 분야' (the discipline of geography) / '규율·훈련' / 동사로 '징계하다'</p>
+      <p><strong>appropriate</strong> — 형용사 '적절한' vs. 동사 '전용하다, 빼앗아 자기 것으로 만들다'. 이 글에서는 후자 의미 (information ~ appropriated)</p>
+      <p><strong>map</strong> — 명사 '지도' vs. 동사 '지도화하다, 체계적으로 파악하다' (mapping environmental injustice)</p>
+      <p><strong>count</strong> — '세다'가 아니라 <i>'중요하다, 인정받다'</i> (whose spatial knowledge counts)</p>
+      <p><strong>chance</strong> — 명사 '기회·우연' vs. 형용사 '우연한' (chance encounters = 우연한 만남)</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ READING COMPREHENSION ═══ -->
+<div class="sec" id="comp">
+  <div class="p-header">
+    <div class="p-code">SECTION 03 · Reading Comprehension</div>
+    <div class="p-title">Reading Comprehension — 5 Questions</div>
+    <div class="p-title-ko">독해 이해도 평가 · 모범답안 포함</div>
+    <span class="p-badge">5 Q &amp; A</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">Q1 — Continuity with tradition</div>
+    <div class="q-block">
+      <div class="q-type">Reading Comprehension</div>
+      <div class="q-stem">Why is digitalisation not simply a break from geographical tradition?</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Model Answer</div>
+      <div class="ans-exp">
+        Geographers have <span class="ans">long relied on technology</span> — from the compass to GIS, from analogue mapping to artificial intelligence — to expand and deepen knowledge of the world. Digitalisation continues this tradition; it is "the latest chapter" rather than a <i>rupture</i>. The only difference is that it is unfolding at an <strong>unprecedented pace and scale</strong>.<br><br>
+        <strong>핵심 단서:</strong> "<i>digitalisation is not a rupture from geographical tradition but rather its latest chapter</i>"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">Q2 — Digital ↔ Physical inseparability</div>
+    <div class="q-block">
+      <div class="q-type">Reading Comprehension</div>
+      <div class="q-stem">What does the passage mean when it says that the digital and the physical are no longer separate?</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Model Answer</div>
+      <div class="ans-exp">
+        Digital technologies are not free-floating; they <span class="ans">depend on physical infrastructure</span> — server farms, undersea cables, microchips — and operate within real <strong>social, political, and economic structures</strong>. So the old binary (virtual vs. real, online vs. offline) collapses: digital space is <i>embedded</i> in the physical world rather than floating above it.<br><br>
+        <strong>핵심 단서:</strong> "<i>The digital does not float free of the physical world; it is embedded in it.</i>"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">Q3 — Distance &amp; Proximity reconfigured</div>
+    <div class="q-block">
+      <div class="q-type">Reading Comprehension</div>
+      <div class="q-stem">How do digital platforms change people's experience of distance and proximity?</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Model Answer</div>
+      <div class="ans-exp">
+        Platforms like dating apps, ridesharing, and short-term rentals turn what were once <i>chance</i> encounters into <strong>deliberate, choice-driven interactions</strong>. Messaging apps such as WhatsApp and WeChat allow people to maintain close relationships across vast distances with unprecedented ease. Distance is <span class="ans">not eliminated but profoundly reconfigured</span> — proximity becomes a matter of choice and platform design rather than physical location.<br><br>
+        <strong>핵심 단서:</strong> "<i>not eliminated, but profoundly reconfigured</i>"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">Q4 — Algorithmic Violence</div>
+    <div class="q-block">
+      <div class="q-type">Reading Comprehension</div>
+      <div class="q-stem">Why can digitalisation intensify spatial inequality?</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Model Answer</div>
+      <div class="ans-exp">
+        The data used to train algorithmic systems <span class="ans">carry the biases and inequalities</span> of the societies that produced them. When such systems guide planning decisions, loan approvals, or housing allocations, they reproduce — and sometimes <strong>amplify</strong> — existing spatial disadvantage. Researchers call this <strong style="color:var(--red);">algorithmic violence</strong>: harm caused through "ostensibly neutral computational processes." A more data-rich geography is therefore <i>not automatically a more just one</i>.<br><br>
+        <strong>핵심 단서:</strong> "<i>algorithmic violence: the reproduction, and sometimes amplification, of spatial disadvantage through ostensibly neutral computational processes</i>"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">Q5 — Dual-use technologies</div>
+    <div class="q-block">
+      <div class="q-type">Reading Comprehension</div>
+      <div class="q-stem">According to Maalsen, how can the same digital technologies serve opposite purposes?</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Model Answer</div>
+      <div class="ans-exp">
+        The same tools (GeoAI, big-data platforms, satellite monitoring) can be used either for <span class="ans">surveillance and extraction</span> — tracking populations or exploiting resources — <span class="ans">or for resistance and care</span>: mapping environmental injustice, documenting displacement of vulnerable groups, and building digital networks that support marginalised communities. The technology itself is not the determining factor; <strong>whose hands it is in</strong> — and to what end — is what matters.<br><br>
+        <strong>핵심 단서:</strong> "<i>the same technologies that enable surveillance and extraction can also, in other hands, become tools of resistance and care</i>"
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SYNTAX / SENTENCE ANALYSIS — FULL (34 SENTENCES) ═══ -->
+<div class="sec" id="syntax">
+  <div class="p-header">
+    <div class="p-code">SECTION 04 · Full Sentence Analysis</div>
+    <div class="p-title">Complete Sentence-by-Sentence Analysis</div>
+    <div class="p-title-ko">본문 전체 34문장 구문 분석 — 8개 단락 빠짐없이</div>
+    <span class="p-badge">34 sentences · 8 paragraphs</span>
+  </div>
+
+  <!-- ¶1 -->
+  <div class="card">
+    <div class="card-lbl">¶1 — Opening Questions (4 sentences)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">①  Geographical thought and practice are fundamentally concerned with <span class="gr">the way [we make and experience the world]</span> — <span class="gr">both things which digital technologies have promised to alter</span>.</div>
+        <div class="sp-ko">지리학적 사고와 실천은 / 우리가 세계를 만들고 경험하는 방식과 / 근본적으로 관련이 있다 — / (그리고) 디지털 기술이 변경하기로 약속한 두 가지가 모두 그러하다. <span class="sp-note">★ be concerned with: "~과 관련이 있다" / the way (in which) S+V: "S가 V하는 방식" / both things which ~: 동격 — 앞에서 언급된 "사고와 실천" 둘 다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">②  But <span class="gr">have digital technologies fundamentally changed our understanding of and engagement with space</span>?</div>
+        <div class="sp-ko">그러나 디지털 기술이 / 공간에 대한 우리의 이해와 관여를 / 근본적으로 바꾸어 놓았는가? <span class="sp-note">★ 현재완료 의문문 / understanding of (and engagement with) space: 두 명사가 공통 목적어 space를 공유 (전치사 공유)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">③  Or <span class="gr">have they simply reproduced existing spatial relationships in digital form</span>?</div>
+        <div class="sp-ko">아니면 그들은 단지 / 기존의 공간 관계를 / 디지털 형태로 재생산했을 뿐인가? <span class="sp-note">★ 앞 의문문(②)과 병렬 / simply: "단지" — 가치 절하 / in digital form: "디지털 형태로"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">④  The answer, <span class="gr">as this commentary argues</span>, is <span class="gr">not as simple as it might first appear</span>.</div>
+        <div class="sp-ko">그 답은, / 이 논평이 주장하는 바와 같이, / 처음 보이는 것만큼 단순하지 않다. <span class="sp-note">★ as + S + V (양태 부사절, 삽입): "~하는 바와 같이" / not as ~ as ~: "~만큼 ~하지 않다" (원급 비교 부정) / it might first appear: "처음에 (~로) 보일지도 모른다"</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ¶2 -->
+  <div class="card">
+    <div class="card-lbl">¶2 — Continuity with Tradition (3 sentences)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">⑤  Geographers <span class="gr">have long held an interest in technology's role</span> in the production and experience of space.</div>
+        <div class="sp-ko">지리학자들은 / 공간의 생산과 경험에서 / 기술의 역할에 대한 관심을 오랫동안 유지해 왔다. <span class="sp-note">★ have long held: 현재완료 + 부사 long ("오랫동안 ~해 왔다") / hold an interest in ~: "~에 관심을 가지다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑥  <span class="gr">From the compass to Geographic Information Systems (GIS), from analogue mapping to artificial intelligence</span>, the discipline has consistently relied on technology / <span class="gr">to expand and deepen our knowledge of the world</span>.</div>
+        <div class="sp-ko">나침반에서 지리정보시스템(GIS)까지, / 아날로그 지도 제작에서 인공지능까지, / 그 학문 분야는 / 우리의 세계에 대한 지식을 확장하고 심화하기 위해 / 일관되게 기술에 의존해 왔다. <span class="sp-note">★ from A to B (병렬 2쌍): 시간/범위 강조 / rely on ~: "~에 의존하다" / to expand and deepen: 부사적 용법(목적), 동사 2개 병렬</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑦  In this sense, digitalisation is <span class="gr">not a rupture from geographical tradition but rather its latest chapter</span> — <span class="gr">one [that is, however, unfolding at an unprecedented pace and scale]</span>.</div>
+        <div class="sp-ko">이런 의미에서, 디지털화는 / 지리학적 전통으로부터의 단절이 아니라 / 오히려 그것의 가장 최신 장(章)이다 — / 다만 전례 없는 속도와 규모로 펼쳐지고 있는 장이다. <span class="sp-note">★ not A but rather B: "A가 아니라 오히려 B" — 글 전체의 주요 명제 / one = a chapter (대명사 one) / that 관계절: one 후치 수식 / however: 삽입 부사 ("다만")</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ¶3 -->
+  <div class="card">
+    <div class="card-lbl">¶3 — Acceleration of Mediation (3 sentences)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">⑧  Digitalisation has, <span class="gr">without question</span>, accelerated the technological mediation of our world.</div>
+        <div class="sp-ko">디지털화는, / 의심의 여지 없이, / 우리 세계의 기술적 매개를 가속화해 왔다. <span class="sp-note">★ without question (삽입구): "의심의 여지없이" — 강조 / 현재완료 has accelerated: 과거~현재까지 누적된 결과</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑨  For those <span class="gr">interested in space and place</span>, it has generated entirely new worlds and infrastructures — cyberspace, the online, the so-called information superhighway — <span class="gr">that challenge our ability to know and describe</span>.</div>
+        <div class="sp-ko">공간과 장소에 관심 있는 사람들에게, / 그것은 완전히 새로운 세계와 기반시설을 만들어 왔다 — / 사이버스페이스, 온라인, 소위 정보 고속도로 — / 이것들은 우리가 알고 묘사하는 능력에 도전한다. <span class="sp-note">★ those (interested in ~): "~에 관심 있는 사람들" (those who are interested의 축약) / so-called: "소위" / that 관계절: 앞 명사구 전체(new worlds and infrastructures) 받음</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑩  It has altered our encounters with space and place <span class="gr">in all kinds of explicit and subtle ways</span>: <span class="gr">the questions we ask, how we ask and answer them, the ways in which knowledge is constructed and communicated, and the material geographies of how information is produced, transmitted, and appropriated</span>.</div>
+        <div class="sp-ko">그것은 우리의 공간·장소와의 만남을 변화시켰다 / 명시적이고 미묘한 모든 방식으로: / 우리가 던지는 질문들, / 우리가 그것을 묻고 답하는 방식, / 지식이 구성되고 전달되는 방식, / 그리고 정보가 생산·전달·전용되는 방식의 물질적 지리. <span class="sp-note">★ 콜론(:) 이후 4가지 항목 등위 병렬 (질문 / 방식 / 방식 / 물질적 지리) / the ways in which ~: "~하는 방식" / 동사 3개 병렬: is produced, transmitted, and appropriated</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ¶4 -->
+  <div class="card">
+    <div class="card-lbl">¶4 — Collapse of Digital/Physical Binary (6 sentences)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">⑪  One significant shift has been <span class="gr">the collapse of the boundary between the digital and the physical</span>.</div>
+        <div class="sp-ko">한 가지 중요한 변화는 / 디지털과 물리적인 것 사이의 경계의 붕괴였다. <span class="sp-note">★ the digital / the physical: "the + 형용사" → 추상 개념을 가리키는 명사구 ("디지털적인 것 / 물리적인 것")</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑫  <span class="gr">Early discussions treated these as opposing binaries</span>: virtual versus real, online versus offline, cyberspace versus physical space.</div>
+        <div class="sp-ko">초기 논의들은 이것들을 / 대립적 이항으로 다루었다: / 가상 대 실재, 온라인 대 오프라인, 사이버스페이스 대 물리적 공간. <span class="sp-note">★ treat A as B: "A를 B로 다루다, 간주하다" / A versus B: "A 대 B" (3쌍 병렬)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑬  <span class="gr">Yet</span> geographers have moved well beyond this framing.</div>
+        <div class="sp-ko">그러나 지리학자들은 / 이러한 틀을 훨씬 넘어섰다. <span class="sp-note">★ Yet (역접 접속부사): "그러나" / well beyond: "훨씬 ~을 넘어서" (well은 강조 부사)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑭  Digital spaces <span class="gr">are now understood to be no less real than so-called "real" spaces</span>.</div>
+        <div class="sp-ko">디지털 공간은 / 이제 소위 '실재' 공간만큼이나 / 실재한다고 이해된다. <span class="sp-note">★ be understood to V: "~인 것으로 이해되다" / no less ~ than ~: "~에 못지않게 ~하다" / so-called: "소위, 이른바" (작은따옴표와 함께 거리감 표시)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑮  <span class="gr">To grasp this</span>, we must attend to the material conditions <span class="gr">that support digital technologies</span> — server farms, undersea cables, microchips — <span class="gr">as well as to the social, political, and economic structures {within which those technologies operate}</span>.</div>
+        <div class="sp-ko">이것을 이해하기 위해, / 우리는 디지털 기술을 지탱하는 물리적 조건들에 / — 서버 농장, 해저 케이블, 마이크로칩 — / 그리고 그 기술이 작동하는 사회·정치·경제적 구조에도 / 주목해야 한다. <span class="sp-note">★ To grasp ~: 부사적 용법(목적) "이해하기 위해" / A as well as B: "B뿐만 아니라 A도" (강조는 A) / within which ~: 전치사 + 관계대명사 (선행사 = structures)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑯  The digital <span class="gr">does not float free of the physical world</span>; it is embedded in it.</div>
+        <div class="sp-ko">디지털은 / 물리적 세계로부터 분리되어 떠 있지 않다; / 그것은 그 안에 내재되어 있다. <span class="sp-note">★ float free of ~: "~으로부터 자유롭게 떠 있다, 분리되다" / be embedded in ~: "~에 깊이 자리잡다, 내재되다" — Maalsen 글 전체의 핵심 명제 / 세미콜론(;): 두 절을 대조하며 잇기</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ¶5 -->
+  <div class="card">
+    <div class="card-lbl">¶5 — Reshaping of Encounters (4 sentences)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">⑰  <span class="gr">Consider how digital platforms have reshaped our encounters with other people and other places</span>.</div>
+        <div class="sp-ko">디지털 플랫폼이 / 다른 사람들과 다른 장소들과의 우리의 만남을 / 어떻게 재편해 왔는지 / 생각해 보라. <span class="sp-note">★ Consider + how절: 명령문 + 간접의문문 (how절이 Consider의 목적어) / reshape: "재편하다, 모양을 다시 만들다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑱  Apps <span class="gr">that mediate dating, ridesharing, or short-term rentals</span> have transformed <span class="gr">[what were once chance encounters]</span> into deliberate, choice-driven interactions.</div>
+        <div class="sp-ko">데이팅, 차량 공유, 단기 임대를 매개하는 앱들은 / 한때 우연한 만남이었던 것들을 / 의도적이고 선택 기반의 상호작용으로 / 변모시켰다. <span class="sp-note">★ transform A into B: "A를 B로 변모시키다" / [what S+V]: 관계대명사 what절 — transform의 목적어 / chance encounters: "우연한 만남" (chance는 형용사)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑲  Messaging platforms <span class="gr">such as WhatsApp and WeChat</span> enable us <span class="gr">to maintain relationships across vast geographical distances with an ease {unimaginable a generation ago}</span>.</div>
+        <div class="sp-ko">WhatsApp이나 WeChat과 같은 메시징 플랫폼은 / 우리로 하여금 / 한 세대 전에는 상상할 수 없었던 수월함으로 / 광대한 지리적 거리를 가로질러 관계를 유지할 수 있게 한다. <span class="sp-note">★ enable + O + to V: "O가 V할 수 있게 하다" / such as ~: "예를 들어 ~과 같은" / {unimaginable a generation ago}: 형용사구 — an ease 후치 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑳  In each case, spatial distance and proximity are experienced differently — <span class="gr">not eliminated, but profoundly reconfigured</span>.</div>
+        <div class="sp-ko">각 경우에, 공간적 거리와 근접성은 / 다르게 경험된다 — / 제거되는 것이 아니라, 깊이 재구성되는 것이다. <span class="sp-note">★ not A but B (대조): "A가 아니라 B" / 과거분사 eliminated / reconfigured: 둘 다 are experienced의 보충 보어 역할 (수동 분사구)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ¶6 -->
+  <div class="card">
+    <div class="card-lbl">¶6 — Algorithmic Violence (5 sentences)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">㉑  Yet digitalisation <span class="gr">does not resolve spatial inequality</span> — <span class="gr">it can intensify it</span>.</div>
+        <div class="sp-ko">그러나 디지털화는 / 공간적 불평등을 해결하지 못한다 — / 오히려 그것을 심화시킬 수 있다. <span class="sp-note">★ resolve vs. intensify: 의도적인 대조 / 대시(—) 사용: 강한 대조 또는 부연 / 두 번째 it = spatial inequality</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉒  This is <span class="gr">perhaps the most sobering finding of recent geographical work</span>.</div>
+        <div class="sp-ko">이것이 / 아마도 최근 지리학 연구의 / 가장 냉정하게 생각하게 만드는 발견이다. <span class="sp-note">★ the most + 형용사 (최상급) / perhaps: 완화 부사 ("아마도, 어쩌면") — 단정을 피하는 학술적 어조 / sobering: "냉정하게 생각하게 만드는, 진지하게 만드는"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉓  The data <span class="gr">used to train algorithmic systems</span> carry within them <span class="gr">the biases and inequalities of the societies {that produced them}</span>.</div>
+        <div class="sp-ko">알고리즘 시스템을 훈련시키는 데 사용된 데이터는 / 그것을 생산한 사회의 / 편견과 불평등을 / 자기 안에 담고 있다. <span class="sp-note">★ {used to train ~}: 과거분사구 — The data 후치 수식 / carry within them ~: "그것들 안에 ~을 담고 있다" (도치 강조) / that 관계절: societies 후치 수식</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉔  <span class="gr">When planning decisions, loan approvals, or housing allocations are guided by such systems</span>, the result can be <span class="gr">[what researchers have called algorithmic violence]</span>: <span class="gr">the reproduction, and sometimes amplification, of spatial disadvantage through ostensibly neutral computational processes</span>.</div>
+        <div class="sp-ko">계획 결정, 대출 승인, 또는 주택 배분이 / 그러한 시스템에 의해 이끌어질 때, / 그 결과는 연구자들이 '알고리즘적 폭력'이라 부르는 것이 될 수 있다: / 즉, 표면상 중립적인 연산 과정을 통한 / 공간적 불이익의 재생산 — 때로는 증폭. <span class="sp-note">★ When + S + V (시간 부사절) / [what S+V]: 관계대명사 what절 — be동사의 보어 / 콜론(:) 이후 동격 명사구가 algorithmic violence를 정의 / ostensibly: "표면상으로는 ~하지만 실제는 다른"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉕  In other words, <span class="gr">a more precise and data-rich geography does not automatically produce a more just one</span>.</div>
+        <div class="sp-ko">다시 말해, / 더 정밀하고 데이터가 풍부한 지리학이 / 자동적으로 더 정의로운 지리학을 만들어내는 것은 아니다. <span class="sp-note">★ In other words: 재진술의 신호 / a more just one: one = geography (반복 회피 대명사) / not ~ automatically: "자동적으로 ~한 것은 아니다" (부분 부정)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ¶7 -->
+  <div class="card">
+    <div class="card-lbl">¶7 — Where? For whom? At what cost? (4 sentences)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">㉖  This has prompted geographers to ask <span class="gr">not only "where?"</span> — the discipline's founding question — <span class="gr">but also "for whom?" and "at what cost?"</span></div>
+        <div class="sp-ko">이것은 지리학자들로 하여금 / 단지 '어디서?' (그 학문의 창립 질문) 뿐 아니라 / '누구를 위해?' 그리고 '어떤 대가로?'를 / 묻게 했다. <span class="sp-note">★ prompt + O + to V: "O가 V하도록 자극하다" / not only A but also B: "A뿐만 아니라 B도" / 삽입 동격구 ("the discipline's founding question") — "where?"를 부연 설명</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉗  The rise of GeoAI and big-data platforms has given spatial analysis capacities <span class="gr">[that would have seemed extraordinary even two decades ago]</span>: <span class="gr">real-time tracking of population movement, AI-assisted identification of flood risk zones, satellite monitoring of deforestation at global scale</span>.</div>
+        <div class="sp-ko">GeoAI와 빅데이터 플랫폼의 부상은 / 단 20년 전이라도 비범하게 보였을 / 공간 분석 능력을 / 제공해 왔다: / 인구 이동의 실시간 추적, / AI 지원 홍수 위험 지역 식별, / 지구 규모의 위성 삼림 벌채 감시. <span class="sp-note">★ has given + IO + DO (4형식 현재완료) / [that would have seemed ~]: 가정법 과거완료가 들어간 관계절 ("~였더라면 ~로 보였을") / 콜론(:) 이후 3개 항목 등위 병렬 — 예시 열거</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉘  These are genuine advances.</div>
+        <div class="sp-ko">이것들은 / 진정한 진보이다. <span class="sp-note">★ genuine: "진짜의, 진정한" — 짧고 강한 평가 문장 / 다음 문장(㉙)의 But으로 이어지는 대조를 위한 디딤돌</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉙  But the same technologies <span class="gr">that enable surveillance and extraction</span> can also, in other hands, become tools of resistance and care — <span class="gr">mapping environmental injustice, documenting displacement, or building digital networks that support vulnerable communities</span>.</div>
+        <div class="sp-ko">그러나 감시와 추출을 가능하게 하는 동일한 기술들이, / 다른 사람의 손에서는, / 저항과 돌봄의 도구가 될 수 있다 — / 환경 부정의를 지도화하고, / 강제 이주를 기록하고, / 취약한 공동체를 지원하는 디지털 네트워크를 구축하면서. <span class="sp-note">★ the same A that ~ can also ~: "동일한 A가 ~도 할 수 있다" (이중 용도 강조) / 분사구문 3개 병렬: mapping ~, documenting ~, or building ~ (결과·예시) / in other hands: "다른 손에서, 다른 사람이 사용하면"</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ¶8 -->
+  <div class="card">
+    <div class="card-lbl">¶8 — Crossroads &amp; Shaping (5 sentences)</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">㉚  Geography, then, <span class="gr">finds itself at a productive but uncomfortable crossroads</span>.</div>
+        <div class="sp-ko">그렇다면 지리학은 / 생산적이지만 불편한 갈림길에 서 있는 / 자신을 발견한다. <span class="sp-note">★ find oneself + 전치사구 / V-ing: "자신이 ~에 처해 있음을 발견하다" — 주어 = 목적어 (재귀대명사 itself) / productive but uncomfortable: 형용사 대조 결합 ("~지만 ~한")</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉛  Digitalisation has expanded the discipline's methodological toolkit beyond recognition, / and has confirmed — <span class="gr">more decisively than any previous technology</span> — <span class="gr">[that place is fundamental to how we live and how power operates]</span>.</div>
+        <div class="sp-ko">디지털화는 / 그 학문의 방법론적 도구 모음을 / 알아볼 수 없을 정도로 확장했고, / 그리고 — 이전의 어떤 기술보다도 결정적으로 — / 장소가 우리가 살아가는 방식과 권력이 작동하는 방식에 / 근본적임을 / 확인해 주었다. <span class="sp-note">★ has expanded ~ and has confirmed ~: 현재완료 동사 2개 병렬 / beyond recognition: "알아볼 수 없을 정도로" / [that S+V]: confirmed의 목적어절 / how절 2개 병렬: how we live, how power operates</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉜  But it has also raised questions <span class="gr">[that no algorithm can answer alone]</span>: <span class="gr">questions about justice, interpretation, and [whose spatial knowledge counts]</span>.</div>
+        <div class="sp-ko">그러나 그것은 또한 / 어떤 알고리즘도 혼자서는 답할 수 없는 / 질문들을 제기해 왔다: / 즉, 정의에 대한, 해석에 대한, 그리고 누구의 공간 지식이 중요한지에 대한 질문들을. <span class="sp-note">★ [that no algorithm can answer alone]: 관계절 (questions 수식) — 부정 주어 no algorithm을 사용한 강조 / 콜론(:) 이후 questions의 동격 부연 / [whose ~ counts]: 간접의문문 (about의 목적어, 마지막 항목)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉝  <span class="gr">In responding to these questions</span>, geography is not merely studying the digital world.</div>
+        <div class="sp-ko">이러한 질문들에 답하는 과정에서, / 지리학은 단지 디지털 세계를 / 연구하고 있는 것만이 아니다. <span class="sp-note">★ In + V-ing: "~하는 과정에서, ~하면서" (전치사 + 동명사) / not merely A: "단지 A만은 아니다" → 다음 문장(㉞)에서 B로 이어지는 강조 구문 / respond to: "~에 응답하다, 답하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">㉞  <span class="gr">It is helping to shape it</span>.</div>
+        <div class="sp-ko">그것은 / 그것(디지털 세계)을 / 형성하는 것을 돕고 있다. <span class="sp-note">★ help + to V (또는 help + V): "V하는 것을 돕다" / 첫 번째 It = geography / 두 번째 it = the digital world / ㉝과 이어져 not merely A. (It is) B 구조 — 매우 짧지만 글 전체의 결론을 담은 강조 문장</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPREHENSIVE GRAMMAR SUMMARY -->
+  <div class="card">
+    <div class="card-lbl">🟢 핵심 구문 &amp; 문법 종합 정리</div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">A. 핵심 구조 패턴 (Core Structural Patterns)</div>
+      <p><strong>① not A but rather B</strong> — "A가 아니라 오히려 B": ⑦ "<i>not a rupture from tradition <u>but rather</u> its latest chapter</i>" (글 전체의 핵심 명제 구조)</p>
+      <p><strong>② not only A but also B</strong> — "A뿐만 아니라 B도": ㉖ "<i>not only 'where?' but also 'for whom?' and 'at what cost?'</i>"</p>
+      <p><strong>③ not merely A. It is B</strong> — "단지 A가 아니라 B이다" (강조 분할): ㉝–㉞ "<i>not merely studying ... It is helping to shape it</i>"</p>
+      <p><strong>④ A as well as B</strong> — "B뿐만 아니라 A도" (강조는 A): ⑮ "<i>material conditions ... as well as ... social structures</i>"</p>
+      <p><strong>⑤ no less ~ than ~</strong> — "~에 못지않게": ⑭ "<i>no less real than so-called 'real' spaces</i>"</p>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">B. 관계사 &amp; 명사절 (Relative Clauses &amp; Noun Clauses)</div>
+      <p><strong>⑥ [what S+V] (관계대명사 what절)</strong> — "S가 V하는 것": ⑱ "<i>what were once chance encounters</i>" / ㉔ "<i>what researchers have called algorithmic violence</i>"</p>
+      <p><strong>⑦ 전치사 + 관계대명사</strong> — ⑮ "<i>structures within which those technologies operate</i>" / ⑩ "<i>the ways in which knowledge is constructed</i>"</p>
+      <p><strong>⑧ [whose + 명사 + V] (간접의문문 / 관계사)</strong> — ㉜ "<i>whose spatial knowledge counts</i>": "누구의 공간 지식이 중요한지"</p>
+      <p><strong>⑨ that 관계절 (제한적·계속적)</strong> — ⑨ "<i>... infrastructures that challenge our ability</i>" / ㉓ "<i>societies that produced them</i>"</p>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">C. 분사구문 &amp; 분사구 (Participles)</div>
+      <p><strong>⑩ 분사구문 병렬 (현재분사 3개)</strong> — ㉙ "<i>mapping ~, documenting ~, or building ~</i>": 결과·예시</p>
+      <p><strong>⑪ 과거분사구 후치 수식</strong> — ⑨ "<i>For those interested in ~</i>" / ㉓ "<i>The data used to train algorithmic systems</i>"</p>
+      <p><strong>⑫ 형용사구 후치 수식</strong> — ⑲ "<i>with an ease unimaginable a generation ago</i>"</p>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">D. 5형식 &amp; 사역·재귀 (Causative &amp; Reflexive)</div>
+      <p><strong>⑬ transform A into B</strong> — ⑱ "A를 B로 변모시키다"</p>
+      <p><strong>⑭ enable + O + to V</strong> — ⑲ "O가 V할 수 있게 하다"</p>
+      <p><strong>⑮ prompt + O + to V</strong> — ㉖ "O가 V하도록 자극하다"</p>
+      <p><strong>⑯ treat A as B / be understood to V</strong> — ⑫ "A를 B로 다루다" / ⑭ "~인 것으로 이해되다"</p>
+      <p><strong>⑰ find oneself at ~ / V-ing</strong> — ㉚ "자신이 ~에 처해 있음을 발견하다" (주어 = 목적어 → 재귀대명사)</p>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">E. 기타 학습 포인트 (Other Notes)</div>
+      <p><strong>⑱ 가정법 과거완료가 들어간 관계절</strong> — ㉗ "<i>capacities that would have seemed extraordinary even two decades ago</i>": "20년 전이라면 ~으로 보였을"</p>
+      <p><strong>⑲ 부분 부정 (not ~ automatically)</strong> — ㉕ "<i>does not automatically produce a more just one</i>": "자동적으로 ~한 것은 아니다"</p>
+      <p><strong>⑳ 전치사 공유 구조</strong> — ② "<i>understanding of and engagement with space</i>": 두 명사가 공통 목적어 space 공유</p>
+      <p><strong>㉑ 대시(—)의 용법</strong> — 강조 삽입(㉖ "the discipline's founding question") / 부연 예시(⑨ "cyberspace, the online, ...") / 강한 대조(㉑ "it can intensify it")</p>
+      <p><strong>㉒ 세미콜론(;) 용법</strong> — ⑯ "<i>The digital does not float free of the physical world; it is embedded in it</i>": 대조적 두 절 연결</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ═══ COMPARATIVE READING ═══ -->
+<div class="sec" id="compare">
+  <div class="p-header">
+    <div class="p-code">SECTION 05 · Comparative Reading</div>
+    <div class="p-title">Comparative Reading — Maalsen × <i>Online Maps</i></div>
+    <div class="p-title-ko">'Online Maps' 글과의 비교 독해 · 모범답안 포함</div>
+    <span class="p-badge">3 questions</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">Q1 — A connecting statement</div>
+    <div class="q-block">
+      <div class="q-type">Comparative Reading</div>
+      <div class="q-stem">Write a statement that best connects two articles.</div>
+      <div style="font-size:.9rem;color:var(--ink2);margin-top:10px;line-height:1.75;">
+        Digital technologies have changed <span class="bk">who</span> can produce geographical knowledge and <span class="bk">how</span> space is understood, but not always e<span class="bk">qually</span> or without consequence.
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">해설 — Why these words?</div>
+      <div class="ans-exp">
+        <strong>who</strong> — Online Maps에서 자원봉사 지도 제작자(volunteer cartographers), 위키 편집자, 일반 사용자가 지도 제작에 참여 가능 → 지식 생산의 <i>주체(who)</i>가 확대됨.<br>
+        <strong>how</strong> — Maalsen이 강조한 "the questions we ask, how we ask and answer them"과 일치 → 공간을 이해하는 <i>방식(how)</i>이 바뀜.<br>
+        <strong>equally</strong> — Maalsen의 <i>algorithmic violence</i> 논의와 Online Maps의 카슈미르 분쟁(편집권 불균형) 모두 "디지털 참여가 <u>평등하지 않다</u>"는 점을 보여줌.<br><br>
+        <strong>대안 어휘:</strong> who → "the people who" / how → "the way" / equally → "evenly"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">Q2 — Maalsen on volunteer cartography</div>
+    <div class="q-block">
+      <div class="q-type">Comparative Reading</div>
+      <div class="q-stem">What would Maalsen most likely say about volunteer cartography in <i>Online Maps</i>?</div>
+      <div style="font-size:.9rem;color:var(--ink2);margin-top:10px;line-height:1.75;">
+        It shows how digital tools can <span class="bk">democratize</span> spatial knowledge, but it should be <span class="bk">examined</span> in terms of power, access, and inequality.
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">해설 — Why these words?</div>
+      <div class="ans-exp">
+        <strong>democratize</strong> — 자원봉사 지도 제작은 "<i>tools of resistance and care</i>" (Maalsen)의 대표 사례. 누구나 지도 제작에 참여 가능 → 공간 지식의 민주화.<br>
+        <strong>examined</strong> (또는 critiqued / scrutinized / questioned) — Maalsen은 디지털을 <i>uncritical하게</i> 찬양하지 않음. "<i>questions that no algorithm can answer alone: ... whose spatial knowledge counts</i>" → 항상 <strong>권력·접근성·불평등</strong> 측면에서 비판적으로 검토해야 함.<br><br>
+        <strong>핵심 논리:</strong> 디지털 도구의 가능성(긍정) <strong>+</strong> 그 한계와 정치성(비판)을 동시에 지적하는 것이 Maalsen의 일관된 입장.<br><br>
+        <strong>대안 어휘:</strong> democratize → "broaden / expand / open up" / examined → "critically assessed / scrutinized / questioned / interrogated"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">Q3 — Kashmir &amp; embedded structures</div>
+    <div class="q-block">
+      <div class="q-type">Comparative Reading</div>
+      <div class="q-stem">The Kashmir dispute in <i>Online Maps</i> involves competing national claims over map edits. How does this support Maalsen's argument that digital spaces are shaped by "social, political, and economic structures"?</div>
+      <div style="font-size:.9rem;color:var(--ink2);margin-top:10px;line-height:1.75;">
+        The Kashmir case shows that even a seemingly n<span class="bk">eutral</span> technical platform (Google Map Maker) becomes a site of political contest — who can edit, whose version is accepted, and who holds final authority all reflect existing <span class="bk">power</span> structures. This is exactly what Maalsen means: digital space is not a n<span class="bk">eutral</span> layer floating above the physical world but is e<span class="bk">mbedded</span> in the same social and political forces.
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">해설 — Why these words?</div>
+      <div class="ans-exp">
+        <strong>neutral (1회·2회)</strong> — Maalsen의 핵심 표현 "<i>ostensibly neutral computational processes</i>"의 정확한 echo. Google Map Maker는 표면적으로는 중립적 기술 도구지만, 실제로는 인도/파키스탄의 국가 주권 갈등이 그대로 옮겨오는 장.<br>
+        <strong>power</strong> — "who can edit, whose version is accepted, and who holds final authority" → 모두 <strong>권력 관계</strong>를 묻는 질문. Maalsen이 "<i>place is fundamental to how power operates</i>"라고 명시.<br>
+        <strong>embedded</strong> — Maalsen 본문의 핵심 어휘: "<i>The digital does not float free of the physical world; it is <u>embedded</u> in it</u>." 카슈미르 사례가 바로 이 명제의 실증.<br><br>
+        <strong>핵심 통찰:</strong> 카슈미르 사례는 디지털 공간이 <u>실제 정치 갈등의 연장</u>임을 보여주는 가장 명확한 예시. "위에 떠 있는 가상 층(floating layer)"이라는 초기 디지털 담론은 더 이상 유효하지 않음.<br><br>
+        <strong>대안 어휘:</strong> neutral → "objective / value-free / apolitical" / power → "political / authority / governance" / embedded → "rooted / grounded / entangled"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">📌 Synthesis — Maalsen의 두 핵심 명제</div>
+    <div class="topic-box">
+      <strong>Thesis 1:</strong> "The digital does not float free of the physical world; it is <strong>embedded</strong> in it."
+      <div class="topic-ko">디지털은 물리적 세계에서 분리되어 떠 있지 않으며, 그 안에 깊이 내재되어 있다.</div>
+    </div>
+    <div class="topic-box" style="background:#fdfaf6;">
+      <strong>Thesis 2:</strong> "A more precise and data-rich geography does not automatically produce a more <strong>just</strong> one."
+      <div class="topic-ko">더 정밀하고 데이터가 풍부한 지리학이 자동으로 더 정의로운 지리학을 만들어내는 것은 아니다.</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 비교 독해 핵심 — Maalsen의 입장</div>
+      <p><strong>긍정:</strong> 디지털화는 지리학의 도구를 확장하고, 새로운 관계·만남을 가능하게 하며, 공간 지식의 생산자(who)를 확대한다.</p>
+      <p><strong>비판:</strong> 그러나 그 과정은 결코 중립적이지 않다. 알고리즘은 사회의 편견을 재생산하고, 디지털 플랫폼은 기존 권력 구조 안에서 작동한다.</p>
+      <p><strong>처방:</strong> "where?"뿐 아니라 <strong>"for whom?"</strong>과 <strong>"at what cost?"</strong>를 물어야 한다. 지리학은 디지털 세계를 단지 연구하는 것이 아니라 <i>형성</i>하는 데에 참여한다.</p>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+const ids=['home','article','vocab','comp','syntax','compare'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
