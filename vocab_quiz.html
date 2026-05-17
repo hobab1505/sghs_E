@@ -8,17 +8,24 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;background:#f5f5f0;min-height:100vh;padding:1.5rem 1rem}
 .wrap{max-width:680px;margin:0 auto}
-.top{margin-bottom:1.5rem}
-.top h1{font-size:22px;font-weight:600;color:#111;margin-bottom:4px}
+.top{margin-bottom:1.25rem}
+.top h1{font-size:22px;font-weight:700;color:#111;margin-bottom:4px}
 .top p{font-size:13px;color:#666}
-.set-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
-.set-btn{padding:6px 13px;font-size:13px;border:1px solid #ddd;border-radius:8px;cursor:pointer;background:#fff;color:#333;transition:all .15s}
+.set-section{margin-bottom:1rem}
+.set-label{font-size:11px;font-weight:700;color:#999;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.set-row{display:flex;gap:5px;flex-wrap:wrap}
+.set-btn{padding:6px 12px;font-size:13px;border:1px solid #ddd;border-radius:8px;cursor:pointer;background:#fff;color:#333;transition:all .15s}
 .set-btn:hover{background:#eee}
 .set-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff;font-weight:600}
+.set-btn.practice{border-color:#C8B8F8;color:#5B3FC8}
+.set-btn.practice:hover{background:#F0EBFF}
+.set-btn.practice.active{background:#5B3FC8;border-color:#5B3FC8;color:#fff}
 .prog-wrap{margin-bottom:1.25rem}
 .prog-meta{display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:5px}
 .prog-track{height:5px;background:#e0e0e0;border-radius:99px;overflow:hidden}
 .prog-fill{height:100%;background:#1D9E75;border-radius:99px;transition:width .3s}
+.prog-fill.purple{background:#5B3FC8}
+.prog-fill.orange{background:#E8821A}
 .card{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
 .badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;margin-bottom:10px}
 .ba{background:#EBF4FD;color:#1565C0}
@@ -51,15 +58,49 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans
 .nav-btn:disabled{opacity:.4;cursor:default}
 .next-btn{background:#1D9E75;border-color:#1D9E75;color:#fff;display:none}
 .next-btn:hover{background:#0F6E56}
-.score-wrap{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:2.5rem 1.5rem;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04)}
-.score-pct{font-size:56px;font-weight:700;color:#1D9E75;line-height:1}
+/* Score */
+.score-wrap{background:#fff;border:1px solid #e8e8e8;border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.score-top{text-align:center;padding:2rem 1.5rem 1.25rem}
+.score-pct{font-size:56px;font-weight:700;line-height:1}
 .score-unit{font-size:26px}
 .score-sub{font-size:15px;color:#444;margin-top:6px;font-weight:500}
-.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1.5rem 0}
-.s-box{background:#f7f7f5;border-radius:9px;padding:.9rem}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 1.5rem 1.5rem}
+.s-box{background:#f7f7f5;border-radius:9px;padding:.85rem;text-align:center}
 .s-n{font-size:24px;font-weight:600}
 .s-l{font-size:12px;color:#888;margin-top:3px}
-.score-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.score-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 1.5rem 1.5rem}
+/* Wrong review */
+.review-section{border-top:1px solid #f0f0f0;padding:1.25rem 1.5rem 1.5rem}
+.review-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.review-header h3{font-size:14px;font-weight:700;color:#C05E00}
+.wrong-list{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem;max-height:220px;overflow-y:auto}
+.wrong-item{display:flex;gap:12px;align-items:baseline;padding:7px 10px;background:#FFF5EB;border-radius:7px;font-size:14px}
+.wrong-en{font-weight:600;color:#7C3A00;min-width:110px;flex-shrink:0}
+.wrong-ko{color:#9A5500;font-size:13px}
+.review-btns{display:flex;gap:8px}
+.review-btn{flex:1;padding:11px;font-size:14px;font-weight:600;border:none;border-radius:9px;cursor:pointer;transition:background .15s;text-align:center}
+.btn-flash{background:#EDE6FF;color:#5B3FC8}
+.btn-flash:hover{background:#D9CCFF}
+.btn-retry{background:#FFF0E0;color:#C05E00;border:1px solid #FFCC80}
+.btn-retry:hover{background:#FFE0B2}
+/* Flash */
+.flash-wrap{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:1.5rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.flash-count{font-size:13px;color:#888;text-align:center;margin-bottom:10px}
+.flash-card{background:#FAFAFA;border:1.5px dashed #ddd;border-radius:12px;padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:all .15s;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:1rem}
+.flash-card:hover{border-color:#aaa;background:#f5f5f5}
+.flash-word{font-size:26px;font-weight:700;color:#111;margin-bottom:6px}
+.flash-meaning{font-size:18px;color:#5C4A00;margin-top:10px;display:none}
+.flash-tap{font-size:12px;color:#ccc;margin-top:14px}
+.flash-nav{display:flex;gap:8px}
+.flash-nav button{flex:1;padding:11px;font-size:14px;border:1px solid #ddd;border-radius:9px;cursor:pointer;background:#fff;transition:all .15s;font-weight:500}
+.flash-knew{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20}
+.flash-knew:hover{background:#C8E6C9}
+.flash-skip{background:#f5f5f5;color:#555}
+.flash-skip:hover{background:#eee}
+.perfect-msg{text-align:center;padding:2rem}
+.perfect-msg .emoji{font-size:40px;margin-bottom:10px}
+.perfect-msg p{font-size:16px;color:#2E7D32;font-weight:600}
+.perfect-msg small{font-size:13px;color:#888;display:block;margin-top:4px}
 </style>
 </head>
 <body>
@@ -68,7 +109,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans
     <h1>📚 단어 퀴즈</h1>
     <p>Advanced English Reading II — 4강·5강·6강 + 수능연계</p>
   </div>
-  <div class="set-row" id="setSel"></div>
+  <div class="set-section">
+    <div class="set-label">📝 시험 세트</div>
+    <div class="set-row" id="setSel"></div>
+  </div>
+  <div class="set-section">
+    <div class="set-label">🔥 연습 세트</div>
+    <div class="set-row" id="practiceSetSel"></div>
+  </div>
   <div id="quizArea"></div>
 </div>
 <script>
@@ -78,6 +126,7 @@ const W=[
 
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
 
+// 시험 세트 1~10
 const SETS=[];
 const sh=shuffle(W);
 for(let s=0;s<10;s++){
@@ -85,85 +134,203 @@ for(let s=0;s<10;s++){
   for(let i=0;i<30;i++) pool.push(sh[(s*30+i)%sh.length]);
   SETS.push(pool);
 }
+// 연습 세트 11~15
+for(let s=0;s<5;s++) SETS.push(shuffle(W).slice(0,30));
 
-let cs=0,cq=0,ans=[],qs=[],done=false;
+// ── state ──
+let cs=0, cq=0, ans=[], qs=[], isDone=false;
+let wrongWords=[];
+let flashMode=false, flashPool=[], flashIdx=0, flashRevealed=false;
 
-function makeOpts(correct,count=4){
-  const others=shuffle(W.filter(w=>w.w!==correct.w)).slice(0,count-1);
-  return shuffle([correct,...others]);
+function makeOpts(correct,n=4){
+  return shuffle([correct,...shuffle(W.filter(x=>x.w!==correct.w)).slice(0,n-1)]);
 }
-
-function buildQs(si){
-  return SETS[si].map((word,i)=>{
+function buildQs(pool){
+  return pool.map((word,i)=>{
     const t=i%3;
     if(t===0) return{type:'A',word,opts:makeOpts(word,4),answer:word.m};
-    if(t===1){const o=shuffle(W.filter(w=>w.w!==word.w))[0];return{type:'B',word,opts:shuffle([word,o]),answer:word.w,prompt:word.m};}
+    if(t===1){const o=shuffle(W.filter(x=>x.w!==word.w))[0];return{type:'B',word,opts:shuffle([word,o]),answer:word.w,prompt:word.m};}
     return{type:'C',word,answer:word.w};
   });
 }
+function markWrong(word){if(!wrongWords.find(x=>x.w===word.w))wrongWords.push(word);}
+function esc(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
 
+// ── render set buttons ──
 function renderSets(){
   const el=document.getElementById('setSel');
-  el.innerHTML='';
+  const pel=document.getElementById('practiceSetSel');
+  el.innerHTML='';pel.innerHTML='';
   for(let i=0;i<10;i++){
     const b=document.createElement('button');
-    b.className='set-btn'+(i===cs?' active':'');
+    b.className='set-btn'+(i===cs&&!flashMode?' active':'');
     b.textContent=`${i+1}세트`;
-    b.onclick=()=>{cs=i;cq=0;ans=[];qs=buildQs(i);render()};
+    const si=i;
+    b.onclick=()=>{cs=si;cq=0;ans=[];wrongWords=[];qs=buildQs(SETS[si]);isDone=false;flashMode=false;render()};
     el.appendChild(b);
+  }
+  for(let i=10;i<15;i++){
+    const b=document.createElement('button');
+    b.className='set-btn practice'+(i===cs&&!flashMode?' active':'');
+    b.textContent=`연습${i-9}`;
+    const si=i;
+    b.onclick=()=>{cs=si;cq=0;ans=[];wrongWords=[];qs=buildQs(SETS[si]);isDone=false;flashMode=false;render()};
+    pel.appendChild(b);
   }
 }
 
+// ── main render ──
 function render(){
   renderSets();
-  if(cq>=30){renderScore();return;}
+  if(flashMode){renderFlash();return;}
+  if(cq>=qs.length){renderScore();return;}
   renderQ();
 }
 
+function fillColor(){
+  if(cs<0)return'orange';
+  if(cs>=10)return'purple';
+  return'';
+}
+function setLabel(){
+  if(cs<0)return'오답 재도전';
+  if(cs>=10)return`연습 ${cs-9}세트`;
+  return`${cs+1}세트`;
+}
+
+// ── score ──
 function renderScore(){
-  const ok=ans.filter(Boolean).length;
-  const pct=Math.round(ok/30*100);
+  const total=qs.length, ok=ans.filter(Boolean).length;
+  const pct=Math.round(ok/total*100);
+  const color=pct>=80?'#1D9E75':pct>=60?'#E8821A':'#C62828';
+
+  let wrongSection='';
+  if(wrongWords.length===0){
+    wrongSection=`<div class="review-section"><div class="perfect-msg"><div class="emoji">🎉</div><p>모두 정답! 완벽합니다!</p><small>틀린 단어가 없어요</small></div></div>`;
+  } else {
+    const listItems=wrongWords.map(w=>`<div class="wrong-item"><span class="wrong-en">${w.w}</span><span class="wrong-ko">${w.m}</span></div>`).join('');
+    wrongSection=`
+    <div class="review-section">
+      <div class="review-header">
+        <h3>❌ 틀린 단어 ${wrongWords.length}개</h3>
+      </div>
+      <div class="wrong-list">${listItems}</div>
+      <div class="review-btns">
+        <button class="review-btn btn-flash" onclick="startFlash()">🃏 플래시카드 복습</button>
+        <button class="review-btn btn-retry" onclick="retryWrong()">📝 틀린 것만 다시 풀기</button>
+      </div>
+    </div>`;
+  }
+
+  let nextBtn='';
+  if(cs>=0&&cs<9) nextBtn=`<button class="nav-btn" style="background:#1D9E75;color:#fff;border-color:#1D9E75" onclick="cs++;cq=0;ans=[];wrongWords=[];qs=buildQs(SETS[cs]);render()">다음 세트 →</button>`;
+  else if(cs>=10&&cs<14) nextBtn=`<button class="nav-btn" style="background:#5B3FC8;color:#fff;border-color:#5B3FC8" onclick="cs++;cq=0;ans=[];wrongWords=[];qs=buildQs(SETS[cs]);render()">다음 연습 →</button>`;
+
   document.getElementById('quizArea').innerHTML=`
   <div class="score-wrap">
-    <p style="font-size:14px;color:#888;margin-bottom:8px">세트 ${cs+1} 완료!</p>
-    <div class="score-pct">${pct}<span class="score-unit">%</span></div>
-    <p class="score-sub">${ok}문제 정답</p>
+    <div class="score-top">
+      <p style="font-size:13px;color:#888;margin-bottom:6px">${setLabel()} 완료</p>
+      <div class="score-pct" style="color:${color}">${pct}<span class="score-unit">%</span></div>
+      <p class="score-sub">${ok} / ${total} 정답</p>
+    </div>
     <div class="score-grid">
       <div class="s-box"><div class="s-n" style="color:#2E7D32">${ok}</div><div class="s-l">정답</div></div>
-      <div class="s-box"><div class="s-n" style="color:#C62828">${30-ok}</div><div class="s-l">오답</div></div>
-      <div class="s-box"><div class="s-n">30</div><div class="s-l">전체</div></div>
+      <div class="s-box"><div class="s-n" style="color:#C62828">${total-ok}</div><div class="s-l">오답</div></div>
+      <div class="s-box"><div class="s-n">${total}</div><div class="s-l">전체</div></div>
     </div>
     <div class="score-actions">
-      <button class="nav-btn" onclick="cq=0;ans=[];qs=buildQs(cs);render()">🔄 다시 풀기</button>
-      ${cs<9?`<button class="nav-btn" style="background:#1D9E75;color:#fff;border-color:#1D9E75" onclick="cs++;cq=0;ans=[];qs=buildQs(cs);render()">다음 세트 →</button>`:`<button class="nav-btn" style="background:#1D9E75;color:#fff;border-color:#1D9E75" onclick="cs=0;cq=0;ans=[];qs=buildQs(0);render()">처음부터 다시</button>`}
+      <button class="nav-btn" onclick="cq=0;ans=[];wrongWords=[];qs=buildQs(cs>=0?SETS[cs]:qs.map(q=>q.word));render()">🔄 다시 풀기</button>
+      ${nextBtn}
     </div>
+    ${wrongSection}
   </div>`;
 }
 
-function escape(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+function retryWrong(){
+  if(!wrongWords.length)return;
+  cs=-1;cq=0;ans=[];
+  qs=buildQs(shuffle([...wrongWords]));
+  isDone=false;flashMode=false;
+  render();
+}
 
+// ── flashcard ──
+function startFlash(){
+  if(!wrongWords.length)return;
+  flashPool=shuffle([...wrongWords]);
+  flashIdx=0;flashRevealed=false;flashMode=true;
+  render();
+}
+
+function renderFlash(){
+  if(flashIdx>=flashPool.length){
+    flashMode=false;
+    document.getElementById('quizArea').innerHTML=`
+    <div class="flash-wrap" style="text-align:center;padding:2.5rem 1.5rem">
+      <div style="font-size:36px;margin-bottom:12px">✅</div>
+      <p style="font-size:16px;font-weight:600;color:#2E7D32;margin-bottom:6px">플래시카드 완료!</p>
+      <p style="font-size:13px;color:#888;margin-bottom:1.5rem">틀린 단어를 모두 확인했어요.</p>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="nav-btn" onclick="flashPool=shuffle([...wrongWords]);flashIdx=0;flashRevealed=false;flashMode=true;render()">🔄 다시 보기</button>
+        <button class="nav-btn" style="background:#E8821A;color:#fff;border-color:#E8821A" onclick="retryWrong()">📝 퀴즈로 풀기</button>
+      </div>
+    </div>`;
+    renderSets();
+    return;
+  }
+  const word=flashPool[flashIdx];
+  document.getElementById('quizArea').innerHTML=`
+  <div class="flash-wrap">
+    <div class="flash-count">플래시카드 ${flashIdx+1} / ${flashPool.length} — 남은 단어 ${flashPool.length}개</div>
+    <div class="flash-card" id="fc" onclick="revealFlash()">
+      <p style="font-size:11px;font-weight:700;color:#bbb;letter-spacing:.06em;margin-bottom:6px">ENGLISH</p>
+      <div class="flash-word">${word.w}</div>
+      <div class="flash-meaning" id="fm">${word.m}</div>
+      <p class="flash-tap" id="ft">탭해서 뜻 확인하기 👆</p>
+    </div>
+    <div class="flash-nav">
+      <button class="flash-skip" onclick="flashIdx++;flashRevealed=false;render()">다음 →</button>
+      <button class="flash-knew" onclick="flashPool.splice(flashIdx,1);if(flashIdx>=flashPool.length)flashIdx=0;flashRevealed=false;if(flashPool.length===0){flashMode=false;}render()">알았어요 ✓</button>
+    </div>
+    <p style="font-size:12px;color:#bbb;text-align:center;margin-top:10px">알았어요를 누르면 이 단어는 제거됩니다</p>
+  </div>`;
+  if(flashRevealed){
+    const fm=document.getElementById('fm'),ft=document.getElementById('ft');
+    if(fm)fm.style.display='block';if(ft)ft.style.display='none';
+  }
+}
+
+function revealFlash(){
+  flashRevealed=true;
+  const fm=document.getElementById('fm'),ft=document.getElementById('ft');
+  if(fm)fm.style.display='block';if(ft)ft.style.display='none';
+}
+
+// ── question ──
 function renderQ(){
   const q=qs[cq];
-  const pct=Math.round(cq/30*100);
+  const total=qs.length;
+  const pct=Math.round(cq/total*100);
+  const fc=fillColor();
   let h=`<div class="prog-wrap">
-    <div class="prog-meta"><span>문제 ${cq+1} / 30</span><span>✅ ${ans.filter(Boolean).length}개 정답</span></div>
-    <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
+    <div class="prog-meta"><span>${setLabel()} — 문제 ${cq+1} / ${total}</span><span>✅ ${ans.filter(Boolean).length}개 정답</span></div>
+    <div class="prog-track"><div class="prog-fill ${fc}" style="width:${pct}%"></div></div>
   </div>
-  <div class="card" id="qcard">`;
+  <div class="card">`;
 
   if(q.type==='A'){
     h+=`<span class="badge ba">영→한 선택</span><p class="qword">${q.word.w}</p><p class="qsub">뜻을 고르세요</p><div class="opts" id="opts">`;
-    q.opts.forEach((o,i)=>{ h+=`<button class="opt" id="opt${i}" onclick="ansA(${i},'${escape(o.m)}','${escape(q.answer)}',${q.opts.length})">${o.m}</button>`; });
+    q.opts.forEach((o,i)=>{h+=`<button class="opt" id="opt${i}" onclick="ansA(${i},'${esc(o.m)}','${esc(q.answer)}',${q.opts.length})">${o.m}</button>`;});
     h+=`</div>`;
-  }else if(q.type==='B'){
+  } else if(q.type==='B'){
     h+=`<span class="badge bb">한→영 선택 (2지선다)</span><p class="qword">${q.prompt}</p><p class="qsub">알맞은 영단어를 고르세요</p><div class="opts" id="opts">`;
-    q.opts.forEach((o,i)=>{ h+=`<button class="opt" id="opt${i}" onclick="ansB(${i},'${escape(o.w)}','${escape(q.answer)}',${q.opts.length})">${o.w}</button>`; });
+    q.opts.forEach((o,i)=>{h+=`<button class="opt" id="opt${i}" onclick="ansB(${i},'${esc(o.w)}','${esc(q.answer)}',${q.opts.length})">${o.w}</button>`;});
     h+=`</div>`;
-  }else{
+  } else {
     h+=`<span class="badge bc">영단어 직접 입력</span><p class="qword">${q.word.m}</p><p class="qsub">해당하는 영단어를 입력하세요</p>
     <div class="fill-row">
-      <input type="text" class="fill-inp" id="fillI" placeholder="영단어 입력..." onkeydown="if(event.key==='Enter')ansC('${escape(q.answer)}')">
-      <button class="sub-btn" onclick="ansC('${escape(q.answer)}')">확인</button>
+      <input type="text" class="fill-inp" id="fillI" placeholder="영단어 입력..." onkeydown="if(event.key==='Enter')ansC('${esc(q.answer)}')">
+      <button class="sub-btn" onclick="ansC('${esc(q.answer)}')">확인</button>
     </div>
     <div class="fb" id="fb"></div>
     <p class="hint">대소문자 구분 없음</p>`;
@@ -174,57 +341,40 @@ function renderQ(){
     <button class="nav-btn next-btn" id="nextBtn" onclick="nextQ()">다음 문제 →</button>
   </div>`;
   document.getElementById('quizArea').innerHTML=h;
-  done=false;
+  isDone=false;
   if(q.type==='C') setTimeout(()=>{const el=document.getElementById('fillI');if(el)el.focus();},50);
 }
 
-function ansA(idx,chosen,correct,total){
-  if(done)return;done=true;
-  const ok=chosen===correct;ans.push(ok);
-  for(let i=0;i<total;i++){
-    const b=document.getElementById('opt'+i);if(!b)continue;
-    b.classList.add('dis');
-    if(b.textContent===correct)b.classList.add('show');
-    if(i===idx&&!ok)b.classList.add('no');
-    if(i===idx&&ok)b.classList.add('ok');
-  }
+function ansA(idx,chosen,correct,n){
+  if(isDone)return;isDone=true;
+  const ok=chosen===correct;ans.push(ok);if(!ok)markWrong(qs[cq].word);
+  for(let i=0;i<n;i++){const b=document.getElementById('opt'+i);if(!b)continue;b.classList.add('dis');if(b.textContent===correct)b.classList.add('show');if(i===idx&&!ok)b.classList.add('no');if(i===idx&&ok)b.classList.add('ok');}
   document.getElementById('nextBtn').style.display='inline-block';
   document.getElementById('skipBtn').disabled=true;
 }
-
-function ansB(idx,chosen,correct,total){
-  if(done)return;done=true;
-  const ok=chosen===correct;ans.push(ok);
-  for(let i=0;i<total;i++){
-    const b=document.getElementById('opt'+i);if(!b)continue;
-    b.classList.add('dis');
-    if(b.textContent===correct)b.classList.add('show');
-    if(i===idx&&!ok)b.classList.add('no');
-    if(i===idx&&ok)b.classList.add('ok');
-  }
+function ansB(idx,chosen,correct,n){
+  if(isDone)return;isDone=true;
+  const ok=chosen===correct;ans.push(ok);if(!ok)markWrong(qs[cq].word);
+  for(let i=0;i<n;i++){const b=document.getElementById('opt'+i);if(!b)continue;b.classList.add('dis');if(b.textContent===correct)b.classList.add('show');if(i===idx&&!ok)b.classList.add('no');if(i===idx&&ok)b.classList.add('ok');}
   document.getElementById('nextBtn').style.display='inline-block';
   document.getElementById('skipBtn').disabled=true;
 }
-
 function ansC(correct){
-  if(done)return;
+  if(isDone)return;
   const inp=document.getElementById('fillI');if(!inp)return;
   const val=inp.value.trim().toLowerCase().replace(/\s+/g,' ');
-  const ans2=correct.toLowerCase().replace(/\s+/g,' ');
-  const ok=val===ans2;
-  done=true;ans.push(ok);
+  const ok=val===correct.toLowerCase().replace(/\s+/g,' ');
+  isDone=true;ans.push(ok);if(!ok)markWrong(qs[cq].word);
   inp.classList.add(ok?'ok':'no');inp.disabled=true;
   const fb=document.getElementById('fb');
-  if(fb)fb.innerHTML=ok?`<span class="ok">✓ 정답입니다!</span>`:`<span class="no">✗ 정답: <strong>${correct}</strong></span>`;
-  fb.className='fb'+(ok?' ok':' no');
+  if(fb){fb.innerHTML=ok?`<span class="ok">✓ 정답입니다!</span>`:`<span class="no">✗ 정답: <strong>${correct}</strong></span>`;fb.className='fb'+(ok?' ok':' no');}
   document.getElementById('nextBtn').style.display='inline-block';
   document.getElementById('skipBtn').disabled=true;
 }
+function skipQ(){markWrong(qs[cq].word);ans.push(false);nextQ();}
+function nextQ(){cq++;isDone=false;render();}
 
-function skipQ(){ans.push(false);nextQ();}
-function nextQ(){cq++;done=false;render();}
-
-qs=buildQs(0);
+qs=buildQs(SETS[0]);
 render();
 </script>
 </body>
