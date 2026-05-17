@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced English 단어 퀴즈</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;background:#f5f5f0;min-height:100vh;padding:1.5rem 1rem}
+.wrap{max-width:680px;margin:0 auto}
+.top{margin-bottom:1.5rem}
+.top h1{font-size:22px;font-weight:600;color:#111;margin-bottom:4px}
+.top p{font-size:13px;color:#666}
+.set-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+.set-btn{padding:6px 13px;font-size:13px;border:1px solid #ddd;border-radius:8px;cursor:pointer;background:#fff;color:#333;transition:all .15s}
+.set-btn:hover{background:#eee}
+.set-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff;font-weight:600}
+.prog-wrap{margin-bottom:1.25rem}
+.prog-meta{display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:5px}
+.prog-track{height:5px;background:#e0e0e0;border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:#1D9E75;border-radius:99px;transition:width .3s}
+.card{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;margin-bottom:10px}
+.ba{background:#EBF4FD;color:#1565C0}
+.bb{background:#E8F5E9;color:#2E7D32}
+.bc{background:#FFF8E1;color:#E65100}
+.qword{font-size:20px;font-weight:600;color:#111;margin-bottom:4px;line-height:1.35}
+.qsub{font-size:13px;color:#888;margin-bottom:1.25rem}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:420px){.opts{grid-template-columns:1fr}}
+.opt{padding:11px 14px;font-size:14px;border:1px solid #ddd;border-radius:9px;cursor:pointer;background:#fff;color:#222;text-align:left;line-height:1.4;transition:all .15s}
+.opt:hover:not(.dis){background:#f5f5f5}
+.opt.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;font-weight:500}
+.opt.no{background:#FFEBEE;border-color:#C62828;color:#B71C1C}
+.opt.show{background:#E3F2FD;border-color:#1565C0;color:#0D47A1;font-weight:500}
+.opt.dis{pointer-events:none}
+.fill-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fill-inp{flex:1;min-width:170px;padding:10px 13px;font-size:15px;border:1px solid #ddd;border-radius:9px;outline:none;transition:border .15s}
+.fill-inp:focus{border-color:#1D9E75}
+.fill-inp.ok{border-color:#2E7D32;background:#E8F5E9;color:#1B5E20}
+.fill-inp.no{border-color:#C62828;background:#FFEBEE;color:#B71C1C}
+.sub-btn{padding:10px 18px;font-size:14px;border:1px solid #ccc;border-radius:9px;cursor:pointer;background:#fff;color:#333;transition:all .15s;white-space:nowrap}
+.sub-btn:hover{background:#eee}
+.fb{margin-top:8px;font-size:13px}
+.fb.ok{color:#2E7D32}
+.fb.no{color:#C62828}
+.hint{font-size:12px;color:#aaa;margin-top:6px}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem}
+.nav-btn{padding:9px 20px;font-size:14px;border:1px solid #ccc;border-radius:9px;cursor:pointer;background:#fff;color:#333;transition:all .15s}
+.nav-btn:hover{background:#eee}
+.nav-btn:disabled{opacity:.4;cursor:default}
+.next-btn{background:#1D9E75;border-color:#1D9E75;color:#fff;display:none}
+.next-btn:hover{background:#0F6E56}
+.score-wrap{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:2.5rem 1.5rem;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.score-pct{font-size:56px;font-weight:700;color:#1D9E75;line-height:1}
+.score-unit{font-size:26px}
+.score-sub{font-size:15px;color:#444;margin-top:6px;font-weight:500}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1.5rem 0}
+.s-box{background:#f7f7f5;border-radius:9px;padding:.9rem}
+.s-n{font-size:24px;font-weight:600}
+.s-l{font-size:12px;color:#888;margin-top:3px}
+.score-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>📚 단어 퀴즈</h1>
+    <p>Advanced English Reading II — 4강·5강·6강 + 수능연계</p>
+  </div>
+  <div class="set-row" id="setSel"></div>
+  <div id="quizArea"></div>
+</div>
+<script>
+const W=[
+{w:"probabilistic",m:"확률론적인"},{w:"typical",m:"전형적인"},{w:"exemplar",m:"전형적인 예, 전형"},{w:"category",m:"범주"},{w:"recognize",m:"인식하다"},{w:"feature",m:"특징"},{w:"exceptional",m:"예외적인, 특별한"},{w:"atypical",m:"비전형적인, 전형적이지 않은"},{w:"assume",m:"가정하다, 추정하다"},{w:"misclassify",m:"잘못 분류하다"},{w:"readily",m:"쉽게"},{w:"correspond to",m:"~에 일치하다, 부합하다"},{w:"fear",m:"두려워하다"},{w:"notion",m:"개념"},{w:"empathy",m:"공감"},{w:"authenticity",m:"진정성"},{w:"premise",m:"전제"},{w:"organizational",m:"조직의"},{w:"in its own right",m:"그 자체로"},{w:"in this regard",m:"이러한 점에서"},{w:"consistent",m:"일치하는, 일관된"},{w:"character",m:"인격"},{w:"underscore",m:"강조하다"},{w:"virtue",m:"미덕"},{w:"stakeholder",m:"이해관계자"},{w:"perspective",m:"관점"},{w:"genuineness",m:"진실성, 진정성"},{w:"guidepost",m:"지침, 이정표"},{w:"conduct",m:"행동"},{w:"be derived from",m:"~에서 비롯되다"},{w:"strategic",m:"전략적인"},{w:"integrity",m:"진실성, 온전함"},{w:"defining",m:"결정적인"},{w:"frame",m:"규정하다, 제시하다"},{w:"construct",m:"구성하다"},{w:"collective",m:"공동체, 집단"},{w:"abstract",m:"추상적인"},{w:"represent",m:"나타내다"},{w:"craft",m:"공들여 만들다"},{w:"associate",m:"관련지어 생각하다, 연상하다"},{w:"presence",m:"존재"},{w:"imply",m:"의미하다, 암시하다"},{w:"parallel",m:"동시에 일어나는, 유사한"},{w:"context",m:"맥락"},{w:"pioneering",m:"선구적인"},{w:"grief",m:"비탄"},{w:"plant-based diet",m:"식물성 식단"},{w:"zero-waste",m:"제로 웨이스트"},{w:"surround",m:"둘러싸다"},{w:"drastic",m:"급진적인"},{w:"follow suit",m:"다른 사람이 하는 것을 따라 하다"},{w:"inadequate",m:"불충분한"},{w:"intake",m:"섭취"},{w:"vegan",m:"비건"},{w:"count",m:"중요하다"},{w:"income",m:"소득"},{w:"quantity demanded",m:"수요량"},{w:"marginal utility",m:"한계 효용"},{w:"consumer",m:"소비자"},{w:"play out",m:"발생하다, 일어나다"},{w:"expansion",m:"확대, 확장"},{w:"resist",m:"저항하다, 참다"},{w:"ethical",m:"윤리적인"},{w:"repair",m:"수선하다, 수리하다"},{w:"critically",m:"비판적으로"},{w:"distribution",m:"유통, 분배"},{w:"activism",m:"행동주의"},{w:"intimate",m:"밀접한, 친밀한"},{w:"industrialization",m:"산업화"},{w:"dynamic",m:"역학 관계"},{w:"detached",m:"분리된, 떨어져 있는"},{w:"can afford",m:"살 여유가 있다"},{w:"possession",m:"소유물"},{w:"philosopher",m:"철학자"},{w:"propose",m:"의견을 제시하다, 제안하다"},{w:"characterized by",m:"이라는 특징을 가진"},{w:"intention",m:"의도, 목적"},{w:"redirection",m:"방향 전환"},{w:"contemplative",m:"관조적인, 사색하는"},{w:"ideal",m:"이상"},{w:"investigation",m:"탐구, 연구"},{w:"for one's own sake",m:"자신을 위해"},{w:"infancy",m:"유아기"},{w:"adulthood",m:"성인기"},{w:"chronic",m:"만성적인"},{w:"bedridden",m:"병상에 누워 지내는"},{w:"end-of-life treatment",m:"연명 치료, 임종 치료"},{w:"illustrious",m:"저명한, 걸출한"},{w:"repertoire",m:"목록"},{w:"species",m:"종"},{w:"captive",m:"사육되는, 사로잡힌"},{w:"not necessarily",m:"반드시 ~은 아닌"},{w:"obvious",m:"분명한, 명백한"},{w:"candidate",m:"후보"},{w:"domestic",m:"가정의, 사육용의"},{w:"highlight",m:"강조하다"},{w:"breed",m:"품종"},{w:"plausible",m:"그럴듯한"},{w:"hypothesis",m:"가설"},{w:"investigate",m:"연구하다, 조사하다"},{w:"inevitably",m:"필연적으로"},{w:"electoral",m:"선거의"},{w:"range",m:"범위"},{w:"variation",m:"차이, 변화"},{w:"analyst",m:"분석가"},{w:"acceptable",m:"받아들일만한, 만족스러운"},{w:"classification",m:"분류"},{w:"distinguish",m:"구별하다"},{w:"proportional",m:"비례적인"},{w:"essence",m:"본질"},{w:"ensure",m:"보장하다, 확인하다"},{w:"party",m:"정당"},{w:"majority",m:"다수"},{w:"prospect",m:"가능성, 가망"},{w:"define",m:"정의하다"},{w:"absolute",m:"절대적인"},{w:"pitch",m:"음높이"},{w:"successive",m:"연속적인"},{w:"float",m:"떠다니다"},{w:"instrumentation",m:"악기 구성"},{w:"cognitive",m:"인지적인"},{w:"psychologist",m:"심리학자"},{w:"identity",m:"정체성"},{w:"transformation",m:"변형, 변화"},{w:"accustomed",m:"익숙한"},{w:"identify",m:"인식하다, 알아보다"},{w:"incorporate",m:"포함하다"},{w:"expertise",m:"전문 지식"},{w:"thread",m:"스레드"},{w:"contribution",m:"기여, 이바지"},{w:"ongoing",m:"진행 중인"},{w:"mainstream",m:"주류의"},{w:"millennium",m:"천년"},{w:"cognition",m:"인지"},{w:"consciousness",m:"의식"},{w:"emphasis",m:"중점, 강조"},{w:"obtain",m:"얻다"},{w:"sophisticated",m:"정교한"},{w:"previously",m:"이전에"},{w:"primate",m:"영장류"},{w:"comprehension",m:"이해"},{w:"echolocation",m:"반향 정위"},{w:"vocal",m:"음성의"},{w:"dialect",m:"방언"},{w:"distinct",m:"고유한"},{w:"pass down",m:"~을 전승하다"},{w:"bottlenose dolphin",m:"큰돌고래"},{w:"ecological",m:"생태계의"},{w:"affordable",m:"적당한 가격의"},{w:"resolve",m:"해결하다"},{w:"ecocrisis",m:"생태 위기"},{w:"compensate for",m:"~을 보상하다, 벌충하다"},{w:"urgent",m:"시급한, 긴급한"},{w:"desperate",m:"필사적인, 절망적인"},{w:"denial",m:"부인, 부정"},{w:"legislation",m:"법률, 입법"},{w:"regulate",m:"규제하다"},{w:"cruelty",m:"잔혹 행위"},{w:"adequate",m:"적절한"},{w:"promotion",m:"증진"},{w:"insufficient",m:"충분하지 못한"},{w:"advocate",m:"옹호자"},{w:"maintain",m:"주장하다"},{w:"excess",m:"잔혹 행위, 지나친 행위"},{w:"fundamental",m:"근본적인"},{w:"inhumanely",m:"비인도적으로"},{w:"consistently",m:"일관되게, 지속적으로"},{w:"essential",m:"필수적인"},{w:"bond",m:"유대감"},{w:"engagement",m:"참여"},{w:"interpersonal",m:"대인 관계의"},{w:"approval",m:"인정, 승인"},{w:"formative",m:"형성하는"},{w:"secure",m:"확보하다"},{w:"persist",m:"지속되다"},{w:"excessive",m:"지나친, 과도한"},{w:"independence",m:"독립성"},{w:"effectiveness",m:"효능감"},{w:"constant",m:"끊임없는"},{w:"withdraw",m:"철회하다"},{w:"unworthy",m:"무가치한"},{w:"extensive",m:"광범위한"},{w:"academic",m:"학문적인"},{w:"accomplish",m:"달성하다"},{w:"attainment",m:"도달, 달성"},{w:"centrality",m:"중심적 역할"},{w:"domain",m:"영역"},{w:"fascinate",m:"매료시키다"},{w:"scholar",m:"학자"},{w:"discipline",m:"학문의 분야"},{w:"accelerate",m:"가속화하다"},{w:"athlete",m:"운동선수"},{w:"self-talk",m:"자기 대화"},{w:"conclusion",m:"결론"},{w:"pursuit",m:"추구"},{w:"momentarily",m:"잠시"},{w:"impulsive",m:"충동적인"},{w:"emotive",m:"감정의"},{w:"instantaneous",m:"즉각적인"},{w:"discern",m:"분간하다"},{w:"outcome",m:"결과"},{w:"maturity",m:"성숙도"},{w:"neural",m:"신경의"},{w:"scattered",m:"드문드문 있는, 산재해 있는"},{w:"stream",m:"물줄기, 개울"},{w:"interpret",m:"해석하다"},{w:"extract",m:"끌어내다, 추출하다"},{w:"survive",m:"생존하다"},{w:"emerging",m:"새로 등장하는"},{w:"visibility",m:"가시성"},{w:"institutional",m:"제도적인"},{w:"distinctive",m:"독특한"},{w:"disrupt",m:"혼란에 빠뜨리다"},{w:"insist",m:"주장하다"},{w:"acknowledge",m:"인정하다"},{w:"viewpoint",m:"관점"},{w:"legitimate",m:"정당한, 합법적인"},{w:"innovator",m:"혁신가"},{w:"guideline",m:"지침"},{w:"upright",m:"똑바로 선, 수직의"},{w:"seasonal",m:"계절의"},{w:"fiber",m:"섬유"},{w:"bark",m:"나무껍질"},{w:"horizontal",m:"수평의"},{w:"administrative",m:"관리의, 행정상의"},{w:"efficiency",m:"효율성"},{w:"sphere",m:"영역"},{w:"complexity",m:"복잡성"},{w:"critique",m:"비판적 분석"},{w:"inhabit",m:"거주하다"},{w:"barrier",m:"장벽"},{w:"translation",m:"번역"},{w:"multilingual",m:"여러 언어를 사용하는"},{w:"colleague",m:"동료"},{w:"authoritative",m:"권위 있는"},{w:"reputation",m:"평판, 명성"},{w:"accuracy",m:"정확성"},{w:"enculturation",m:"문화 적응, 문화화"},{w:"spontaneously",m:"자발적으로"},{w:"accessible",m:"이용 가능한"},{w:"supplier",m:"공급국, 공급자"},{w:"backfire",m:"역효과를 낳다"},{w:"generate",m:"만들어 내다"},{w:"invasion",m:"침공"},{w:"oppose",m:"반대하다"},{w:"export",m:"수출하다"},{w:"wholesaler",m:"도매상, 도매업자"},{w:"retailer",m:"소매상, 소매업자"},{w:"reasonable",m:"타당한"},{w:"manufacturer",m:"제조업체, 제조업자"},{w:"in bulk",m:"대량으로"},{w:"transport",m:"운송하다"},{w:"gain access to",m:"~을 입수하다, 접근하다"},{w:"logically",m:"논리적으로"},{w:"categorize",m:"분류하다"},{w:"interaction",m:"상호 작용"},{w:"continuously",m:"계속해서"},{w:"external",m:"외부의"},{w:"irrational",m:"비이성적인"},{w:"procedure",m:"절차"},{w:"imitation",m:"모방"},{w:"indicate",m:"보여 주다"},{w:"genetically",m:"유전적으로"},{w:"coordination",m:"조정"},{w:"facilitation",m:"촉진"},{w:"sufficient",m:"충분한"},{w:"adaptive",m:"적응성이 있는"},{w:"acquisition",m:"습득"},{w:"reproduction",m:"번식"},{w:"engage in",m:"~을 하다"},{w:"variant",m:"변형, 변종"},{w:"adopt",m:"채택하다, 쓰다"},{w:"delight",m:"기쁨, 기쁘게 하다"},{w:"permanently",m:"영구적으로"},{w:"indefinitely",m:"무한히"},{w:"assimilate",m:"동화하다"},{w:"performance",m:"운영, 실행"},{w:"responsiveness",m:"반응성"},{w:"duplicate",m:"모방하다"},{w:"counterexample",m:"반례"},{w:"instance",m:"사례"},{w:"exclude",m:"제외하다"},{w:"institution",m:"기관"},{w:"depict",m:"묘사하다"},{w:"stereotype",m:"정형화된"},{w:"elaborate",m:"정교한, 복잡한"},{w:"flexibility",m:"유연성"},{w:"spatial",m:"공간의"},{w:"exclusive",m:"전용의, 독점적인"},{w:"representation",m:"표상, 개념 작용"},{w:"episodic",m:"에피소드의, 단편적인"},{w:"explicit memory",m:"명시적 기억"},{w:"verbally",m:"언어로, 구두로"},{w:"communicate",m:"전하다, 알리다"},{w:"markedly",m:"현저하게"},{w:"substantial",m:"상당한"},{w:"incidentally",m:"덧붙여 말하자면"},{w:"spectator",m:"관중"},{w:"coverage",m:"중계, 보도"},{w:"comfort",m:"안락함, 편안"},{w:"quantity",m:"양"},{w:"portion",m:"1인분"},{w:"dense",m:"밀도가 높은"},{w:"commercial",m:"상업적인"},{w:"yield",m:"가져오다, 산출하다"},{w:"proficient",m:"능숙한, 숙달한"},{w:"execution",m:"실행, 수행"},{w:"commit to",m:"~에 전념하다"},{w:"hinder",m:"방해하다"},{w:"differ",m:"상이하다, 다르다"},{w:"vary",m:"다양하다, 각기 다르다"},{w:"time-constrained",m:"시간의 제약을 받는"},{w:"minority",m:"소수 집단"},{w:"in-group",m:"내집단"},{w:"remote",m:"먼, 외진"},{w:"removed",m:"동떨어진"},{w:"induce",m:"유도하다"},{w:"discomfort",m:"불편함"},{w:"property",m:"속성, 특성"},{w:"backrest",m:"등받이"},{w:"fulfill",m:"달성하다, 충족시키다"},{w:"functional",m:"기능적인"},{w:"challenge",m:"이의를 제기하다, 도전하다"},{w:"legacy",m:"유산"},{w:"endeavor",m:"노력"},{w:"monetary",m:"금전적인, 통화의"},{w:"boundary",m:"경계선"},{w:"significance",m:"의의, 의미, 중요성"},{w:"coincidence",m:"우연, 우연의 일치"},{w:"obesity",m:"비만"},{w:"embody",m:"구현하다, 나타내다"},{w:"beneficial",m:"유익한, 이로운"},{w:"caution",m:"조심, 경고하다"},{w:"diagnose",m:"진단하다"},{w:"undergo",m:"거치다, 겪다"},{w:"evaluate",m:"평가하다"},{w:"confirm",m:"확인하다"},{w:"disposition",m:"성질, 성향, 기질"},{w:"aesthetic",m:"미학적인, 미적인"},{w:"conspicuous",m:"눈에 잘 띄는"},{w:"deficit",m:"부족, 결손"},{w:"adherence",m:"지속성, 고수"},{w:"elicit",m:"이끌어 내다"},{w:"trigger",m:"유발하다, 촉발하다"},{w:"deception",m:"속임수"},{w:"modest",m:"대단하지 않은, 겸손한"},{w:"immense",m:"엄청난, 거대한"},{w:"proximity",m:"근접성, 가까움"},{w:"shallow",m:"피상적인, 얕은"},{w:"distract",m:"주의를 산만하게 하다"},{w:"tragedy",m:"비극"},{w:"criterion",m:"기준"},{w:"analogy",m:"유추, 비유, 유사점"},{w:"endure",m:"견디다, 인내하다"},{w:"preference",m:"선호, 선호하는 것"},{w:"prominent",m:"중요한"},{w:"coordinate",m:"조정하다, 조율하다"},{w:"attitude",m:"태도"},{w:"inherent",m:"본질적인, 내재된"},{w:"widespread",m:"널리 퍼진"},{w:"rare",m:"드문, 희귀한"},{w:"crude",m:"조잡한, 대충의"},{w:"portable",m:"휴대용의"},{w:"simplify",m:"단순화하다"},{w:"escalation",m:"고조, 상승, 격화"},{w:"centerpiece",m:"핵심, 중요 요소"},{w:"isolation",m:"격리, 고립"},{w:"obligate",m:"의무를 지우다, 강요하다"},{w:"ascend",m:"올라가다, 오르다"},{w:"nonprofit",m:"비영리적인"},{w:"emission",m:"배출물"},{w:"interference",m:"간섭, 방해"},{w:"gauge",m:"측정하다, 판단하다"},{w:"accurate",m:"정확한"},{w:"temperate",m:"온대의, 온화한"},{w:"pursue",m:"추구하다, 추적하다"},{w:"activate",m:"활성화하다, 작동시키다"},{w:"explicit",m:"명시적인, 뚜렷한"},{w:"exhibition",m:"전시회"},{w:"affirm",m:"확인하다, 단언하다"},{w:"rebellion",m:"반란, 반대, 저항"},{w:"advent",m:"출현, 도래"},{w:"detach",m:"분리하다, 떼어 내다"},{w:"modify",m:"수정하다, 조정하다"},{w:"deficient",m:"부족한, 결핍된"},{w:"transparent",m:"투명한, 명료한"},{w:"strategy",m:"전략"},{w:"differentiate",m:"차별화하다, 구분하다"},{w:"hazardous",m:"위험한, 해로운"}
+];
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+
+const SETS=[];
+const sh=shuffle(W);
+for(let s=0;s<10;s++){
+  const pool=[];
+  for(let i=0;i<30;i++) pool.push(sh[(s*30+i)%sh.length]);
+  SETS.push(pool);
+}
+
+let cs=0,cq=0,ans=[],qs=[],done=false;
+
+function makeOpts(correct,count=4){
+  const others=shuffle(W.filter(w=>w.w!==correct.w)).slice(0,count-1);
+  return shuffle([correct,...others]);
+}
+
+function buildQs(si){
+  return SETS[si].map((word,i)=>{
+    const t=i%3;
+    if(t===0) return{type:'A',word,opts:makeOpts(word,4),answer:word.m};
+    if(t===1){const o=shuffle(W.filter(w=>w.w!==word.w))[0];return{type:'B',word,opts:shuffle([word,o]),answer:word.w,prompt:word.m};}
+    return{type:'C',word,answer:word.w};
+  });
+}
+
+function renderSets(){
+  const el=document.getElementById('setSel');
+  el.innerHTML='';
+  for(let i=0;i<10;i++){
+    const b=document.createElement('button');
+    b.className='set-btn'+(i===cs?' active':'');
+    b.textContent=`${i+1}세트`;
+    b.onclick=()=>{cs=i;cq=0;ans=[];qs=buildQs(i);render()};
+    el.appendChild(b);
+  }
+}
+
+function render(){
+  renderSets();
+  if(cq>=30){renderScore();return;}
+  renderQ();
+}
+
+function renderScore(){
+  const ok=ans.filter(Boolean).length;
+  const pct=Math.round(ok/30*100);
+  document.getElementById('quizArea').innerHTML=`
+  <div class="score-wrap">
+    <p style="font-size:14px;color:#888;margin-bottom:8px">세트 ${cs+1} 완료!</p>
+    <div class="score-pct">${pct}<span class="score-unit">%</span></div>
+    <p class="score-sub">${ok}문제 정답</p>
+    <div class="score-grid">
+      <div class="s-box"><div class="s-n" style="color:#2E7D32">${ok}</div><div class="s-l">정답</div></div>
+      <div class="s-box"><div class="s-n" style="color:#C62828">${30-ok}</div><div class="s-l">오답</div></div>
+      <div class="s-box"><div class="s-n">30</div><div class="s-l">전체</div></div>
+    </div>
+    <div class="score-actions">
+      <button class="nav-btn" onclick="cq=0;ans=[];qs=buildQs(cs);render()">🔄 다시 풀기</button>
+      ${cs<9?`<button class="nav-btn" style="background:#1D9E75;color:#fff;border-color:#1D9E75" onclick="cs++;cq=0;ans=[];qs=buildQs(cs);render()">다음 세트 →</button>`:`<button class="nav-btn" style="background:#1D9E75;color:#fff;border-color:#1D9E75" onclick="cs=0;cq=0;ans=[];qs=buildQs(0);render()">처음부터 다시</button>`}
+    </div>
+  </div>`;
+}
+
+function escape(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+
+function renderQ(){
+  const q=qs[cq];
+  const pct=Math.round(cq/30*100);
+  let h=`<div class="prog-wrap">
+    <div class="prog-meta"><span>문제 ${cq+1} / 30</span><span>✅ ${ans.filter(Boolean).length}개 정답</span></div>
+    <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
+  </div>
+  <div class="card" id="qcard">`;
+
+  if(q.type==='A'){
+    h+=`<span class="badge ba">영→한 선택</span><p class="qword">${q.word.w}</p><p class="qsub">뜻을 고르세요</p><div class="opts" id="opts">`;
+    q.opts.forEach((o,i)=>{ h+=`<button class="opt" id="opt${i}" onclick="ansA(${i},'${escape(o.m)}','${escape(q.answer)}',${q.opts.length})">${o.m}</button>`; });
+    h+=`</div>`;
+  }else if(q.type==='B'){
+    h+=`<span class="badge bb">한→영 선택 (2지선다)</span><p class="qword">${q.prompt}</p><p class="qsub">알맞은 영단어를 고르세요</p><div class="opts" id="opts">`;
+    q.opts.forEach((o,i)=>{ h+=`<button class="opt" id="opt${i}" onclick="ansB(${i},'${escape(o.w)}','${escape(q.answer)}',${q.opts.length})">${o.w}</button>`; });
+    h+=`</div>`;
+  }else{
+    h+=`<span class="badge bc">영단어 직접 입력</span><p class="qword">${q.word.m}</p><p class="qsub">해당하는 영단어를 입력하세요</p>
+    <div class="fill-row">
+      <input type="text" class="fill-inp" id="fillI" placeholder="영단어 입력..." onkeydown="if(event.key==='Enter')ansC('${escape(q.answer)}')">
+      <button class="sub-btn" onclick="ansC('${escape(q.answer)}')">확인</button>
+    </div>
+    <div class="fb" id="fb"></div>
+    <p class="hint">대소문자 구분 없음</p>`;
+  }
+  h+=`</div>
+  <div class="nav">
+    <button class="nav-btn" id="skipBtn" onclick="skipQ()">건너뛰기</button>
+    <button class="nav-btn next-btn" id="nextBtn" onclick="nextQ()">다음 문제 →</button>
+  </div>`;
+  document.getElementById('quizArea').innerHTML=h;
+  done=false;
+  if(q.type==='C') setTimeout(()=>{const el=document.getElementById('fillI');if(el)el.focus();},50);
+}
+
+function ansA(idx,chosen,correct,total){
+  if(done)return;done=true;
+  const ok=chosen===correct;ans.push(ok);
+  for(let i=0;i<total;i++){
+    const b=document.getElementById('opt'+i);if(!b)continue;
+    b.classList.add('dis');
+    if(b.textContent===correct)b.classList.add('show');
+    if(i===idx&&!ok)b.classList.add('no');
+    if(i===idx&&ok)b.classList.add('ok');
+  }
+  document.getElementById('nextBtn').style.display='inline-block';
+  document.getElementById('skipBtn').disabled=true;
+}
+
+function ansB(idx,chosen,correct,total){
+  if(done)return;done=true;
+  const ok=chosen===correct;ans.push(ok);
+  for(let i=0;i<total;i++){
+    const b=document.getElementById('opt'+i);if(!b)continue;
+    b.classList.add('dis');
+    if(b.textContent===correct)b.classList.add('show');
+    if(i===idx&&!ok)b.classList.add('no');
+    if(i===idx&&ok)b.classList.add('ok');
+  }
+  document.getElementById('nextBtn').style.display='inline-block';
+  document.getElementById('skipBtn').disabled=true;
+}
+
+function ansC(correct){
+  if(done)return;
+  const inp=document.getElementById('fillI');if(!inp)return;
+  const val=inp.value.trim().toLowerCase().replace(/\s+/g,' ');
+  const ans2=correct.toLowerCase().replace(/\s+/g,' ');
+  const ok=val===ans2;
+  done=true;ans.push(ok);
+  inp.classList.add(ok?'ok':'no');inp.disabled=true;
+  const fb=document.getElementById('fb');
+  if(fb)fb.innerHTML=ok?`<span class="ok">✓ 정답입니다!</span>`:`<span class="no">✗ 정답: <strong>${correct}</strong></span>`;
+  fb.className='fb'+(ok?' ok':' no');
+  document.getElementById('nextBtn').style.display='inline-block';
+  document.getElementById('skipBtn').disabled=true;
+}
+
+function skipQ(){ans.push(false);nextQ();}
+function nextQ(){cq++;done=false;render();}
+
+qs=buildQs(0);
+render();
+</script>
+</body>
+</html>
