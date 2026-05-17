@@ -164,9 +164,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
     </div>
     <nav class="hdr-nav">
       <button class="nb on" onclick="show('home')">목차</button>
-      <button class="nb" onclick="show('p1')">지문 1 · 어휘</button>
-      <button class="nb" onclick="show('p2')">지문 2 · 무관문장</button>
-      <button class="nb" onclick="show('p3')">지문 3 · 문장삽입</button>
+      <button class="nb" onclick="show('p1')">기출 · 어휘</button>
+      <button class="nb" onclick="show('p2')">지문 1 · 주제</button>
+      <button class="nb" onclick="show('p3')">지문 2 · 무관문장</button>
+      <button class="nb" onclick="show('p4')">지문 3 · 문장삽입</button>
       <button class="nb" onclick="show('voca')">단어장</button>
     </nav>
   </div>
@@ -184,12 +185,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
       <div class="toc-en">Soft-Path River Engineering</div>
       <div class="toc-ko">소프트 패스 강 공학 · 문맥상 맞지 않는 단어 고르기</div>
     </a>
-    <a class="toc-card" onclick="show('p2')">
+    <a class="toc-card" onclick="show('p3')">
       <div class="toc-badge">전체 흐름과 관계없는 문장</div>
       <div class="toc-en">Biopower & Sustainability</div>
       <div class="toc-ko">바이오 동력과 지속 가능성 · 무관한 문장 찾기</div>
     </a>
-    <a class="toc-card" onclick="show('p3')">
+    <a class="toc-card" onclick="show('p4')">
       <div class="toc-badge">문장 삽입</div>
       <div class="toc-en">Elephants as Keystone Species</div>
       <div class="toc-ko">핵심종으로서의 코끼리 · 주어진 문장 위치 찾기</div>
@@ -353,7 +354,112 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
 </div><!-- end p1 -->
 
 <!-- ════════════════════ P2 ════════════════════ -->
+
+<!-- ════ P2 지문1 주제완성 ════ -->
 <div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">Chapter 22 · 지문 1</div>
+    <div class="p-title">Connectivity &amp; Conservation Barriers</div>
+    <div class="p-title-ko">연결성과 보전 장벽 — 인간 개발과 야생동물 이동</div>
+    <span class="p-type-badge">주어진 단어를 이용하여 다음 글의 제목을 완성하시오</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent"><span class="vw">Connectivity<span class="tt">연결성</span></span>, the capacity of a landscape to support movement by any given species across the landscape, is of increasing concern for <span class="vw">conservation<span class="tt">보전, 보존</span></span> biologists.</p>
+      <p class="plain-sent">As the connectivity of a landscape increases from the human perspective (generally through increases in road networks), connectivity decreases for many other species.</p>
+      <p class="plain-sent">Although we may see many species of animals moving across human landscapes (e.g. deer, wolves, and turtles crossing roads or <span class="vw">wander<span class="tt">돌아다니다, 배회하다</span></span>ing through our backyards), landscapes <span class="vw">substantially<span class="tt">상당히, 크게</span></span> altered for human use act as barriers to movement of both animal and plant species.</p>
+      <p class="plain-sent">In some cases, these barriers are incomplete — many turtles die on roads, but some <span class="vw">make it across<span class="tt">건너다, 통과하다</span></span>.</p>
+      <p class="plain-sent">In other cases, passage is essentially impossible — cities along landscape corridors such as river valleys can effectively eliminate genetic exchange between previously connected plant and animal populations; dams can permanently <span class="vw">halt<span class="tt">막다, 중단시키다</span></span> spawning of fish by blocking travel to their <span class="vw">breeding ground<span class="tt">번식지</span></span>s.</p>
+      <p class="plain-sent">Thus, lack of connectivity can decrease the conservation value of remaining habitat below what its mapped area might suggest, increasing the impact of <span class="vw">fragmentation<span class="tt">단편화, 분절화</span></span>.</p>
+      <div class="fn">* corridor: 회랑 지대(주요 도로나 강을 따라 나 있는 좁고 긴 땅) &nbsp;&nbsp;** spawning: 산란</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 문항 — 주어진 단어를 이용하여 다음 글의 제목을 완성하시오</div>
+    <div class="q-block">
+      <div class="q-type">제목 완성 (Title Completion) · keyword: connectivity, barriers, conservation</div>
+      <div class="q-stem">use at least one keyword from the list for the title.<br><br>keyword: <strong>connectivity, barriers, conservation</strong></div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 & 해설</div>
+      <div class="ans-num">정답 (예시): <span class="ans">How Human Development Turns Connectivity into Barriers to Wildlife Conservation</span></div>
+      <div class="ans-exp">
+        <strong>핵심 논리:</strong> 인간 개발 → 인간에게 연결성(connectivity) ↑ / 야생동물에게 장벽(barriers) ↑ → 보전 가치(conservation value) ↓<br><br>
+        <strong>keyword 활용:</strong><br>
+        • <strong>connectivity</strong>: 인간에게 연결성 증가 ↔ 야생동물에게 연결성 감소<br>
+        • <strong>barriers</strong>: 도로·도시·댐이 야생동물 이동의 장벽<br>
+        • <strong>conservation</strong>: 연결성 부재가 보전 가치 감소, 서식지 단편화 심화<br><br>
+        <strong>다른 제목 예시:</strong><br>
+        "Human Connectivity as a Barrier to Wildlife Conservation"<br>
+        "The Paradox of Connectivity: Barriers to Conservation in Human Landscapes"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="vw">Connectivity<span class="tt">연결성</span></span>, <span class="gr">the capacity of a landscape to support movement by any given species across the landscape</span>, / is of increasing concern for <span class="vw">conservation<span class="tt">보전</span></span> biologists.</div>
+        <div class="sp-ko">경관 내 어떤 주어진 종의 이동을 지원하는 경관의 능력인 연결성은 / 보전 생물학자들에게 점점 더 중요한 관심사가 되고 있다. <span class="sp-note">★ 동격 삽입구 / be of concern: "관심사가 되다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As the connectivity of a landscape increases from the human perspective / (generally through increases in road networks), / connectivity decreases for many other species.</div>
+        <div class="sp-ko">경관의 연결성이 인간의 관점에서 증가할수록 / (일반적으로 도로망 증가를 통해), / 많은 다른 종들에게 연결성은 감소한다. <span class="sp-note">★ as ~ increases: "~할수록" (비례 부사절)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Although we may see many species of animals <span class="gr">moving across human landscapes (e.g. deer, wolves, and turtles crossing roads or <span class="vw">wandering<span class="tt">배회하다</span></span> through our backyards)</span>, / landscapes <span class="vw">substantially<span class="tt">상당히</span></span> altered for human use / act as barriers to movement of both animal and plant species.</div>
+        <div class="sp-ko">비록 우리가 많은 동물 종들이 인간 경관을 가로질러 이동하는 것을 볼 수 있지만 / (예: 도로를 건너거나 우리 뒷마당을 돌아다니는 사슴, 늑대, 거북이), / 인간 사용을 위해 상당히 변형된 경관들은 / 동물과 식물 종 모두의 이동에 장벽으로 작용한다. <span class="sp-note">★ Although(양보절) / act as ~: "~로 작용하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In some cases, these barriers are incomplete — many turtles die on roads, but some <span class="vw">make it across<span class="tt">건너다</span></span>. In other cases, passage is essentially impossible — <span class="gr">cities along landscape corridors such as river valleys can effectively eliminate genetic exchange between previously connected plant and animal populations</span>; <span class="gr">dams can permanently <span class="vw">halt<span class="tt">막다</span></span> spawning of fish by blocking travel to their <span class="vw">breeding grounds<span class="tt">번식지</span></span></span>.</div>
+        <div class="sp-ko">어떤 경우에는, 이러한 장벽이 불완전하다 — 많은 거북이가 도로에서 죽지만, 일부는 건넌다. / 다른 경우에는, 통과가 본질적으로 불가능하다 — / 강 계곡과 같은 경관 회랑을 따라 있는 도시들은 이전에 연결된 식물과 동물 개체군 사이의 유전자 교환을 효과적으로 제거할 수 있다; / 댐은 번식지로의 이동을 막아 물고기의 산란을 영구적으로 막을 수 있다. <span class="sp-note">★ 세미콜론(;): 관련된 두 절 연결</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Thus, lack of connectivity can decrease the conservation value of remaining habitat / below <span class="gr">[what its mapped area might suggest]</span>, / <span class="gr">increasing the impact of <span class="vw">fragmentation<span class="tt">단편화</span></span></span>.</div>
+        <div class="sp-ko">따라서, 연결성 부족은 남아있는 서식지의 보전 가치를 / 지도상 면적이 시사할 수 있는 것보다 낮게 감소시킬 수 있고, / 단편화의 영향을 증가시킨다. <span class="sp-note">★ what its mapped area might suggest: 관계대명사 what절 / increasing ~: 결과 분사구문</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 & 문법 포인트</div>
+      <p><strong>① 동격 삽입구 (콤마+명사구)</strong> — "Connectivity, <u>the capacity of a landscape to support movement</u>," → Connectivity의 내용을 바로 뒤에서 설명</p>
+      <p><strong>② as ~ increases (비례 부사절)</strong> — "~할수록 ~하다": "as connectivity increases from the human perspective, connectivity decreases for other species"</p>
+      <p><strong>③ Although (양보절)</strong> — "비록 ~이지만": "Although we may see ~ moving, landscapes act as barriers"</p>
+      <p><strong>④ what its mapped area might suggest (관계대명사 what)</strong> — "지도상 면적이 시사할 수 있는 것": 명사절, below의 목적어</p>
+      <p><strong>⑤ increasing ~ (결과 분사구문)</strong> — "그 결과 ~을 증가시키면서"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; Text Structure</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> The role of <strong>connectivity</strong> in establishing <strong>barriers</strong> to wildlife <strong>conservation</strong> in human-altered landscapes.
+      <div class="topic-ko">인간이 변형한 경관에서 야생동물 보전에 대한 장벽을 형성하는 연결성의 역할.</div>
+    </div>
+    <div class="structure-box" style="margin-top:12px;">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>Definition:</strong> connectivity in conservation biology = landscape capacity to support species movement</div>
+      <div class="s-item"><strong>Paradox:</strong> human connectivity ↑ <span class="s-arrow">vs</span> wildlife connectivity ↓</div>
+      <div class="s-item"><strong>Examples:</strong> human-made <u>barriers</u> to species movement
+        <br><span class="s-arrow">→</span> roads, dams, cities
+      </div>
+      <div class="s-item"><strong>Consequence:</strong> reduced <u>conservation</u> value
+        <br><span class="s-arrow">→</span> lack of connectivity makes habitats <u>less</u> valuable than their mapped area suggests
+        <br><span class="s-arrow">→</span> fragmentation becomes more <u>damaging</u>
+      </div>
+    </div>
+    <div style="background:#fff8f0;border:1px solid rgba(176,90,30,.25);border-radius:8px;padding:14px 18px;margin-top:12px;font-size:.84rem;line-height:1.75;">
+      <h4 style="color:var(--accent2);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;font-weight:700;">Main Idea</h4>
+      As human development <u>enhances</u> connectivity for people, it increasingly acts as a <u>barrier</u> to wildlife movement, ultimately <u>weakening</u> the conservation value of remaining habitats.
+      <div style="margin-top:8px;font-size:.79rem;color:var(--ink3);font-style:italic;">인간 개발이 사람들을 위한 연결성을 향상시킬수록, 그것은 점점 더 야생동물 이동의 장벽으로 작용하여, 궁극적으로 남은 서식지의 보전 가치를 약화시킨다.</div>
+    </div>
+  </div>
+</div><!-- end p2 -->
+
+<div class="sec" id="p3">
   <div class="p-header">
     <div class="p-code">Chapter 22 · 지문 2</div>
     <div class="p-title">Biopower & Sustainability</div>
@@ -478,7 +584,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
 </div><!-- end p2 -->
 
 <!-- ════════════════════ P3 ════════════════════ -->
-<div class="sec" id="p3">
+<div class="sec" id="p4">
   <div class="p-header">
     <div class="p-code">Chapter 22 · 지문 3</div>
     <div class="p-title">Elephants as a Keystone Species</div>
@@ -698,7 +804,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
 </main>
 
 <script>
-const ids=['home','p1','p2','p3','voca'];
+const ids=['home','p1','p2','p3','p4','voca'];
 function show(id){
   ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
   const t=document.getElementById(id);if(t)t.classList.add('on');
