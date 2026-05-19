@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1 (13-14) · 빈칸 내용 추론 | SGHS Critical Reading &amp; Writing</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+
+/* ─── HEADER ─── */
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1100px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.15rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.7rem;opacity:.55;margin-top:2px;}
+.hdr-nav{display:flex;gap:6px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:5px 14px;border-radius:4px;font-size:.72rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+
+/* ─── LAYOUT ─── */
+.wrap{max-width:1100px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── TOC ─── */
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:20px 22px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);}
+.toc-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.65rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.08em;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1.05rem;font-weight:600;margin-bottom:4px;line-height:1.4;}
+.toc-ko{font-size:.8rem;color:var(--ink3);}
+
+/* ─── PASSAGE HEADER ─── */
+.p-header{background:var(--ink);color:#fefcf8;padding:22px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;font-style:italic;}
+.p-type-badge{display:inline-block;margin-top:10px;background:var(--accent2);color:#fff;font-size:.65rem;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.1em;}
+
+/* ─── CARD ─── */
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ─── PLAIN PASSAGE (원문) ─── */
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:24px 28px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.95;color:var(--ink);margin-bottom:2px;}
+.plain-sent+.plain-sent{margin-top:4px;}
+.num-circle{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--ink);font-size:.72rem;font-weight:700;margin:0 3px;vertical-align:middle;font-family:'Noto Sans KR',sans-serif;}
+.bk{display:inline-block;border-bottom:2.5px solid var(--ink);min-width:120px;margin:0 3px;vertical-align:bottom;}
+.fn{font-size:.77rem;color:var(--ink3);margin-top:14px;border-top:1px solid var(--border2);padding-top:10px;font-style:italic;line-height:1.6;}
+
+/* ─── QUESTION ─── */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:14px;}
+.q-type{font-size:.68rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:10px;text-transform:uppercase;}
+.q-stem{font-size:.91rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:14px;}
+.q-fill-para{font-family:'Crimson Pro',serif;font-size:1rem;line-height:1.95;font-style:italic;color:var(--ink);}
+.q-kw{font-size:.9rem;color:var(--ink);line-height:2;}
+.q-ts{font-size:.86rem;color:var(--ink2);line-height:2.1;}
+.q-ts .ts-item{margin-bottom:4px;}
+
+/* ─── ANSWER BOX ─── */
+.ans-box{margin-top:14px;padding:18px 22px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-box+.ans-box{margin-top:10px;}
+.ans-lbl{font-size:.65rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+.ans-num{font-size:1.05rem;font-weight:700;color:var(--orange);margin-bottom:10px;}
+.ans-exp{font-size:.84rem;color:var(--ink2);line-height:1.7;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+
+/* ─── 구문해석 ─── */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;color:var(--ink);}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+
+/* ─── 어휘 툴팁 ─── */
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+.wrong-word{color:var(--red);font-weight:700;text-decoration:line-through;text-decoration-color:var(--red);}
+.right-word{color:var(--orange);font-weight:700;}
+
+/* ─── GRAMMAR NOTE ─── */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;margin-top:10px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;letter-spacing:.06em;margin-bottom:8px;}
+.gr-note p{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:6px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+
+/* ─── TOPIC & FRAMEWORK ─── */
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;border-radius:0 7px 7px 0;margin-bottom:14px;font-size:.9rem;line-height:1.65;}
+.topic-ko{margin-top:8px;font-size:.8rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:8px;font-style:italic;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:9px 15px;text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.06em;margin-bottom:4px;}
+.fw-ko{margin-top:8px;font-size:.79rem;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:8px;}
+
+/* ─── TEXT STRUCTURE BOX ─── */
+.structure-box{background:#f8f4ff;border:1px solid rgba(100,60,180,.2);border-radius:8px;padding:18px 22px;font-size:.84rem;line-height:1.75;}
+.structure-box h4{color:#5a3aaa;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;font-weight:700;}
+.structure-box .s-item{margin-bottom:6px;padding-left:14px;border-left:3px solid #c0a8f0;}
+.structure-box .s-arrow{color:var(--accent2);font-weight:700;margin:0 4px;}
+.main-idea-box{background:#fff8f0;border:1px solid rgba(176,90,30,.25);border-radius:8px;padding:16px 20px;margin-top:14px;font-size:.84rem;line-height:1.75;}
+.main-idea-box h4{color:var(--accent2);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;font-weight:700;}
+
+/* ─── VOCAB TABLE ─── */
+.voca-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.55;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.95rem;}
+.vw-mean{color:var(--ink2);}
+.vw-extra{font-size:.78rem;color:var(--ink3);margin-top:2px;}
+
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card,.passage-box,.plain-box{padding:16px 18px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Ch1 (13–14) · 빈칸 내용 추론</div>
+      <div class="hdr-sub">SGHS Critical Reading &amp; Writing — 본문·Keywords·Text Structure·빈칸 정답·구문분석</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p1')">지문 1 · 내부 감각</button>
+      <button class="nb" onclick="show('p2')">지문 2 · 맥루한</button>
+      <button class="nb" onclick="show('p3')">지문 3 · 솔크 연구소</button>
+      <button class="nb" onclick="show('p4')">지문 4 · 사전 지식</button>
+      <button class="nb" onclick="show('voca')">단어장</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ════════════════════ HOME ════════════════════ -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">Chapter 1 (13–14) — 빈칸 내용 추론</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:24px;">SGHS Critical Reading &amp; Writing · 영어 비평적 읽기와 쓰기 B &nbsp;|&nbsp; 총 4개 지문 + 단어장</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p1')">
+      <div class="toc-badge">빈칸 내용 추론 · 지문 3</div>
+      <div class="toc-en">Interoception &amp; Emotional Empathy</div>
+      <div class="toc-ko">내부 감각 수용과 감정적 공감 · Mirror Neurons 빈칸</div>
+    </a>
+    <a class="toc-card" onclick="show('p2')">
+      <div class="toc-badge">빈칸 내용 추론 · 지문 4</div>
+      <div class="toc-en">McLuhan &amp; the Overextension of Technology</div>
+      <div class="toc-ko">기술의 과도한 확장과 맥루한 · 빈칸 채우기</div>
+    </a>
+    <a class="toc-card" onclick="show('p3')">
+      <div class="toc-badge">빈칸 내용 추론 · 지문 2</div>
+      <div class="toc-en">Scientific Credit &amp; the Salk Institute</div>
+      <div class="toc-ko">과학적 공로 귀속과 솔크 연구소 · consensus / credit / community</div>
+    </a>
+    <a class="toc-card" onclick="show('p4')">
+      <div class="toc-badge">빈칸 내용 추론 · 지문 4</div>
+      <div class="toc-en">Prior Knowledge as the X-Factor</div>
+      <div class="toc-ko">독해의 미지 요인, 사전 지식 · Text Structure 빈칸</div>
+    </a>
+    <a class="toc-card" onclick="show('voca')">
+      <div class="toc-badge">Vocabulary</div>
+      <div class="toc-en">Chapter 1 (13–14) Word List</div>
+      <div class="toc-ko">4개 지문 핵심 단어 &amp; 숙어 정리</div>
+    </a>
+  </div>
+</div>
+
+<!-- ════════════════════ P1 — INTEROCEPTION ════════════════════ -->
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">Chapter 1 (13–14) · 지문 01 · Passage 3</div>
+    <div class="p-title">Interoception &amp; Emotional Empathy</div>
+    <div class="p-title-ko">내부 감각 수용과 감정적 공감 — 신체는 감정의 다리</div>
+    <span class="p-type-badge">빈칸 내용 추론</span>
+  </div>
+
+  <!-- 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Becoming aware of our internal <span class="vw">sensations<span class="tt">감각, 느낌</span></span> can help us handle our own emotions.</p>
+      <p class="plain-sent">Perhaps more surprisingly, the body's <span class="vw">interoceptive<span class="tt">내부 감각 수용의</span></span> <span class="vw">faculty<span class="tt">기능, 능력</span></span> can also bring us into closer contact with other people's emotions.</p>
+      <p class="plain-sent">That's because the brain, on its own, has no direct access to the contents of other people's minds, no way to feel what others are feeling.</p>
+      <p class="plain-sent">Interpreting others' spoken words and facial expressions may <span class="vw">yield<span class="tt">낳다, 산출하다</span></span> only a coolly abstract sense of the emotions that <span class="vw">stir<span class="tt">움직이다, 일어나다</span></span> within.</p>
+      <p class="plain-sent">The body acts as a critical <span class="vw">conduit<span class="tt">전달자, 도관</span></span>, supplying the brain with the <span class="vw">visceral<span class="tt">본능적인, 내장의</span></span> information it lacks.</p>
+      <p class="plain-sent">It does so in this way: When interacting with other people, we subtly and <span class="vw">unconsciously<span class="tt">무의식적으로</span></span> <span class="vw">mimic<span class="tt">모방하다, 흉내 내다</span></span> their facial expressions, gestures, posture, and vocal pitch.</p>
+      <p class="plain-sent">Then, via the interoception of our own bodies' signals, we <span class="vw">perceive<span class="tt">지각하다, 인식하다</span></span> what the other person is feeling because we feel it in ourselves.</p>
+      <p class="plain-sent">We bring other people's feelings onboard, and the body is the bridge.</p>
+      <p class="plain-sent">In an act similar to taking a bite off our partner's plate, or borrowing an earbud to hear the song our friend is listening to, we are <span class="vw">sampling<span class="tt">맛보다, 표본 추출하다</span></span> their emotions.</p>
+      <div class="fn">* interoceptive: 내부 감각 수용의 &nbsp;&nbsp;** conduit: 전달자 &nbsp;&nbsp;*** visceral: 본능적인</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">문항 — Keywords / Text Structure / 빈칸 채우기</div>
+
+    <div class="q-block">
+      <div class="q-type">★ Keywords (첫 글자 힌트)</div>
+      <div class="q-kw">
+        * Keywords : <span class="bk" style="min-width:130px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:6px;">(i)</span>, &nbsp;emotions, &nbsp;brain, &nbsp;body, &nbsp;<span class="bk" style="min-width:100px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:6px;">(m)</span>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Text Structure</div>
+      <div class="q-ts">
+        <div class="ts-item">1) <strong>Introduction</strong> (sent. 1~2) : the role and importance of the body's interoceptive <span class="bk" style="min-width:70px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(f)</span></div>
+        <div class="ts-item">2) <strong>Development 1</strong> (sent. 3~5) : the brain's <span class="bk" style="min-width:30px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(n)</span> direct access and the body as a critical <span class="bk" style="min-width:90px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(c)</span></div>
+        <div class="ts-item">3) <strong>Development 2</strong> (sent. 6~7) : the mechanism of perceiving other people's feelings through interoception of our own bodies' signals</div>
+        <div class="ts-item">4) <strong>Conclusion</strong> (sent. 8~9) : <span class="bk" style="min-width:100px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(s)</span> other people's emotions and the body as the <span class="bk" style="min-width:80px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(b)</span></div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">Q. Fill-in-the-blank (보충 지문)</div>
+      <div class="q-fill-para">
+        &nbsp;&nbsp;<em>Mirror neurons</em> are brain cells that "mirror" other people's actions in our own brain when we see them. This mirrored activity helps us understand what others are doing and feeling. Because of this, they play an important role in <span class="bk" style="min-width:90px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(e)</span>.
+      </div>
+    </div>
+  </div>
+
+  <!-- 정답 & 해설 -->
+  <div class="card">
+    <div class="card-lbl">정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">Keywords 정답</div>
+      <div class="ans-exp">
+        <strong>i</strong> = <span class="ans">interoception</span> (내부 감각 수용) — 지문 전체 핵심 개념. 신체 내부 신호를 감지하는 기능<br>
+        <strong>m</strong> = <span class="ans">mimicry / mimic</span> (모방) — 타인의 표정·자세·음조를 무의식적으로 모방하는 핵심 메커니즘
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Text Structure 정답</div>
+      <div class="ans-exp">
+        <strong>1) f</strong> = <span class="ans">faculty</span> (기능, 능력) — "the body's interoceptive faculty"<br>
+        <strong>2) n</strong> = <span class="ans">no</span> (없는) — "the brain's <em>no</em> direct access" → 뇌는 직접 접근 불가<br>
+        <strong>2) c</strong> = <span class="ans">conduit</span> (전달자) — 신체가 뇌에 본능적 정보를 공급하는 전달자<br>
+        <strong>4) s</strong> = <span class="ans">sampling</span> (맛보기, 표본 추출) — "we are <em>sampling</em> their emotions"<br>
+        <strong>4) b</strong> = <span class="ans">bridge</span> (다리) — "the body is the <em>bridge</em>" — 신체가 감정의 다리
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Fill-in 정답</div>
+      <div class="ans-exp">
+        <strong>e</strong> = <span class="ans">empathy</span> (공감) — 미러 뉴런은 타인의 행동을 뇌에서 반영함으로써 공감 능력의 토대가 된다. 본문의 핵심 결론 "we perceive what the other person is feeling because we feel it in ourselves"와 연결.
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Becoming aware of our internal <span class="vw">sensations<span class="tt">감각</span></span> // <span class="gr">can help us handle</span> our own emotions.</div>
+        <div class="sp-ko">우리의 내적 감각을 인식하는 것은 / 우리 자신의 감정을 다스리는 데 도움이 될 수 있다. <span class="sp-note">★ 동명사 주어 Becoming ~ / help + 목적어 + 원형부정사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Perhaps more surprisingly, the body's <span class="vw">interoceptive<span class="tt">내부 감각 수용의</span></span> <span class="vw">faculty<span class="tt">기능</span></span> can also <span class="gr">bring us into closer contact</span> with other people's emotions.</div>
+        <div class="sp-ko">아마도 더 놀랍게도, / 신체의 내부 감각 수용 기능은 / 우리를 다른 사람들의 감정과 더 가깝게 접촉하게 할 수도 있다. <span class="sp-note">★ bring A into contact with B: A를 B와 접촉하게 하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">That's because the brain, on its own, has <span class="gr">no direct access to the contents of other people's minds</span>, no way to feel <span class="gr">what others are feeling</span>.</div>
+        <div class="sp-ko">그것은 뇌가 스스로는 / 다른 사람들의 마음 내용에 직접 접근할 수 없고, / 다른 사람들이 느끼는 것을 느낄 방법이 없기 때문이다. <span class="sp-note">★ what others are feeling: 관계대명사 what절(명사절) / no access, no way: 병렬 부정</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Interpreting others' spoken words and facial expressions</span> may <span class="vw">yield<span class="tt">낳다</span></span> only a coolly abstract sense of the emotions <span class="gr">{that stir within}</span>.</div>
+        <div class="sp-ko">다른 사람들의 말과 표정을 해석하는 것은 / 내면에서 움직이는 감정의 냉담하게 추상적인 감각만을 낳을 수도 있다. <span class="sp-note">★ 동명사 주어 Interpreting ~ / that stir within: 관계절 (emotions 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The body acts as a critical <span class="vw">conduit<span class="tt">전달자</span></span>, // <span class="gr">supplying the brain with the visceral information {it lacks}</span>.</div>
+        <div class="sp-ko">신체는 핵심적인 전달자 역할을 하며, / 뇌에 그것이 부족한 본능적인 정보를 공급한다. <span class="sp-note">★ supplying: 분사구문(동시 동작) / supply A with B: A에게 B를 공급하다 / it lacks: 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It does so in this way: When interacting with other people, we subtly and <span class="vw">unconsciously<span class="tt">무의식적으로</span></span> <span class="vw">mimic<span class="tt">모방하다</span></span> their facial expressions, gestures, posture, and vocal pitch.</div>
+        <div class="sp-ko">신체는 이런 방식으로 그렇게 한다: 다른 사람들과 상호작용할 때, / 우리는 미묘하게 그리고 무의식적으로 / 그들의 표정, 몸짓, 자세, 그리고 목소리 높낮이를 모방한다. <span class="sp-note">★ When interacting: 분사구문(시간) = When we interact~</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Then, via the interoception of our own bodies' signals, we <span class="vw">perceive<span class="tt">지각하다</span></span> <span class="gr">what the other person is feeling</span> // because we feel it in ourselves.</div>
+        <div class="sp-ko">그러면, 우리 자신의 신체 신호의 내부 감각 수용을 통해, / 우리는 상대방이 느끼는 것을 지각한다 / 우리 스스로가 그것을 느끼기 때문에. <span class="sp-note">★ what ~ is feeling: 관계대명사 what절(명사절, perceive의 목적어)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">We bring other people's feelings <span class="gr">onboard</span>, and the body is the <strong>bridge</strong>.</div>
+        <div class="sp-ko">우리는 다른 사람들의 감정을 받아들이고, / 신체가 그 다리이다. <span class="sp-note">★ bring onboard: 받아들이다, 합류시키다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In an act similar to <span class="gr">taking a bite off our partner's plate</span>, or <span class="gr">borrowing an earbud</span> to hear the song our friend is listening to, we are <span class="vw">sampling<span class="tt">맛보다</span></span> their emotions.</div>
+        <div class="sp-ko">우리 파트너의 접시에서 한 입 먹거나, / 친구가 듣고 있는 노래를 듣기 위해 이어버드를 빌리는 것과 유사한 행위로, / 우리는 그들의 감정을 맛보고 있는 것이다. <span class="sp-note">★ similar to -ing / the song our friend is listening to: 관계절(목적격 관계대명사 생략)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 &amp; 문법 포인트</div>
+      <p><strong>① 동명사 주어</strong> — Becoming aware of ~, Interpreting ~ : 동명사구가 주어로 사용</p>
+      <p><strong>② help + O + 원형</strong> — "can help us <u>handle</u>" : help는 목적격보어로 원형부정사 사용</p>
+      <p><strong>③ bring A into contact with B</strong> — "bring us into <u>closer</u> contact with other people's emotions"</p>
+      <p><strong>④ 관계대명사 what절 (명사절)</strong> — "what others are feeling" / "what the other person is feeling" : perceive의 목적어</p>
+      <p><strong>⑤ supply A with B (분사구문)</strong> — "supplying the brain with the visceral information it lacks" : 동시 동작의 분사구문</p>
+    </div>
+  </div>
+
+  <!-- Topic & Text Structure -->
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; Text Structure</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> The role of interoceptive body signals in the brain's perception of emotions through mimic of others
+      <div class="topic-ko">타인의 모방을 통한 감정 지각에서 내부 감각 신호의 역할</div>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>Introduction (sent. 1~2):</strong> 신체의 내부 감각 수용 기능의 역할 소개<br><span class="s-arrow">→</span> 자신의 감정 조절 + 타인의 감정과의 접촉</div>
+      <div class="s-item"><strong>Development 1 (sent. 3~5):</strong> 뇌의 한계 → 신체의 역할<br><span class="s-arrow">→</span> 뇌는 타인 마음에 직접 접근 불가 / 신체가 conduit로서 본능적 정보 공급</div>
+      <div class="s-item"><strong>Development 2 (sent. 6~7):</strong> 구체적 메커니즘<br><span class="s-arrow">→</span> 무의식적 mimic(표정·몸짓·음조) → 내부 감각 수용 → 타인 감정 지각</div>
+      <div class="s-item"><strong>Conclusion (sent. 8~9):</strong> 신체 = 감정의 다리<br><span class="s-arrow">→</span> 타인의 감정을 <u>sampling</u>하는 행위 / 신체가 그 <u>bridge</u></div>
+    </div>
+    <div class="main-idea-box">
+      <h4>Main Idea</h4>
+      The body serves as a <u>bridge</u> for emotional empathy: by unconsciously <u>mimicking</u> others' expressions, we perceive their emotions through our own interoceptive signals — we are literally <u>sampling</u> their feelings.
+      <div style="margin-top:8px;font-size:.8rem;color:var(--ink3);font-style:italic;">신체는 감정적 공감의 다리 역할을 한다: 타인의 표정을 무의식적으로 모방함으로써, 우리는 자신의 내부 감각 신호를 통해 그들의 감정을 지각한다 — 우리는 문자 그대로 그들의 감정을 맛보고 있는 것이다.</div>
+    </div>
+  </div>
+
+  <!-- Logical Framework -->
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span><br>Body's Interoceptive Faculty</td>
+          <td>내적 감각 인식 → 자신의 감정 조절<br>+ 더 놀랍게: 타인의 감정과도 접촉 가능</td>
+          <td class="fw-ko">신체의 내부 감각 수용 기능이 자신과 타인의 감정 모두와 연결됨을 소개한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Brain's Limit</span><br>No Direct Access</td>
+          <td>뇌 단독: 타인 마음 내용 직접 접근 ✗<br>말·표정 해석 → 추상적 감각만 얻음<br>→ 신체 필요: conduit로서 본능적 정보 공급</td>
+          <td class="fw-ko">뇌의 한계를 제시하여 신체의 필요성을 논리적으로 도출한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Mechanism</span><br>Mimicry → Interoception</td>
+          <td>무의식적 mimic(표정·자세·음조) →<br>자신의 내부 감각 수용 →<br>상대방 감정 지각 (우리 몸에서 느끼기 때문)</td>
+          <td class="fw-ko">감정 공감의 구체적 신체 메커니즘(모방 → 내부 감각)을 설명한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span><br>Body = Bridge</td>
+          <td>신체 = 감정의 다리<br>타인의 감정을 <em>sampling</em>하는 행위<br>(파트너 접시 한 입 / 이어버드 비유)</td>
+          <td class="fw-ko">일상적 비유로 결론을 강화: 신체가 타인 감정을 맛보는(sampling) 다리임을 확인한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p1 -->
+
+<!-- ════════════════════ P2 — MCLUHAN ════════════════════ -->
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">Chapter 1 (13–14) · 지문 02 · Passage 4</div>
+    <div class="p-title">McLuhan &amp; the Overextension of Technology</div>
+    <div class="p-title-ko">기술의 과도한 확장과 맥루한 — 모든 확장은 잘라내기</div>
+    <span class="p-type-badge">빈칸 내용 추론</span>
+  </div>
+
+  <!-- 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">The strongest criticisms of the <span class="vw">overextension<span class="tt">과도한 확장</span></span> of technology involve claims of <span class="vw">dehumanization<span class="tt">비인간화</span></span>, and these arguments are not new.</p>
+      <p class="plain-sent">Canadian philosopher of the electronic age, Marshall McLuhan was primarily a <span class="vw">techno-utopian<span class="tt">기술 낙관론자</span></span>, but he was also a critical thinker, who <span class="vw">cautioned<span class="tt">경고하다</span></span> decades ago against too much human extension into technology.</p>
+      <p class="plain-sent">McLuhan famously claimed that every media extension of man is an <span class="vw">amputation<span class="tt">잘라내기, 절단</span></span>.</p>
+      <p class="plain-sent">For example, once we have a car, we don't walk to the shops any more; once we have a computer hard-drive, we don't have to remember things; and now that we have personal GPS (Global Positioning System) on our cell phones, no one can find their way about without it.</p>
+      <p class="plain-sent">Based on McLuhan's philosophy, we are becoming <span class="vw">post-literate<span class="tt">탈문해화의</span></span> because we rely on screens full of pictures, rather than print media, such as books.</p>
+      <p class="plain-sent">It is thus possible that extensions of human <span class="vw">faculties<span class="tt">기능들, 능력들</span></span>, through techno- and <span class="vw">bio-enhancement<span class="tt">생물학적 향상</span></span>, will bring about <span class="vw">arrested<span class="tt">정지된, 저해된</span></span> development in the natural evolution of higher human faculties.</p>
+      <div class="fn">* techno-utopian: 기술 낙관론자 &nbsp;&nbsp;** amputation: 잘라내기, 절단 &nbsp;&nbsp;*** post-literate: 탈문해화의</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">문항 — Keywords / Text Structure / 빈칸 채우기</div>
+
+    <div class="q-block">
+      <div class="q-type">★ Keywords (첫 글자 힌트)</div>
+      <div class="q-kw">
+        * Keywords : <span class="bk" style="min-width:120px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:6px;">(o)</span> of technology, &nbsp;electronic age, &nbsp;human <span class="bk" style="min-width:90px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:6px;">(f)</span>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Text Structure</div>
+      <div class="q-ts">
+        <div class="ts-item">1) <strong>Introduction</strong> (sent. 1~3) : cautions against too much human extension into technology</div>
+        <div class="ts-item">2) <strong>Development</strong> (sent. 4) : every media extension of man is an <span class="bk" style="min-width:100px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(a)</span></div>
+        <div class="ts-item">3) <strong>Conclusion</strong> (sent. 5~6) : <span class="bk" style="min-width:90px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(a)</span> development in the natural evolution of higher human faculties</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">Q. Fill-in-the-blank (보충 지문 — 빈칸 3개)</div>
+      <div class="q-fill-para">
+        &nbsp;&nbsp;Marshall McLuhan was a Canadian thinker who argued that media do not simply transmit information but actively <span class="bk" style="min-width:90px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(r)</span> human experience. He believed that when humans extend their abilities through technology, they also reorganize how they perceive and interact with the world. A key idea is that every extension of human capacity tends to replace or weaken a <span class="bk" style="min-width:80px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(p)</span> natural skill, which changes everyday behavior in unnoticed ways. For example, modern social media can extend communication across distance, but it may also reduce face-to-face attention and deep listening in conversations. This suggests that technology works like an environment that slowly reshapes <span class="bk" style="min-width:80px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(h)</span> rather than just a tool we use. From this perspective, technological progress is not only about gaining new abilities but also about losing certain older forms of awareness. Overall, McLuhan's view helps explain why human development and technology should be understood as closely connected, sometimes in unexpected and hidden ways.
+      </div>
+    </div>
+  </div>
+
+  <!-- 정답 & 해설 -->
+  <div class="card">
+    <div class="card-lbl">정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">Keywords 정답</div>
+      <div class="ans-exp">
+        <strong>o</strong> = <span class="ans">overextension</span> (과도한 확장) — 지문의 핵심 비판 대상<br>
+        <strong>f</strong> = <span class="ans">faculties</span> (기능들, 능력들) — "extensions of human <em>faculties</em>"
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Text Structure 정답</div>
+      <div class="ans-exp">
+        <strong>2) a</strong> = <span class="ans">amputation</span> (잘라내기, 절단) — "every media extension of man is an <em>amputation</em>"<br>
+        <strong>3) a</strong> = <span class="ans">arrested</span> (저해된, 정지된) — "<em>arrested</em> development in the natural evolution of higher human faculties"
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Fill-in 정답</div>
+      <div class="ans-exp">
+        <strong>r</strong> = <span class="ans">reshape(s)</span> — 미디어는 정보를 전달하는 것이 아니라 인간 경험을 <em>재형성</em>한다<br>
+        <strong>p</strong> = <span class="ans">previously (acquired) / prior</span> — 기술은 이전부터 있던(prior) 자연적 능력을 약화시킨다<br>
+        <strong>h</strong> = <span class="ans">habits</span> (습관) — 기술은 <em>습관</em>을 서서히 재형성하는 환경처럼 작동한다
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The strongest criticisms of the <span class="vw">overextension<span class="tt">과도한 확장</span></span> of technology // involve claims of <span class="vw">dehumanization<span class="tt">비인간화</span></span>, and these arguments are not new.</div>
+        <div class="sp-ko">기술의 과도한 확장에 대한 가장 강력한 비판들은 / 비인간화의 주장을 포함하며, / 이러한 논거들은 새로운 것이 아니다.</div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Canadian philosopher of the electronic age, Marshall McLuhan was primarily a <span class="vw">techno-utopian<span class="tt">기술 낙관론자</span></span>, but he was also a critical thinker, <span class="gr">{who cautioned decades ago against too much human extension into technology}</span>.</div>
+        <div class="sp-ko">전자 시대의 캐나다 철학자인 마샬 맥루한은 주로 기술 낙관론자였지만, / 그는 또한 수십 년 전 기술에 대한 지나친 인간의 확장에 대해 경고한 비판적 사상가이기도 했다. <span class="sp-note">★ who ~ technology: 관계절(McLuhan 부연) / caution against: ~에 대해 경고하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">McLuhan famously <span class="gr">claimed that</span> every media extension of man is an <span class="vw">amputation<span class="tt">잘라내기</span></span>.</div>
+        <div class="sp-ko">맥루한은 모든 인간의 미디어 확장은 잘라내기라고 유명하게 주장했다. <span class="sp-note">★ claim that절: ~라고 주장하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, <span class="gr">once we have</span> a car, we don't walk to the shops any more; <span class="gr">once we have</span> a computer hard-drive, we don't have to remember things; and <span class="gr">now that we have</span> personal GPS on our cell phones, no one can find their way about without it.</div>
+        <div class="sp-ko">예를 들어, 자동차가 생기면 더 이상 걸어서 가게에 가지 않고; / 컴퓨터 하드 드라이브가 생기면 사물을 기억할 필요가 없어지며; / 이제 휴대폰에 개인 GPS가 생기면 누구도 그것 없이 길을 찾을 수 없다. <span class="sp-note">★ once ~: "일단 ~하면" (조건/시간 접속사) / now that ~: "이제 ~이므로" (이유)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Based on McLuhan's philosophy, we are becoming <span class="vw">post-literate<span class="tt">탈문해화의</span></span> // because we rely on screens full of pictures, <span class="gr">rather than print media, such as books</span>.</div>
+        <div class="sp-ko">맥루한의 철학에 따르면, / 우리는 탈문해화되고 있는데, / 책과 같은 인쇄 매체보다 그림으로 가득한 화면에 의존하기 때문이다. <span class="sp-note">★ because절: 이유 / rather than: ~보다는</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">It</span> is thus possible // <span class="gr">that extensions of human <span class="vw">faculties<span class="tt">기능들</span></span>, through techno- and bio-enhancement, will bring about <span class="vw">arrested<span class="tt">저해된</span></span> development in the natural evolution of higher human faculties</span>.</div>
+        <div class="sp-ko">따라서 기술적·생물학적 향상을 통한 인간 기능의 확장이 / 고등 인간 기능의 자연적 진화에서 발달 저해를 초래할 가능성이 있다. <span class="sp-note">★ It(가주어) ~ that절(진주어): "~할 가능성이 있다" / bring about: ~을 초래하다</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 &amp; 문법 포인트</div>
+      <p><strong>① caution against</strong> — "cautioned against too much human extension": ~에 대해 경고하다</p>
+      <p><strong>② claim that절</strong> — "claimed that every media extension ... is an amputation": that이하가 주장의 내용</p>
+      <p><strong>③ once ~ / now that ~</strong> — once: "일단 ~하면" (조건); now that: "이제 ~이므로" (이유)</p>
+      <p><strong>④ It(가주어) ~ that절(진주어)</strong> — "It is possible <u>that</u> extensions ... will bring about arrested development"</p>
+      <p><strong>⑤ bring about</strong> — "초래하다": "will bring about arrested development"</p>
+    </div>
+  </div>
+
+  <!-- Topic & Text Structure -->
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; Text Structure</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Criticism of the overextension of technology in the electronic age and its effects on human faculty
+      <div class="topic-ko">전자 시대의 기술 과도한 확장에 대한 비판과 인간 기능에 미치는 영향</div>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>Introduction (sent. 1~3):</strong> 기술 과도 확장 = 비인간화 비판 소개<br><span class="s-arrow">→</span> McLuhan: 기술로의 지나친 인간 확장에 경고 / "모든 미디어 확장 = amputation"</div>
+      <div class="s-item"><strong>Development (sent. 4):</strong> amputation의 구체적 사례<br><span class="s-arrow">→</span> 자동차 → 걷기 상실 / 하드드라이브 → 기억 상실 / GPS → 길 찾기 상실</div>
+      <div class="s-item"><strong>Conclusion (sent. 5~6):</strong> post-literate → arrested development<br><span class="s-arrow">→</span> 기술·생물학적 향상이 고등 인간 기능의 자연적 진화를 <u>저해</u>할 가능성</div>
+    </div>
+    <div class="main-idea-box">
+      <h4>Main Idea</h4>
+      McLuhan's philosophy shows that technological <u>extension</u> functions as <u>amputation</u>: every gain in technological ability comes at the cost of a natural human <u>faculty</u>, potentially leading to <u>arrested development</u> in human evolution.
+      <div style="margin-top:8px;font-size:.8rem;color:var(--ink3);font-style:italic;">맥루한의 철학은 기술적 확장이 잘라내기로 기능함을 보여준다: 기술 능력의 모든 이득은 자연적 인간 기능의 손실을 대가로 하며, 잠재적으로 인간 진화에서 발달 저해로 이어질 수 있다.</div>
+    </div>
+  </div>
+
+  <!-- Logical Framework -->
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span><br>McLuhan's Warning</td>
+          <td>기술 과도 확장 = 비인간화 비판<br>McLuhan: 기술 낙관론자 + 동시에 비판적 사상가<br>"모든 미디어 확장 = amputation"</td>
+          <td class="fw-ko">맥루한의 경고를 소개하며 논의의 틀을 제시한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Examples</span><br>Amputation in Action</td>
+          <td>자동차 → 걷기 X / 하드드라이브 → 기억 X / GPS → 길 찾기 X<br>기술 확장 = 자연적 능력의 상실</td>
+          <td class="fw-ko">일상적 사례들로 amputation 개념을 구체화한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span><br>Arrested Development</td>
+          <td>post-literate: 그림 화면 의존 → 인쇄 매체 독해 퇴화<br>techno/bio-enhancement → 고등 인간 기능 자연 진화의 arrested development</td>
+          <td class="fw-ko">amputation의 최종 결과로 인간 진화 자체의 저해 가능성을 경고한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p2 -->
+
+<!-- ════════════════════ P3 — SALK INSTITUTE ════════════════════ -->
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">Chapter 1 (13–14) · 지문 03 · Passage 2</div>
+    <div class="p-title">Scientific Credit &amp; the Salk Institute</div>
+    <div class="p-title-ko">과학적 공로 귀속의 어려움 — 솔크 연구소의 인류학적 연구</div>
+    <span class="p-type-badge">빈칸 내용 추론</span>
+  </div>
+
+  <!-- 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">A detailed <span class="vw">anthropological<span class="tt">인류학적인</span></span> study of daily scientific practice in the Salk Institute laboratory in La Jolla, California shows how difficult it is to assign <span class="vw">credit<span class="tt">공로, 인정</span></span> and dates.</p>
+      <p class="plain-sent">Bruno Latour describes how scientists arrived at the <span class="vw">elucidation<span class="tt">규명, 설명</span></span> of TRF (thyrotropin-releasing factor), a hormone that is <span class="vw">secreted<span class="tt">분비되다</span></span> by the brain.</p>
+      <p class="plain-sent">He says that his observations led him to "the <span class="vw">conviction<span class="tt">확신</span></span> that a body of practices widely regarded by outsiders as well organized, logical, and <span class="vw">coherent<span class="tt">일관성 있는</span></span>, in fact consists of a disordered <span class="vw">array<span class="tt">배열</span></span> of observations with which scientists struggle to produce order."</p>
+      <p class="plain-sent">The final <span class="vw">consensus<span class="tt">합의</span></span> <span class="vw">formulation<span class="tt">공식화</span></span> of TRF (i.e., when it became a scientific "fact") emerged some time between January 1968 and January 1970.</p>
+      <p class="plain-sent">Half of the Nobel Prize in Medicine for 1977 for this discovery was shared between the Salk group and another competing group in New Orleans (the other half went to Rosalind Yalow for the techniques she developed that were used in these studies), but each of these two competing groups strongly felt that they deserved sole credit and that the other did not deserve even a share of the award.</p>
+      <div class="fn">* elucidation: 규명, 설명 &nbsp;&nbsp;** secrete: 분비하다 &nbsp;&nbsp;*** array: 배열</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">문항 — Keywords / Text Structure / 빈칸 채우기</div>
+
+    <div class="q-block">
+      <div class="q-type">★ Keywords (첫 글자 힌트)</div>
+      <div class="q-kw">
+        * Keywords : assign, &nbsp;<span class="bk" style="min-width:80px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:6px;">(c)</span>, &nbsp;dates, &nbsp;consensus, &nbsp;deserve
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Text Structure</div>
+      <div class="q-ts">
+        <div class="ts-item">1) <strong>Introduction</strong> (sent. 1) : background of the anthropological study in the Salk Institute laboratory</div>
+        <div class="ts-item">2) <strong>Development</strong> (sent. 2~4) : insight from observation in the anthropological study of scientific practice</div>
+        <div class="ts-item">3) <strong>Conclusion</strong> (sent. 5) : results and conflict in the emergence of scientific consensus and credit assignment</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">Q. Fill-in-the-blank (보충 지문 — 빈칸 3개)</div>
+      <div class="q-fill-para">
+        &nbsp;&nbsp;The key background idea for this passage is that science is not a completely logical and objective process, even though it often appears to be. In reality, scientific research involves interpreting messy data and organizing different observations into meaningful results. For a scientific "fact" to be accepted, there must be <span class="bk" style="min-width:110px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(c)</span> among researchers. It is also often unclear who should receive <span class="bk" style="min-width:80px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(c)</span> for a discovery, since many people contribute to the process. Therefore, scientific knowledge is not simply found, but gradually constructed through collaboration and competition within the scientific <span class="bk" style="min-width:100px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(c)</span>.
+      </div>
+    </div>
+  </div>
+
+  <!-- 정답 & 해설 -->
+  <div class="card">
+    <div class="card-lbl">정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">Keywords 정답</div>
+      <div class="ans-exp">
+        <strong>c</strong> = <span class="ans">credit</span> (공로, 인정) — "how difficult it is to assign <em>credit</em> and dates" / "deserved sole <em>credit</em>"
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Text Structure 해설</div>
+      <div class="ans-exp">
+        Text Structure의 세 단계는 모두 완성된 형태로 제공됨.<br>
+        <strong>핵심 흐름:</strong> 솔크 연구소 사례 소개 → 관찰: 과학은 실제로 무질서하다 → 결론: 공로 귀속의 어려움 (노벨상 갈등)
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Fill-in 정답 (모두 c로 시작)</div>
+      <div class="ans-exp">
+        <strong>1st c</strong> = <span class="ans">consensus</span> (합의) — "there must be <em>consensus</em> among researchers" — 과학적 '사실'의 성립 조건<br>
+        <strong>2nd c</strong> = <span class="ans">credit</span> (공로) — "who should receive <em>credit</em> for a discovery" — 발견의 공로 귀속 문제<br>
+        <strong>3rd c</strong> = <span class="ans">community</span> (공동체) — "within the scientific <em>community</em>" — 과학 지식은 과학 공동체 내에서 구성됨
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">A detailed <span class="vw">anthropological<span class="tt">인류학적인</span></span> study ... // shows <span class="gr">how difficult it is to assign credit and dates</span>.</div>
+        <div class="sp-ko">캘리포니아 라졸라 솔크 연구소 실험실에서의 일상적 과학 실천에 대한 상세한 인류학적 연구는 / 공로와 날짜를 귀속시키는 것이 얼마나 어려운지를 보여준다. <span class="sp-note">★ how difficult it is to ~: 간접의문문 (명사절) / it ~ to V: 가주어-진주어</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Bruno Latour describes <span class="gr">how scientists arrived at the <span class="vw">elucidation<span class="tt">규명</span></span> of TRF</span>, // a hormone <span class="gr">{that is secreted by the brain}</span>.</div>
+        <div class="sp-ko">브루노 라투르는 과학자들이 어떻게 TRF의 규명에 도달했는지를 설명한다, / TRF는 뇌에서 분비되는 호르몬이다. <span class="sp-note">★ how ~ arrived at: 간접의문문(명사절) / a hormone that ~: 동격 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">He says that his observations led him to "<span class="gr">the conviction that</span> a body of practices widely regarded by outsiders as well organized, logical, and coherent, // in fact consists of a disordered <span class="vw">array<span class="tt">배열</span></span> of observations <span class="gr">{with which scientists struggle to produce order}</span>."</div>
+        <div class="sp-ko">그는 자신의 관찰이 그를 "외부인들에게 잘 조직되고, 논리적이며, 일관된 것으로 널리 여겨지는 관행들의 집합이, / 사실 과학자들이 질서를 만들어내기 위해 분투하는 무질서한 관찰들의 배열로 구성된다"는 확신으로 이끌었다고 말한다. <span class="sp-note">★ the conviction that ~: 동격절 / with which: 전치사+관계대명사 (scientists struggle with observations)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The final <span class="vw">consensus<span class="tt">합의</span></span> <span class="vw">formulation<span class="tt">공식화</span></span> of TRF // (i.e., <span class="gr">when it became a scientific "fact"</span>) // emerged some time between January 1968 and January 1970.</div>
+        <div class="sp-ko">TRF의 최종 합의 공식 — (즉, 그것이 과학적 '사실'이 된 때) — 은 / 1968년 1월과 1970년 1월 사이의 어느 시점에 등장했다. <span class="sp-note">★ i.e.: "즉" (id est) / when절: 삽입 설명</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Half of the Nobel Prize ... was shared between the Salk group and another competing group in New Orleans // (the other half went to Rosalind Yalow for <span class="gr">the techniques {she developed} {that were used in these studies}</span>), // but each of these two competing groups strongly felt // <span class="gr">that they deserved sole credit</span> and <span class="gr">that the other did not deserve even a share of the award</span>.</div>
+        <div class="sp-ko">1977년 노벨 의학상의 절반은 솔크 그룹과 뉴올리언스의 또 다른 경쟁 그룹 사이에 나뉘었지만 / (나머지 절반은 이 연구들에 사용된 기술을 개발한 로잘린드 얄로우에게 돌아갔다), / 이 두 경쟁 그룹 각각은 강하게 느꼈다 / 자신들이 단독으로 공로를 받을 자격이 있고 / 상대방은 수상의 일부분도 받을 자격이 없다고. <span class="sp-note">★ the techniques {she developed} {that were used ~}: 관계절 중첩 / that ~ and that ~: 병렬 명사절(felt의 목적어)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 &amp; 문법 포인트</div>
+      <p><strong>① how + 형용사 + it is to V (가주어-진주어 간접의문문)</strong> — "shows <u>how difficult it is to assign</u> credit and dates"</p>
+      <p><strong>② the conviction that ~ (동격절)</strong> — "the conviction <u>that</u> a body of practices ... consists of a disordered array": conviction의 내용을 that절로 설명</p>
+      <p><strong>③ with which (전치사 + 관계대명사)</strong> — "observations with which scientists struggle to produce order" = observations that scientists struggle with</p>
+      <p><strong>④ 관계절 중첩</strong> — "the techniques {she developed} {that were used in these studies}": 두 관계절이 같은 선행사 수식</p>
+      <p><strong>⑤ felt that ~ and that ~ (병렬 명사절)</strong> — "felt <u>that</u> they deserved ... and <u>that</u> the other did not deserve": feel의 두 목적어가 that절로 병렬</p>
+    </div>
+  </div>
+
+  <!-- Topic & Text Structure -->
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; Text Structure</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> The difficulty of assigning credit and specifying dates
+      <div class="topic-ko">공로와 날짜를 귀속시키는 것의 어려움</div>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>Introduction (sent. 1):</strong> 솔크 연구소 인류학적 연구 배경<br><span class="s-arrow">→</span> 과학에서 공로와 날짜 귀속이 얼마나 어려운가</div>
+      <div class="s-item"><strong>Development (sent. 2~4):</strong> 라투르의 관찰에서 얻은 통찰<br><span class="s-arrow">→</span> TRF 규명 과정: "잘 조직된 것처럼 보이나 실제로는 무질서한 관찰들의 배열"<br><span class="s-arrow">→</span> TRF 합의 시기: 1968~1970년 사이 어느 때 (불명확)</div>
+      <div class="s-item"><strong>Conclusion (sent. 5):</strong> 노벨상과 공로 분쟁<br><span class="s-arrow">→</span> 두 그룹 모두 단독 공로를 주장 → 공로 귀속의 근본적 어려움 확인</div>
+    </div>
+    <div class="main-idea-box">
+      <h4>Main Idea</h4>
+      Scientific practice, despite appearing organized and logical, is actually a <u>messy</u> process of struggling with observations; assigning <u>credit</u> and dates to discoveries is fundamentally difficult, as the <u>TRF Nobel Prize conflict</u> illustrates.
+      <div style="margin-top:8px;font-size:.8rem;color:var(--ink3);font-style:italic;">과학적 실천은 조직적이고 논리적으로 보임에도 불구하고, 실제로는 관찰들과 씨름하는 혼란스러운 과정이다; 발견의 공로와 날짜를 귀속시키는 것은 근본적으로 어려우며, TRF 노벨상 갈등이 이를 잘 보여준다.</div>
+    </div>
+  </div>
+
+  <!-- Logical Framework -->
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span><br>Research Background</td>
+          <td>솔크 연구소 인류학적 연구<br>→ 공로·날짜 귀속이 얼마나 어려운가를 보여줌</td>
+          <td class="fw-ko">연구의 배경과 핵심 주제(공로 귀속의 어려움)를 제시한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Observation</span><br>Science ≠ Orderly</td>
+          <td>라투르: 외부에서 봤을 때 논리적·일관성 있어 보이지만<br>실제 = "무질서한 관찰들의 배열"<br>TRF 합의 시기: 1968~1970 (불명확)</td>
+          <td class="fw-ko">과학의 외양(논리적)과 실제(혼란스러운 과정) 사이의 간극을 드러낸다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conflict</span><br>Nobel Prize Dispute</td>
+          <td>노벨상 절반: Salk & 뉴올리언스 그룹 공유<br>각자: "우리만 단독 공로" 주장 → 충돌<br>→ 공로 귀속의 근본적 불명확성 확인</td>
+          <td class="fw-ko">실제 사례(노벨상 갈등)로 공로 귀속의 어려움을 구체적으로 증명한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p3 -->
+
+<!-- ════════════════════ P4 — PRIOR KNOWLEDGE ════════════════════ -->
+<div class="sec" id="p4">
+  <div class="p-header">
+    <div class="p-code">Chapter 1 (13–14) · 지문 04 · Passage 4</div>
+    <div class="p-title">Prior Knowledge as the X-Factor</div>
+    <div class="p-title-ko">독해의 미지 요인, 사전 지식 — 야구 독해력 실험</div>
+    <span class="p-type-badge">빈칸 내용 추론</span>
+  </div>
+
+  <!-- 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">The importance of <span class="vw">what a reader brings to the page<span class="tt">독자가 텍스트에 가져오는 것</span></span> is highlighted in a study discussed by Hirsch in <em>The Knowledge Deficit</em>.</p>
+      <p class="plain-sent">This study consisted of two groups of students who were asked to read a passage about baseball.</p>
+      <p class="plain-sent">The first group was made up of strong readers who knew little about baseball.</p>
+      <p class="plain-sent">The second group was composed of <span class="vw">struggling<span class="tt">고전하는, 어려움을 겪는</span></span> readers who were <span class="vw">knowledgeable<span class="tt">박식한, 잘 아는</span></span> about baseball.</p>
+      <p class="plain-sent">After reading the passage, students in each group had their <span class="vw">comprehension<span class="tt">이해력</span></span> tested.</p>
+      <p class="plain-sent">Guess which group scored higher?</p>
+      <p class="plain-sent">The struggling readers.</p>
+      <p class="plain-sent">Having strong reading skills was not enough for the students who came to the page with a knowledge <span class="vw">deficit<span class="tt">부족, 결손</span></span> about the topic.</p>
+      <p class="plain-sent">Though the second group of readers were not strong readers, their prior knowledge <span class="vw">enabled<span class="tt">가능하게 하다</span></span> them to <span class="vw">outscore<span class="tt">더 높은 점수를 얻다</span></span> readers with far better abilities.</p>
+      <p class="plain-sent">Prior knowledge, or, in the case of the good readers, the lack of prior knowledge, was the <span class="vw">x-factor<span class="tt">미지의 요인, 핵심 변수</span></span>.</p>
+      <div class="fn">* deficit: 부족, 결손 &nbsp;&nbsp;** x-factor: (성공을 좌우하는) 미지의 요인</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">문항 — Keywords / Text Structure</div>
+
+    <div class="q-block">
+      <div class="q-type">★ Keywords (첫 글자 힌트)</div>
+      <div class="q-kw">
+        * Keywords : <span class="bk" style="min-width:60px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:6px;">(p)</span> knowledge, &nbsp;comprehension, &nbsp;reading skills, &nbsp;<span class="bk" style="min-width:80px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:6px;">(x-f)</span>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Text Structure</div>
+      <div class="q-ts">
+        <div class="ts-item">1) <strong>Introduction</strong> (sent. 1~4) : the composition of experimental groups in the study of prior knowledge and reading comprehension</div>
+        <div class="ts-item">2) <strong>Development 1</strong> (sent. 5~6) : the process of testing reading comprehension based on prior knowledge and reading skills</div>
+        <div class="ts-item">3) <strong>Development 2</strong> (sent. 7) : the surprising results in reading comprehension where prior knowledge <span class="bk" style="min-width:100px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(o)</span> reading skills</div>
+        <div class="ts-item">4) <strong>Conclusion</strong> (sent. 8~10) : the importance of prior knowledge as the x-factor in reading comprehension</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 정답 & 해설 -->
+  <div class="card">
+    <div class="card-lbl">정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">Keywords 정답</div>
+      <div class="ans-exp">
+        <strong>p</strong> = <span class="ans">prior</span> (사전의, 이전의) — "prior knowledge": 사전 지식<br>
+        <strong>x-f</strong> = <span class="ans">x-factor</span> (미지의 요인) — "Prior knowledge ... was the <em>x-factor</em>"
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Text Structure 정답</div>
+      <div class="ans-exp">
+        <strong>3) o</strong> = <span class="ans">outscores / overcomes</span> — "prior knowledge <em>outscores</em> reading skills" — 사전 지식이 독해 능력보다 높은 점수를 낳음<br>
+        근거: "their prior knowledge <strong>enabled them to outscore</strong> readers with far better abilities" (sent. 9)
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The importance of <span class="gr">what a reader brings to the page</span> // is highlighted in a study <span class="gr">{discussed by Hirsch in <em>The Knowledge Deficit</em>}</span>.</div>
+        <div class="sp-ko">독자가 페이지에 가져오는 것의 중요성은 / 허쉬가 『지식 결핍』에서 논의한 연구에서 부각된다. <span class="sp-note">★ what a reader brings: 관계대명사 what절(명사절) / discussed by ~: 수동 분사구</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This study consisted of two groups of students <span class="gr">{who were asked to read a passage about baseball}</span>.</div>
+        <div class="sp-ko">이 연구는 야구에 관한 지문을 읽도록 요청받은 두 그룹의 학생들로 구성되었다. <span class="sp-note">★ be asked to V: ~하도록 요청받다(수동태)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The first group was made up of strong readers <span class="gr">{who knew little about baseball}</span>.<br>The second group was composed of <span class="vw">struggling<span class="tt">고전하는</span></span> readers <span class="gr">{who were knowledgeable about baseball}</span>.</div>
+        <div class="sp-ko">첫 번째 그룹은 야구에 대해 거의 알지 못하는 능숙한 독자들로 구성되었다.<br>두 번째 그룹은 야구에 대해 잘 알고 있는 독해 능력이 부족한 독자들로 구성되었다. <span class="sp-note">★ be made up of / be composed of: ~으로 구성되다 (유사 표현)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">Having strong reading skills</span> was not enough for the students <span class="gr">{who came to the page with a knowledge <span class="vw">deficit<span class="tt">결손</span></span> about the topic}</span>.</div>
+        <div class="sp-ko">강력한 독해 능력을 갖추는 것만으로는 / 주제에 대한 지식 결핍을 가지고 페이지에 온 학생들에게 충분하지 않았다. <span class="sp-note">★ 동명사 주어 Having ~ skills / who came to the page with ~: 관계절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Though the second group of readers were not strong readers, // their prior knowledge <span class="gr">enabled them to outscore</span> readers with far better abilities.</div>
+        <div class="sp-ko">두 번째 그룹의 독자들은 능숙한 독자들이 아니었지만, / 그들의 사전 지식은 훨씬 더 나은 능력을 가진 독자들을 능가하게 해주었다. <span class="sp-note">★ though: 양보 접속사 / enable A to V: A가 V하도록 가능하게 하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Prior knowledge, or, <span class="gr">in the case of the good readers, the lack of prior knowledge</span>, was the <span class="vw">x-factor<span class="tt">미지의 요인</span></span>.</div>
+        <div class="sp-ko">사전 지식이, 또는 능숙한 독자들의 경우에는 사전 지식의 부족이, 미지의 요인이었다. <span class="sp-note">★ in the case of ~: ~의 경우에는 (삽입구) / Prior knowledge ... was ~: 주어와 동사 사이의 삽입구</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 &amp; 문법 포인트</div>
+      <p><strong>① what a reader brings to the page (관계대명사 what절)</strong> — 명사절, of의 목적어: "독자가 페이지에 가져오는 것"</p>
+      <p><strong>② 수동 분사구</strong> — "discussed by Hirsch": study를 뒤에서 수식하는 과거분사구</p>
+      <p><strong>③ 동명사 주어</strong> — "Having strong reading skills was not enough": 동명사구가 주어</p>
+      <p><strong>④ enable A to V</strong> — "their prior knowledge enabled them to outscore readers": A가 V하도록 가능하게 하다</p>
+      <p><strong>⑤ 삽입구</strong> — "or, in the case of the good readers, the lack of prior knowledge": 주어-동사 사이에 삽입, 대구 강조</p>
+    </div>
+  </div>
+
+  <!-- Topic & Text Structure -->
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; Text Structure</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> The importance of prior knowledge as the x-factor in reading comprehension and reading skills
+      <div class="topic-ko">독해력과 독해 능력에서 미지의 요인으로서 사전 지식의 중요성</div>
+    </div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>Introduction (sent. 1~4):</strong> 실험 집단 구성<br><span class="s-arrow">→</span> 1그룹: 능숙한 독자 + 야구 지식 ✗ / 2그룹: 서투른 독자 + 야구 지식 ✓</div>
+      <div class="s-item"><strong>Development 1 (sent. 5~6):</strong> 이해력 검사<br><span class="s-arrow">→</span> 어느 그룹이 더 높은 점수를 받았을까? (독자에게 질문)</div>
+      <div class="s-item"><strong>Development 2 (sent. 7):</strong> 놀라운 결과<br><span class="s-arrow">→</span> 서투른 독자들이 높은 점수 — 사전 지식이 독해 능력을 <u>outscores</u></div>
+      <div class="s-item"><strong>Conclusion (sent. 8~10):</strong> x-factor = prior knowledge<br><span class="s-arrow">→</span> 지식 결핍 → 독해 능력 무용지물 / 사전 지식 = 결정적 변수</div>
+    </div>
+    <div class="main-idea-box">
+      <h4>Main Idea</h4>
+      A study on baseball reading comprehension reveals that <u>prior knowledge</u> is the decisive x-factor: struggling readers with topic knowledge <u>outscored</u> strong readers without it, demonstrating that what one <u>brings</u> to a text matters more than raw reading ability.
+      <div style="margin-top:8px;font-size:.8rem;color:var(--ink3);font-style:italic;">야구 독해력 연구는 사전 지식이 결정적인 미지의 요인임을 보여준다: 주제 지식을 가진 서투른 독자들이 그것이 없는 능숙한 독자들을 능가했으며, 텍스트에 가져오는 것이 순수 독해 능력보다 더 중요함을 입증한다.</div>
+    </div>
+  </div>
+
+  <!-- Logical Framework -->
+  <div class="card">
+    <div class="card-lbl">04 Logical Framework</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Setup</span><br>Two Groups</td>
+          <td>그룹 1: 능숙한 독자 ↑ + 야구 지식 ↓<br>그룹 2: 독해력 ↓ + 야구 지식 ↑<br>→ 독해력 vs 사전 지식의 대립 구도</td>
+          <td class="fw-ko">두 변수(독해력 / 사전 지식)가 대립하는 실험 설계를 소개한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Surprise</span><br>Struggling Readers Win</td>
+          <td>독해 서투른 그룹(=야구 지식 보유)이 더 높은 점수<br>→ 기존 예상(독해력 ↑ = 이해력 ↑) 뒤집힘</td>
+          <td class="fw-ko">수사의문문으로 독자의 예상을 뒤집는 놀라운 결과를 제시한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Conclusion</span><br>Prior Knowledge = X-Factor</td>
+          <td>강한 독해력 + 지식 결핍 → 불충분<br>약한 독해력 + 사전 지식 → 더 높은 이해<br>→ 사전 지식 = 결정적 x-factor</td>
+          <td class="fw-ko">사전 지식의 결정적 역할을 결론으로 도출하며, 독해 교육의 함의를 시사한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p4 -->
+
+<!-- ════════════════════ VOCABULARY ════════════════════ -->
+<div class="sec" id="voca">
+  <div style="background:var(--ink);color:#fefcf8;padding:22px 28px;border-radius:8px 8px 0 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;">Chapter 1 (13–14) · Word &amp; Phrase List</div>
+    <div style="font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;">단어장 — Chapter 1 (13–14) 핵심 어휘</div>
+    <div style="font-size:.82rem;opacity:.62;margin-top:4px;">4개 지문 전체 핵심 단어 &amp; 숙어 · 한국어 뜻 / 관련어 포함</div>
+  </div>
+  <div class="card" style="border-radius:0 0 8px 8px;">
+    <div class="card-lbl">지문 1 — Interoception &amp; Emotions</div>
+    <table class="voca-table">
+      <thead><tr><th>단어 / 숙어</th><th>뜻</th><th>관련어 / 파생어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">interoceptive</td><td class="vw-mean">내부 감각 수용의</td><td class="vw-extra">interoception 내부 감각 수용</td></tr>
+        <tr><td class="vw-word">faculty</td><td class="vw-mean">기능, 능력</td><td class="vw-extra">cf. ability, capacity</td></tr>
+        <tr><td class="vw-word">conduit</td><td class="vw-mean">전달자, 도관</td><td class="vw-extra">channel, medium</td></tr>
+        <tr><td class="vw-word">visceral</td><td class="vw-mean">본능적인, 내장의</td><td class="vw-extra">gut-level, instinctive</td></tr>
+        <tr><td class="vw-word">yield</td><td class="vw-mean">낳다, 산출하다; 양보하다</td><td class="vw-extra">produce, generate</td></tr>
+        <tr><td class="vw-word">stir</td><td class="vw-mean">(감정이) 움직이다, 일어나다</td><td class="vw-extra">arise, move</td></tr>
+        <tr><td class="vw-word">mimic</td><td class="vw-mean">모방하다, 흉내 내다</td><td class="vw-extra">imitate, copy / mimicry 모방</td></tr>
+        <tr><td class="vw-word">unconsciously</td><td class="vw-mean">무의식적으로</td><td class="vw-extra">↔ consciously / unconscious 무의식의</td></tr>
+        <tr><td class="vw-word">perceive</td><td class="vw-mean">지각하다, 인식하다</td><td class="vw-extra">perception 지각 / perceptive 지각력 있는</td></tr>
+        <tr><td class="vw-word">sampling</td><td class="vw-mean">맛보기, 표본 추출</td><td class="vw-extra">sample 표본, 맛보다</td></tr>
+        <tr><td class="vw-word">bring A into contact with B</td><td class="vw-mean">A를 B와 접촉하게 하다</td><td class="vw-extra">bring A onboard: A를 합류시키다</td></tr>
+        <tr><td class="vw-word">supply A with B</td><td class="vw-mean">A에게 B를 공급하다</td><td class="vw-extra">provide A with B</td></tr>
+      </tbody>
+    </table>
+
+    <div class="card-lbl" style="margin-top:28px;">지문 2 — McLuhan &amp; Technology</div>
+    <table class="voca-table">
+      <thead><tr><th>단어 / 숙어</th><th>뜻</th><th>관련어 / 파생어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">overextension</td><td class="vw-mean">과도한 확장</td><td class="vw-extra">overextend 과도하게 확장하다</td></tr>
+        <tr><td class="vw-word">dehumanization</td><td class="vw-mean">비인간화</td><td class="vw-extra">↔ humanization / dehumanize 비인간화하다</td></tr>
+        <tr><td class="vw-word">techno-utopian</td><td class="vw-mean">기술 낙관론자</td><td class="vw-extra">utopian 이상주의자 / ↔ dystopian</td></tr>
+        <tr><td class="vw-word">caution (against)</td><td class="vw-mean">(~에 대해) 경고하다</td><td class="vw-extra">warn against / caution 주의, 경고</td></tr>
+        <tr><td class="vw-word">amputation</td><td class="vw-mean">잘라내기, 절단</td><td class="vw-extra">amputate 절단하다</td></tr>
+        <tr><td class="vw-word">post-literate</td><td class="vw-mean">탈문해화의</td><td class="vw-extra">literate 글을 읽을 수 있는 / literacy 문해력</td></tr>
+        <tr><td class="vw-word">faculties</td><td class="vw-mean">기능들, 능력들</td><td class="vw-extra">faculty의 복수 / higher human faculties 고등 인간 기능</td></tr>
+        <tr><td class="vw-word">bio-enhancement</td><td class="vw-mean">생물학적 향상</td><td class="vw-extra">enhance 향상시키다 / enhancement 향상</td></tr>
+        <tr><td class="vw-word">arrested development</td><td class="vw-mean">발달 저해, 성장 멈춤</td><td class="vw-extra">arrested 정지된, 저해된</td></tr>
+        <tr><td class="vw-word">bring about</td><td class="vw-mean">초래하다, 야기하다</td><td class="vw-extra">cause, lead to, result in</td></tr>
+        <tr><td class="vw-word">now that</td><td class="vw-mean">이제 ~이므로 (이유 접속사)</td><td class="vw-extra">since, because (현재 상황 이유)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="card-lbl" style="margin-top:28px;">지문 3 — Salk Institute &amp; Scientific Credit</div>
+    <table class="voca-table">
+      <thead><tr><th>단어 / 숙어</th><th>뜻</th><th>관련어 / 파생어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">anthropological</td><td class="vw-mean">인류학적인</td><td class="vw-extra">anthropology 인류학 / anthropologist 인류학자</td></tr>
+        <tr><td class="vw-word">credit</td><td class="vw-mean">공로, 인정; 신용</td><td class="vw-extra">assign/give/receive credit 공로를 귀속/받다</td></tr>
+        <tr><td class="vw-word">elucidation</td><td class="vw-mean">규명, 설명</td><td class="vw-extra">elucidate 규명하다, 설명하다</td></tr>
+        <tr><td class="vw-word">secrete</td><td class="vw-mean">분비하다</td><td class="vw-extra">secretion 분비 / hormone 호르몬</td></tr>
+        <tr><td class="vw-word">conviction</td><td class="vw-mean">확신; 유죄 선고</td><td class="vw-extra">convince 확신시키다 / convinced 확신하는</td></tr>
+        <tr><td class="vw-word">coherent</td><td class="vw-mean">일관성 있는</td><td class="vw-extra">↔ incoherent / coherence 일관성</td></tr>
+        <tr><td class="vw-word">array</td><td class="vw-mean">배열, 다양한 집합</td><td class="vw-extra">a disordered array of: 무질서한 ~의 집합</td></tr>
+        <tr><td class="vw-word">consensus</td><td class="vw-mean">합의, 의견 일치</td><td class="vw-extra">reach a consensus 합의에 이르다</td></tr>
+        <tr><td class="vw-word">formulation</td><td class="vw-mean">공식화, 명확한 표현</td><td class="vw-extra">formulate 공식화하다 / formula 공식</td></tr>
+        <tr><td class="vw-word">deserve</td><td class="vw-mean">~을 받을 자격이 있다</td><td class="vw-extra">merit, be worthy of</td></tr>
+        <tr><td class="vw-word">sole</td><td class="vw-mean">단독의, 유일한</td><td class="vw-extra">solely 단독으로 / only, exclusive</td></tr>
+      </tbody>
+    </table>
+
+    <div class="card-lbl" style="margin-top:28px;">지문 4 — Prior Knowledge &amp; Reading</div>
+    <table class="voca-table">
+      <thead><tr><th>단어 / 숙어</th><th>뜻</th><th>관련어 / 파생어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">prior knowledge</td><td class="vw-mean">사전 지식</td><td class="vw-extra">prior 이전의, 사전의 / background knowledge</td></tr>
+        <tr><td class="vw-word">comprehension</td><td class="vw-mean">이해력, 이해</td><td class="vw-extra">comprehend 이해하다 / reading comprehension 독해력</td></tr>
+        <tr><td class="vw-word">deficit</td><td class="vw-mean">부족, 결손</td><td class="vw-extra">knowledge deficit 지식 결핍 / ↔ surplus</td></tr>
+        <tr><td class="vw-word">struggling</td><td class="vw-mean">고전하는, 어려움을 겪는</td><td class="vw-extra">struggle 분투하다 / struggling readers 서투른 독자</td></tr>
+        <tr><td class="vw-word">knowledgeable</td><td class="vw-mean">박식한, 잘 아는</td><td class="vw-extra">knowledge 지식 / well-informed</td></tr>
+        <tr><td class="vw-word">outscore</td><td class="vw-mean">더 높은 점수를 얻다, 능가하다</td><td class="vw-extra">outperform, surpass</td></tr>
+        <tr><td class="vw-word">enable A to V</td><td class="vw-mean">A가 V하도록 가능하게 하다</td><td class="vw-extra">allow A to V / make it possible for A to V</td></tr>
+        <tr><td class="vw-word">x-factor</td><td class="vw-mean">미지의 요인, 핵심 변수</td><td class="vw-extra">the decisive variable that determines outcome</td></tr>
+        <tr><td class="vw-word">highlight</td><td class="vw-mean">강조하다, 부각시키다</td><td class="vw-extra">emphasize, underscore</td></tr>
+        <tr><td class="vw-word">be made up of / be composed of</td><td class="vw-mean">~으로 구성되다</td><td class="vw-extra">consist of (전치사 없이 직접 목적어)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end voca -->
+
+</main>
+
+<script>
+const ids=['home','p1','p2','p3','p4','voca'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
