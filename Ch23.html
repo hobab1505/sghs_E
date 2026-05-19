@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 23 · Physics, Chemistry, Bioscience, Earth Science | SGHS Critical Reading &amp; Writing</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1100px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.15rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.7rem;opacity:.55;margin-top:2px;}
+.hdr-nav{display:flex;gap:6px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:5px 14px;border-radius:4px;font-size:.72rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.wrap{max-width:1100px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:20px 22px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);}
+.toc-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.65rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.08em;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1.05rem;font-weight:600;margin-bottom:4px;line-height:1.4;}
+.toc-ko{font-size:.8rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:22px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;font-style:italic;}
+.p-type-badge{display:inline-block;margin-top:10px;background:var(--accent2);color:#fff;font-size:.65rem;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.1em;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:24px 28px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.95;color:var(--ink);margin-bottom:2px;}
+.plain-sent+.plain-sent{margin-top:4px;}
+.para-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;color:var(--accent2);background:var(--orange-bg);border:1px solid rgba(192,80,16,.2);padding:2px 10px;border-radius:4px;display:inline-block;margin-bottom:8px;margin-top:14px;}
+.insert-sent{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.95;color:var(--ink);background:#fdf0e8;border-left:4px solid var(--accent2);padding:10px 16px;margin:10px 0;border-radius:0 6px 6px 0;}
+.num-circle{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--ink);font-size:.72rem;font-weight:700;margin:0 3px;vertical-align:middle;font-family:'Noto Sans KR',sans-serif;}
+.bk{display:inline-block;border-bottom:2.5px solid var(--ink);min-width:120px;margin:0 3px;vertical-align:bottom;}
+.fn{font-size:.77rem;color:var(--ink3);margin-top:14px;border-top:1px solid var(--border2);padding-top:10px;font-style:italic;line-height:1.6;}
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:14px;}
+.q-type{font-size:.68rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:10px;text-transform:uppercase;}
+.q-stem{font-size:.91rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:14px;}
+.choices{display:flex;flex-direction:column;gap:7px;}
+.choice{font-size:.88rem;line-height:1.55;padding:8px 12px;border-radius:5px;color:var(--ink2);}
+.cn{display:inline-block;font-weight:700;color:var(--ink);margin-right:4px;}
+.correct-choice{background:var(--orange-bg);border:1px solid rgba(192,80,16,.25);color:var(--ink);}
+.correct-choice .cn{color:var(--orange);}
+.wrong-choice{background:var(--red-bg);border:1px solid rgba(176,26,26,.2);color:var(--ink);}
+.wrong-choice .cn{color:var(--red);}
+.ans-box{margin-top:14px;padding:18px 22px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-box+.ans-box{margin-top:10px;}
+.ans-lbl{font-size:.65rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+.ans-num{font-size:1.05rem;font-weight:700;color:var(--orange);margin-bottom:10px;}
+.ans-exp{font-size:.84rem;color:var(--ink2);line-height:1.7;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;color:var(--ink);}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+.wrong-word{color:var(--red);font-weight:700;text-decoration:underline;text-decoration-color:var(--red);}
+.right-word{color:var(--orange);font-weight:700;}
+.ul-word{font-weight:700;text-decoration:underline;text-decoration-color:var(--ink);}
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;margin-top:10px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;letter-spacing:.06em;margin-bottom:8px;}
+.gr-note p{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:6px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;border-radius:0 7px 7px 0;margin-bottom:14px;font-size:.9rem;line-height:1.65;}
+.topic-ko{margin-top:8px;font-size:.8rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:8px;font-style:italic;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:9px 15px;text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.06em;margin-bottom:4px;}
+.fw-ko{margin-top:8px;font-size:.79rem;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:8px;}
+.structure-box{background:#f8f4ff;border:1px solid rgba(100,60,180,.2);border-radius:8px;padding:18px 22px;font-size:.84rem;line-height:1.75;}
+.structure-box h4{color:#5a3aaa;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;font-weight:700;}
+.structure-box .s-item{margin-bottom:6px;padding-left:14px;border-left:3px solid #c0a8f0;}
+.structure-box .s-arrow{color:var(--accent2);font-weight:700;margin:0 4px;}
+.main-idea-box{background:#fff8f0;border:1px solid rgba(176,90,30,.25);border-radius:8px;padding:16px 20px;margin-top:14px;font-size:.84rem;line-height:1.75;}
+.main-idea-box h4{color:var(--accent2);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;font-weight:700;}
+.voca-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.55;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.95rem;}
+.vw-mean{color:var(--ink2);}
+.vw-extra{font-size:.78rem;color:var(--ink3);margin-top:2px;}
+.q-ts{font-size:.86rem;color:var(--ink2);line-height:2.1;}
+.q-ts .ts-item{margin-bottom:4px;}
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card,.passage-box,.plain-box{padding:16px 18px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Ch23 · Physics, Chemistry, Bioscience, Earth Science</div>
+      <div class="hdr-sub">SGHS Critical Reading &amp; Writing — 본문·문항·정답해설·구문분석·Topic·Logical Framework</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p0')">기출 · 글의 순서</button>
+      <button class="nb" onclick="show('p1')">지문 1 · 제목 완성</button>
+      <button class="nb" onclick="show('p2')">지문 2 · 어법 교정</button>
+      <button class="nb" onclick="show('p3')">지문 3 · 무관 문장</button>
+      <button class="nb" onclick="show('voca')">단어장</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:8px;">Chapter 23 — Physics, Chemistry, Bioscience, Earth Science</h1>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:24px;">SGHS Critical Reading &amp; Writing · Suah Kim &nbsp;|&nbsp; 총 4개 지문 + 단어장</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p0')">
+      <div class="toc-badge">기출 · 2026학년도 6월 모평</div>
+      <div class="toc-en">Chaos Theory &amp; the Magnetic Pendulum</div>
+      <div class="toc-ko">혼돈 이론과 자기 진자 · 글의 순서</div>
+    </a>
+    <a class="toc-card" onclick="show('p1')">
+      <div class="toc-badge">지문 1 · 제목 완성</div>
+      <div class="toc-en">Relative Velocity &amp; Momentum</div>
+      <div class="toc-ko">상대 속도와 운동량 · keywords: bullet, velocity</div>
+    </a>
+    <a class="toc-card" onclick="show('p2')">
+      <div class="toc-badge">지문 2 · 어법 교정</div>
+      <div class="toc-en">Hipparchus of Nicaea</div>
+      <div class="toc-ko">고대 천문학자 히파르코스 · 밑줄 어법 오류 찾기</div>
+    </a>
+    <a class="toc-card" onclick="show('p3')">
+      <div class="toc-badge">지문 3 · 무관한 문장</div>
+      <div class="toc-en">Microscopic Life Beyond Familiar Environments</div>
+      <div class="toc-ko">친숙한 환경 너머의 미생물 · 전체 흐름 무관 문장</div>
+    </a>
+    <a class="toc-card" onclick="show('voca')">
+      <div class="toc-badge">Vocabulary</div>
+      <div class="toc-en">Chapter 23 Word &amp; Phrase List</div>
+      <div class="toc-ko">Ch23 전체 단어 &amp; 숙어 정리</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ 기출 · 글의 순서 ═══ -->
+<div class="sec" id="p0">
+  <div class="p-header">
+    <div class="p-code">기출 · 2026학년도 6월 모평 · Chapter 23</div>
+    <div class="p-title">Chaos Theory &amp; the Magnetic Pendulum</div>
+    <div class="p-title-ko">혼돈 이론과 자기 진자 — 반복, 비선형 시스템, 분기점</div>
+    <span class="p-type-badge">글의 순서 배열</span>
+  </div>
+
+  <!-- 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문 (글의 순서 문제)</div>
+    <div class="plain-box">
+      <p class="plain-sent">A good example of chaos is the magnetic <span class="vw">pendulum<span class="tt">진자, 추(錘)</span></span> sold as an <span class="vw">executive toy<span class="tt">사무실 책상용 소품</span></span>. It has four magnets arranged in a square at the base and a pendulum that swings back and forth between them.</p>
+      <div class="para-label">(A)</div>
+      <p class="plain-sent">In order to produce chaos, the <span class="vw">iteration<span class="tt">반복</span></span> has to be within what is called a <span class="vw">nonlinear<span class="tt">비선형의</span></span> system. Nor are all nonlinear systems chaotic: to become so they need to be pushed beyond a certain point, called a <span class="vw">bifurcation<span class="tt">분기(分岐)</span></span>. Before that point is reached they may behave in a quite <span class="vw">orderly<span class="tt">질서 있는</span></span> fashion.</p>
+      <div class="para-label">(B)</div>
+      <p class="plain-sent">Release the pendulum and note the magnets that it visits, and in what order. If the pendulum is released from the same position a second time, the pattern of movement may at first be the same but soon it will become completely different. In fact, the pattern of its movement is chaotic.</p>
+      <div class="para-label">(C)</div>
+      <p class="plain-sent">No matter how much care is taken to start the pendulum in the same position, it will visit an entirely different set of points on the two occasions. Chaotic systems are generated by iteration, though not all iteration leads to chaos.</p>
+      <div class="fn">* pendulum: 추(錘) &nbsp;&nbsp;** iteration: 반복 &nbsp;&nbsp;*** bifurcation: 분기(分岐)</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">01 문항 — 글의 순서 배열</div>
+    <div class="q-block">
+      <div class="q-type">글의 순서 (Text Ordering)</div>
+      <div class="q-stem">주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?<br>( &nbsp;&nbsp;&nbsp; ) → ( &nbsp;&nbsp;&nbsp; ) → ( &nbsp;&nbsp;&nbsp; )</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> (A) → (B) → (C)</div>
+        <div class="choice"><span class="cn">②</span> (A) → (C) → (B)</div>
+        <div class="choice correct-choice"><span class="cn">③</span> (B) → (C) → (A) ← 정답</div>
+        <div class="choice"><span class="cn">④</span> (C) → (A) → (B)</div>
+        <div class="choice"><span class="cn">⑤</span> (C) → (B) → (A)</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 &amp; 해설</div>
+      <div class="ans-num">정답: <span class="ans">(B) → (C) → (A)</span></div>
+      <div class="ans-exp">
+        <strong>글의 흐름 분석:</strong><br><br>
+        <strong>도입부:</strong> 자기 진자를 혼돈의 예시로 소개 → "A good example of chaos is the magnetic pendulum"<br><br>
+        <strong>(B) 실험:</strong> 도입의 자기 진자를 직접 <em>실험</em>하는 내용 — 진자를 놓고(Release the pendulum) 방문하는 자석을 관찰 → 같은 위치에서 다시 놓으면 처음엔 같지만 곧 완전히 달라짐 = <u>혼돈적</u><br><br>
+        <strong>(C) 확인:</strong> (B)의 실험 결과를 <em>확인·심화</em> — "No matter how much care is taken" (아무리 같은 위치에서 시작해도) → 완전히 다른 지점 방문 / "<strong>Chaotic systems are generated by iteration</strong>" — 반복이 혼돈의 생성자임을 처음 제시<br><br>
+        <strong>(A) 이론:</strong> (C)에서 언급된 iteration을 받아 <em>이론적 설명</em> — 모든 iteration이 chaos를 만드는 게 아니라 <u>비선형 시스템</u> 안에서 <u>분기점(bifurcation)</u>을 넘어야 함
+      </div>
+    </div>
+  </div>
+
+  <!-- 완성된 지문 + Keywords / Text Structure / Main Idea -->
+  <div class="card">
+    <div class="card-lbl">Keywords / Text Structure / Main Idea — 빈칸 채우기</div>
+
+    <div class="q-block">
+      <div class="q-type">★ Topic</div>
+      <div class="q-ts">chaos theory and the <span class="bk" style="min-width:100px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(c)</span> that produce chaotic systems</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Text Structure</div>
+      <div class="q-ts">
+        <div class="ts-item">- Introduction: A magnetic pendulum is a <span class="bk" style="min-width:70px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(c)</span> example of chaos</div>
+        <div class="ts-item">- Experiment: The pendulum is released and <span class="bk" style="min-width:90px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(o)</span> — its movement pattern soon becomes completely <span class="bk" style="min-width:120px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(u)</span>, i.e., <span class="bk" style="min-width:80px;display:inline-block;"></span></div>
+        <div class="ts-item">- Confirmation: Even when released from the <span class="bk" style="min-width:60px;display:inline-block;"></span> position, the pendulum visits entirely <span class="bk" style="min-width:80px;display:inline-block;"></span> points — confirming the chaotic nature; <span class="bk" style="min-width:90px;display:inline-block;"></span> is identified as the generator of chaos</div>
+        <div class="ts-item">- Theoretical Explanation: Not all iteration produces chaos — it must occur within a <span class="bk" style="min-width:90px;display:inline-block;"></span> system pushed beyond a <span class="bk" style="min-width:100px;display:inline-block;"></span> point; before that threshold, the system may behave quite <span class="bk" style="min-width:70px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(o)</span></div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Main Idea</div>
+      <div class="q-ts">
+        Chaos is generated by <span class="bk" style="min-width:80px;display:inline-block;"></span> w<span class="bk" style="min-width:80px;display:inline-block;"></span> a nonlinear system driven p<span class="bk" style="min-width:60px;display:inline-block;"></span> a bifurcation point — as demonstrated by a magnetic pendulum that produces entirely u<span class="bk" style="min-width:120px;display:inline-block;"></span> movement patterns despite i<span class="bk" style="min-width:80px;display:inline-block;"></span> starting conditions.
+      </div>
+    </div>
+  </div>
+
+  <!-- 정답 -->
+  <div class="card">
+    <div class="card-lbl">정답 &amp; 해설 — Topic / Text Structure / Main Idea</div>
+    <div class="ans-box">
+      <div class="ans-lbl">Topic 정답</div>
+      <div class="ans-exp"><strong>c</strong> = <span class="ans">conditions</span> (조건) — "chaos theory and the <em>conditions</em> that produce chaotic systems"</div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Text Structure 정답</div>
+      <div class="ans-exp">
+        <strong>Introduction — c</strong> = <span class="ans">classic</span> (전형적인) — "a <em>classic</em> example of chaos"<br>
+        <strong>Experiment — o</strong> = <span class="ans">observed</span> (관찰되다) — 진자를 놓고 관찰<br>
+        <strong>u</strong> = <span class="ans">unpredictable</span> (예측 불가능한) / i.e. = <span class="ans">chaotic</span> (혼돈적인)<br>
+        <strong>Confirmation</strong> — same position → entirely <span class="ans">different</span> points / <span class="ans">Iteration</span> = generator of chaos<br>
+        <strong>Theoretical</strong> — <span class="ans">nonlinear</span> system / <span class="ans">bifurcation</span> point / quite <span class="ans">orderly</span> (질서 있게)
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Main Idea 정답</div>
+      <div class="ans-exp">
+        Chaos is generated by <span class="ans">iteration</span> <strong>w</strong><span class="ans">ithin</span> a nonlinear system driven <strong>p</strong><span class="ans">ast</span> a bifurcation point — produces entirely <strong>u</strong><span class="ans">npredictable</span> movement patterns despite <strong>i</strong><span class="ans">dentical</span> starting conditions.
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 완성된 지문 (B → C → A) 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">[도입] A good example of chaos is the magnetic <span class="vw">pendulum<span class="tt">진자</span></span> // sold as an <span class="vw">executive toy<span class="tt">사무실 소품</span></span>. It has four magnets arranged in a square at the base // and a pendulum that swings back and forth between them.</div>
+        <div class="sp-ko">혼돈의 좋은 예는 사무실 소품으로 판매되는 자기 진자이다. / 밑판에 정사각형으로 배열된 4개의 자석 / 그 사이에서 앞뒤로 흔들리는 진자로 구성된다. <span class="sp-note">★ sold as ~: 수동 분사구(sold를 과거분사로, a pendulum을 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">[B] Release the pendulum and note the magnets {that it visits}, and in what order. If the pendulum is released from the same position a second time, the pattern of movement may at first be the same // but soon it will become completely different. In fact, the pattern of its movement is chaotic.</div>
+        <div class="sp-ko">진자를 놓고 그것이 방문하는 자석들을 / 그리고 어떤 순서로 방문하는지 주목하라. / 진자를 두 번째로 같은 위치에서 놓으면, 처음에는 움직임 패턴이 같을 수 있지만 / 곧 완전히 달라진다. / 사실, 움직임의 패턴은 혼돈적이다. <span class="sp-note">★ that it visits: 관계절(magnets 수식) / may at first be ~: 가능성 조동사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">[C] <span class="gr">No matter how much care is taken</span> to start the pendulum in the same position, it will visit an entirely different set of points on the two occasions. Chaotic systems are generated by <span class="vw">iteration<span class="tt">반복</span></span>, though not all iteration leads to chaos.</div>
+        <div class="sp-ko">진자를 같은 위치에서 시작하기 위해 아무리 많은 주의를 기울여도, / 두 경우에 완전히 다른 지점들을 방문할 것이다. / 혼돈 시스템은 반복에 의해 생성되지만, 모든 반복이 혼돈으로 이어지는 것은 아니다. <span class="sp-note">★ No matter how much ~: 양보 부사절 ("아무리 ~해도") / though: 양보 접속사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">[A] In order to produce chaos, the <span class="vw">iteration<span class="tt">반복</span></span> has to be within <span class="gr">what is called a nonlinear system</span>. <span class="gr">Nor are all nonlinear systems chaotic</span>: to become so they need to be pushed beyond a certain point, called a <span class="vw">bifurcation<span class="tt">분기</span></span>. Before that point is reached // they may behave in a quite <span class="vw">orderly<span class="tt">질서 있는</span></span> fashion.</div>
+        <div class="sp-ko">혼돈을 만들어내기 위해, 반복은 비선형 시스템이라고 불리는 것 안에 있어야 한다. / 모든 비선형 시스템이 혼돈적인 것도 아니다: 그렇게 되기 위해서는 분기점이라고 불리는 특정 지점을 넘어야 한다. / 그 지점에 도달하기 전에 / 그것들은 꽤 질서 있게 작동할 수도 있다. <span class="sp-note">★ what is called ~: "~라고 불리는 것" (관계대명사 what) / Nor are all ~: 부정 도치 구문 ("~도 아니다")</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 &amp; 문법 포인트</div>
+      <p><strong>① No matter how much ~ (양보 부사절)</strong> — "No matter how much care is taken to start the pendulum": "아무리 ~해도"</p>
+      <p><strong>② what is called ~ (관계대명사 what)</strong> — "what is called a nonlinear system": "비선형 시스템이라고 불리는 것"</p>
+      <p><strong>③ Nor + 도치 구문</strong> — "Nor <u>are</u> all nonlinear systems chaotic": 부정어 Nor가 문두 → 주어-동사 도치</p>
+      <p><strong>④ 수동태 분사구 (sold as)</strong> — "the magnetic pendulum sold as an executive toy": 진자를 뒤에서 수식하는 과거분사구</p>
+      <p><strong>⑤ though (양보 접속사)</strong> — "Chaotic systems are generated by iteration, though not all iteration leads to chaos": 대조 강조</p>
+    </div>
+  </div>
+
+  <!-- Topic & Framework -->
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; Logical Framework</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Chaos theory and the <u>conditions</u> that produce chaotic systems
+      <div class="topic-ko">혼돈 이론과 혼돈 시스템을 만들어내는 조건들</div>
+    </div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Introduction</span><br>Classic Example</td>
+          <td>자기 진자 = 혼돈의 전형적 예<br>4개 자석 + 사이를 흔드는 진자</td>
+          <td class="fw-ko">독자의 이해를 위한 구체적 실물 예시로 도입한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Experiment (B)</span><br>Observe Chaos</td>
+          <td>진자 놓기 → 같은 위치에서 다시 → 처음엔 같지만 곧 완전히 달라짐 = 혼돈적</td>
+          <td class="fw-ko">실제 실험을 통해 혼돈의 현상을 직접 보여준다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Confirmation (C)</span><br>Iteration = Generator</td>
+          <td>아무리 조심해도 → 항상 다른 지점 방문<br>"Chaotic systems are generated by iteration"</td>
+          <td class="fw-ko">결과를 확인하고 iteration이 혼돈의 생성자임을 명시한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Theory (A)</span><br>Conditions for Chaos</td>
+          <td>조건 1: 비선형(nonlinear) 시스템 안의 iteration<br>조건 2: bifurcation(분기점)을 넘어야 함<br>분기점 전 → 질서 있게 작동 가능</td>
+          <td class="fw-ko">혼돈이 발생하는 이론적 조건(비선형 + 분기점 초과)을 설명한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p0 -->
+
+<!-- ═══ 지문 1 · 제목 완성 ═══ -->
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">Chapter 23 · 지문 1</div>
+    <div class="p-title">Relative Velocity &amp; Momentum</div>
+    <div class="p-title-ko">상대 속도와 운동량 — 프랑스 조종사의 총알 잡기</div>
+    <span class="p-type-badge">주어진 단어로 제목 완성</span>
+  </div>
+
+  <!-- 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">There is one important thing to note about <span class="vw">momentum<span class="tt">운동량</span></span>. Since motion is relative, only relative <span class="vw">velocities<span class="tt">속도들</span></span> are relevant. In fact, when you think about it, all velocities are relative. Thus, on the surface of the earth, we always <span class="vw">reckon<span class="tt">측정하다, 생각하다</span></span> velocity with respect to the ground — the velocity of the earth itself does not matter. There is a true story of a French pilot in World War II who stretched his hand out of his small airplane window and caught a bullet. How is this possible? The velocity of the bullet must have been about the same as the velocity of his plane. This can happen, because a bullet slows down to such a velocity toward the end of its flight path due to the action of <span class="vw">air drag<span class="tt">공기 저항</span></span>. Since only relative velocity matters, the momentum of the bullet was <span class="vw">negligible<span class="tt">무시할 수 있는</span></span> as far as the pilot was concerned. Thus, he would have had little problem in catching the bullet.</p>
+      <div class="fn">* momentum: 운동량(물체의 질량과 속도의 곱으로 나타내는 물리량) &nbsp;&nbsp;** velocity: 속도 &nbsp;&nbsp;*** reckon: 생각하다</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">01 문항 — 제목 완성 / Text Structure / Main Idea 빈칸</div>
+
+    <div class="q-block">
+      <div class="q-type">주어진 단어를 모두 사용해 글의 제목을 완성하시오</div>
+      <div class="q-stem">keyword: <strong>bullet</strong>, <strong>velocity</strong></div>
+      <div style="border:2px dashed var(--border);border-radius:6px;padding:16px;margin-top:10px;min-height:60px;font-family:'Crimson Pro',serif;font-size:1rem;color:var(--ink3);">제목을 완성하시오 ↑</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Text Structure</div>
+      <div class="q-ts">
+        <div class="ts-item">- Claim: Only relative velocity <span class="bk" style="min-width:80px;display:inline-block;"></span> when considering momentum</div>
+        <div class="ts-item">- Evidence 1: On Earth, we measure velocity relative to the <span class="bk" style="min-width:70px;display:inline-block;"></span> — Earth's own velocity is i<span class="bk" style="min-width:100px;display:inline-block;"></span></div>
+        <div class="ts-item">- Illustration: A WWII French pilot caught a <span class="bk" style="min-width:60px;display:inline-block;"></span> with his b<span class="bk" style="min-width:50px;display:inline-block;"></span> hand</div>
+        <div class="ts-item">- Explanation: The bullet's velocity had m<span class="bk" style="min-width:90px;display:inline-block;"></span> the plane's velocity due to air drag — making the bullet's momentum <span class="bk" style="min-width:100px;display:inline-block;"></span> from the pilot's perspective.</div>
+        <div class="ts-item">- Conclusion: Since only <span class="bk" style="min-width:120px;display:inline-block;"></span> matters, the pilot would have had l<span class="bk" style="min-width:60px;display:inline-block;"></span> difficulty catching the bullet.</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Main Idea</div>
+      <div class="q-ts">
+        Since momentum is <span class="bk" style="min-width:100px;display:inline-block;"></span> on relative velocity, an object's impact is determined by its speed r<span class="bk" style="min-width:80px;display:inline-block;"></span> to the observer rather than its ground speed, allowing a pilot to safely catch a bullet traveling at nearly the <span class="bk" style="min-width:60px;display:inline-block;"></span> velocity as his aircraft.
+      </div>
+    </div>
+  </div>
+
+  <!-- 정답 -->
+  <div class="card">
+    <div class="card-lbl">정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">제목 완성 정답 (예시)</div>
+      <div class="ans-exp">
+        <span class="ans">How Relative Velocity Made It Possible to Catch a Bullet</span><br>
+        또는: <span class="ans">The Role of Relative Velocity: Why a Pilot Could Catch a Bullet</span><br>
+        <strong>사용 단어:</strong> <u>bullet</u> (총알), <u>velocity</u> (속도) — 두 단어 모두 포함
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Text Structure 정답</div>
+      <div class="ans-exp">
+        <strong>matters</strong> (중요하다) — "Only relative velocity <em>matters</em>"<br>
+        <strong>ground</strong> (지면) / <strong>i</strong> = <span class="ans">irrelevant</span> (무관한) — 지구 자체의 속도는 무관<br>
+        <strong>bullet</strong> (총알) / <strong>b</strong> = <span class="ans">bare</span> (맨) — "his bare hand"<br>
+        <strong>m</strong> = <span class="ans">matched</span> (일치했다) — 총알의 속도가 비행기 속도와 일치<br>
+        momentum = <span class="ans">negligible</span> (무시할 수 있는)<br>
+        <strong>relative velocity</strong> / <strong>l</strong> = <span class="ans">little</span> — "little difficulty catching the bullet"
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Main Idea 정답</div>
+      <div class="ans-exp">
+        <strong>based/dependent</strong> on relative velocity / <strong>r</strong> = <span class="ans">relative</span> / <span class="ans">same</span> velocity as his aircraft
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Since motion is relative, <span class="gr">only relative velocities are relevant</span>. In fact, when you think about it, all velocities are relative.</div>
+        <div class="sp-ko">운동은 상대적이므로, / 상대 속도만이 관련이 있다. / 사실, 생각해보면 모든 속도는 상대적이다. <span class="sp-note">★ Since: 이유 접속사 / relevant: 관련 있는, 유효한</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Thus, on the surface of the earth, we always <span class="vw">reckon<span class="tt">측정하다</span></span> velocity <span class="gr">with respect to the ground</span> — the velocity of the earth itself does not matter.</div>
+        <div class="sp-ko">따라서 지표면에서, 우리는 항상 지면에 대해 속도를 측정한다 — 지구 자체의 속도는 중요하지 않다. <span class="sp-note">★ with respect to ~: ~에 대해, ~에 관하여</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">There is a true story of a French pilot in World War II <span class="gr">{who stretched his hand out of his small airplane window and caught a bullet}</span>.</div>
+        <div class="sp-ko">2차 세계대전 중 작은 비행기 창문 밖으로 손을 뻗어 총알을 잡은 프랑스 조종사의 실화가 있다. <span class="sp-note">★ who ~ and caught: 관계절(a French pilot 수식) / stretched A out of B: B에서 A를 뻗다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The velocity of the bullet <span class="gr">must have been</span> about the same as the velocity of his plane. This can happen, because a bullet slows down to such a velocity toward the end of its flight path <span class="gr">due to the action of <span class="vw">air drag<span class="tt">공기 저항</span></span></span>.</div>
+        <div class="sp-ko">총알의 속도는 그의 비행기 속도와 거의 같았음에 틀림없다. / 이것은 가능한데, 총알이 비행 경로 끝부분에서 공기 저항의 작용으로 인해 그런 속도까지 감속하기 때문이다. <span class="sp-note">★ must have been: 과거 추측 (~였음에 틀림없다) / due to: ~ 때문에</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Since only relative velocity matters, the <span class="vw">momentum<span class="tt">운동량</span></span> of the bullet was <span class="vw">negligible<span class="tt">무시할 수 있는</span></span> <span class="gr">as far as the pilot was concerned</span>. Thus, he would have had little problem in catching the bullet.</div>
+        <div class="sp-ko">상대 속도만 중요하므로, / 조종사의 입장에서 총알의 운동량은 무시할 수 있었다. / 따라서, 그는 총알을 잡는 데 거의 문제가 없었을 것이다. <span class="sp-note">★ as far as ~ is concerned: ~에 관한 한, ~의 입장에서 / would have had: 과거 추측(결과)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 &amp; 문법 포인트</div>
+      <p><strong>① must have been (과거 추측)</strong> — "The velocity of the bullet <u>must have been</u> about the same": "~였음에 틀림없다"</p>
+      <p><strong>② due to + 명사 (이유)</strong> — "due to the action of air drag": "~때문에" (because of와 동일, 명사구 앞에 사용)</p>
+      <p><strong>③ as far as ~ is concerned</strong> — "as far as the pilot was concerned": "조종사의 입장에서 보면, 조종사에 관한 한"</p>
+      <p><strong>④ would have had (과거 추측/결과)</strong> — "he would have had little problem": 현재 상황을 과거로 추론 — "거의 문제가 없었을 것이다"</p>
+      <p><strong>⑤ with respect to ~</strong> — "reckon velocity with respect to the ground": "~에 대해, ~에 관하여"</p>
+    </div>
+  </div>
+
+  <!-- Topic & Framework -->
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; Logical Framework</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Relative velocity and momentum — why a pilot could catch a bullet
+      <div class="topic-ko">상대 속도와 운동량 — 조종사가 총알을 잡을 수 있었던 이유</div>
+    </div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Claim</span></td>
+          <td>운동은 상대적 → 상대 속도만 운동량 계산에 유효<br>지구의 속도 자체는 무관</td>
+          <td class="fw-ko">핵심 주장: 상대 속도만이 운동량에 관련된다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Illustration</span></td>
+          <td>프랑스 조종사의 총알 잡기 — 놀라운 실화<br>→ 어떻게 가능한가? (독자에게 질문)</td>
+          <td class="fw-ko">극적인 실화로 독자의 관심을 끌며 논점을 제시한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Explanation</span></td>
+          <td>총알 속도 = 비행기 속도 (공기 저항으로 감속)<br>→ 상대 속도 ≈ 0 → 운동량 무시할 수 있음(negligible)</td>
+          <td class="fw-ko">물리학적 원리(공기저항→감속→상대속도≈0)로 설명한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>상대 속도만 중요하므로 → 총알 잡기에 문제 없음</td>
+          <td class="fw-ko">원리의 적용으로 결론을 도출: 상대 속도 = 유일한 관련 변수.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p1 -->
+
+<!-- ═══ 지문 2 · 어법 교정 ═══ -->
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">Chapter 23 · 지문 2</div>
+    <div class="p-title">Hipparchus of Nicaea</div>
+    <div class="p-title-ko">고대 천문학자 히파르코스 — 관측 천문학과 이심원</div>
+    <span class="p-type-badge">밑줄 친 부분 중 어법이 틀린 것 찾기</span>
+  </div>
+
+  <!-- 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문 (밑줄 ①~⑤)</div>
+    <div class="plain-box">
+      <p class="plain-sent">Hipparchus of Nicaea was the most important astronomer of the Hellenistic Age after Aristarchus of Samos. Unlike Aristarchus, Hipparchus believed in the <span class="vw">geocentric<span class="tt">지구 중심적인</span></span> universe of Aristotle. A noted mathematician, Hipparchus <span class="vw">gauged<span class="tt">측정하다</span></span> the movement of the sun and the moon <span class="ul-word">① using</span> an astronomical model devised by Apollonius of Perga. Hipparchus worked at Alexandria and Rhodes; at the latter city, he created a kind of astronomical research center <span class="ul-word">② in which</span> he <span class="vw">cataloged<span class="tt">목록화하다</span></span> the stars according to brightness. He produced a star chart of about 850 stars, <span class="ul-word">③ tracking</span> their movements and relative brightness. Hipparchus made more accurate measurements than Aristarchus <span class="wrong-word">④ was</span> of the distance of the moon and sun from the earth. To <span class="vw">account for<span class="tt">설명하다</span></span> the orbit of the sun around the earth he developed the idea of the <span class="vw">eccentric<span class="tt">이심원</span></span>, <span class="ul-word">⑤ which</span> Ptolemy of Alexandria would expand upon.</p>
+      <div class="fn">* geocentric: 지구 중심적인 &nbsp;&nbsp;** gauge: 측정하다 &nbsp;&nbsp;*** eccentric: 이심원(중심이 지구에서 벗어난 위치에 있는 원 궤도)</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">01 문항 — 어법이 틀린 것 + Topic / Main Idea 빈칸</div>
+    <div class="q-block">
+      <div class="q-type">밑줄 친 ①~⑤ 중 어법이 틀린 것을 찾아 바르게 고치시오</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> <span class="ul-word">using</span></div>
+        <div class="choice"><span class="cn">②</span> <span class="ul-word">in which</span></div>
+        <div class="choice"><span class="cn">③</span> <span class="ul-word">tracking</span></div>
+        <div class="choice wrong-choice"><span class="cn">④</span> <span class="ul-word">was</span> ← 오답 (수정 필요)</div>
+        <div class="choice"><span class="cn">⑤</span> <span class="ul-word">which</span></div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Topic &amp; Main Idea 빈칸</div>
+      <div class="q-ts">
+        <div class="ts-item">* <strong>topic</strong>: Hipparchus's c<span class="bk" style="min-width:120px;display:inline-block;"></span> to ancient <span class="bk" style="min-width:100px;display:inline-block;"></span></div>
+        <div class="ts-item" style="margin-top:12px;">* <strong>main idea</strong>: Hipparchus made significant a<span class="bk" style="min-width:100px;display:inline-block;"></span> in observational and theoretical astronomy, producing more <span class="bk" style="min-width:80px;display:inline-block;"></span> measurements and star catalogs that l<span class="bk" style="min-width:60px;display:inline-block;"></span> the groundwork for l<span class="bk" style="min-width:60px;display:inline-block;"></span> astronomers like Ptolemy.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 정답 -->
+  <div class="card">
+    <div class="card-lbl">정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">어법 정답</div>
+      <div class="ans-num">정답: <span class="ans">④ <span class="wrong-word">was</span> → <span class="right-word">did</span></span></div>
+      <div class="ans-exp">
+        <strong>오답 이유:</strong> 비교 구문에서 대동사(pro-verb)를 사용해야 한다.<br><br>
+        원문: "Hipparchus made more accurate measurements than Aristarchus <span class="wrong-word">was</span> of the distance..."<br>
+        수정: "Hipparchus made more accurate measurements than Aristarchus <span class="right-word">did</span> of the distance..."<br><br>
+        <strong>설명:</strong> 앞의 동사 "made" (= made measurements)를 받는 대동사는 <span class="right-word">did</span>. "was"는 be동사이므로 "made"의 대동사로 쓸 수 없다.<br>
+        = "than Aristarchus <em>did</em> [= made measurements] of the distance..."
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Topic &amp; Main Idea 정답</div>
+      <div class="ans-exp">
+        <strong>Topic:</strong> Hipparchus's <span class="ans">contributions</span> to ancient <span class="ans">astronomy</span><br><br>
+        <strong>Main idea:</strong> significant <span class="ans">advances/advancements</span> / more <span class="ans">accurate</span> measurements / <span class="ans">laid</span> the groundwork / <span class="ans">later</span> astronomers like Ptolemy
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">①③⑤ 나머지 오답 확인 (정답인 이유)</div>
+      <div class="ans-exp">
+        <strong>① using</strong> — 동시동작 분사구문: "as he used an astronomical model" → <em>using</em> ✓<br>
+        <strong>② in which</strong> — 관계부사 where와 동일: "a research center where he cataloged the stars" = "a research center <em>in which</em> he cataloged" ✓<br>
+        <strong>③ tracking</strong> — 동시동작 분사구문: "while he tracked their movements" → <em>tracking</em> ✓<br>
+        <strong>⑤ which</strong> — 관계대명사 계속적 용법: "= and Ptolemy of Alexandria would expand upon <em>it</em>(= the eccentric)" ✓
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Hipparchus of Nicaea was the most important astronomer of the Hellenistic Age // after Aristarchus of Samos. Unlike Aristarchus, Hipparchus believed in the <span class="vw">geocentric<span class="tt">지구 중심적인</span></span> universe of Aristotle.</div>
+        <div class="sp-ko">니케아의 히파르코스는 사모스의 아리스타르코스 다음으로 헬레니즘 시대의 가장 중요한 천문학자였다. / 아리스타르코스와 달리, 히파르코스는 아리스토텔레스의 지구 중심적 우주를 믿었다. <span class="sp-note">★ Unlike ~: 전치사(= In contrast to ~) / believe in: ~을 믿다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A noted mathematician, Hipparchus <span class="vw">gauged<span class="tt">측정하다</span></span> the movement of the sun and the moon // <span class="gr">① using an astronomical model {devised by Apollonius of Perga}</span>.</div>
+        <div class="sp-ko">저명한 수학자로서, 히파르코스는 페르가의 아폴로니오스가 고안한 천문학적 모델을 사용하여 / 태양과 달의 움직임을 측정했다. <span class="sp-note">★ A noted mathematician: 독립적 기술(= As a noted mathematician) / ① using: 분사구문(동시동작) / devised by ~: 수동 분사구</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Hipparchus worked at Alexandria and Rhodes; at the latter city, he created a kind of astronomical research center // <span class="gr">② in which he cataloged the stars according to brightness</span>.</div>
+        <div class="sp-ko">히파르코스는 알렉산드리아와 로도스에서 일했는데; 후자(로도스)에서 그는 밝기에 따라 별을 목록화하는 일종의 천문학 연구 센터를 만들었다. <span class="sp-note">★ the latter: 앞서 언급한 둘 중 후자(Rhodes) / ② in which: 관계부사 where = in which</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">He produced a star chart of about 850 stars, // <span class="gr">③ tracking their movements and relative brightness</span>. Hipparchus made more accurate measurements than Aristarchus <span class="right-word">did</span> <span class="wrong-word">(was ✗)</span> of the distance of the moon and sun from the earth.</div>
+        <div class="sp-ko">그는 약 850개의 별의 성도를 만들면서, / 그 움직임과 상대적 밝기를 추적했다. / 히파르코스는 달과 태양의 거리에 관해 아리스타르코스보다 더 정확한 측정치를 만들었다. <span class="sp-note">★ ③ tracking: 분사구문(동시동작) / ④ was → did: 대동사(made를 받음)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">To <span class="vw">account for<span class="tt">설명하다</span></span> the orbit of the sun around the earth // he developed the idea of the <span class="vw">eccentric<span class="tt">이심원</span></span>, // <span class="gr">⑤ which Ptolemy of Alexandria would expand upon</span>.</div>
+        <div class="sp-ko">지구 주위를 도는 태양의 궤도를 설명하기 위해 / 그는 이심원 개념을 발전시켰는데, / 알렉산드리아의 프톨레마이오스가 이를 더욱 발전시키게 될 것이었다. <span class="sp-note">★ To account for ~: 목적 부사구(to부정사) / ⑤ which: 관계대명사 계속적 용법(= and he expanded upon it)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 &amp; 문법 포인트 (선생님 강조)</div>
+      <p><strong>① 분사구문 (동시동작)</strong> — "using an astronomical model": = "as he used an astronomical model"</p>
+      <p><strong>② 관계사구 in which</strong> — "research center <u>in which</u> he cataloged" = "research center <u>where</u> he cataloged" (where = in which)</p>
+      <p><strong>③ 분사구문 (동시동작)</strong> — "tracking their movements": = "while he tracked their movements"</p>
+      <p><strong>④ 비교구문 대동사 (★오답 포인트)</strong> — "more accurate measurements than Aristarchus <span class="wrong-word">was</span> <span class="right-word">→ did</span>": 앞 동사 made를 받는 대동사 did 필요. was는 be동사이므로 불가.</p>
+      <p><strong>⑤ 관계대명사 계속적 용법</strong> — "the eccentric, <u>which</u> Ptolemy would expand upon" = "and Ptolemy would expand upon <em>it</em> (= the eccentric)"</p>
+    </div>
+  </div>
+
+  <!-- Topic & Framework -->
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; Logical Framework</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Hipparchus's <u>contributions</u> to ancient <u>astronomy</u>
+      <div class="topic-ko">고대 천문학에 대한 히파르코스의 공헌</div>
+    </div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Background</span></td>
+          <td>히파르코스 = 헬레니즘 시대 최고 천문학자(아리스타르코스 제외)<br>아리스토텔레스의 지구 중심설 지지</td>
+          <td class="fw-ko">역사적 위치와 우주관을 소개한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Achievements</span></td>
+          <td>태양·달 움직임 측정 (아폴로니오스 모델 사용)<br>로도스에 천문 연구 센터 창설<br>약 850개 별 성도 + 밝기·움직임 추적</td>
+          <td class="fw-ko">관측 천문학에서의 구체적 업적들을 나열한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Superior Accuracy</span></td>
+          <td>아리스타르코스보다 더 정확한 달·태양 거리 측정</td>
+          <td class="fw-ko">비교 구문으로 히파르코스의 탁월한 정확성을 강조한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Theoretical Legacy</span></td>
+          <td>이심원(eccentric) 개념 개발<br>→ 프톨레마이오스가 계승·발전</td>
+          <td class="fw-ko">이론적 기여와 후대에 미친 영향으로 마무리한다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p2 -->
+
+<!-- ═══ 지문 3 · 무관한 문장 ═══ -->
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">Chapter 23 · 지문 3</div>
+    <div class="p-title">Microscopic Life Beyond Familiar Environments</div>
+    <div class="p-title-ko">친숙한 환경 너머의 미생물 — DNA 분석으로 드러난 생명의 다양성</div>
+    <span class="p-type-badge">전체 흐름과 관계없는 문장</span>
+  </div>
+
+  <!-- 원문 -->
+  <div class="card">
+    <div class="card-lbl">본문 — 원문 (번호 ①~⑤)</div>
+    <div class="plain-box">
+      <p class="plain-sent">Living things are not confined to the familiar <span class="vw">temperate<span class="tt">온대의</span></span> <span class="vw">realm<span class="tt">영역, 세계</span></span> of land, water, and sunlight inhabited by plants and plant-eating animals. They can be found in the darkest depths of the ocean, in hot volcanic mud, in pools beneath the frozen surface of the <span class="vw">Antarctic<span class="tt">남극</span></span>, and buried kilometers deep in the Earth's crust.</p>
+      <p class="plain-sent"><span class="num-circle">①</span> The creatures that live in these extreme environments are generally unfamiliar, not only because they are inaccessible, but also because they are mostly <span class="vw">microscopic<span class="tt">극히 작은, 미세한</span></span>.</p>
+      <p class="plain-sent"><span class="num-circle">②</span> In more <span class="vw">homely<span class="tt">평범한, 일상적인</span></span> habitats, too, most organisms are too small for us to see without special equipment: they tend to go unnoticed, unless they cause a disease or <span class="vw">rot<span class="tt">썩히다</span></span> the <span class="vw">timbers<span class="tt">목재</span></span> of our houses.</p>
+      <p class="plain-sent" style="background:var(--red-bg);border-left:4px solid var(--red);padding:10px 16px;margin:6px 0;border-radius:0 6px 6px 0;"><span class="num-circle" style="border-color:var(--red);color:var(--red);">③</span> Studies of bacteria have helped us become familiar with those species of industrial importance, such as those used in breaking down waste materials.</p>
+      <p class="plain-sent"><span class="num-circle">④</span> Yet microorganisms make up most of the total mass of living matter on our planet.</p>
+      <p class="plain-sent"><span class="num-circle">⑤</span> Only recently, through new methods of molecular analysis and specifically through the analysis of DNA sequences, have we begun to get a picture of life on Earth that is not <span class="vw">grossly<span class="tt">심하게, 크게</span></span> distorted by our biased perspective as large animals living on dry land.</p>
+      <div class="fn">* temperate: 온대의 &nbsp;&nbsp;** Earth's crust: 지각 &nbsp;&nbsp;*** microscopic: 극히 작은</div>
+    </div>
+  </div>
+
+  <!-- 문항 -->
+  <div class="card">
+    <div class="card-lbl">01 문항 — 무관한 문장 / Topic / Text Structure / Main Idea</div>
+    <div class="q-block">
+      <div class="q-type">전체 흐름과 관계없는 문장을 고르시오</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="choice"><span class="cn">②</span></div>
+        <div class="choice wrong-choice"><span class="cn">③</span> <span style="color:var(--red);">← 무관한 문장</span></div>
+        <div class="choice"><span class="cn">④</span></div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Topic &amp; Text Structure 빈칸</div>
+      <div class="q-ts">
+        <div class="ts-item">* <strong>topic</strong>: the d<span class="bk" style="min-width:90px;display:inline-block;"></span> and p<span class="bk" style="min-width:90px;display:inline-block;"></span> of microscopic life beyond f<span class="bk" style="min-width:80px;display:inline-block;"></span> environments</div>
+        <div style="margin-top:10px;margin-bottom:4px;font-size:.68rem;font-weight:700;letter-spacing:.14em;color:var(--accent);">TEXT STRUCTURE</div>
+        <div class="ts-item">- Claim: Living things e<span class="bk" style="min-width:80px;display:inline-block;"></span> far beyond the familiar temperate realm</div>
+        <div class="ts-item">- Evidence: F<span class="bk" style="min-width:70px;display:inline-block;"></span> in ocean depths, volcanic mud, Antarctic pools, deep Earth's crust</div>
+        <div class="ts-item">- Elaboration ①: These organisms are unfamiliar — i<span class="bk" style="min-width:110px;display:inline-block;"></span> and mostly m<span class="bk" style="min-width:100px;display:inline-block;"></span></div>
+        <div class="ts-item">- Elaboration ②: Even in o<span class="bk" style="min-width:90px;display:inline-block;"></span> habitats, most organisms are too small to see.</div>
+        <div class="ts-item">- Counterintuitive fact: Microorganisms make up most of Earth's total l<span class="bk" style="min-width:70px;display:inline-block;"></span> mass</div>
+        <div class="ts-item">- Conclusion: Only recently, through DNA analysis, have we begun to see life w<span class="bk" style="min-width:80px;display:inline-block;"></span> our biased large-animal perspective</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">★ Main Idea</div>
+      <div class="q-ts">
+        Microscopic organisms d<span class="bk" style="min-width:90px;display:inline-block;"></span> life on Earth far beyond familiar environments, yet their true diversity has only recently become v<span class="bk" style="min-width:80px;display:inline-block;"></span> through molecular and DNA analysis.
+      </div>
+    </div>
+  </div>
+
+  <!-- 정답 -->
+  <div class="card">
+    <div class="card-lbl">정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 &amp; 해설</div>
+      <div class="ans-num">정답: <span class="ans">③</span></div>
+      <div class="ans-exp">
+        <strong>글의 주제:</strong> 미생물은 친숙한 환경 너머 극한 환경에서도 존재하며, 그 진정한 다양성은 최근에서야 분자·DNA 분석을 통해 드러났다.<br><br>
+        <strong>③이 무관한 이유:</strong> "Studies of bacteria have helped us become familiar with those species of industrial importance" = 산업적 중요성이 있는 박테리아 종 → <u>극한 환경에서의 미생물 다양성</u>이라는 글의 흐름과 무관. 산업적 활용(폐기물 분해 등)은 이 글의 논점이 아니다.<br><br>
+        <strong>흐름 확인:</strong> 도입: 극한 환경 생명체 → ①②: 접근 불가 + 미세해서 미인식 → <span style="color:var(--red);">③ 삭제 (산업적 중요성)</span> → ④: 미생물 = 대부분의 생물량 → ⑤: DNA 분석으로만 비로소 파악 가능
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Topic &amp; Text Structure 정답</div>
+      <div class="ans-exp">
+        <strong>Topic:</strong> d = <span class="ans">diversity</span> / p = <span class="ans">prevalence</span> / f = <span class="ans">familiar</span><br>
+        <strong>e</strong> = <span class="ans">extend/exist</span> (존재하다/뻗어나가다)<br>
+        <strong>F</strong> = <span class="ans">Found</span> (발견된다) — 수동태 분사<br>
+        <strong>i</strong> = <span class="ans">inaccessible</span> (접근 불가한) / <strong>m</strong> = <span class="ans">microscopic</span> (미세한)<br>
+        <strong>o</strong> = <span class="ans">ordinary / homely</span> (평범한)<br>
+        <strong>l</strong> = <span class="ans">living</span> (살아있는) — "total living mass"<br>
+        <strong>w</strong> = <span class="ans">without / beyond</span> — "see life without our biased perspective"
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Main Idea 정답</div>
+      <div class="ans-exp">
+        <strong>d</strong> = <span class="ans">dominate</span> (지배하다) — 미생물이 지구 생명을 지배한다<br>
+        <strong>v</strong> = <span class="ans">visible</span> (보이는, 드러나는) — DNA 분석을 통해 비로소 가시화됨
+      </div>
+    </div>
+  </div>
+
+  <!-- 구문해석 -->
+  <div class="card">
+    <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Living things are not confined to the familiar <span class="vw">temperate<span class="tt">온대의</span></span> <span class="vw">realm<span class="tt">영역</span></span> of land, water, and sunlight // <span class="gr">inhabited by plants and plant-eating animals</span>.</div>
+        <div class="sp-ko">생명체들은 식물과 초식동물이 서식하는 / 육지, 물, 햇빛의 친숙한 온대 영역에만 국한되지 않는다. <span class="sp-note">★ be confined to ~: ~에 국한되다 / inhabited by ~: 수동 분사구(realm 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="num-circle">①</span> The creatures <span class="gr">{that live in these extreme environments}</span> are generally unfamiliar, <span class="gr">not only because they are inaccessible, but also because they are mostly <span class="vw">microscopic<span class="tt">극히 작은</span></span></span>.</div>
+        <div class="sp-ko">이러한 극한 환경에 사는 생물들은 일반적으로 낯선데, / 접근하기 어렵기 때문만이 아니라 / 대부분 극히 작기 때문이기도 하다. <span class="sp-note">★ not only because A but also because B: A 때문만이 아니라 B 때문에도</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="num-circle">②</span> In more <span class="vw">homely<span class="tt">평범한</span></span> habitats, too, most organisms are <span class="gr">too small for us to see</span> without special equipment: they tend to go unnoticed, unless they cause a disease or <span class="vw">rot<span class="tt">썩히다</span></span> the <span class="vw">timbers<span class="tt">목재</span></span> of our houses.</div>
+        <div class="sp-ko">더 평범한 서식지에서도, 대부분의 유기체는 특별한 장비 없이 우리가 볼 수 없을 만큼 작다: 그것들은 질병을 유발하거나 집의 목재를 썩히지 않는 한 눈에 띄지 않는 경향이 있다. <span class="sp-note">★ too ~ for A to V: A가 V하기에 너무 ~ / unless: ~하지 않으면</span></div>
+      </div>
+      <div class="sp" style="background:var(--red-bg);border-radius:6px;padding:14px;">
+        <div class="sp-en" style="color:var(--red);"><span class="num-circle" style="border-color:var(--red);color:var(--red);">③</span> [무관한 문장] Studies of bacteria have helped us become familiar with those species of industrial importance, such as those used in breaking down waste materials.</div>
+        <div class="sp-ko" style="color:var(--red);">【무관】 박테리아 연구는 우리가 폐기물 분해에 사용되는 것과 같은 산업적 중요성이 있는 종들에 익숙해지는 데 도움을 주었다. <span class="sp-note">★ 글의 흐름: 극한 환경 미생물 다양성 → ③ 산업적 활용은 무관</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="num-circle">④</span> Yet microorganisms make up most of the <span class="vw">total mass<span class="tt">총 질량</span></span> of living matter on our planet.</div>
+        <div class="sp-ko">그럼에도 불구하고, 미생물은 우리 행성의 살아있는 물질의 총 질량의 대부분을 차지한다. <span class="sp-note">★ make up: ~을 구성하다, 차지하다 / Yet: 역접(= Nevertheless)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="num-circle">⑤</span> <span class="gr">Only recently</span>, through new methods of <span class="vw">molecular<span class="tt">분자의</span></span> analysis and specifically through the analysis of DNA sequences, <span class="gr">have we begun</span> to get a picture of life on Earth // that is not <span class="vw">grossly<span class="tt">심하게</span></span> distorted by our biased perspective as large animals living on dry land.</div>
+        <div class="sp-ko">오직 최근에서야, 분자 분석의 새로운 방법들을 통해, 특히 DNA 서열 분석을 통해, 우리는 지구 생명에 대한 그림을 얻기 시작했는데, / 그것은 육지에 사는 대형 동물로서의 우리의 편향된 시각에 의해 심하게 왜곡되지 않은 그림이다. <span class="sp-note">★ Only recently (부정 부사구) → 도치: "have we begun" (주어-동사 도치) / that is not distorted: 관계절</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 &amp; 문법 포인트</div>
+      <p><strong>① not only because A but also because B</strong> — "not only because they are inaccessible, <u>but also because</u> they are mostly microscopic": A 때문만이 아니라 B 때문에도</p>
+      <p><strong>② too ~ for A to V</strong> — "too small <u>for us to see</u>": "우리가 볼 수 없을 만큼 작다"</p>
+      <p><strong>③ make up</strong> — "microorganisms <u>make up</u> most of the total mass": "~을 구성하다/차지하다"</p>
+      <p><strong>④ 부정 부사어 도치</strong> — "<u>Only recently</u> ... <u>have we begun</u>": Only + 부사(구/절)가 문두 → 주어-조동사 도치</p>
+      <p><strong>⑤ be confined to ~</strong> — "not confined to the familiar temperate realm": "~에 국한되지 않다"</p>
+    </div>
+  </div>
+
+  <!-- Topic & Framework -->
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; Logical Framework</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> The <u>diversity</u> and <u>prevalence</u> of microscopic life beyond <u>familiar</u> environments
+      <div class="topic-ko">친숙한 환경 너머의 미생물 생명의 다양성과 편재성</div>
+    </div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="step-badge">① Claim</span></td>
+          <td>생명체 = 온대 영역에만 국한되지 않음<br>심해, 화산 진흙, 남극 연못, 지각 깊은 곳에서도 발견</td>
+          <td class="fw-ko">생명체의 분포 범위가 훨씬 넓다는 핵심 주장을 제시한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">② Why Unfamiliar</span></td>
+          <td>①: 접근 불가 + 미세함 → 생소<br>②: 평범한 환경에서도 대부분 너무 작아 육안 불가</td>
+          <td class="fw-ko">미생물이 왜 우리에게 낯선지 두 가지 이유를 설명한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">③ Surprising Fact</span></td>
+          <td>④: 그럼에도 미생물 = 지구 생물 총량의 대부분</td>
+          <td class="fw-ko">역접(Yet)으로 미생물이 실제로는 지배적임을 강조한다.</td>
+        </tr>
+        <tr>
+          <td><span class="step-badge">④ Conclusion</span></td>
+          <td>⑤: 오직 최근 DNA 분석으로만 비로소 편향 없는 그림 가능</td>
+          <td class="fw-ko">분자·DNA 분석 이전까지는 우리가 미생물의 진정한 다양성을 몰랐음을 결론짓는다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p3 -->
+
+<!-- ═══ VOCABULARY ═══ -->
+<div class="sec" id="voca">
+  <div style="background:var(--ink);color:#fefcf8;padding:22px 28px;border-radius:8px 8px 0 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;">Chapter 23 · Word &amp; Phrase List</div>
+    <div style="font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;">단어장 — Physics, Chemistry, Bioscience, Earth Science</div>
+    <div style="font-size:.82rem;opacity:.62;margin-top:4px;">교재 제공 단어 + 지문 핵심 어휘 전체</div>
+  </div>
+  <div class="card" style="border-radius:0 0 8px 8px;">
+    <div class="card-lbl">교재 제공 단어 &amp; 숙어 (Chapter 23 Word &amp; Phrase List)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어 / 숙어</th><th>뜻</th><th>동의어 / 관련어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">executive toy</td><td class="vw-mean">사무실 책상에 두는 작은 기념품, 놀이 용품</td><td class="vw-extra">desk accessory</td></tr>
+        <tr><td class="vw-word">nonlinear</td><td class="vw-mean">비선형의</td><td class="vw-extra">↔ linear 선형의</td></tr>
+        <tr><td class="vw-word">orderly</td><td class="vw-mean">질서 있는</td><td class="vw-extra">= regular, systematic ↔ chaotic</td></tr>
+        <tr><td class="vw-word">air drag</td><td class="vw-mean">공기 저항</td><td class="vw-extra">air resistance</td></tr>
+        <tr><td class="vw-word">negligible</td><td class="vw-mean">무시할 수 있는</td><td class="vw-extra">= insignificant ↔ significant</td></tr>
+        <tr><td class="vw-word">note</td><td class="vw-mean">주목하다</td><td class="vw-extra">= observe, notice</td></tr>
+        <tr><td class="vw-word">catalog</td><td class="vw-mean">목록화하다</td><td class="vw-extra">= list, classify</td></tr>
+        <tr><td class="vw-word">account for</td><td class="vw-mean">설명하다</td><td class="vw-extra">= explain, describe</td></tr>
+        <tr><td class="vw-word">realm</td><td class="vw-mean">영역, 세계</td><td class="vw-extra">domain, sphere, field</td></tr>
+        <tr><td class="vw-word">Antarctic</td><td class="vw-mean">남극</td><td class="vw-extra">cf. Arctic 북극</td></tr>
+        <tr><td class="vw-word">homely</td><td class="vw-mean">평범한</td><td class="vw-extra">= ordinary, familiar ↔ exotic</td></tr>
+        <tr><td class="vw-word">rot</td><td class="vw-mean">썩히다</td><td class="vw-extra">= decay, decompose</td></tr>
+        <tr><td class="vw-word">timber</td><td class="vw-mean">목재</td><td class="vw-extra">wood, lumber</td></tr>
+        <tr><td class="vw-word">total mass</td><td class="vw-mean">총 질량</td><td class="vw-extra">biomass 생물량</td></tr>
+        <tr><td class="vw-word">molecular</td><td class="vw-mean">분자의</td><td class="vw-extra">molecule 분자 / molecular analysis 분자 분석</td></tr>
+        <tr><td class="vw-word">grossly</td><td class="vw-mean">심하게, 크게</td><td class="vw-extra">severely, greatly / gross 심한</td></tr>
+      </tbody>
+    </table>
+
+    <div class="card-lbl" style="margin-top:28px;">지문별 추가 핵심 어휘</div>
+    <table class="voca-table">
+      <thead><tr><th>단어 / 숙어</th><th>뜻</th><th>관련어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">iteration</td><td class="vw-mean">반복</td><td class="vw-extra">iterate 반복하다 / iterative 반복적인</td></tr>
+        <tr><td class="vw-word">bifurcation</td><td class="vw-mean">분기(分岐), 갈림점</td><td class="vw-extra">bifurcate 두 갈래로 나뉘다</td></tr>
+        <tr><td class="vw-word">nonlinear system</td><td class="vw-mean">비선형 시스템</td><td class="vw-extra">chaos theory에서의 핵심 개념</td></tr>
+        <tr><td class="vw-word">momentum</td><td class="vw-mean">운동량 (질량×속도)</td><td class="vw-extra">물리량 / cf. velocity 속도, mass 질량</td></tr>
+        <tr><td class="vw-word">velocity</td><td class="vw-mean">속도 (방향 포함)</td><td class="vw-extra">cf. speed 속력(방향 제외) / relative velocity 상대 속도</td></tr>
+        <tr><td class="vw-word">reckon</td><td class="vw-mean">측정하다, 생각하다</td><td class="vw-extra">calculate, estimate</td></tr>
+        <tr><td class="vw-word">negligible</td><td class="vw-mean">무시할 수 있는, 거의 없는</td><td class="vw-extra">= insignificant / as far as ~ is concerned: ~의 입장에서</td></tr>
+        <tr><td class="vw-word">geocentric</td><td class="vw-mean">지구 중심적인</td><td class="vw-extra">↔ heliocentric 태양 중심적인</td></tr>
+        <tr><td class="vw-word">gauge</td><td class="vw-mean">측정하다</td><td class="vw-extra">= measure, assess</td></tr>
+        <tr><td class="vw-word">eccentric</td><td class="vw-mean">이심원; 기이한</td><td class="vw-extra">eccentricity 이심률 / (천문) 중심이 지구에서 벗어난 원 궤도</td></tr>
+        <tr><td class="vw-word">temperate</td><td class="vw-mean">온대의; 온화한</td><td class="vw-extra">temperate zone 온대 / ↔ tropical 열대</td></tr>
+        <tr><td class="vw-word">microscopic</td><td class="vw-mean">극히 작은, 미시적인</td><td class="vw-extra">microscope 현미경 / ↔ macroscopic 거시적인</td></tr>
+        <tr><td class="vw-word">be confined to</td><td class="vw-mean">~에 국한되다, 한정되다</td><td class="vw-extra">= be limited to, be restricted to</td></tr>
+        <tr><td class="vw-word">inaccessible</td><td class="vw-mean">접근하기 어려운</td><td class="vw-extra">↔ accessible / inaccessibility 접근 불가</td></tr>
+        <tr><td class="vw-word">distort</td><td class="vw-mean">왜곡하다</td><td class="vw-extra">distortion 왜곡 / biased 편향된</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end voca -->
+
+</main>
+
+<script>
+const ids=['home','p0','p1','p2','p3','voca'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
