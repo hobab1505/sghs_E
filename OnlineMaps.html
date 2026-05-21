@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Maps: Everyman Offers New Directions | SGHS Critical Reading &amp; Writing</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1100px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.15rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.7rem;opacity:.55;margin-top:2px;}
+.hdr-nav{display:flex;gap:6px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:5px 14px;border-radius:4px;font-size:.72rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.wrap{max-width:1100px;margin:0 auto;padding:30px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:22px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:20px 22px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);}
+.toc-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.65rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.08em;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1.05rem;font-weight:600;margin-bottom:4px;line-height:1.4;}
+.toc-ko{font-size:.8rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:22px 28px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.82rem;opacity:.62;margin-top:4px;font-style:italic;}
+.p-type-badge{display:inline-block;margin-top:10px;background:var(--accent2);color:#fff;font-size:.65rem;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.1em;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:26px 28px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+/* 본문 박스 */
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:24px 32px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.article-para{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:2;color:var(--ink);margin-bottom:18px;text-indent:1.5em;}
+.article-para:last-child{margin-bottom:0;}
+.para-num{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:700;color:var(--accent2);background:var(--orange-bg);border:1px solid rgba(192,80,16,.2);padding:1px 7px;border-radius:3px;margin-right:6px;vertical-align:middle;text-indent:0;}
+.fn{font-size:.77rem;color:var(--ink3);margin-top:14px;border-top:1px solid var(--border2);padding-top:10px;font-style:italic;line-height:1.6;}
+/* 빈칸 */
+.bk{display:inline-block;border-bottom:2.5px solid var(--ink);min-width:120px;margin:0 3px;vertical-align:bottom;}
+/* Q&A */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:14px;}
+.q-type{font-size:.68rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:10px;text-transform:uppercase;}
+.q-stem{font-size:.91rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:10px;}
+.q-ts{font-size:.86rem;color:var(--ink2);line-height:2.1;}
+.ans-box{margin-top:14px;padding:18px 22px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-box+.ans-box{margin-top:10px;}
+.ans-lbl{font-size:.65rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+.ans-exp{font-size:.84rem;color:var(--ink2);line-height:1.7;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+/* RC 질문 박스 */
+.rc-q{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:20px;}
+.rc-q-num{font-size:.68rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;text-transform:uppercase;}
+.rc-q-text{font-size:.92rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:14px;}
+.rc-ans{background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:6px;padding:14px 18px;font-size:.85rem;color:var(--ink2);line-height:1.8;}
+.rc-ans strong{color:var(--ink);}
+.rc-ans .key{color:var(--orange);font-weight:700;}
+/* 구문해석 */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:24px 28px;margin-bottom:20px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:16px;background:var(--paper);padding:0 8px;font-size:.62rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;color:var(--ink);}
+.sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
+.sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
+/* 어휘 툴팁 */
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:5px 10px;border-radius:5px;font-size:.73rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+/* grammar note */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:14px 18px;margin-top:10px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.78rem;letter-spacing:.06em;margin-bottom:8px;}
+.gr-note p{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:6px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+/* topic/framework */
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:15px 20px;border-radius:0 7px 7px 0;margin-bottom:14px;font-size:.9rem;line-height:1.65;}
+.topic-ko{margin-top:8px;font-size:.8rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:8px;font-style:italic;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:9px 15px;text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:13px 15px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.06em;margin-bottom:4px;}
+.fw-ko{margin-top:8px;font-size:.79rem;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:8px;}
+.structure-box{background:#f8f4ff;border:1px solid rgba(100,60,180,.2);border-radius:8px;padding:18px 22px;font-size:.84rem;line-height:1.75;}
+.structure-box h4{color:#5a3aaa;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;font-weight:700;}
+.structure-box .s-item{margin-bottom:6px;padding-left:14px;border-left:3px solid #c0a8f0;}
+.s-arrow{color:var(--accent2);font-weight:700;margin:0 4px;}
+.main-idea-box{background:#fff8f0;border:1px solid rgba(176,90,30,.25);border-radius:8px;padding:16px 20px;margin-top:14px;font-size:.84rem;line-height:1.75;}
+.main-idea-box h4{color:var(--accent2);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;font-weight:700;}
+/* vocab */
+.voca-table{width:100%;border-collapse:collapse;font-size:.84rem;}
+.voca-table th{background:var(--bg);padding:8px 14px;text-align:left;font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:8px 14px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.55;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.95rem;}
+.vw-mean{color:var(--ink2);}
+.vw-extra{font-size:.78rem;color:var(--ink3);margin-top:2px;}
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card,.passage-box,.plain-box{padding:16px 18px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Online Maps: Everyman Offers New Directions</div>
+      <div class="hdr-sub">SGHS Critical Reading &amp; Writing · New York Times, 2009 — 본문·Topic·RC 정답해설·구문분석·단어장</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('text1')">본문 1부</button>
+      <button class="nb" onclick="show('text2')">본문 2부</button>
+      <button class="nb" onclick="show('text3')">본문 3부</button>
+      <button class="nb" onclick="show('rc')">Topic &amp; RC</button>
+      <button class="nb" onclick="show('syntax')">구문 해석</button>
+      <button class="nb" onclick="show('voca')">단어장</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.7rem;margin-bottom:6px;">Online Maps: Everyman Offers New Directions</h1>
+  <p style="font-family:'Crimson Pro',serif;font-size:1rem;color:var(--ink3);font-style:italic;margin-bottom:20px;">New York Times, 16 November 2009, by Veronique Greenwood</p>
+  <p style="font-size:.88rem;color:var(--ink3);margin-bottom:24px;">SGHS Critical Reading &amp; Writing · Suah Kim &nbsp;|&nbsp; 본문 전문 + Topic/Main Idea 빈칸 + Reading Comprehension 5문항 + 구문 해석 + 단어장</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('text1')">
+      <div class="toc-badge">본문 1부 · para 1–4</div>
+      <div class="toc-en">The Volunteer Cartographers</div>
+      <div class="toc-ko">리처드 힌츠 소개 / 자원봉사 지도 제작자들 / 구글의 전략적 필요</div>
+    </a>
+    <a class="toc-card" onclick="show('text2')">
+      <div class="toc-badge">본문 2부 · para 5–8</div>
+      <div class="toc-en">Industry Disruption &amp; the Free Map Movement</div>
+      <div class="toc-ko">기존 지도 산업 교란 / OpenStreetMap / 신뢰성 논란</div>
+    </a>
+    <a class="toc-card" onclick="show('text3')">
+      <div class="toc-badge">본문 3부 · para 9–11</div>
+      <div class="toc-en">Social Mapping &amp; Political Borders</div>
+      <div class="toc-ko">사회적 활동으로서의 지도 제작 / Map Maker / 카슈미르 분쟁</div>
+    </a>
+    <a class="toc-card" onclick="show('rc')">
+      <div class="toc-badge">Topic · Main Idea · RC</div>
+      <div class="toc-en">Topic / Main Idea 빈칸 + Reading Comprehension 5문항</div>
+      <div class="toc-ko">빈칸 정답 해설 + RC 모범 답안 (영어/한국어)</div>
+    </a>
+    <a class="toc-card" onclick="show('syntax')">
+      <div class="toc-badge">구문 해석</div>
+      <div class="toc-en">Key Sentence Analysis</div>
+      <div class="toc-ko">핵심 문장 10개 구문·문법 해설</div>
+    </a>
+    <a class="toc-card" onclick="show('voca')">
+      <div class="toc-badge">Vocabulary</div>
+      <div class="toc-en">Word &amp; Phrase List</div>
+      <div class="toc-ko">교재 제공 어휘 전체 + 추가 핵심 표현</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ 본문 1부 ═══ -->
+<div class="sec" id="text1">
+  <div class="p-header">
+    <div class="p-code">Online Maps · 본문 1부 · Para. 1–4</div>
+    <div class="p-title">The Volunteer Cartographers</div>
+    <div class="p-title-ko">자원봉사 지도 제작자들 — 구글이 필요로 하는 것</div>
+    <span class="p-type-badge">신문 기사 읽기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — Para. 1–4 (어휘 툴팁 포함)</div>
+    <div class="plain-box">
+      <p class="article-para"><span class="para-num">¶1</span>They don't know it, but people who use Google's online maps may be getting directions from Richard Hintz. Mr. Hintz, a 62-year-old engineer who lives in Berkeley, Calif., has <span class="vw">tweaked<span class="tt">미세하게 수정하다</span></span> the locations of more than 200 business listings and points of interest in cities across the state, sliding an on-screen place marker down the block here, moving another one across the street there. Farther <span class="vw">afield<span class="tt">(집에서) 멀리 떨어져</span></span>, he has mapped parts of Cambodia and Laos, where he likes to go on motorcycle trips. Mr. Hintz said these acts of <span class="vw">geo-volunteerism<span class="tt">지리 정보 자원봉사 활동</span></span> were motivated in part by self-interest: he wants to know where he's going. But "it has this added attraction that it helps others," he said.</p>
+
+      <p class="article-para"><span class="para-num">¶2</span>Mr. Hintz is a foot soldier in an army of volunteer <span class="vw">cartographers<span class="tt">지도 제작자</span></span> who are <span class="vw">logging<span class="tt">(데이터를) 기록하다, 입력하다</span></span> every detail of neighborhoods near and far into online <span class="vw">atlases<span class="tt">지도집, 지도 데이터베이스</span></span>. From Petaluma to Peshawar, these amateurs are <span class="vw">arming<span class="tt">(도구·정보를) 갖추게 하다</span></span> themselves with GPS devices and easy-to-use software to create digital maps where none were available before, or fixing mistakes and adding information to existing ones. Like contributors to Wikipedia before them, they are <span class="vw">democratizing<span class="tt">민주화하다, 대중에게 개방하다</span></span> a field that used to be the <span class="vw">exclusive<span class="tt">특정 집단만의, 독점적인</span></span> domain of professionals and specialists. And the information they gather is becoming increasingly valuable commercially.</p>
+
+      <p class="article-para"><span class="para-num">¶3</span>Google, for example, sees maps playing a growing strategic role in its business, especially as people use cellphones to find places to visit, shop and eat. It needs reliable data about the locations of businesses and other destinations. "The way you get that data is having users precisely locate things," said John Hanke, a vice president of product management who <span class="vw">oversees<span class="tt">감독하다, 총괄하다</span></span> Google's mapping efforts.</p>
+
+      <p class="article-para"><span class="para-num">¶4</span>People have been contributing information to digital maps for some time, building displays of crime statistics or apartment rentals. Now they are creating and editing the <span class="vw">underlying<span class="tt">기반이 되는, 근본적인</span></span> maps of streets, highways, rivers and coastlines.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">단락 요약</div>
+    <table class="fw-table">
+      <thead><tr><th>단락</th><th>핵심 내용</th><th>키워드</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">¶1</span></td><td>리처드 힌츠 소개 — 62세 엔지니어, 200개 이상 지점 수정, 캄보디아·라오스까지 지도 제작. 동기: 자기 이익 + 타인 도움</td><td>geo-volunteerism, tweak, self-interest</td></tr>
+        <tr><td><span class="step-badge">¶2</span></td><td>힌츠는 수많은 자원봉사 지도 제작자 중 한 명 — GPS 활용, 디지털 지도 창조·수정. 위키피디아처럼 지도 제작의 <em>민주화</em>. 정보의 상업적 가치 증대</td><td>cartographer, atlas, democratize, exclusive domain</td></tr>
+        <tr><td><span class="step-badge">¶3</span></td><td>구글의 전략적 관심 — 모바일 시대 지도의 역할 증대. 사용자가 위치를 정확히 파악하는 방식으로 데이터 확보</td><td>oversee, reliable data, precisely locate</td></tr>
+        <tr><td><span class="step-badge">¶4</span></td><td>진화: 과거 = 통계·임대 정보 → 현재 = 도로·강·해안선 등 기반 지도 직접 편집</td><td>underlying maps, creating and editing</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ 본문 2부 ═══ -->
+<div class="sec" id="text2">
+  <div class="p-header">
+    <div class="p-code">Online Maps · 본문 2부 · Para. 5–8</div>
+    <div class="p-title">Industry Disruption &amp; the Free Map Movement</div>
+    <div class="p-title-ko">기존 지도 산업의 교란과 무료 지도 운동</div>
+    <span class="p-type-badge">신문 기사 읽기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — Para. 5–8 (어휘 툴팁 포함)</div>
+    <div class="plain-box">
+      <p class="article-para"><span class="para-num">¶5</span>"It is a huge shift," said Michael F. Goodchild, a professor of geography at the University of California, Santa Barbara. "This is putting mapping where it should be, which is the hands of local people who know an area well." That is changing the dynamics of an industry that has been dominated by <span class="vw">a handful of<span class="tt">소수의, 몇 안 되는</span></span> digital mapping companies like Tele Atlas and Navteq. Google is increasingly <span class="vw">bypassing<span class="tt">우회하다, 거치지 않고 넘어가다</span></span> those traditional map providers. It has relied on volunteers to create digital maps of 140 countries, including India, Pakistan and the Philippines, that are more complete than many maps created professionally. Last month Google dropped Tele Atlas data from its United States maps, choosing to rely instead on government data and other sources, including updates from users.</p>
+
+      <p class="article-para"><span class="para-num">¶6</span>"They have <span class="vw">coverage<span class="tt">(지도·정보의) 포괄 범위</span></span> in areas that the big mapping guys don't have," said Mike Dobson, a mapping industry consultant who once worked at Rand McNally. "It has the opportunity to cause a lot of <span class="vw">disruption<span class="tt">파괴적 혼란, 기존 질서의 교란</span></span> in these industries."</p>
+
+      <p class="article-para"><span class="para-num">¶7</span>Some people think map data is so valuable that it should be free. OpenStreetMap, a nonprofit group whose mission is to make free maps that can be reused by anyone, has some 180,000 contributors who have mapped many countries in varying levels of detail. The maps are used on a White House Web site that tracks community service opportunities and in many iPhone applications, among other places. Another collaborative project called WikiMapia is creating its own <span class="vw">annotated<span class="tt">주석을 달다, 설명을 덧붙이다</span></span> maps, <span class="vw">layered<span class="tt">겹쳐 놓다</span></span> on top of Google's. Traditional mapmakers are seeking to adapt by <span class="vw">tapping<span class="tt">활용하다, 이용하다</span></span> their own citizen cartographers. Tele Atlas, which TomTom bought last year for $4.3 billion, now uses feedback from users of TomTom's navigation devices to update its maps.</p>
+
+      <p class="article-para"><span class="para-num">¶8</span>But Tele Atlas says its customers, who might be in delivery trucks or emergency vehicles, can't rely fully on community-created maps, any more than historians can rely on Wikipedia. "Most of our customers expect a level of <span class="vw">due diligence<span class="tt">당연히 기울여야 할 주의, 정당한 검토</span></span> and quality that is way more than what a community is going to put together," said Patrick McDevitt, vice president of global engineering at Tele Atlas.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">단락 요약</div>
+    <table class="fw-table">
+      <thead><tr><th>단락</th><th>핵심 내용</th><th>키워드</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">¶5</span></td><td>굿차일드 교수: "지도가 있어야 할 곳 = 지역을 잘 아는 사람들의 손" / 구글: Tele Atlas 우회, 140개국 자원봉사 지도 사용, Tele Atlas 미국 데이터 폐기</td><td>bypass, a handful of, coverage</td></tr>
+        <tr><td><span class="step-badge">¶6</span></td><td>컨설턴트 마이크 돕슨: 대형 지도 업체가 없는 지역 커버 가능 → 기존 산업에 큰 교란 예고</td><td>disruption, coverage</td></tr>
+        <tr><td><span class="step-badge">¶7</span></td><td>무료 지도 운동: OpenStreetMap(18만 기여자, 백악관 사이트·iPhone 앱 사용) / WikiMapia / 기존 업체도 자체 시민 지도 제작자 활용(Tele Atlas)</td><td>annotate, layer, tap, due diligence</td></tr>
+        <tr><td><span class="step-badge">¶8</span></td><td>반론: Tele Atlas — 배달차량·긴급차량 고객은 위키피디아 수준의 정확성 불가. 품질과 적절한 검토 필요</td><td>due diligence, rely on, community-created</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ 본문 3부 ═══ -->
+<div class="sec" id="text3">
+  <div class="p-header">
+    <div class="p-code">Online Maps · 본문 3부 · Para. 9–11</div>
+    <div class="p-title">Social Mapping, Developing Countries &amp; Political Borders</div>
+    <div class="p-title-ko">사회적 활동·개발도상국·정치적 국경 분쟁</div>
+    <span class="p-type-badge">신문 기사 읽기</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 — Para. 9–11 (어휘 툴팁 포함)</div>
+    <div class="plain-box">
+      <p class="article-para"><span class="para-num">¶9</span>Defenders of the amateur approach point out that professionally created maps often have errors and can be slow to add road closures and other updates. Google has <span class="vw">moderators<span class="tt">검토자, 조정자</span></span> who try to verify the accuracy of users' changes, unless they are very minor, while OpenStreetMap relies on its members to police changes. "As far as we can tell so far, these new sources are as accurate as the traditional ones," Professor Goodchild said. Contributors to OpenStreetMap have turned mapmaking into a social activity. Last month, a group of some 200 volunteers in Atlanta <span class="vw">braved<span class="tt">(악조건을) 무릅쓰다</span></span> the wind and drizzle to collect map data across the city. Armed with GPS devices, cameras and paper maps of neighborhoods, they added missing alleys, public art, restaurants and hotels. John L. Kittle Jr., a 55-year-old engineer, was one participant. In the past, Mr. Kittle has corrected street names in Atlanta and improved the map for his home town of Decatur, Ga. Recently an <span class="vw">acquaintance<span class="tt">지인</span></span> mentioned that she lived in a new condo development, and Mr. Kittle added it to the map. "Seeing an error on a map is the kind of thing that <span class="vw">gnaws at<span class="tt">계속 신경 쓰이다, 마음에 걸리다</span></span> me," he said. "By being able to fix it, I feel like the world is a better place in a very small but measurable way." Mr. Kittle said contributing to a project where anyone can freely use the mapping data was important to him. Others, like Mr. Hintz, said they could make a greater contribution through Google, whose maps are widely used.</p>
+
+      <p class="article-para"><span class="para-num">¶10</span>Some of the most remarkable efforts of amateur map makers are in countries where few, if any, digital maps existed. Google first tested a tool called Map Maker in India, where people immediately began tracing and labeling roads and buildings on top of satellite images provided by Google. When Google released the tool more broadly last year, Faraz Ahmad, a 26-year-old programmer from Pakistan who lives in Glasgow, took one look at the map of India and decided he did not want to see his homeland out-mapped by its traditional rival. So he began mapping Pakistan in his free time, using information from friends, family and existing maps. Mr. Ahmad is now the top contributor to Map Maker, logging more than 41,000 changes.</p>
+
+      <p class="article-para"><span class="para-num">¶11</span>Maps are political, of course, and community-edited maps can <span class="vw">set off<span class="tt">촉발하다, 일으키다</span></span> conflicts. When Mr. Ahmad tried to work on the part of Kashmir that is <span class="vw">administered<span class="tt">관할하다, 통치하다</span></span> by Pakistan, he found that Map Maker wouldn't allow it. He said his contributions were finally accepted by the Map Maker team, which is led by engineers based in India, but only after a long e-mail exchange. At his request, Google is now preventing further changes to the region, after people in India tried to make it part of their country, Mr. Ahmad said. "Whenever you have a Pakistani and an Indian doing something together, there is a political discussion or <span class="vw">dispute<span class="tt">분쟁, 논쟁</span></span>." A Google spokeswoman, Elaine Filadelfo, said Google sometimes blocked changes to <span class="vw">contentious<span class="tt">논쟁을 초래할, 논쟁 대상이 되는</span></span> areas "<span class="vw">with an eye to<span class="tt">~에 주의하여, ~을 목적으로</span></span> avoiding back-and-forth editing."</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">단락 요약</div>
+    <table class="fw-table">
+      <thead><tr><th>단락</th><th>핵심 내용</th><th>키워드</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">¶9</span></td><td>아마추어 지지 측: 전문 지도도 오류 있음 / 구글은 moderator, OSM은 회원이 검증. 애틀랜타 200명 자원봉사 사례 / 키틀: "지도 오류가 신경 쓰인다, 고치면 세상이 더 나아진다"</td><td>moderator, brave, gnaw at, acquaintance</td></tr>
+        <tr><td><span class="step-badge">¶10</span></td><td>개발도상국에서 가장 큰 효과 — 인도에서 Map Maker 테스트. 파라즈 아흐마드(파키스탄·글래스고): 인도에 '지도 경쟁'에서 지지 않으려 파키스탄 지도 제작 → 41,000건 이상 최다 기여자</td><td>Map Maker, out-mapped, remarkable</td></tr>
+        <tr><td><span class="step-badge">¶11</span></td><td>지도의 정치성 — 카슈미르 분쟁: 파키스탄 관할 지역 편집 거부 → 긴 이메일 협상 끝에 수용. 구글: 논쟁 지역 변경 차단 ("back-and-forth editing 방지")</td><td>set off, administer, dispute, contentious, with an eye to</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ Topic / Main Idea / RC ═══ -->
+<div class="sec" id="rc">
+  <div class="p-header">
+    <div class="p-code">Online Maps · Topic · Main Idea · Reading Comprehension</div>
+    <div class="p-title">Topic / Main Idea 빈칸 + Reading Comprehension</div>
+    <div class="p-title-ko">빈칸 정답 해설 + RC 5문항 모범 답안</div>
+    <span class="p-type-badge">Topic · Main Idea · RC</span>
+  </div>
+
+  <!-- Topic / Main Idea 빈칸 -->
+  <div class="card">
+    <div class="card-lbl">★ Topic / Main Idea — 빈칸 채우기</div>
+
+    <div class="q-block">
+      <div class="q-type">Topic</div>
+      <div class="q-ts">
+        <span class="bk" style="min-width:120px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(____)</span> cartography and the d<span class="bk" style="min-width:140px;display:inline-block;"></span><span style="font-size:.75rem;color:var(--ink3);margin-left:4px;">(d____)</span> of digital mapmaking
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-type">Main Idea</div>
+      <div class="q-ts">
+        Amateur volunteers using GPS devices and online tools are t<span class="bk" style="min-width:140px;display:inline-block;"></span> digital mapmaking by adding l<span class="bk" style="min-width:80px;display:inline-block;"></span> data to platforms like Google Maps and OpenStreetMap — democratizing a field once d<span class="bk" style="min-width:110px;display:inline-block;"></span> by professionals, while raising questions about r<span class="bk" style="min-width:110px;display:inline-block;"></span> and p<span class="bk" style="min-width:80px;display:inline-block;"></span> control.
+      </div>
+    </div>
+
+    <div class="ans-box" style="margin-top:18px;">
+      <div class="ans-lbl">Topic 정답</div>
+      <div class="ans-exp">
+        빈칸 1 = <span class="ans">Volunteer / Amateur</span> (자원봉사/아마추어) — volunteer cartography<br>
+        <strong>d</strong> = <span class="ans">democratization</span> (민주화) — "the <em>democratization</em> of digital mapmaking"
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Main Idea 정답</div>
+      <div class="ans-exp">
+        <strong>t</strong> = <span class="ans">transforming</span> (변혁하다) — 아마추어들이 디지털 지도 제작을 변혁하고 있다<br>
+        <strong>l</strong> = <span class="ans">local</span> (지역의) — local data (지역 데이터) 추가<br>
+        <strong>d</strong> = <span class="ans">dominated</span> (지배된) — "a field once <em>dominated</em> by professionals"<br>
+        <strong>r</strong> = <span class="ans">reliability</span> (신뢰성) — Tele Atlas의 우려: 품질·신뢰성<br>
+        <strong>p</strong> = <span class="ans">political</span> (정치적) — 카슈미르 사례: political control
+      </div>
+    </div>
+  </div>
+
+  <!-- Text Structure -->
+  <div class="card">
+    <div class="card-lbl">글 전체 Text Structure</div>
+    <div class="structure-box">
+      <h4>Text Structure</h4>
+      <div class="s-item"><strong>Hook (¶1):</strong> 리처드 힌츠 — 구글 지도 사용자들이 모르는 사이 자원봉사자의 정보를 사용 중<br><span class="s-arrow">→</span> geo-volunteerism: 자기 이익 + 타인 도움</div>
+      <div class="s-item"><strong>Democratization (¶2):</strong> 수만 명의 자원봉사 지도 제작자 = "Wikipedia 같은" 지도 민주화<br><span class="s-arrow">→</span> 전문가·전문가 집단의 독점 영역에서 대중으로 이동</div>
+      <div class="s-item"><strong>Commercial Value (¶3–4):</strong> 구글의 전략적 필요 (모바일 시대) → 사용자가 위치 정확히 입력<br><span class="s-arrow">→</span> 기반 지도(도로·강·해안선) 편집으로 진화</div>
+      <div class="s-item"><strong>Industry Disruption (¶5–6):</strong> Tele Atlas·Navteq 지배 → 구글이 우회, 자원봉사자로 140개국 지도<br><span class="s-arrow">→</span> "It has the opportunity to cause a lot of disruption"</div>
+      <div class="s-item"><strong>Free Map Movement (¶7):</strong> OpenStreetMap(18만 기여자), WikiMapia, 기존 업체도 시민 지도 활용</div>
+      <div class="s-item"><strong>Counter-argument (¶8):</strong> Tele Atlas: 긴급차량·배달 고객 = 위키피디아 수준 불가 → due diligence 필요</div>
+      <div class="s-item"><strong>Defense &amp; Social (¶9):</strong> 전문 지도도 오류 있음 / 애틀랜타 200명 자원봉사 = 지도 제작의 사회적 활동화</div>
+      <div class="s-item"><strong>Developing Countries (¶10):</strong> 디지털 지도 없던 나라들에서 가장 큰 효과 (인도, 파키스탄 아흐마드)</div>
+      <div class="s-item"><strong>Political Dimension (¶11):</strong> 지도의 정치성 — 카슈미르 분쟁 / 구글의 논쟁 지역 변경 차단</div>
+    </div>
+    <div class="main-idea-box">
+      <h4>Main Idea</h4>
+      Volunteer cartographers using GPS and online tools are <u>transforming</u> digital mapmaking by crowdsourcing <u>local</u> geographic data — <u>democratizing</u> a field once <u>dominated</u> by professionals — while also raising new questions about data <u>reliability</u> and <u>political</u> control of geographic information.
+      <div style="margin-top:8px;font-size:.8rem;color:var(--ink3);font-style:italic;">GPS와 온라인 도구를 사용하는 자원봉사 지도 제작자들은 지역 지리 데이터를 크라우드소싱함으로써 디지털 지도 제작을 변혁하고 있다 — 전문가들이 지배하던 분야를 민주화하면서 동시에 데이터 신뢰성과 지리 정보에 대한 정치적 통제라는 새로운 질문들을 제기하고 있다.</div>
+    </div>
+  </div>
+
+  <!-- Reading Comprehension -->
+  <div class="card">
+    <div class="card-lbl">Reading Comprehension — 5문항 모범 답안</div>
+
+    <div class="rc-q">
+      <div class="rc-q-num">Question 1</div>
+      <div class="rc-q-text">What motivated Richard Hintz to contribute to Google Maps?</div>
+      <div class="rc-ans">
+        <strong>모범 답안 (영어):</strong><br>
+        Richard Hintz was motivated <span class="key">partly by self-interest</span> — he wants to know where he is going — and <span class="key">partly by the satisfaction of helping others</span>. He described his contributions as acts of "geo-volunteerism," noting that while his primary reason was personal convenience, knowing that his edits also helped other users was an added attraction.<br><br>
+        <strong>한국어 해설:</strong><br>
+        힌츠의 동기는 두 가지이다. ① <span class="key">자기 이익(self-interest)</span> — 자신이 어디로 가는지 알기 위해 ② <span class="key">타인에게도 도움이 된다는 부가적 매력</span>. "geo-volunteerism"이라는 표현이 핵심 — 개인적 이유와 공공적 기여가 함께함.
+      </div>
+    </div>
+
+    <div class="rc-q">
+      <div class="rc-q-num">Question 2</div>
+      <div class="rc-q-text">In what way are volunteer cartographers changing the field of mapmaking?</div>
+      <div class="rc-ans">
+        <strong>모범 답안 (영어):</strong><br>
+        Volunteer cartographers are <span class="key">democratizing mapmaking</span> — a field that was once the exclusive domain of professionals and specialists. Using GPS devices and easy-to-use software, they are creating digital maps where none existed, fixing errors, and editing the underlying maps of streets, highways, rivers, and coastlines. Like Wikipedia contributors, they are opening up a previously closed, expert-controlled field to ordinary citizens worldwide.<br><br>
+        <strong>한국어 해설:</strong><br>
+        핵심 개념: <span class="key">민주화(democratization)</span>. 전문가·전문 기업의 독점 영역이었던 지도 제작을 일반 시민에게 개방. ① 기존에 없던 지도 창조 ② 오류 수정 ③ 도로·강·해안선 등 기반 지도 직접 편집 — 이전의 단순 정보 추가(범죄 통계, 임대 정보)에서 한 단계 진화.
+      </div>
+    </div>
+
+    <div class="rc-q">
+      <div class="rc-q-num">Question 3</div>
+      <div class="rc-q-text">Why does Google value user contributions to online maps?</div>
+      <div class="rc-ans">
+        <strong>모범 답안 (영어):</strong><br>
+        Google values user contributions because <span class="key">maps play a growing strategic role in its business</span>, especially as people increasingly use cellphones to find businesses, restaurants, and other destinations. Google needs <span class="key">reliable, precise location data</span> to serve these users effectively. As John Hanke stated, "The way you get that data is having users precisely locate things." User-generated data also allows Google to <span class="key">bypass traditional, costly map providers</span> like Tele Atlas, and to cover 140 countries more completely than professionally made maps.<br><br>
+        <strong>한국어 해설:</strong><br>
+        구글의 관점: ① <span class="key">지도 = 비즈니스의 전략적 자산</span> (특히 모바일 시대) ② 사용자가 직접 정확히 위치를 파악하는 것이 데이터 수집의 최선책 ③ 기존 지도 제공업체(Tele Atlas 등)를 <span class="key">우회(bypass)</span>하여 비용 절감 + 더 완전한 커버리지 확보.
+      </div>
+    </div>
+
+    <div class="rc-q">
+      <div class="rc-q-num">Question 4</div>
+      <div class="rc-q-text">What concern does Tele Atlas raise about community-created maps?</div>
+      <div class="rc-ans">
+        <strong>모범 답안 (영어):</strong><br>
+        Tele Atlas argues that its customers — who may be operating <span class="key">delivery trucks or emergency vehicles</span> — cannot rely fully on community-created maps. Their customers require a level of <span class="key">due diligence and quality</span> that far exceeds what a volunteer community can provide. Tele Atlas compares community-created maps to Wikipedia, suggesting that <span class="key">professionals cannot depend on them</span> for critical, safety-related decisions, just as historians cannot rely on Wikipedia as a primary source.<br><br>
+        <strong>한국어 해설:</strong><br>
+        텔레 아틀라스의 우려: <span class="key">품질과 신뢰성(due diligence)</span> 문제. 핵심 비유: 역사학자가 위키피디아에 의존할 수 없는 것처럼, 배달차량·긴급차량 운전자도 커뮤니티 지도에 전적으로 의존할 수 없다 → <span class="key">전문적 검토와 높은 품질 기준</span>이 필요.
+      </div>
+    </div>
+
+    <div class="rc-q">
+      <div class="rc-q-num">Question 5</div>
+      <div class="rc-q-text">Why can community-edited maps become politically controversial?</div>
+      <div class="rc-ans">
+        <strong>모범 답안 (영어):</strong><br>
+        Community-edited maps can become politically controversial because <span class="key">maps reflect and reinforce political claims over territory</span>. The article illustrates this with the <span class="key">Kashmir dispute</span>: when Faraz Ahmad (Pakistani) tried to map the Pakistan-administered part of Kashmir, Map Maker initially rejected his contributions. Users from India also attempted to edit the same region to claim it for their country. Google ultimately had to block further changes to prevent "back-and-forth editing." This shows that when different nationalities contribute to the same map, <span class="key">territorial disputes are transferred into the digital mapmaking process</span>.<br><br>
+        <strong>한국어 해설:</strong><br>
+        지도의 정치적 성격: <span class="key">지도는 영토 주권의 시각적 표현</span>. 카슈미르 사례가 핵심 증거: ① 파키스탄 관할 지역 편집 → Map Maker 거부 ② 인도 사용자들의 반대 편집 시도 ③ 결국 구글이 해당 지역 변경 차단. 결론: 지리 정보에는 <span class="key">정치적 권력 관계</span>가 반영되어 있어 커뮤니티 편집이 국가 간 분쟁을 촉발할 수 있다.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 구문 해석 ═══ -->
+<div class="sec" id="syntax">
+  <div class="p-header">
+    <div class="p-code">Online Maps · 핵심 구문 해석</div>
+    <div class="p-title">Key Sentence Analysis</div>
+    <div class="p-title-ko">핵심 문장 10개 — 구문·문법 완전 분석</div>
+    <span class="p-type-badge">구문 해석</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">본문 핵심 문장 구문 분석</div>
+    <div class="passage-box">
+
+      <div class="sp">
+        <div class="sp-en">They don't know it, but people <span class="gr">{who use Google's online maps}</span> may be getting directions from Richard Hintz.</div>
+        <div class="sp-ko">그들은 모르지만, 구글 온라인 지도를 사용하는 사람들은 리처드 힌츠로부터 길 안내를 받고 있을 수도 있다. <span class="sp-note">★ who use ~: 관계절(people 수식) / may be V-ing: 현재 가능성의 추측</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">Mr. Hintz is a foot soldier in an army of volunteer <span class="vw">cartographers<span class="tt">지도 제작자</span></span> <span class="gr">{who are logging every detail of neighborhoods near and far into online atlases}</span>.</div>
+        <div class="sp-ko">힌츠 씨는 가깝고 먼 지역의 모든 세부 사항을 온라인 지도집에 기록하고 있는 자원봉사 지도 제작자 군단의 일개 병사이다. <span class="sp-note">★ foot soldier in an army of ~: 비유적 표현 "~의 군대 속 일개 병사" / who are logging: 관계절</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">Like contributors to Wikipedia before them, they are <span class="vw">democratizing<span class="tt">민주화하다</span></span> a field <span class="gr">{that used to be the exclusive domain of professionals and specialists}</span>.</div>
+        <div class="sp-ko">그들보다 앞선 위키피디아 기여자들처럼, 그들은 전문가와 전문인들의 독점 영역이었던 분야를 민주화하고 있다. <span class="sp-note">★ Like ~: 전치사(= similar to) / used to be: "~이었다" (과거 습관·상태) / that used to be ~: 관계절</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">"The way <span class="gr">{you get that data}</span> is <span class="gr">having users precisely locate things</span>," said John Hanke, a vice president of product management <span class="gr">{who oversees Google's mapping efforts}</span>.</div>
+        <div class="sp-ko">"그 데이터를 얻는 방법은 사용자들이 정확하게 사물의 위치를 파악하게 하는 것입니다"라고 구글의 지도 업무를 총괄하는 제품 관리 부사장 존 행키가 말했다. <span class="sp-note">★ The way S V is V-ing: "~하는 방법은 ~하는 것이다" / having users locate: 사역 동명사구(목적어+원형)</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">"This is putting mapping <span class="gr">where it should be</span>, which is the hands of local people <span class="gr">{who know an area well}</span>."</div>
+        <div class="sp-ko">"이것은 지도 제작이 있어야 할 곳, 즉 지역을 잘 아는 현지인들의 손에 지도 제작을 놓는 것입니다." <span class="sp-note">★ where it should be: 장소 부사절(관계부사 where) / which is ~: 관계대명사 계속적 용법(앞 절 전체 부연)</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">Google is increasingly <span class="vw">bypassing<span class="tt">우회하다</span></span> those traditional map providers. It has relied on volunteers to create digital maps of 140 countries, including India, Pakistan and the Philippines, <span class="gr">{that are more complete than many maps created professionally}</span>.</div>
+        <div class="sp-ko">구글은 점점 더 기존 지도 제공업체들을 우회하고 있다. 구글은 인도, 파키스탄, 필리핀을 포함한 140개국의 디지털 지도를 만들기 위해 자원봉사자들에 의존해왔는데, 그 지도들은 전문적으로 만들어진 많은 지도들보다 더 완성도가 높다. <span class="sp-note">★ has relied on ~ to V: ~에 의존하여 V하다 / that are more complete ~: 관계절(140개국 지도 수식)</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">But Tele Atlas says its customers, <span class="gr">{who might be in delivery trucks or emergency vehicles}</span>, can't rely fully on community-created maps, <span class="gr">any more than historians can rely on Wikipedia</span>.</div>
+        <div class="sp-ko">그러나 텔레 아틀라스는, 배달 트럭이나 긴급 차량에 탑승해 있을 수 있는 고객들은, 역사학자들이 위키피디아에 의존할 수 없는 것과 마찬가지로, 커뮤니티가 만든 지도에 완전히 의존할 수 없다고 말한다. <span class="sp-note">★ who might be ~: 삽입 관계절(customers 부연) / any more than ~: "~와 마찬가지로 ~아니다" (비교 부정)</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">"Seeing an error on a map is the kind of thing <span class="gr">{that gnaws at me}</span>," he said. "By being able to fix it, I feel like the world is a better place in a very small but measurable way."</div>
+        <div class="sp-ko">"지도에서 오류를 보는 것은 계속 신경 쓰이는 종류의 일이에요. 그것을 고칠 수 있음으로써, 나는 세상이 아주 작지만 측정 가능한 방식으로 더 나은 곳이 된 것 같은 기분이 들어요." <span class="sp-note">★ 동명사 주어 Seeing ~ / gnaw at: ~을 계속 신경 쓰이게 하다 / By being able to V: "V할 수 있음으로써"</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">When Google released the tool more broadly last year, Faraz Ahmad, a 26-year-old programmer from Pakistan <span class="gr">{who lives in Glasgow}</span>, took one look at the map of India and decided <span class="gr">he did not want to see his homeland out-mapped by its traditional rival</span>.</div>
+        <div class="sp-ko">구글이 작년에 그 도구를 더 광범위하게 출시했을 때, 글래스고에 사는 파키스탄 출신의 26세 프로그래머 파라즈 아흐마드는 인도 지도를 한 번 훑어보고, 자신의 조국이 전통적인 경쟁국에게 지도 제작에서 뒤처지는 것을 보고 싶지 않다고 결심했다. <span class="sp-note">★ took one look at ~: "~을 한번 훑어보다" / out-mapped: out- 접두사 "~보다 더 많이 지도화되다" / by its traditional rival: 인도를 의미</span></div>
+      </div>
+
+      <div class="sp">
+        <div class="sp-en">A Google spokeswoman, Elaine Filadelfo, said Google sometimes blocked changes to <span class="vw">contentious<span class="tt">논쟁 대상이 되는</span></span> areas "<span class="vw">with an eye to<span class="tt">~을 목적으로, ~에 주의하여</span></span> avoiding back-and-forth editing."</div>
+        <div class="sp-ko">구글 대변인 엘레인 필라델포는 구글이 때때로 "앞뒤로 왔다 갔다 하는 편집을 피하기 위한 목적으로" 논쟁이 되는 지역의 변경을 차단한다고 말했다. <span class="sp-note">★ with an eye to -ing: "~을 목적으로, ~하기 위해" / back-and-forth editing: 양측이 번갈아 가며 반복 수정하는 편집 분쟁</span></div>
+      </div>
+
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 &amp; 문법 포인트 총정리</div>
+      <p><strong>① used to be (과거 상태)</strong> — "a field that <u>used to be</u> the exclusive domain of professionals": "~이었다" (현재는 아님을 암시)</p>
+      <p><strong>② any more than ~ (비교 부정)</strong> — "can't rely on ~, <u>any more than</u> historians can rely on Wikipedia": "역사학자가 위키피디아에 의존할 수 없는 것처럼 마찬가지로 ~도 할 수 없다"</p>
+      <p><strong>③ 관계대명사 계속적 용법 (which)</strong> — "the hands of local people, <u>which</u> is [= and that is] the hands of local people who know an area well": 앞 절 전체를 부연 설명</p>
+      <p><strong>④ out- 접두사 (능가)</strong> — "<u>out-mapped</u> by its traditional rival": "~에게 지도 제작에서 뒤처지다/능가당하다" (outrun, outperform, outscore와 동일 구조)</p>
+      <p><strong>⑤ with an eye to -ing</strong> — "<u>with an eye to</u> avoiding back-and-forth editing": "~하기 위한 목적으로, ~에 주의하여" (= in order to avoid)</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VOCABULARY ═══ -->
+<div class="sec" id="voca">
+  <div style="background:var(--ink);color:#fefcf8;padding:22px 28px;border-radius:8px 8px 0 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;opacity:.5;margin-bottom:5px;">Online Maps · Word &amp; Phrase List</div>
+    <div style="font-family:'Crimson Pro',serif;font-size:1.35rem;font-weight:600;">단어장 — Online Maps: Everyman Offers New Directions</div>
+    <div style="font-size:.82rem;opacity:.62;margin-top:4px;">교재 제공 어휘 전체 (30개) + 추가 핵심 표현</div>
+  </div>
+  <div class="card" style="border-radius:0 0 8px 8px;">
+    <div class="card-lbl">교재 제공 단어 &amp; 숙어 (Word &amp; Phrase List)</div>
+    <table class="voca-table">
+      <thead><tr><th>단어 / 숙어</th><th>뜻</th><th>활용 / 관련어</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">tweak</td><td class="vw-mean">미세하게 수정하다</td><td class="vw-extra">tweak the location of ~: ~의 위치를 미세하게 수정하다</td></tr>
+        <tr><td class="vw-word">afield</td><td class="vw-mean">(집에서) 멀리 떨어져</td><td class="vw-extra">Farther afield: 더 먼 곳에서</td></tr>
+        <tr><td class="vw-word">geo-volunteerism</td><td class="vw-mean">지리 정보 자원봉사 활동</td><td class="vw-extra">geo- (지리의) + volunteerism (자원봉사 정신)</td></tr>
+        <tr><td class="vw-word">cartographer</td><td class="vw-mean">지도 제작자</td><td class="vw-extra">cartography 지도 제작(학) / volunteer cartographer</td></tr>
+        <tr><td class="vw-word">log</td><td class="vw-mean">(데이터를) 기록하다, 입력하다</td><td class="vw-extra">log changes (변경 사항을 기록하다) / log 41,000 changes</td></tr>
+        <tr><td class="vw-word">atlas</td><td class="vw-mean">지도집, 지도 데이터베이스</td><td class="vw-extra">online atlas / plural: atlases</td></tr>
+        <tr><td class="vw-word">arm</td><td class="vw-mean">(도구·정보를) 갖추게 하다</td><td class="vw-extra">arm oneself with ~: ~을 갖추다 / Armed with GPS devices</td></tr>
+        <tr><td class="vw-word">democratize</td><td class="vw-mean">민주화하다, 대중에게 개방하다</td><td class="vw-extra">democratization 민주화 / democratize a field 분야를 대중에게 개방</td></tr>
+        <tr><td class="vw-word">exclusive</td><td class="vw-mean">특정 집단만의, 독점적인</td><td class="vw-extra">exclusive domain 독점 영역 / exclusively 독점적으로</td></tr>
+        <tr><td class="vw-word">oversee</td><td class="vw-mean">감독하다, 총괄하다</td><td class="vw-extra">oversee mapping efforts 지도 업무를 총괄하다 / overseer 감독자</td></tr>
+        <tr><td class="vw-word">underlying</td><td class="vw-mean">기반이 되는, 근본적인</td><td class="vw-extra">underlying maps 기반 지도 / underlying cause 근본 원인</td></tr>
+        <tr><td class="vw-word">a handful of</td><td class="vw-mean">소수의, 몇 안 되는</td><td class="vw-extra">a handful of companies 소수의 기업들 / = a few</td></tr>
+        <tr><td class="vw-word">bypass</td><td class="vw-mean">우회하다, 거치지 않고 넘어가다</td><td class="vw-extra">bypass traditional providers 기존 업체를 우회하다</td></tr>
+        <tr><td class="vw-word">coverage</td><td class="vw-mean">(지도·정보의) 포괄 범위</td><td class="vw-extra">have coverage in areas 특정 지역의 포괄 범위를 갖추다</td></tr>
+        <tr><td class="vw-word">disruption</td><td class="vw-mean">파괴적 혼란, 기존 질서의 교란</td><td class="vw-extra">disrupt 교란하다 / disruptive 파괴적인 (= 혁신적인)</td></tr>
+        <tr><td class="vw-word">annotate</td><td class="vw-mean">주석을 달다, 설명을 덧붙이다</td><td class="vw-extra">annotated maps 주석이 달린 지도 / annotation 주석</td></tr>
+        <tr><td class="vw-word">layer</td><td class="vw-mean">겹쳐 놓다 (overlaying data on a map)</td><td class="vw-extra">layered on top of Google's maps 구글 지도 위에 겹쳐 놓다</td></tr>
+        <tr><td class="vw-word">tap</td><td class="vw-mean">활용하다, 이용하다</td><td class="vw-extra">tap their own citizen cartographers 자체 시민 지도 제작자를 활용하다</td></tr>
+        <tr><td class="vw-word">due diligence</td><td class="vw-mean">당연히 기울여야 할 주의, 정당한 검토</td><td class="vw-extra">a level of due diligence 일정 수준의 정당한 검토</td></tr>
+        <tr><td class="vw-word">moderator</td><td class="vw-mean">검토자, 조정자</td><td class="vw-extra">moderate 중재하다 / verify accuracy 정확성을 검증하다</td></tr>
+        <tr><td class="vw-word">brave</td><td class="vw-mean">(악조건을) 무릅쓰다</td><td class="vw-extra">brave the wind and drizzle 바람과 이슬비를 무릅쓰다 (동사)</td></tr>
+        <tr><td class="vw-word">acquaintance</td><td class="vw-mean">지인</td><td class="vw-extra">an acquaintance mentioned ~ 한 지인이 ~라고 언급했다</td></tr>
+        <tr><td class="vw-word">gnaw at</td><td class="vw-mean">계속 신경 쓰이다, 마음에 걸리다</td><td class="vw-extra">gnaw at me 나를 계속 신경 쓰이게 하다 / gnaw 씹다, 갉아먹다</td></tr>
+        <tr><td class="vw-word">set off</td><td class="vw-mean">촉발하다, 일으키다</td><td class="vw-extra">set off conflicts 분쟁을 촉발하다 / = trigger, spark</td></tr>
+        <tr><td class="vw-word">administer</td><td class="vw-mean">관할하다, 통치하다</td><td class="vw-extra">administered by Pakistan 파키스탄이 관할하는 / administration 행정</td></tr>
+        <tr><td class="vw-word">dispute</td><td class="vw-mean">분쟁, 논쟁 / 반박하다</td><td class="vw-extra">political dispute 정치적 분쟁 / territorial dispute 영토 분쟁</td></tr>
+        <tr><td class="vw-word">contentious</td><td class="vw-mean">논쟁을 초래할, 논쟁 대상이 되는</td><td class="vw-extra">contentious areas 논쟁이 되는 지역 / contention 논쟁</td></tr>
+        <tr><td class="vw-word">with an eye to</td><td class="vw-mean">~에 주의하여, ~을 목적으로</td><td class="vw-extra">with an eye to avoiding ~: ~을 피하기 위한 목적으로 / = in order to</td></tr>
+      </tbody>
+    </table>
+
+    <div class="card-lbl" style="margin-top:28px;">추가 핵심 표현 &amp; 구문</div>
+    <table class="voca-table">
+      <thead><tr><th>표현</th><th>뜻</th><th>본문 예시</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">foot soldier in an army of ~</td><td class="vw-mean">~의 군단 중 일개 병사 (비유)</td><td class="vw-extra">"a foot soldier in an army of volunteer cartographers"</td></tr>
+        <tr><td class="vw-word">used to be</td><td class="vw-mean">~이었다 (과거 상태, 현재는 아님)</td><td class="vw-extra">"a field that used to be the exclusive domain of professionals"</td></tr>
+        <tr><td class="vw-word">any more than ~</td><td class="vw-mean">~와 마찬가지로 ~아니다 (비교 부정)</td><td class="vw-extra">"can't rely on ~, any more than historians can rely on Wikipedia"</td></tr>
+        <tr><td class="vw-word">out-mapped</td><td class="vw-mean">지도 제작에서 능가당하다</td><td class="vw-extra">"he did not want to see his homeland out-mapped" / out- = 능가하다</td></tr>
+        <tr><td class="vw-word">back-and-forth editing</td><td class="vw-mean">양측이 번갈아 반복 수정하는 편집 분쟁</td><td class="vw-extra">"with an eye to avoiding back-and-forth editing"</td></tr>
+        <tr><td class="vw-word">police (changes)</td><td class="vw-mean">(변경 사항을) 감시·단속하다</td><td class="vw-extra">"relies on its members to police changes" (동사)</td></tr>
+        <tr><td class="vw-word">put together</td><td class="vw-mean">모아서 만들다, 구성하다</td><td class="vw-extra">"what a community is going to put together"</td></tr>
+        <tr><td class="vw-word">a level of due diligence</td><td class="vw-mean">일정 수준의 정당한 검토</td><td class="vw-extra">"expect a level of due diligence and quality"</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+
+<script>
+const ids=['home','text1','text2','text3','rc','syntax','voca'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
