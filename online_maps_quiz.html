@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Maps 단어 퀴즈</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;background:#f5f5f0;min-height:100vh;padding:1.5rem 1rem}
+.wrap{max-width:680px;margin:0 auto}
+.top{margin-bottom:1.25rem}
+.top-badge{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:3px 9px;margin-bottom:8px;letter-spacing:.03em;background:#E0F7FA;color:#006064}
+.top h1{font-size:22px;font-weight:700;color:#111;margin-bottom:3px}
+.top p{font-size:13px;color:#888}
+.p-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.ptag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:5px}
+.p1{background:#E0F2F1;color:#004D40}
+.p2{background:#FFF3E0;color:#E65100}
+.p3{background:#F3E5F5;color:#4A148C}
+.tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.25rem}
+.tab{padding:6px 13px;font-size:13px;border:1px solid #ddd;border-radius:99px;cursor:pointer;background:#fff;color:#444;transition:all .15s;font-weight:500}
+.tab:hover{background:#f0f0f0}
+.tab.on{background:#00838F;border-color:#00838F;color:#fff;font-weight:700}
+.wl-toggle{font-size:13px;color:#00838F;cursor:pointer;margin-bottom:1rem;display:flex;align-items:center;gap:5px;user-select:none}
+.wordlist{background:#fff;border:1px solid #e8e8e8;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.25rem;display:none}
+.wordlist.show{display:block}
+.wl-sec{margin-bottom:1.1rem}
+.wl-sec:last-child{margin-bottom:0}
+.wl-title{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:5px;display:inline-block;margin-bottom:8px}
+.wt1{background:#E0F2F1;color:#004D40}
+.wt2{background:#FFF3E0;color:#E65100}
+.wt3{background:#F3E5F5;color:#4A148C}
+.word-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:5px}
+.word-row{display:flex;gap:6px;font-size:13px;padding:5px 7px;border-radius:6px;background:#f9f9f7}
+.wen{font-weight:600;color:#003333;min-width:110px;flex-shrink:0}
+.wko{color:#555;line-height:1.4}
+.prog-wrap{margin-bottom:1.25rem}
+.prog-meta{display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:5px}
+.prog-track{height:5px;background:#e0e0e0;border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:#00838F;border-radius:99px;transition:width .3s}
+.prog-fill.orange{background:#E8821A}
+.card{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;margin-bottom:10px}
+.ba{background:#E0F7FA;color:#006064}
+.bb{background:#E8F5E9;color:#2E7D32}
+.bc{background:#FFF8E1;color:#E65100}
+.src-chip{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:5px;margin-left:6px;vertical-align:middle}
+.sc1{background:#E0F2F1;color:#004D40}
+.sc2{background:#FFF3E0;color:#E65100}
+.sc3{background:#F3E5F5;color:#4A148C}
+.qword{font-size:19px;font-weight:600;color:#111;margin-bottom:4px;line-height:1.4}
+.qsub{font-size:13px;color:#888;margin-bottom:1.25rem}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:420px){.opts{grid-template-columns:1fr}}
+.opt{padding:11px 14px;font-size:14px;border:1px solid #ddd;border-radius:9px;cursor:pointer;background:#fff;color:#222;text-align:left;line-height:1.4;transition:all .15s}
+.opt:hover:not(.dis){background:#f5f5f5}
+.opt.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;font-weight:500}
+.opt.no{background:#FFEBEE;border-color:#C62828;color:#B71C1C}
+.opt.show{background:#E0F7FA;border-color:#00838F;color:#004D40;font-weight:500}
+.opt.dis{pointer-events:none}
+.fill-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fill-inp{flex:1;min-width:170px;padding:10px 13px;font-size:15px;border:1px solid #ddd;border-radius:9px;outline:none;transition:border .15s}
+.fill-inp:focus{border-color:#00838F}
+.fill-inp.ok{border-color:#2E7D32;background:#E8F5E9;color:#1B5E20}
+.fill-inp.no{border-color:#C62828;background:#FFEBEE;color:#B71C1C}
+.sub-btn{padding:10px 18px;font-size:14px;border:1px solid #ccc;border-radius:9px;cursor:pointer;background:#fff;color:#333;transition:all .15s;white-space:nowrap}
+.sub-btn:hover{background:#eee}
+.fb{margin-top:8px;font-size:13px}
+.fb.ok{color:#2E7D32}.fb.no{color:#C62828}
+.hint{font-size:12px;color:#aaa;margin-top:6px}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem}
+.nbtn{padding:9px 20px;font-size:14px;border:1px solid #ccc;border-radius:9px;cursor:pointer;background:#fff;color:#333;transition:all .15s}
+.nbtn:hover{background:#eee}
+.nbtn:disabled{opacity:.4;pointer-events:none}
+.nxt{background:#00838F;border-color:#00838F;color:#fff;display:none}
+.nxt:hover{background:#006064}
+.score-wrap{background:#fff;border:1px solid #e8e8e8;border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.score-top{text-align:center;padding:2rem 1.5rem 1.25rem}
+.score-pct{font-size:54px;font-weight:700;line-height:1}
+.score-unit{font-size:24px}
+.score-sub{font-size:15px;color:#444;margin-top:5px;font-weight:500}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 1.5rem 1.5rem}
+.sbox{background:#f7f7f5;border-radius:9px;padding:.85rem;text-align:center}
+.sn{font-size:24px;font-weight:600}.sl{font-size:12px;color:#888;margin-top:3px}
+.score-acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 1.5rem 1.25rem}
+.review-sec{border-top:1px solid #f0f0f0;padding:1.25rem 1.5rem 1.5rem}
+.review-sec h3{font-size:14px;font-weight:700;color:#C05E00;margin-bottom:10px}
+.wrong-list{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem;max-height:220px;overflow-y:auto}
+.wi{display:flex;gap:10px;align-items:baseline;padding:7px 10px;background:#FFF5EB;border-radius:7px;font-size:14px}
+.wi-en{font-weight:600;color:#7C3A00;min-width:120px;flex-shrink:0}
+.wi-ko{color:#9A5500;font-size:13px}
+.review-btns{display:flex;gap:8px}
+.rbtn{flex:1;padding:11px;font-size:13px;font-weight:600;border:none;border-radius:9px;cursor:pointer;transition:background .15s}
+.rbtn-flash{background:#EDE6FF;color:#5B3FC8}
+.rbtn-flash:hover{background:#D9CCFF}
+.rbtn-retry{background:#FFF0E0;color:#C05E00;border:1px solid #FFCC80}
+.rbtn-retry:hover{background:#FFE0B2}
+.flash-wrap{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:1.5rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.flash-count{font-size:13px;color:#888;text-align:center;margin-bottom:10px}
+.flash-card{background:#E0F7FA;border:1.5px dashed #80DEEA;border-radius:12px;padding:2rem 1.5rem;text-align:center;cursor:pointer;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:1rem;transition:all .15s}
+.flash-card:hover{border-color:#00838F;background:#B2EBF2}
+.flash-word{font-size:24px;font-weight:700;color:#111;margin-bottom:4px;line-height:1.4}
+.flash-meaning{font-size:17px;color:#004D40;margin-top:10px;display:none;line-height:1.5}
+.flash-tap{font-size:12px;color:#80DEEA;margin-top:12px}
+.flash-nav{display:flex;gap:8px}
+.flash-nav button{flex:1;padding:11px;font-size:14px;border:1px solid #ddd;border-radius:9px;cursor:pointer;background:#fff;transition:all .15s;font-weight:500}
+.fknew{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20}
+.fknew:hover{background:#C8E6C9}
+.fskip{background:#f5f5f5;color:#555}
+.fskip:hover{background:#eee}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="top-badge">Online Maps</div>
+    <h1>단어 퀴즈</h1>
+    <p>SGHS 비평적 읽기와 쓰기 B — Everyman Offers New Directions · 총 55단어 · 30문제 × 8세트</p>
+    <div class="p-tags">
+      <span class="ptag p1">¶1–4 Volunteer Cartographers</span>
+      <span class="ptag p2">¶5–8 Industry Disruption</span>
+      <span class="ptag p3">¶9–11 Social &amp; Political Maps</span>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="wl-toggle" onclick="toggleWL()">
+    <span id="wlArr">▶</span> 단어 목록 보기 (55개)
+  </div>
+  <div class="wordlist" id="wordlist">
+    <div class="wl-sec">
+      <span class="wl-title wt1">¶1–4 — The Volunteer Cartographers</span>
+      <div class="word-grid" id="wg1"></div>
+    </div>
+    <div class="wl-sec">
+      <span class="wl-title wt2">¶5–8 — Industry Disruption &amp; Free Map Movement</span>
+      <div class="word-grid" id="wg2"></div>
+    </div>
+    <div class="wl-sec">
+      <span class="wl-title wt3">¶9–11 — Social Mapping &amp; Political Borders</span>
+      <div class="word-grid" id="wg3"></div>
+    </div>
+  </div>
+
+  <div id="quizArea"></div>
+</div>
+
+<script>
+const W1 = [ // ¶1–4 Volunteer Cartographers
+  {w:"tweak",               m:"미세하게 수정하다",            src:1},
+  {w:"afield",              m:"(집에서) 멀리 떨어져",          src:1},
+  {w:"geo-volunteerism",    m:"지리 정보 자원봉사 활동",       src:1},
+  {w:"cartographer",        m:"지도 제작자",                 src:1},
+  {w:"log",                 m:"(데이터를) 기록하다, 입력하다",  src:1},
+  {w:"atlas",               m:"지도집, 지도 데이터베이스",      src:1},
+  {w:"arm",                 m:"(도구·정보를) 갖추게 하다",     src:1},
+  {w:"democratize",         m:"민주화하다, 대중에게 개방하다",  src:1},
+  {w:"democratization",     m:"민주화",                     src:1},
+  {w:"exclusive",           m:"특정 집단만의, 독점적인",       src:1},
+  {w:"oversee",             m:"감독하다, 총괄하다",           src:1},
+  {w:"underlying",          m:"기반이 되는, 근본적인",        src:1},
+  {w:"self-interest",       m:"자기 이익",                  src:1},
+  {w:"reliable",            m:"신뢰할 수 있는",              src:1},
+  {w:"precisely",           m:"정확하게",                   src:1},
+  {w:"strategic",           m:"전략적인",                   src:1},
+  {w:"commercially",        m:"상업적으로",                 src:1},
+  {w:"foot soldier",        m:"일개 병사 (비유)",            src:1},
+  {w:"cartography",         m:"지도 제작(학)",              src:1},
+];
+
+const W2 = [ // ¶5–8 Industry Disruption
+  {w:"a handful of",        m:"소수의, 몇 안 되는",           src:2},
+  {w:"bypass",              m:"우회하다, 거치지 않고 넘어가다", src:2},
+  {w:"coverage",            m:"(지도·정보의) 포괄 범위",      src:2},
+  {w:"disruption",          m:"파괴적 혼란, 기존 질서의 교란",  src:2},
+  {w:"annotate",            m:"주석을 달다, 설명을 덧붙이다",   src:2},
+  {w:"layer",               m:"겹쳐 놓다",                  src:2},
+  {w:"tap",                 m:"활용하다, 이용하다",           src:2},
+  {w:"due diligence",       m:"당연히 기울여야 할 주의, 정당한 검토", src:2},
+  {w:"collaborative",       m:"협력적인, 공동의",            src:2},
+  {w:"nonprofit",           m:"비영리의",                   src:2},
+  {w:"reliability",         m:"신뢰성",                    src:2},
+  {w:"put together",        m:"모아서 만들다, 구성하다",       src:2},
+  {w:"community-created",   m:"커뮤니티가 만든",             src:2},
+];
+
+const W3 = [ // ¶9–11 Social & Political
+  {w:"moderator",           m:"검토자, 조정자",              src:3},
+  {w:"brave",               m:"(악조건을) 무릅쓰다",          src:3},
+  {w:"acquaintance",        m:"지인",                      src:3},
+  {w:"gnaw at",             m:"계속 신경 쓰이다, 마음에 걸리다", src:3},
+  {w:"set off",             m:"촉발하다, 일으키다",           src:3},
+  {w:"administer",          m:"관할하다, 통치하다",           src:3},
+  {w:"dispute",             m:"분쟁, 논쟁",                 src:3},
+  {w:"contentious",         m:"논쟁을 초래할, 논쟁 대상이 되는",src:3},
+  {w:"with an eye to",      m:"~에 주의하여, ~을 목적으로",    src:3},
+  {w:"out-map",             m:"지도 제작에서 능가하다",        src:3},
+  {w:"back-and-forth",      m:"앞뒤로 왔다갔다 하는",         src:3},
+  {w:"police",              m:"감시하다, 단속하다",           src:3},
+  {w:"participatory",       m:"참여적인",                   src:3},
+  {w:"dominated",           m:"지배된",                    src:3},
+  {w:"transforming",        m:"변혁하는, 변화시키는",         src:3},
+  {w:"verify",              m:"검증하다, 확인하다",           src:3},
+  {w:"remarkable",          m:"주목할 만한, 놀라운",          src:3},
+  {w:"territorial",         m:"영토의",                    src:3},
+  {w:"political",           m:"정치적인",                   src:3},
+  {w:"volunteer",           m:"자원봉사자; 자원봉사의",        src:3},
+  {w:"accuracy",            m:"정확성",                    src:3},
+  {w:"measurable",          m:"측정 가능한",                src:3},
+  {w:"spokesperson",        m:"대변인",                    src:3},
+];
+
+const ALL=[...W1,...W2,...W3]; // 55 words
+
+const SRC_CLS=['','sc1','sc2','sc3'];
+const SRC_LBL=['','¶1–4','¶5–8','¶9–11'];
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+
+function makeSets(){
+  const sets=[];
+  for(let s=0;s<8;s++){
+    // balanced: ~9 from W1(19), ~6 from W2(13), ~15 from W3(23) → 30 total
+    const pick=(arr,n)=>shuffle([...arr]).slice(0,n);
+    const pool=[...pick(W1,10),...pick(W2,7),...pick(W3,13)];
+    sets.push(shuffle(pool));
+  }
+  return sets;
+}
+const SETS=makeSets();
+
+let cs=0,cq=0,ans=[],qs=[],isDone=false;
+let wrongWords=[],flashPool=[],flashIdx=0,flashRevealed=false,flashMode=false;
+let mode='quiz';
+
+function makeOpts(correct,n=4){return shuffle([correct,...shuffle(ALL.filter(x=>x.w!==correct.w)).slice(0,n-1)])}
+function buildQs(pool){
+  return pool.map((word,i)=>{
+    const t=i%3;
+    if(t===0)return{type:'A',word,opts:makeOpts(word,4),answer:word.m};
+    if(t===1){const o=shuffle(ALL.filter(x=>x.w!==word.w))[0];return{type:'B',word,opts:shuffle([word,o]),answer:word.w,prompt:word.m};}
+    return{type:'C',word,answer:word.w};
+  });
+}
+function markWrong(word){if(!wrongWords.find(x=>x.w===word.w))wrongWords.push(word);}
+function esc(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+
+function buildWordList(){
+  const fill=(id,arr)=>{
+    document.getElementById(id).innerHTML=
+      arr.map(w=>`<div class="word-row"><span class="wen">${w.w}</span><span class="wko">${w.m}</span></div>`).join('');
+  };
+  fill('wg1',W1);fill('wg2',W2);fill('wg3',W3);
+}
+function toggleWL(){
+  const el=document.getElementById('wordlist'),ar=document.getElementById('wlArr');
+  const show=el.classList.toggle('show');ar.textContent=show?'▼':'▶';
+}
+
+function renderTabs(){
+  const el=document.getElementById('tabs');el.innerHTML='';
+  for(let i=0;i<8;i++){
+    const b=document.createElement('button');
+    b.className='tab'+(cs===i&&mode==='quiz'?' on':'');
+    b.innerHTML=`세트${i+1} <span style="font-size:10px;opacity:.6">30문제</span>`;
+    const si=i;
+    b.onclick=()=>{cs=si;cq=0;ans=[];wrongWords=[];qs=buildQs([...SETS[si]]);isDone=false;flashMode=false;mode='quiz';render();};
+    el.appendChild(b);
+  }
+}
+
+function render(){
+  renderTabs();
+  if(flashMode){renderFlash();return;}
+  if(cq>=qs.length){renderScore();return;}
+  renderQ();
+}
+
+function renderScore(){
+  const total=qs.length,ok=ans.filter(Boolean).length;
+  const pct=Math.round(ok/total*100);
+  const color=pct>=80?'#1D9E75':pct>=60?'#E8821A':'#C62828';
+  const label=mode==='wrong'?'오답 재도전':`세트 ${cs+1}`;
+  let wrongSec='';
+  if(!wrongWords.length){
+    wrongSec=`<div class="review-sec" style="text-align:center;padding:1.5rem">
+      <div style="font-size:36px;margin-bottom:8px">🎉</div>
+      <p style="font-size:15px;font-weight:600;color:#2E7D32">모두 정답! 완벽해요!</p>
+    </div>`;
+  } else {
+    wrongSec=`<div class="review-sec">
+      <h3>❌ 틀린 단어 ${wrongWords.length}개</h3>
+      <div class="wrong-list">${wrongWords.map(w=>`<div class="wi"><span class="wi-en">${w.w}</span><span class="wi-ko">${w.m}</span></div>`).join('')}</div>
+      <div class="review-btns">
+        <button class="rbtn rbtn-flash" onclick="startFlash()">🃏 플래시카드 복습</button>
+        <button class="rbtn rbtn-retry" onclick="retryWrong()">📝 틀린 것만 다시 풀기</button>
+      </div>
+    </div>`;
+  }
+  const nextBtn=mode==='quiz'&&cs<7
+    ?`<button class="nbtn" style="background:#00838F;color:#fff;border-color:#00838F" onclick="cs++;cq=0;ans=[];wrongWords=[];qs=buildQs([...SETS[cs]]);isDone=false;render()">다음 세트 →</button>`:'';
+  document.getElementById('quizArea').innerHTML=`
+  <div class="score-wrap">
+    <div class="score-top">
+      <p style="font-size:13px;color:#888;margin-bottom:6px">${label} 완료</p>
+      <div class="score-pct" style="color:${color}">${pct}<span class="score-unit">%</span></div>
+      <p class="score-sub">${ok} / ${total} 정답</p>
+    </div>
+    <div class="score-grid">
+      <div class="sbox"><div class="sn" style="color:#2E7D32">${ok}</div><div class="sl">정답</div></div>
+      <div class="sbox"><div class="sn" style="color:#C62828">${total-ok}</div><div class="sl">오답</div></div>
+      <div class="sbox"><div class="sn">${total}</div><div class="sl">전체</div></div>
+    </div>
+    <div class="score-acts">
+      <button class="nbtn" onclick="cq=0;ans=[];wrongWords=[];qs=buildQs(shuffle([...SETS[cs]]));isDone=false;mode='quiz';render()">🔄 다시 풀기</button>
+      ${nextBtn}
+    </div>
+    ${wrongSec}
+  </div>`;
+}
+
+function retryWrong(){
+  if(!wrongWords.length)return;
+  mode='wrong';cq=0;ans=[];
+  qs=buildQs(shuffle([...wrongWords]));
+  isDone=false;flashMode=false;render();
+}
+
+function startFlash(){
+  flashPool=shuffle([...wrongWords]);flashIdx=0;flashRevealed=false;flashMode=true;render();
+}
+function renderFlash(){
+  if(!flashPool.length||flashIdx>=flashPool.length){
+    flashMode=false;
+    document.getElementById('quizArea').innerHTML=`
+    <div class="flash-wrap" style="text-align:center;padding:2.5rem 1.5rem">
+      <div style="font-size:36px;margin-bottom:10px">✅</div>
+      <p style="font-size:16px;font-weight:600;color:#2E7D32;margin-bottom:4px">플래시카드 완료!</p>
+      <p style="font-size:13px;color:#888;margin-bottom:1.5rem">틀린 단어를 모두 확인했어요.</p>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="nbtn" onclick="flashPool=shuffle([...wrongWords]);flashIdx=0;flashRevealed=false;flashMode=true;render()">🔄 다시 보기</button>
+        <button class="nbtn" style="background:#E8821A;color:#fff;border-color:#E8821A" onclick="retryWrong()">📝 퀴즈로 풀기</button>
+      </div>
+    </div>`;
+    renderTabs();return;
+  }
+  const word=flashPool[flashIdx];
+  document.getElementById('quizArea').innerHTML=`
+  <div class="flash-wrap">
+    <div class="flash-count">플래시카드 ${flashIdx+1} / ${flashPool.length} · 남은 단어 ${flashPool.length}개</div>
+    <div class="flash-card" onclick="revealFlash()">
+      <p style="font-size:10px;font-weight:700;color:#80DEEA;letter-spacing:.08em;margin-bottom:6px">ENGLISH <span class="src-chip ${SRC_CLS[word.src]}">${SRC_LBL[word.src]}</span></p>
+      <div class="flash-word">${word.w}</div>
+      <div class="flash-meaning" id="fm">${word.m}</div>
+      <p class="flash-tap" id="ft">탭해서 뜻 확인 👆</p>
+    </div>
+    <div class="flash-nav">
+      <button class="fskip" onclick="flashIdx++;flashRevealed=false;render()">다음 →</button>
+      <button class="fknew" onclick="flashPool.splice(flashIdx,1);if(flashIdx>=flashPool.length)flashIdx=Math.max(0,flashPool.length-1);flashRevealed=false;if(!flashPool.length){flashMode=false;}render()">알았어요 ✓</button>
+    </div>
+    <p style="font-size:11px;color:#ccc;text-align:center;margin-top:8px">알았어요를 누르면 이 단어는 목록에서 제거돼요</p>
+  </div>`;
+  renderTabs();
+  if(flashRevealed){const fm=document.getElementById('fm'),ft=document.getElementById('ft');if(fm)fm.style.display='block';if(ft)ft.style.display='none';}
+}
+function revealFlash(){
+  flashRevealed=true;
+  const fm=document.getElementById('fm'),ft=document.getElementById('ft');
+  if(fm)fm.style.display='block';if(ft)ft.style.display='none';
+}
+
+function renderQ(){
+  const q=qs[cq],total=qs.length,pct=Math.round(cq/total*100);
+  const pf=mode==='wrong'?'orange':'';
+  const label=mode==='wrong'?'오답 재도전':`세트 ${cs+1}`;
+  const sc=SRC_CLS[q.word.src]||'';
+  const sl=SRC_LBL[q.word.src]||'';
+  let h=`<div class="prog-wrap">
+    <div class="prog-meta">
+      <span>${label} — 문제 ${cq+1} / ${total}</span>
+      <span>✅ ${ans.filter(Boolean).length}개 정답</span>
+    </div>
+    <div class="prog-track"><div class="prog-fill ${pf}" style="width:${pct}%"></div></div>
+  </div>
+  <div class="card">`;
+  if(q.type==='A'){
+    h+=`<span class="badge ba">영→한 선택</span><span class="src-chip ${sc}">${sl}</span>
+    <p class="qword">${q.word.w}</p><p class="qsub">뜻을 고르세요</p>
+    <div class="opts" id="opts">`;
+    q.opts.forEach((o,i)=>{h+=`<button class="opt" id="opt${i}" onclick="ansA(${i},'${esc(o.m)}','${esc(q.answer)}',${q.opts.length})">${o.m}</button>`;});
+    h+=`</div>`;
+  } else if(q.type==='B'){
+    h+=`<span class="badge bb">한→영 선택 (2지선다)</span><span class="src-chip ${sc}">${sl}</span>
+    <p class="qword">${q.prompt}</p><p class="qsub">알맞은 영단어/표현을 고르세요</p>
+    <div class="opts" id="opts">`;
+    q.opts.forEach((o,i)=>{h+=`<button class="opt" id="opt${i}" onclick="ansB(${i},'${esc(o.w)}','${esc(q.answer)}',${q.opts.length})">${o.w}</button>`;});
+    h+=`</div>`;
+  } else {
+    h+=`<span class="badge bc">영단어/표현 직접 입력</span><span class="src-chip ${sc}">${sl}</span>
+    <p class="qword">${q.word.m}</p><p class="qsub">해당하는 영단어 또는 표현을 입력하세요</p>
+    <div class="fill-row">
+      <input type="text" class="fill-inp" id="fillI" placeholder="입력..." onkeydown="if(event.key==='Enter')ansC('${esc(q.answer)}')">
+      <button class="sub-btn" onclick="ansC('${esc(q.answer)}')">확인</button>
+    </div>
+    <div class="fb" id="fb"></div>
+    <p class="hint">대소문자 구분 없음</p>`;
+  }
+  h+=`</div>
+  <div class="nav">
+    <button class="nbtn" id="skipBtn" onclick="skipQ()">건너뛰기</button>
+    <button class="nbtn nxt" id="nextBtn" onclick="nextQ()">다음 문제 →</button>
+  </div>`;
+  document.getElementById('quizArea').innerHTML=h;
+  isDone=false;
+  if(q.type==='C') setTimeout(()=>{const el=document.getElementById('fillI');if(el)el.focus();},50);
+}
+
+function ansA(idx,chosen,correct,n){
+  if(isDone)return;isDone=true;
+  const ok=chosen===correct;ans.push(ok);if(!ok)markWrong(qs[cq].word);
+  for(let i=0;i<n;i++){const b=document.getElementById('opt'+i);if(!b)continue;b.classList.add('dis');if(b.textContent===correct)b.classList.add('show');if(i===idx&&!ok)b.classList.add('no');if(i===idx&&ok)b.classList.add('ok');}
+  document.getElementById('nextBtn').style.display='inline-block';document.getElementById('skipBtn').disabled=true;
+}
+function ansB(idx,chosen,correct,n){
+  if(isDone)return;isDone=true;
+  const ok=chosen===correct;ans.push(ok);if(!ok)markWrong(qs[cq].word);
+  for(let i=0;i<n;i++){const b=document.getElementById('opt'+i);if(!b)continue;b.classList.add('dis');if(b.textContent===correct)b.classList.add('show');if(i===idx&&!ok)b.classList.add('no');if(i===idx&&ok)b.classList.add('ok');}
+  document.getElementById('nextBtn').style.display='inline-block';document.getElementById('skipBtn').disabled=true;
+}
+function ansC(correct){
+  if(isDone)return;
+  const inp=document.getElementById('fillI');if(!inp)return;
+  const val=inp.value.trim().toLowerCase().replace(/\s+/g,' ');
+  const ok=val===correct.toLowerCase().replace(/\s+/g,' ');
+  isDone=true;ans.push(ok);if(!ok)markWrong(qs[cq].word);
+  inp.classList.add(ok?'ok':'no');inp.disabled=true;
+  const fb=document.getElementById('fb');
+  if(fb){fb.innerHTML=ok?`<span class="ok">✓ 정답입니다!</span>`:`<span class="no">✗ 정답: <strong>${correct}</strong></span>`;fb.className='fb'+(ok?' ok':' no');}
+  document.getElementById('nextBtn').style.display='inline-block';document.getElementById('skipBtn').disabled=true;
+}
+function skipQ(){markWrong(qs[cq].word);ans.push(false);nextQ();}
+function nextQ(){cq++;isDone=false;render();}
+
+buildWordList();
+qs=buildQs([...SETS[0]]);
+render();
+</script>
+</body>
+</html>
