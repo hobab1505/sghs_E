@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7강 · Focus Framework | Advanced English Reading II 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1200px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.1rem;font-weight:600;letter-spacing:.04em;white-space:nowrap;}
+.hdr-sub{font-size:.65rem;opacity:.5;margin-top:2px;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;overflow-x:auto;max-width:800px;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:4px 10px;border-radius:4px;font-size:.68rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.wrap{max-width:1200px;margin:0 auto;padding:26px 16px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:20px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:16px 20px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 4px 16px var(--shadow);}
+.toc-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 9px;border-radius:20px;margin-bottom:8px;letter-spacing:.08em;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1rem;font-weight:600;margin-bottom:3px;line-height:1.4;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+.p-header{background:var(--ink);color:#fefcf8;padding:18px 26px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.6rem;opacity:.5;margin-bottom:4px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.28rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.78rem;opacity:.6;margin-top:3px;font-style:italic;}
+.p-type-badge{display:inline-block;margin-top:9px;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 11px;border-radius:20px;letter-spacing:.1em;}
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:22px 26px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+/* Passage box */
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:22px 26px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:14px;background:var(--paper);padding:0 7px;font-size:.6rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.95;color:var(--ink);margin-bottom:3px;}
+.given-sent{background:#fdf0e8;border-left:4px solid var(--accent2);padding:10px 16px;border-radius:0 6px 6px 0;margin:10px 0;font-family:'Crimson Pro',serif;font-size:1rem;line-height:1.9;}
+.num-circle{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--ink);font-size:.7rem;font-weight:700;margin:0 2px;vertical-align:middle;}
+.fn{font-size:.75rem;color:var(--ink3);margin-top:12px;border-top:1px solid var(--border2);padding-top:9px;font-style:italic;line-height:1.6;}
+/* Vocab */
+.voca-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px;}
+.voca-item{background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:8px 12px;font-size:.82rem;}
+.voca-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.92rem;}
+.voca-mean{color:var(--ink2);margin-left:4px;}
+.voca-syn{font-size:.75rem;color:var(--ink3);margin-top:2px;}
+/* Q blocks */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:18px 22px;margin-bottom:12px;}
+.q-type{font-size:.66rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;text-transform:uppercase;}
+.q-stem{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:12px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;line-height:1.55;padding:7px 11px;border-radius:5px;color:var(--ink2);}
+.cn{display:inline-block;font-weight:700;color:var(--ink);margin-right:4px;}
+.correct-choice{background:var(--orange-bg);border:1px solid rgba(192,80,16,.25);color:var(--ink);}
+.correct-choice .cn{color:var(--orange);}
+.wrong-choice{background:var(--red-bg);border:1px solid rgba(176,26,26,.2);}
+.q-ts{font-size:.84rem;color:var(--ink2);line-height:2.1;}
+.q-ts .ts-item{margin-bottom:3px;}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:100px;margin:0 2px;vertical-align:bottom;}
+/* Answer */
+.ans-box{margin-top:12px;padding:16px 20px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-box+.ans-box{margin-top:9px;}
+.ans-lbl{font-size:.62rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:7px;}
+.ans-num{font-size:1rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.7;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+/* Syntax */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:22px 26px;margin-bottom:18px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:14px;background:var(--paper);padding:0 7px;font-size:.6rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.03rem;line-height:1.9;color:var(--ink);}
+.sp-ko{font-size:.8rem;color:var(--ink2);line-height:1.65;padding-left:11px;border-left:3px solid var(--border);margin-top:4px;}
+.sp-note{display:inline-block;font-size:.72rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 5px;border-radius:3px;margin-left:5px;}
+/* Tooltips */
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:4px 9px;border-radius:5px;font-size:.71rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+.wrong-word{color:var(--red);font-weight:700;text-decoration:underline;text-decoration-color:var(--red);}
+.right-word{color:var(--orange);font-weight:700;}
+.ul-word{font-weight:700;text-decoration:underline;text-decoration-color:var(--ink);}
+/* Grammar note */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:12px 16px;margin-top:9px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.76rem;letter-spacing:.06em;margin-bottom:7px;}
+.gr-note p{font-size:.81rem;color:var(--ink2);line-height:1.65;margin-bottom:5px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+/* Topic & Framework */
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:13px 18px;border-radius:0 7px 7px 0;margin-bottom:12px;font-size:.88rem;line-height:1.65;}
+.topic-ko{margin-top:7px;font-size:.78rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:7px;font-style:italic;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:8px 13px;text-align:left;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:12px 13px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-bottom:3px;}
+.fw-ko{margin-top:6px;font-size:.77rem;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:6px;}
+.main-idea-box{background:#fff8f0;border:1px solid rgba(176,90,30,.25);border-radius:8px;padding:14px 18px;margin-top:12px;font-size:.83rem;line-height:1.75;}
+.main-idea-box h4{color:var(--accent2);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;font-weight:700;}
+/* irrelevant sentence */
+.irrel{background:var(--red-bg);border-left:4px solid var(--red);padding:10px 16px;margin:6px 0;border-radius:0 6px 6px 0;}
+/* Full voca table */
+.voca-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.voca-table th{background:var(--bg);padding:7px 13px;text-align:left;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:7px 13px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.5;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.93rem;}
+.vw-mean{color:var(--ink2);}
+.vw-extra{font-size:.76rem;color:var(--ink3);margin-top:2px;}
+.sec-divider{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin:22px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border2);}
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card,.passage-box,.plain-box{padding:14px 16px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Focus Framework · 7강</div>
+      <div class="hdr-sub">2026 3rd Grade 1st Semester · Advanced English Reading II · pp.078–089</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb" onclick="show('p001')">001·녹색소비</button>
+      <button class="nb" onclick="show('p002')">002·학습조언</button>
+      <button class="nb" onclick="show('p003')">003·인종교육</button>
+      <button class="nb" onclick="show('p004')">004·해양오염</button>
+      <button class="nb" onclick="show('p005')">005·저작권침해</button>
+      <button class="nb" onclick="show('p006')">006·사진현실</button>
+      <button class="nb" onclick="show('p007')">007·게이트키핑</button>
+      <button class="nb" onclick="show('p008')">008·직업분화</button>
+      <button class="nb" onclick="show('p009')">009·동물심리학</button>
+      <button class="nb" onclick="show('p010')">010·도시농업</button>
+      <button class="nb" onclick="show('p011')">011·식민노동</button>
+      <button class="nb" onclick="show('p012')">012·아침저녁형</button>
+      <button class="nb" onclick="show('voca')">단어장</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.65rem;margin-bottom:6px;">Focus Framework · 7강</h1>
+  <p style="font-size:.86rem;color:var(--ink3);margin-bottom:22px;">2026 3rd Grade 1st Semester · Advanced English Reading II &nbsp;|&nbsp; pp.078–089 · 총 12개 지문</p>
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p001')">
+      <div class="toc-badge">001 · 어법 (낱말 쓰임)</div>
+      <div class="toc-en">Green Consumers &amp; Environmental Responsibility</div>
+      <div class="toc-ko">녹색 소비자의 내적 책임 의식 / ③ think → who think</div>
+    </a>
+    <a class="toc-card" onclick="show('p002')">
+      <div class="toc-badge">002 · 제목 선택</div>
+      <div class="toc-en">Common Study Advice Is Often Wrong</div>
+      <div class="toc-ko">반복 암기의 허상 / 정답 ④</div>
+    </a>
+    <a class="toc-card" onclick="show('p003')">
+      <div class="toc-badge">003 · 제목 선택</div>
+      <div class="toc-en">White Supremacy in American Education</div>
+      <div class="toc-ko">교육의 백인 우월주의 / 정답 ③</div>
+    </a>
+    <a class="toc-card" onclick="show('p004')">
+      <div class="toc-badge">004 · 어법</div>
+      <div class="toc-en">Marine Plastic Pollution &amp; Quantitative Methods</div>
+      <div class="toc-ko">해양 플라스틱 오염 / ⑤ it → them</div>
+    </a>
+    <a class="toc-card" onclick="show('p005')">
+      <div class="toc-badge">005 · 무관한 문장</div>
+      <div class="toc-en">Digital Piracy &amp; Publishing</div>
+      <div class="toc-ko">디지털 저작권 침해 / 정답 ④</div>
+    </a>
+    <a class="toc-card" onclick="show('p006')">
+      <div class="toc-badge">006 · 글의 순서</div>
+      <div class="toc-en">Photography as Interpretation of Reality</div>
+      <div class="toc-ko">사진의 주관성과 디지털 현실 / 정답 ⑤ (C)→(B)→(A)</div>
+    </a>
+    <a class="toc-card" onclick="show('p007')">
+      <div class="toc-badge">007 · 어법 (낱말 쓰임)</div>
+      <div class="toc-en">Gatekeeping in the News Media</div>
+      <div class="toc-ko">뉴스 게이트키핑 / ③ which → that</div>
+    </a>
+    <a class="toc-card" onclick="show('p008')">
+      <div class="toc-badge">008 · 제목 선택</div>
+      <div class="toc-en">Occupational Specialization in Civilizations</div>
+      <div class="toc-ko">직업 분화와 전문 조합의 탄생 / 정답 ④</div>
+    </a>
+    <a class="toc-card" onclick="show('p009')">
+      <div class="toc-badge">009 · 제목 선택</div>
+      <div class="toc-en">Animal Psychologists Redefine Psychology</div>
+      <div class="toc-ko">행동 중심 심리학으로의 전환 / 정답 ⑤</div>
+    </a>
+    <a class="toc-card" onclick="show('p010')">
+      <div class="toc-badge">010 · 어법</div>
+      <div class="toc-en">Botanical Gardens &amp; Urban Agriculture</div>
+      <div class="toc-ko">도시 농업과 식물원의 역할 / ③ what → that</div>
+    </a>
+    <a class="toc-card" onclick="show('p011')">
+      <div class="toc-badge">011 · 무관한 문장</div>
+      <div class="toc-en">Colonial Labour Regimes &amp; Inequality</div>
+      <div class="toc-ko">식민 노동 체제와 불평등 확대 / 정답 ③</div>
+    </a>
+    <a class="toc-card" onclick="show('p012')">
+      <div class="toc-badge">012 · 글의 순서</div>
+      <div class="toc-en">Morning People vs. Night People</div>
+      <div class="toc-ko">아침형 vs 저녁형 인간 / 정답 ③ (B)→(C)→(A)</div>
+    </a>
+    <a class="toc-card" onclick="show('voca')">
+      <div class="toc-badge">단어장</div>
+      <div class="toc-en">7강 전체 Focus Vocabulary</div>
+      <div class="toc-ko">12개 지문 핵심 어휘 통합 정리</div>
+    </a>
+  </div>
+</div>
+
+
+<!-- ═══ 001 · Green Consumers ═══ -->
+<div class="sec" id="p001">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0061 · p.078 · 001</div>
+    <div class="p-title">Green Consumers &amp; Environmental Responsibility</div>
+    <div class="p-title-ko">녹색 소비자와 환경적 책임 의식</div>
+    <span class="p-type-badge">밑줄 친 부분 중 어법이 틀린 것</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">alternative</span><span class="voca-mean"> 대체품, 대안</span><div class="voca-syn">substitute, replacement / an alternative to ~: ~에 대한 대안</div></div>
+      <div class="voca-item"><span class="voca-word">internal</span><span class="voca-mean"> 내적인</span><div class="voca-syn">↔ external</div></div>
+      <div class="voca-item"><span class="voca-word">vital</span><span class="voca-mean"> 매우 중요한</span><div class="voca-syn">crucial, essential, critical</div></div>
+      <div class="voca-item"><span class="voca-word">consumption</span><span class="voca-mean"> 소비</span><div class="voca-syn">consume 소비하다 / consumer 소비자</div></div>
+      <div class="voca-item"><span class="voca-word">sustainability</span><span class="voca-mean"> 지속 가능성</span><div class="voca-syn">sustainable 지속 가능한 / sustain 유지하다</div></div>
+      <div class="voca-item"><span class="voca-word">management</span><span class="voca-mean"> 경영, 관리</span><div class="voca-syn">manageable 관리 가능한 / administration, governance</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage</div>
+    <div class="plain-box">
+      <p class="plain-sent">Green consumers, compared with non-green consumers, prefer purchasing environmentally-friendly products over the standard <span class="vw">alternatives<span class="tt">대체품, 대안</span></span> <span class="ul-word">① available</span>.</p>
+      <p class="plain-sent">Green consumers believe [that they are guided by their <span class="vw">internal<span class="tt">내적인</span></span> control and open-mindedness], so they would not leave the responsibilities of <span class="ul-word">② protecting</span> the environment to governments, business communities, environmentalists or scientists.</p>
+      <p class="plain-sent">Green consumers are ordinary people {<span class="wrong-word">③ think</span> that business operations have a <span class="vw">vital<span class="tt">매우 중요한</span></span> role in fighting to protect environment in general}.</p>
+      <p class="plain-sent">Moreover, these consumers believe [that an individual's <span class="vw">consumption<span class="tt">소비</span></span> <span class="ul-word">④ makes</span> a difference in environmental issues].</p>
+      <p class="plain-sent">When green consumers demand products and services, firms combine environmental and social costs of their production and consumption.</p>
+      <p class="plain-sent">They also provide green <span class="vw">management<span class="tt">경영, 관리</span></span> and green marketing practices by creating job opportunities in green consumption.</p>
+      <p class="plain-sent">Therefore, it could be said [<span class="ul-word">⑤ that</span> green consumers are individuals {targeting <span class="vw">sustainability<span class="tt">지속 가능성</span></span> by using their purchasing power}].</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항 &amp; Topic / Logical Framework 빈칸</div>
+    <div class="q-block">
+      <div class="q-type">밑줄 친 ①~⑤ 중 어법이 틀린 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> available</div>
+        <div class="choice"><span class="cn">②</span> protecting</div>
+        <div class="choice wrong-choice"><span class="cn">③</span> <span class="wrong-word">think</span> ← 오답</div>
+        <div class="choice"><span class="cn">④</span> makes</div>
+        <div class="choice"><span class="cn">⑤</span> that</div>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Topic &amp; Logical Framework</div>
+      <div class="q-ts">
+        <div class="ts-item"><strong>Topic:</strong> Green consumers use their p<span class="bk" style="min-width:80px;display:inline-block;"></span> power to drive environmental s<span class="bk" style="min-width:80px;display:inline-block;"></span> and corporate responsibility.</div>
+        <div class="ts-item" style="margin-top:10px;"><strong>① Introduction:</strong> Green consumers prefer e<span class="bk" style="min-width:100px;display:inline-block;"></span> products over standard choices.</div>
+        <div class="ts-item"><strong>② Development 1:</strong> They take p<span class="bk" style="min-width:100px;display:inline-block;"></span> responsibility and believe both individual and c<span class="bk" style="min-width:80px;display:inline-block;"></span> actions matter.</div>
+        <div class="ts-item"><strong>③ Development 2:</strong> Firms i<span class="bk" style="min-width:100px;display:inline-block;"></span> socio-environmental costs &amp; adopt green marketing.</div>
+        <div class="ts-item"><strong>④ Conclusion:</strong> Consumers achieve long-term s<span class="bk" style="min-width:100px;display:inline-block;"></span> through purchasing power.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">어법 정답</div>
+      <div class="ans-num">③ <span class="wrong-word">think</span> → <span class="right-word">who think</span></div>
+      <div class="ans-exp">
+        <strong>오류:</strong> "Green consumers are ordinary people {③ <em>think</em> that business operations...}"<br>
+        선행사 <strong>ordinary people</strong>을 수식하는 <u>관계절</u>이므로 관계대명사 <strong>who</strong>가 필요하다.<br>
+        → "ordinary people <strong>who think</strong> that business operations have a vital role..."<br><br>
+        <strong>나머지 ①②④⑤ 적절 이유:</strong><br>
+        ① <em>available</em> — 후치 수식 형용사(= that are available) ✓<br>
+        ② <em>protecting</em> — 전치사 of의 목적어 동명사 ✓<br>
+        ④ <em>makes</em> — 주어 an individual's consumption(단수)에 호응 ✓<br>
+        ⑤ <em>that</em> — said의 목적절 접속사 that ✓
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Topic / Framework 정답</div>
+      <div class="ans-exp">purchasing / sustainability / eco-friendly / personal / corporate / internalize / sustainability</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Green consumers, <span class="gr">compared with non-green consumers</span>, prefer purchasing environmentally-friendly products <span class="gr">over the standard alternatives available</span>.</div>
+        <div class="sp-ko">녹색 소비자들은, 비녹색 소비자들과 비교하여, 이용 가능한 표준 대체품보다 친환경 제품 구매를 선호한다. <span class="sp-note">★ compared with ~: 분사구문(비교) / alternatives available: available이 후치 수식형용사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Green consumers believe <span class="gr">[that they are guided by their internal control and open-mindedness]</span>, so they would not leave the responsibilities of ② protecting the environment to governments, business communities, environmentalists or scientists.</div>
+        <div class="sp-ko">녹색 소비자들은 자신들이 내적 통제력과 열린 마음에 의해 인도된다고 믿기 때문에, 환경을 보호할 책임을 정부, 기업, 환경론자, 과학자들에게 맡기지 않을 것이다. <span class="sp-note">★ leave A to B: A를 B에게 맡기다 / of protecting: 전치사 of + 동명사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Green consumers are ordinary people {<span class="wrong-word">③ think</span> <span class="right-word">(→ who think)</span> that business operations have a vital role in fighting to protect environment in general}.</div>
+        <div class="sp-ko">녹색 소비자들은 사업 운영이 일반적으로 환경 보호를 위해 싸우는 데 중요한 역할을 한다고 생각하는 일반인들이다. <span class="sp-note">★ ③ think → who think: 선행사 ordinary people을 수식하는 관계절 — 관계대명사 who 필요</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Moreover, these consumers believe <span class="gr">[that an individual's consumption ④ makes a difference in environmental issues]</span>.</div>
+        <div class="sp-ko">더욱이, 이 소비자들은 개인의 소비가 환경 문제에서 차이를 만든다고 믿는다. <span class="sp-note">★ make a difference: 차이를 만들다, 영향을 미치다 / ④ makes: 단수 주어 consumption에 호응 ✓</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">When green consumers demand products and services, firms combine environmental and social costs of their production and consumption.</div>
+        <div class="sp-ko">녹색 소비자들이 제품과 서비스를 요구할 때, 기업들은 자신들의 생산과 소비의 환경적·사회적 비용을 결합한다. <span class="sp-note">★ When ~: 시간 부사절 / combine A and B: A와 B를 결합하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">They also provide green management and green marketing practices by creating job opportunities in green consumption.</div>
+        <div class="sp-ko">그들은 또한 녹색 소비에서 일자리 기회를 창출함으로써 녹색 경영과 녹색 마케팅 관행을 제공한다. <span class="sp-note">★ by creating ~: 수단의 by + 동명사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Therefore, it could be said <span class="gr">[⑤ that green consumers are individuals {targeting sustainability by using their purchasing power}]</span>.</div>
+        <div class="sp-ko">따라서, 녹색 소비자들은 구매력을 사용하여 지속 가능성을 목표로 하는 개인들이라고 말할 수 있다. <span class="sp-note">★ it ~ that ~: 가주어-진주어 구문 / targeting ~: 현재분사구(individuals 수식)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① 관계대명사 who (★오답 포인트)</strong> — "ordinary people <u>who think</u> that~": 선행사 people(사람) + 관계절 → who 필요. think만 쓰면 동사가 2개 충돌</p>
+      <p><strong>② leave A to B</strong> — "leave the responsibilities of protecting the environment <u>to</u> governments": "A를 B에게 맡기다"</p>
+      <p><strong>③ make a difference</strong> — "an individual's consumption <u>makes a difference</u>": "차이를 만들다, 영향을 미치다"</p>
+      <p><strong>④ 가주어-진주어 it ~ that ~</strong> — "it could be said <u>that</u> green consumers are individuals": that절이 진주어</p>
+    </div>
+  </div>
+</div><!-- end p001 -->
+
+<!-- ═══ 002 · Study Advice ═══ -->
+<div class="sec" id="p002">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0074 · p.079 · 002</div>
+    <div class="p-title">Common Study Advice Is Often Wrong</div>
+    <div class="p-title-ko">흔한 학습 조언의 허상 — 반복은 지속적 학습에 효과 없다</div>
+    <span class="p-type-badge">글의 제목으로 가장 적절한 것</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">repetition</span><span class="voca-mean"> 반복</span><div class="voca-syn">repeat 반복하다</div></div>
+      <div class="voca-item"><span class="voca-word">permanently</span><span class="voca-mean"> 영구적으로</span><div class="voca-syn">perpetually, indelibly / ↔ temporarily</div></div>
+      <div class="voca-item"><span class="voca-word">intentionality</span><span class="voca-mean"> 의도성</span><div class="voca-syn">intention 의도 / intentional 의도적인</div></div>
+      <div class="voca-item"><span class="voca-word">embed</span><span class="voca-mean"> 깊이 새기다, 삽입하다</span><div class="voca-syn">be embedded in ~에 깊이 박혀 있다</div></div>
+      <div class="voca-item"><span class="voca-word">durable</span><span class="voca-mean"> 오래 지속되는, 영속적인</span><div class="voca-syn">long-lasting, enduring / durability 내구성</div></div>
+      <div class="voca-item"><span class="voca-word">pervasive</span><span class="voca-mean"> 널리 퍼져 있는</span><div class="voca-syn">widespread, ubiquitous, prevalent</div></div>
+      <div class="voca-item"><span class="voca-word">plain</span><span class="voca-mean"> 완전히, 분명히</span><div class="voca-syn">clearly, completely, simply</div></div>
+      <div class="voca-item"><span class="voca-word">caption</span><span class="voca-mean"> 캡션, 사진 설명</span><div class="voca-syn">label, subtitle</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage</div>
+    <div class="plain-box">
+      <p class="plain-sent">[What students are advised to do] is often <span class="vw">plain<span class="tt">완전히, 분명히</span></span> wrong.</p>
+      <p class="plain-sent">For instance, study tips {published on a website at George Mason University} include this advice: "The key to learning something well is <span class="vw">repetition<span class="tt">반복</span></span>; the more times you go over the material, the better chance you have of storing it <span class="vw">permanently<span class="tt">영구적으로</span></span>."</p>
+      <p class="plain-sent">Another, from a Dartmouth College website, suggests: "If you intend to remember something, you probably will."</p>
+      <p class="plain-sent">A public service piece {that runs occasionally in the St. Louis Post-Dispatch offering study advice} shows a kid with his nose buried in a book. "Concentrate," the <span class="vw">caption<span class="tt">캡션, 사진 설명</span></span> reads. "Focus on one thing and one thing only. Repeat, repeat, repeat! Repeating [what you have to remember] can help burn it into your memory."</p>
+      <p class="plain-sent">Belief in the power of rereading, <span class="vw">intentionality<span class="tt">의도성</span></span>, and repetition is <span class="vw">pervasive<span class="tt">널리 퍼져 있는</span></span>, but the truth is you usually can't <span class="vw">embed<span class="tt">깊이 새기다</span></span> something in memory simply by repeating it over and over.</p>
+      <p class="plain-sent">This tactic might work when looking up a phone number and holding it in your mind while punching it into your phone, but it doesn't work for <span class="vw">durable<span class="tt">오래 지속되는</span></span> learning.</p>
+      <div class="fn">* 빈칸 it(= ?) = 단순 반복 암기 전략(This tactic)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항</div>
+    <div class="q-block">
+      <div class="q-type">글의 제목으로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> The role of motivation in student learning outcomes</div>
+        <div class="choice"><span class="cn">②</span> Cognitive overload and its effects on student memory</div>
+        <div class="choice"><span class="cn">③</span> Goal-setting as a strategy to improve learning outcomes</div>
+        <div class="correct-choice"><span class="cn">④</span> Common study advice that fails to promote durable learning ← 정답</div>
+        <div class="choice"><span class="cn">⑤</span> Variations in student achievements by the type of learning advice</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답</div>
+      <div class="ans-num">④ Common study advice that fails to promote durable learning</div>
+      <div class="ans-exp">
+        <strong>핵심 흐름:</strong> 학생들에게 제공되는 학습 조언(반복·의도·집중)은 흔하지만(pervasive), 실은 지속적 학습(durable learning)에는 효과가 없다는 것이 이 글의 핵심이다.<br><br>
+        <strong>④ 정답 이유:</strong> "common study advice" = 흔한 학습 조언(반복·집중) / "fails to promote durable learning" = 지속적 학습을 증진하지 못한다 → 글 전체 주장과 정확히 일치.<br><br>
+        <strong>오답 이유:</strong> ①③ 동기부여·목표설정은 글에서 다루지 않음. ② 인지 과부하는 언급 없음. ⑤ 학습 조언 유형별 성취도 비교가 아님.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="gr">[What students are advised to do]</span> is often plain wrong.</div>
+        <div class="sp-ko">학생들이 하도록 조언받는 것은 종종 완전히 잘못되어 있다. <span class="sp-note">★ What S V: 관계대명사 what절(명사절 — 주어 역할) / plain: 부사("완전히, 분명히")</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For instance, study tips {published on a website at George Mason University} include this advice: "The key to learning something well is repetition; <span class="gr">the more times you go over the material, the better chance you have</span> of storing it permanently."</div>
+        <div class="sp-ko">예를 들어, 조지 메이슨 대학교 웹사이트에 게시된 학습 팁은 이런 조언을 포함한다: "무언가를 잘 배우는 핵심은 반복이다; 자료를 살펴보는 횟수가 많을수록, 그것을 영구적으로 저장할 가능성이 더 높다." <span class="sp-note">★ published on ~: 수동 분사구(study tips 수식) / the 비교급~, the 비교급~: "~할수록 더 ~하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Another, from a Dartmouth College website, suggests: "If you intend to remember something, you probably will."</div>
+        <div class="sp-ko">또 다른 조언은 다트머스 대학교 웹사이트에서 제안하는 것으로: "만약 당신이 무언가를 기억하려고 의도한다면, 아마도 그렇게 될 것이다." <span class="sp-note">★ Another (= another tip) [from ~]: 삽입 전치사구(출처) / suggests: 뒤에 that절 생략 / If you intend to ~: 가정법 현재(조건 부사절)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A public service piece {that runs occasionally in the St. Louis Post-Dispatch <span class="gr">offering study advice</span>} shows a kid <span class="gr">with his nose buried in a book</span>.</div>
+        <div class="sp-ko">세인트 루이스 포스트-디스패치에 가끔 게재되어 학습 조언을 제공하는 공익 기사는 책에 코를 파묻고 있는 아이를 보여준다. <span class="sp-note">★ that runs occasionally: 관계절 / offering ~: 분사구문(동시동작) / with his nose buried: with + 목적어 + 분사(부대상황)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Belief in the power of rereading, intentionality, and repetition is pervasive, // but the truth is <span class="gr">[you usually can't embed something in memory simply by repeating it over and over]</span>.</div>
+        <div class="sp-ko">다시 읽기, 의도성, 반복의 힘에 대한 믿음은 널리 퍼져 있지만, 진실은 단순히 반복적으로 되풀이하는 것만으로는 보통 무언가를 기억 속에 새길 수 없다는 것이다. <span class="sp-note">★ the truth is (that) ~: "진실은 ~이다"(that 생략 가능) / by repeating ~: 수단(~함으로써)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This tactic might work <span class="gr">when looking up a phone number and holding it in your mind while punching it into your phone</span>, but it doesn't work for durable learning.</div>
+        <div class="sp-ko">이 전략은 전화번호를 찾아보고 전화기에 입력하는 동안 그것을 마음속에 유지할 때는 효과가 있을 수 있지만, 지속적인 학습에는 효과가 없다. <span class="sp-note">★ when looking up ~: 분사구문(시간) = when you look up ~ / for durable learning: "지속적 학습을 위해서는"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① What S V (관계대명사 명사절)</strong> — "What students are advised to do is often wrong": What절이 주어 역할</p>
+      <p><strong>② the 비교급~, the 비교급~</strong> — "the more times ~, the better chance ~": "~할수록 더 ~하다"</p>
+      <p><strong>③ with + O + 분사 (부대상황)</strong> — "with his nose buried in a book": "코를 책에 파묻은 채로"</p>
+      <p><strong>④ simply by V-ing</strong> — "simply by repeating it over and over": "단순히 ~함으로써만" — by + 동명사(수단)</p>
+    </div>
+  </div>
+</div><!-- end p002 -->
+
+<!-- ═══ 003 · White Supremacy in Education ═══ -->
+<div class="sec" id="p003">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0075 · p.080 · 003</div>
+    <div class="p-title">White Supremacy in American Education</div>
+    <div class="p-title-ko">미국 교육의 백인 우월주의 — 아시안계 미국인의 '비정상화'</div>
+    <span class="p-type-badge">글의 제목으로 가장 적절한 것</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">correspondingly</span><span class="voca-mean"> 그에 상응하여</span><div class="voca-syn">accordingly, consequently</div></div>
+      <div class="voca-item"><span class="voca-word">conform to</span><span class="voca-mean"> ~을 준수하다</span><div class="voca-syn">comply with, adhere to / ↔ rebel against</div></div>
+      <div class="voca-item"><span class="voca-word">outperform</span><span class="voca-mean"> 능가하다</span><div class="voca-syn">surpass, excel / outweigh, outnumber, outlive</div></div>
+      <div class="voca-item"><span class="voca-word">pathological</span><span class="voca-mean"> 병리적인</span><div class="voca-syn">pathology 병리학</div></div>
+      <div class="voca-item"><span class="voca-word">predominantly</span><span class="voca-mean"> 대부분, 대개</span><div class="voca-syn">mainly, primarily / predominant 지배적인</div></div>
+      <div class="voca-item"><span class="voca-word">reinforce</span><span class="voca-mean"> 강화하다</span><div class="voca-syn">strengthen, consolidate</div></div>
+      <div class="voca-item"><span class="voca-word">constitute</span><span class="voca-mean"> 구성하다</span><div class="voca-syn">make up, comprise</div></div>
+      <div class="voca-item"><span class="voca-word">supremacy</span><span class="voca-mean"> 우월주의, 최상위</span><div class="voca-syn">dominance, priority / white supremacy 백인 우월주의</div></div>
+      <div class="voca-item"><span class="voca-word">deviant</span><span class="voca-mean"> 규범에서 벗어난</span><div class="voca-syn">abnormal, nonconforming</div></div>
+      <div class="voca-item"><span class="voca-word">emulate</span><span class="voca-mean"> 본받다</span><div class="voca-syn">imitate, follow / emulation 모방</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage</div>
+    <div class="plain-box">
+      <p class="plain-sent">American educators saw Asian American parenting as <span class="vw">deviant<span class="tt">규범에서 벗어난</span></span> and, <span class="vw">correspondingly<span class="tt">그에 상응하여</span></span>, felt white middle class parents and kids set an appropriate standard {that others should <span class="vw">conform to<span class="tt">준수하다</span></span>}.</p>
+      <p class="plain-sent">For example, when white children <span class="vw">outperform<span class="tt">능가하다</span></span> minority students, teachers rarely see it as "academic bullying" or express sympathy about minorities' "emotional well-being."</p>
+      <p class="plain-sent">Similarly, educators do not create <span class="vw">pathological<span class="tt">병리적인</span></span> rationales for whites' weaker performance relative to Asian Americans, as happens for minorities relative to whites.</p>
+      <p class="plain-sent">Whites are not expected to <span class="vw">emulate<span class="tt">본받다</span></span> those who achieve more (i.e., toward Asian Americans), whereas black and Latinx youths are (i.e., toward whites).</p>
+      <p class="plain-sent">Also, teachers, <span class="vw">predominantly<span class="tt">대부분</span></span> white, <span class="vw">reinforce<span class="tt">강화하다</span></span> a "hidden curriculum"; that is, informal norms for [what <span class="vw">constitutes<span class="tt">구성하다</span></span> proper behavior, dress, attitudes, and discipline in schools].</p>
+      <p class="plain-sent">Racial inequalities arise even in integrated and reasonably resourced schools.</p>
+      <p class="plain-sent">Educators make significant efforts to address the learning gaps facing minority youths but do not disrupt the white <span class="vw">supremacy<span class="tt">우월주의</span></span> embedded in standard practices.</p>
+      <p class="plain-sent">The taken-for-granted assumption [that white students' practices are "normal"] contributes to [why Asian Americans are framed as "deviant" and "a problem."]</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항</div>
+    <div class="q-block">
+      <div class="q-type">글의 제목으로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> Efforts to Eliminate Gender Discrimination in Schools</div>
+        <div class="choice"><span class="cn">②</span> Benefits of an Inclusive and Fair Learning Environment</div>
+        <div class="correct-choice"><span class="cn">③</span> How White Supremacy Shapes American Educators' Views ← 정답</div>
+        <div class="choice"><span class="cn">④</span> Integrating Cultures: The Future of Racially Mixed Schools</div>
+        <div class="choice"><span class="cn">⑤</span> The Role of Diversity in Reducing Academic Achievement Gaps</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답</div>
+      <div class="ans-num">③ How White Supremacy Shapes American Educators' Views</div>
+      <div class="ans-exp">
+        <strong>핵심 흐름:</strong> 미국 교육자들이 백인 중산층의 행동 방식을 '정상'으로, 아시안계 부모 양육을 '비정상'으로 보는 백인 우월주의적 시각이 교육 현장의 이중 잣대와 불평등을 만들어낸다.<br><br>
+        <strong>③ 정답 이유:</strong> "White Supremacy" = 지문 내 "white supremacy embedded in standard practices" 직접 대응 / "Shapes American Educators' Views" = 교육자들의 이중 기준 전반을 형성한다 → 주제 전체를 포괄.<br><br>
+        <strong>오답:</strong> ①성별차별·②포용적 환경·④문화통합은 지문 주제와 무관. ⑤다양성의 성취도 효과도 지문 핵심이 아님.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">American educators saw Asian American parenting as deviant and, correspondingly, felt white middle class parents and kids set an appropriate standard <span class="gr">{that others should conform to}</span>.</div>
+        <div class="sp-ko">미국 교육자들은 아시안계 미국인의 양육을 일탈적인 것으로 보았고, 그에 상응하여, 백인 중산층 부모와 아이들이 다른 사람들이 따라야 할 적절한 기준을 설정한다고 느꼈다. <span class="sp-note">★ see A as B: A를 B로 보다 / that others should conform to: 관계절(standard 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, when white children outperform minority students, teachers rarely see it as "academic bullying" or express sympathy about minorities' "emotional well-being."</div>
+        <div class="sp-ko">예를 들어, 백인 아이들이 소수 집단 학생들보다 더 뛰어난 성과를 낼 때, 교사들은 그것을 "학문적 괴롭힘"으로 보거나 소수 집단의 "정서적 안녕"에 대한 공감을 표현하는 경우가 거의 없다. <span class="sp-note">★ when ~: 시간 부사절 / rarely: 빈도 부사("거의 ~하지 않다")</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Similarly, educators do not create pathological rationales for whites' weaker performance relative to Asian Americans, as happens for minorities relative to whites.</div>
+        <div class="sp-ko">마찬가지로, 교육자들은 아시안계 미국인에 비한 백인의 더 약한 성과에 대해 병리적인 설명을 만들지 않는데, 이것은 백인 대비 소수 집단의 경우에 일어나는 것과 다르다. <span class="sp-note">★ relative to ~: "~에 비해, ~에 상대적으로" / as happens for ~: "~의 경우에 일어나는 것처럼"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Whites are not expected to emulate those {who achieve more (i.e., toward Asian Americans)}, whereas black and Latinx youths are (i.e., toward whites).</div>
+        <div class="sp-ko">백인들은 더 많은 것을 성취하는 사람들(즉, 아시안계 미국인을 향해)을 본받도록 기대되지 않는 반면, 흑인과 라틴계 청소년들은 (백인을 향해) 그렇게 기대된다. <span class="sp-note">★ be expected to V: ~하도록 기대되다 / whereas: 대조 접속사 / are (= are expected to emulate whites): 도치/생략</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Also, teachers, predominantly white, reinforce a "hidden curriculum"; that is, informal norms for <span class="gr">[what constitutes proper behavior, dress, attitudes, and discipline in schools]</span>.</div>
+        <div class="sp-ko">또한, 대부분 백인인 교사들은 "숨겨진 교육과정"을 강화한다; 즉, 학교에서 적절한 행동, 복장, 태도, 훈육을 구성하는 것에 대한 비공식적 규범들이다. <span class="sp-note">★ predominantly white: 삽입구(teachers 부연) / that is: 즉(앞 내용 부연) / what constitutes ~: 관계대명사 what절(명사절)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Racial inequalities arise even in integrated and reasonably resourced schools.</div>
+        <div class="sp-ko">인종적 불평등은 통합적이고 합리적으로 자원이 갖춰진 학교에서조차 발생한다. <span class="sp-note">★ arise: "발생하다, 생겨나다" / even in ~: "~에서조차" — 양보 강조 / integrated 통합적인 / reasonably resourced: "합리적으로 자원을 갖춘"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Educators make significant efforts to address the learning gaps {facing minority youths} but do not disrupt the white supremacy {embedded in standard practices}.</div>
+        <div class="sp-ko">교육자들은 소수 집단 청소년들이 직면한 학습 격차를 해소하기 위해 상당한 노력을 기울이지만, 표준 관행에 내포된 백인 우월주의는 무너뜨리지 않는다. <span class="sp-note">★ facing minority youths: 분사구(learning gaps 수식) / embedded in ~: 수동 분사구(white supremacy 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The taken-for-granted assumption <span class="gr">[that white students' practices are "normal"]</span> contributes to <span class="gr">[why Asian Americans are framed as "deviant" and "a problem."]</span></div>
+        <div class="sp-ko">백인 학생들의 관행이 "정상"이라는 당연시되는 가정은, 아시안계 미국인들이 "일탈적"이고 "문제아"로 표현되는 이유에 기여한다. <span class="sp-note">★ taken-for-granted: 복합 형용사("당연시되는") / assumption that ~: 동격절 / contribute to why ~: "~라는 이유에 기여하다"</span></div>
+      </div>
+    </div>
+  </div>
+</div><!-- end p003 -->
+
+
+<!-- ═══ 004 · Marine Plastic Pollution ═══ -->
+<div class="sec" id="p004">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0076 · p.081 · 004</div>
+    <div class="p-title">Marine Plastic Pollution &amp; Quantitative Approaches</div>
+    <div class="p-title-ko">해양 플라스틱 오염과 정량적 접근법의 필요성</div>
+    <span class="p-type-badge">밑줄 친 부분 중 어법이 틀린 것</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">counteract</span><span class="voca-mean"> 대응하다, 상쇄하다</span><div class="voca-syn">counteract the effect of ~: ~의 영향을 상쇄하다</div></div>
+      <div class="voca-item"><span class="voca-word">planetary boundary</span><span class="voca-mean"> 지구 한계선</span><div class="voca-syn">planetary 지구의, 행성의</div></div>
+      <div class="voca-item"><span class="voca-word">tailored</span><span class="voca-mean"> 맞춤형의</span><div class="voca-syn">tailor-made / tailor 맞추다, 재단사</div></div>
+      <div class="voca-item"><span class="voca-word">holistic</span><span class="voca-mean"> 전체적인</span><div class="voca-syn">comprehensive, integrated</div></div>
+      <div class="voca-item"><span class="voca-word">pervasive</span><span class="voca-mean"> 만연한</span><div class="voca-syn">widespread, ubiquitous</div></div>
+      <div class="voca-item"><span class="voca-word">shed light on</span><span class="voca-mean"> ~을 해명하다</span><div class="voca-syn">cast/throw light on, clarify</div></div>
+      <div class="voca-item"><span class="voca-word">exploit</span><span class="voca-mean"> 활용하다</span><div class="voca-syn">utilize / exploitation 착취, 활용</div></div>
+      <div class="voca-item"><span class="voca-word">disrupt</span><span class="voca-mean"> 교란하다, 방해하다</span><div class="voca-syn">disturb, destabilize</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage</div>
+    <div class="plain-box">
+      <p class="plain-sent">Marine plastic pollution is a complex problem {that occurs on many levels}, as it presents physical, chemical, and biological implications for marine compartments at small scales while <span class="ul-word">① involving</span> vast geographic domains.</p>
+      <p class="plain-sent">To <span class="vw">counteract<span class="tt">대응하다</span></span> [<span class="ul-word">② what</span> can be regarded as a <span class="vw">planetary<span class="tt">지구의</span></span> boundary threat], we need <span class="vw">tailored<span class="tt">맞춤형의</span></span> instruments to provide various layers of knowledge in an accessible manner.</p>
+      <p class="plain-sent">To this end, laboratory experiments and observations are indeed fundamental to capture specific aspects of plastic and plastic-related pollution; yet this zoo of data is still insufficient <span class="ul-word">③ to provide</span> a <span class="vw">holistic<span class="tt">전체적인</span></span> description of this <span class="vw">pervasive<span class="tt">만연한</span></span> phenomenon.</p>
+      <p class="plain-sent">Quantitative methods can link and <span class="vw">exploit<span class="tt">활용하다</span></span> our current understanding of the different processes and complex interaction {characterizing marine plastic pollution} to <span class="ul-word">④ ultimately</span> help to <span class="vw">shed<span class="tt">shed light on: 해명하다</span></span> some light on aspects {that are hard to investigate in the field}.</p>
+      <p class="plain-sent">Actions against marine pollution have to be timely, bold, and knowledge-based.</p>
+      <p class="plain-sent">In this perspective, comprehensive, data-informed approaches can help not only to identify and protect the mechanisms {that interconnect marine ecosystems} but also to understand the processes and synergies {that are <span class="vw">disrupting<span class="tt">교란하다</span></span> <span class="wrong-word">⑤ it</span>}.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항</div>
+    <div class="q-block">
+      <div class="q-type">밑줄 친 ①~⑤ 중 어법이 틀린 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> involving</div>
+        <div class="choice"><span class="cn">②</span> what</div>
+        <div class="choice"><span class="cn">③</span> to provide</div>
+        <div class="choice"><span class="cn">④</span> ultimately</div>
+        <div class="wrong-choice"><span class="cn">⑤</span> <span class="wrong-word">it</span> ← 오답</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">어법 정답</div>
+      <div class="ans-num">⑤ <span class="wrong-word">it</span> → <span class="right-word">them</span></div>
+      <div class="ans-exp">
+        <strong>오류:</strong> "processes and synergies that are disrupting <em>⑤ it</em>"<br>
+        <em>it</em>의 선행사를 찾으면: "the mechanisms that <strong>interconnect marine ecosystems</strong>" → ecosystems 또는 전체 marine ecosystems(복수) / 또는 앞 문장의 "marine ecosystems"를 가리킨다. 어느 쪽이든 <strong>복수</strong>이므로 <strong>them</strong>이 올바르다.<br><br>
+        <strong>나머지 ①②③④ 적절 이유:</strong><br>
+        ① <em>involving</em> — 분사구문(동시동작): "while involving vast geographic domains" ✓<br>
+        ② <em>what</em> — 관계대명사 what절: "what can be regarded as a planetary boundary threat" ✓<br>
+        ③ <em>to provide</em> — insufficient의 보어 to부정사(결과/목적) ✓<br>
+        ④ <em>ultimately</em> — 부사(help to shed를 수식) ✓
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Marine plastic pollution is a complex problem {that occurs on many levels}, as it presents physical, chemical, and biological implications for marine compartments at small scales while <span class="gr">① involving vast geographic domains</span>.</div>
+        <div class="sp-ko">해양 플라스틱 오염은 여러 수준에서 발생하는 복잡한 문제로, 작은 규모에서 해양 구역에 물리적·화학적·생물학적 영향을 미치면서도 방대한 지리적 영역을 포함한다. <span class="sp-note">★ as it presents ~: 이유 부사절 / while involving ~: 분사구문(동시동작, 대조)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">To counteract <span class="gr">[② what can be regarded as a planetary boundary threat]</span>, we need tailored instruments to provide various layers of knowledge in an accessible manner.</div>
+        <div class="sp-ko">지구 한계선 위협으로 간주될 수 있는 것에 대응하기 위해, 우리는 접근 가능한 방식으로 다양한 지식 층위를 제공하는 맞춤형 도구가 필요하다. <span class="sp-note">★ ② what can be regarded as ~: 관계대명사 what절("~로 간주될 수 있는 것") / tailored ~ to V: ~하는 맞춤형 ~</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">To this end, laboratory experiments and observations are indeed fundamental to capture specific aspects of plastic and plastic-related pollution; yet this zoo of data is still insufficient <span class="gr">③ to provide a holistic description</span> of this pervasive phenomenon.</div>
+        <div class="sp-ko">이러한 목적으로, 실험실 실험과 관찰은 플라스틱 및 플라스틱 관련 오염의 특정 측면을 포착하는 데 실로 필수적이다; 그러나 이 동물원 같은 데이터는 이 만연한 현상에 대한 전체적인 설명을 제공하기에는 여전히 불충분하다. <span class="sp-note">★ To this end: "이러한 목적으로" / insufficient to V: "V하기에 불충분한"(③ to provide: 결과/목적의 to부정사) / zoo of data: "데이터의 동물원" = 혼잡한 상태의 비유</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Quantitative methods can link and exploit our current understanding of the different processes and complex interaction {characterizing marine plastic pollution} to <span class="gr">④ ultimately help to shed some light on</span> aspects {that are hard to investigate in the field}.</div>
+        <div class="sp-ko">정량적 방법들은 해양 플라스틱 오염을 특징짓는 다양한 과정과 복잡한 상호작용에 대한 현재의 이해를 연결하고 활용하여 / 현장에서 조사하기 어려운 측면들을 궁극적으로 해명하는 데 도움을 줄 수 있다. <span class="sp-note">★ to ultimately help: to부정사(결과/목적) / shed light on ~: "~을 해명하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Actions against marine pollution have to be timely, bold, and knowledge-based.</div>
+        <div class="sp-ko">해양 오염에 맞선 조치들은 시의적절하고, 과감하며, 지식에 기반해야 한다. <span class="sp-note">★ have to be: "~이어야 한다"(의무) / timely 시의적절한 / bold 과감한 / knowledge-based 지식 기반의 — 세 형용사 병렬</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In this perspective, comprehensive, data-informed approaches can help not only to identify and protect the mechanisms {that interconnect marine ecosystems} but also to understand the processes and synergies {that are disrupting <span class="wrong-word">it</span> <span class="right-word">(→ them)</span>}.</div>
+        <div class="sp-ko">이러한 관점에서, 포괄적이고 데이터 기반의 접근법은 해양 생태계를 연결하는 메커니즘을 파악하고 보호할 뿐만 아니라, 그것들을 교란하는 과정과 시너지를 이해하는 데 도움이 될 수 있다. <span class="sp-note">★ not only ~ but also ~: 상관접속사 / ⑤ it → them: marine ecosystems(복수)를 가리키므로 them 필요</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① 분사구문 while V-ing</strong> — "while involving vast geographic domains": 동시동작 또는 대조 강조</p>
+      <p><strong>② what can be regarded as (관계대명사 what)</strong> — "what can be regarded as a planetary boundary threat": "~로 간주될 수 있는 것"</p>
+      <p><strong>③ insufficient to V</strong> — "still insufficient to provide a holistic description": "전체적 설명을 제공하기에 불충분한"</p>
+      <p><strong>④ not only ~ but also ~ (상관접속사 병렬)</strong> — "not only to identify ~ but also to understand ~": 두 to부정사 병렬</p>
+      <p><strong>⑤ 수 일치 (★오답 포인트)</strong> — "the mechanisms that interconnect marine ecosystems … disrupting <u>them</u>": 복수 선행사 → 복수 대명사</p>
+    </div>
+  </div>
+</div><!-- end p004 -->
+
+<!-- ═══ 005 · Digital Piracy ═══ -->
+<div class="sec" id="p005">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0077 · p.082 · 005</div>
+    <div class="p-title">Digital Piracy &amp; the Publishing Industry</div>
+    <div class="p-title-ko">디지털 저작권 침해와 출판 산업의 대응</div>
+    <span class="p-type-badge">전체 흐름과 관계없는 문장</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">piracy</span><span class="voca-mean"> 불법 복제, 저작권 침해</span><div class="voca-syn">pirate 불법 복제하다 / anti-piracy law 저작권 침해 방지법</div></div>
+      <div class="voca-item"><span class="voca-word">unauthorized</span><span class="voca-mean"> 무단의, 허가받지 않은</span><div class="voca-syn">illegal, unlicensed</div></div>
+      <div class="voca-item"><span class="voca-word">appropriate</span><span class="voca-mean"> 도용하다 (동사)</span><div class="voca-syn">steal, misuse / appropriation 도용</div></div>
+      <div class="voca-item"><span class="voca-word">a fraction of</span><span class="voca-mean"> ~의 극히 일부</span><div class="voca-syn">a small part of</div></div>
+      <div class="voca-item"><span class="voca-word">mortify</span><span class="voca-mean"> 모멸감을 주다</span><div class="voca-syn">humiliate, embarrass</div></div>
+      <div class="voca-item"><span class="voca-word">shoplift</span><span class="voca-mean"> 상점에서 훔치다</span><div class="voca-syn">shoplifting 절도</div></div>
+      <div class="voca-item"><span class="voca-word">think nothing of</span><span class="voca-mean"> ~을 아무렇지도 않게 생각하다</span><div class="voca-syn">have no qualms about</div></div>
+      <div class="voca-item"><span class="voca-word">fend off</span><span class="voca-mean"> ~을 막다</span><div class="voca-syn">ward off / fight off 싸워서 물리치다</div></div>
+      <div class="voca-item"><span class="voca-word">write off</span><span class="voca-mean"> 손해를 결손으로 처리하다</span><div class="voca-syn">write off losses 손실 처리하다</div></div>
+      <div class="voca-item"><span class="voca-word">safeguard</span><span class="voca-mean"> 보호 장치</span><div class="voca-syn">protection, security measure</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage</div>
+    <div class="plain-box">
+      <p class="plain-sent"><span class="num-circle">①</span> One factor {that influences the publisher and the bookstore's ability to sell materials} is <span class="vw">piracy<span class="tt">불법 복제</span></span>, {which refers to the <span class="vw">unauthorized<span class="tt">무단의</span></span> copying, distribution, or use of copyrighted content}. This is hardly a recent phenomenon, as copyright law dates back to 1709 during the reign of Britain's Queen Anne.</p>
+      <p class="plain-sent"><span class="num-circle">②</span> But digital formats make piracy easier whether texts are <span class="vw">appropriated<span class="tt">도용되다</span></span> for personal use or sold for a fraction of their retail cost.</p>
+      <p class="plain-sent"><span class="num-circle">③</span> Individuals {who would be <span class="vw">mortified<span class="tt">모멸감을 느끼다</span></span> at the idea of <span class="vw">shoplifting<span class="tt">상점 절도</span></span> a print copy of a bestseller} often <span class="vw">think nothing of<span class="tt">아무렇지 않게 여기다</span></span> reading an online version {that may have been pirated}.</p>
+      <div class="irrel"><span class="num-circle" style="border-color:var(--red);color:var(--red);">④</span> <span style="color:var(--red);font-weight:600;">[무관한 문장]</span> Piracy can actually provide access to books, films, music, and educational content for people who cannot afford or legally obtain them, especially in developing countries.</div>
+      <p class="plain-sent"><span class="num-circle">⑤</span> As with any retail business, book publishers will continue to <span class="vw">fend off<span class="tt">막다</span></span> piracy with evolving digital <span class="vw">safeguards<span class="tt">보호 장치</span></span> and to estimate and <span class="vw">write off<span class="tt">결손 처리하다</span></span> losses where these fail.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항 &amp; 정답 해설</div>
+    <div class="q-block">
+      <div class="q-type">전체 흐름과 관계없는 문장은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="choice"><span class="cn">②</span></div>
+        <div class="choice"><span class="cn">③</span></div>
+        <div class="wrong-choice"><span class="cn">④</span> ← 무관한 문장</div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 &amp; 해설</div>
+      <div class="ans-num">④</div>
+      <div class="ans-exp">
+        <strong>글의 주제:</strong> 디지털 형식이 저작권 침해를 더 쉽게 만들며, 출판사는 보호 장치와 손실 처리로 대응한다.<br><br>
+        <strong>④ 무관한 이유:</strong> ④는 "저작권 침해가 개발도상국 사람들에게 접근성을 제공할 수 있다"고 주장하여, 저작권 침해의 <u>긍정적 측면</u>을 제시한다. 이는 저작권 침해를 <u>출판 산업의 위협</u>으로 다루는 글 전체의 흐름(①②③⑤)과 정반대로, 전체 논지를 흐린다.<br><br>
+        <strong>흐름 확인:</strong> ① 저작권 침해 정의 + 역사 → ② 디지털로 더 쉬워짐 → ③ 소비자의 이중 잣대(실물은 훔치기 어색, 온라인은 아무렇지 않음) → <span style="color:var(--red);">④ 무관(긍정 효과)</span> → ⑤ 출판사의 대응
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">One factor <span class="gr">{that influences the publisher and the bookstore's ability to sell materials}</span> is piracy, <span class="gr">{which refers to the unauthorized copying, distribution, or use of copyrighted content}</span>.</div>
+        <div class="sp-ko">출판사와 서점의 자료 판매 능력에 영향을 미치는 한 가지 요인은 저작권 침해인데, 이것은 저작권이 있는 내용의 무단 복제, 배포, 또는 사용을 말한다. <span class="sp-note">★ that influences ~: 관계절(One factor 수식) / which refers to ~: 계속적 용법(piracy 부연)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This is hardly a recent phenomenon, as copyright law <span class="gr">dates back to 1709</span> during the reign of Britain's Queen Anne.</div>
+        <div class="sp-ko">이것은 저작권법이 영국의 앤 여왕 치세 동안 1709년으로 거슬러 올라가기 때문에 결코 최근 현상이 아니다. <span class="sp-note">★ hardly: 부정 부사("거의 ~하지 않다") / date back to ~: "~까지 거슬러 올라가다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But digital formats make piracy easier <span class="gr">whether texts are appropriated for personal use or sold for a fraction of their retail cost</span>.</div>
+        <div class="sp-ko">그러나 디지털 형식은 텍스트가 개인 사용을 위해 도용되거나 소매 가격의 극히 일부로 판매되든 간에 저작권 침해를 더 쉽게 만든다. <span class="sp-note">★ whether A or B: "A이든 B이든" (양보) / a fraction of ~: "~의 극히 일부"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Individuals <span class="gr">{who would be mortified at the idea of shoplifting a print copy of a bestseller}</span> often think nothing of reading an online version <span class="gr">{that may have been pirated}</span>.</div>
+        <div class="sp-ko">베스트셀러 인쇄본을 훔치는 생각에 모멸감을 느낄 개인들이 종종 저작권 침해가 되었을 수도 있는 온라인 버전을 읽는 것을 아무렇지 않게 생각한다. <span class="sp-note">★ who would be mortified: 관계절(부정법, "~할 것이다") / think nothing of V-ing: "~하는 것을 아무렇지 않게 생각하다" / may have been pirated: 완료 수동 추측</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en" style="color:var(--red);">【무관 ④】 Piracy can actually provide access to books, films, music, and educational content for people who cannot afford or legally obtain them, especially in developing countries.</div>
+        <div class="sp-ko" style="border-left-color:var(--red);">저작권 침해는 실제로 특히 개발도상국에서 책, 영화, 음악 및 교육 콘텐츠에 접근할 여유가 없거나 합법적으로 얻을 수 없는 사람들에게 접근성을 제공할 수 있다. <span class="sp-note" style="color:var(--red);background:#fff0f0;">★ 무관한 이유: 저작권 침해의 긍정적 측면 제시 → 출판사 피해·대응이라는 글의 논지와 반대 방향 / cannot afford: "~할 여유가 없다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As with any retail business, book publishers will continue to fend off piracy with evolving digital safeguards and to estimate and write off losses <span class="gr">where these fail</span>.</div>
+        <div class="sp-ko">어떤 소매 사업과 마찬가지로, 책 출판사들은 진화하는 디지털 보호 장치로 저작권 침해를 계속 막고, 이것들이 실패하는 곳에서 손실을 추정하고 결손으로 처리할 것이다. <span class="sp-note">★ As with ~: "~와 마찬가지로" / continue to V: 계속 V하다 / where these fail: 관계부사절("이것들이 실패하는 곳에서")</span></div>
+      </div>
+    </div>
+  </div>
+</div><!-- end p005 -->
+
+<!-- ═══ 006 · Photography ═══ -->
+<div class="sec" id="p006">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0078 · p.083 · 006</div>
+    <div class="p-title">Photography as Interpretation of Reality</div>
+    <div class="p-title-ko">사진의 주관성과 디지털 기술로 인한 현실과의 거리</div>
+    <span class="p-type-badge">글의 순서 배열</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">neutral</span><span class="voca-mean"> 중립적인</span><div class="voca-syn">impartial, unbiased / neutrality 중립</div></div>
+      <div class="voca-item"><span class="voca-word">pass for</span><span class="voca-mean"> ~로 통하다</span><div class="voca-syn">be taken for, be accepted as</div></div>
+      <div class="voca-item"><span class="voca-word">unquestionable</span><span class="voca-mean"> 의문의 여지가 없는</span><div class="voca-syn">undeniable, indisputable</div></div>
+      <div class="voca-item"><span class="voca-word">dodging / burning</span><span class="voca-mean"> 다징(밝게) / 버닝(어둡게)</span><div class="voca-syn">암실 현상 기술</div></div>
+      <div class="voca-item"><span class="voca-word">comprised of</span><span class="voca-mean"> ~로 구성된</span><div class="voca-syn">made up of, composed of</div></div>
+      <div class="voca-item"><span class="voca-word">tonal</span><span class="voca-mean"> 색조의, 음영의</span><div class="voca-syn">tone 색조, 음색</div></div>
+      <div class="voca-item"><span class="voca-word">removed</span><span class="voca-mean"> 동떨어진</span><div class="voca-syn">distant, detached</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage (완성된 순서 C→B→A)</div>
+    <div class="plain-box">
+      <p class="plain-sent">Photography battles with the fantasy [that it captures a <span class="vw">neutral<span class="tt">중립적인</span></span> view of reality without modifying it]. Susan Sontag refers to an official use of the printed photograph {that <span class="vw">passes for<span class="tt">~로 통하다</span></span> <span class="vw">unquestionable<span class="tt">의문의 여지가 없는</span></span> proof [that a given thing happened]}.</p>
+      <p class="plain-sent"><strong>(C)</strong> However, she states her opinion [that 'photographs are as much an interpretation of the world as paintings and drawings']. Additionally, [the art of <span class="vw">dodging<span class="tt">다징(밝게 만들기)</span></span> and <span class="vw">burning<span class="tt">버닝(어둡게 만들기)</span></span> during the transfer from negative to print] was well established before Photoshop and digital photography.</p>
+      <p class="plain-sent"><strong>(B)</strong> Ansel Adams is known for spending many hours in the darkroom developing a single print and he also said, 'dodging and burning are steps to take care of mistakes God made in establishing <span class="vw">tonal<span class="tt">색조의</span></span> relationships'. However, digital images tend to be one more step <span class="vw">removed<span class="tt">동떨어진</span></span> from reality.</p>
+      <p class="plain-sent"><strong>(A)</strong> While the negative in print photography is still an image, the file of a digital image is <span class="vw">comprised of<span class="tt">~로 구성되다</span></span> bits — computerized 1's and 0's — {that are not an image until interpreted and displayed by a combination of software and an electronic display device}.</p>
+      <div class="fn">* dodging: 다징(특정 부분을 더 밝게) &nbsp;&nbsp;** burning: 버닝(특정 부분을 더 어둡게)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항</div>
+    <div class="q-block">
+      <div class="q-type">주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> (A) – (C) – (B)</div>
+        <div class="choice"><span class="cn">②</span> (B) – (A) – (C)</div>
+        <div class="choice"><span class="cn">③</span> (B) – (C) – (A)</div>
+        <div class="choice"><span class="cn">④</span> (C) – (A) – (B)</div>
+        <div class="correct-choice"><span class="cn">⑤</span> (C) – (B) – (A) ← 정답</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 &amp; 해설</div>
+      <div class="ans-num">⑤ (C) → (B) → (A)</div>
+      <div class="ans-exp">
+        <strong>도입:</strong> 사진이 현실을 중립적으로 포착한다는 환상(myth) 소개 + 손탁의 언급<br><br>
+        <strong>(C):</strong> "However, she states…" → 손탁 반박: 사진도 그림처럼 해석임 + 인쇄 사진의 다징/버닝도 오래된 기술임을 언급 (전통 암실 기술 소개)<br><br>
+        <strong>(B):</strong> (C)의 다징/버닝을 받아 → 앤설 아담스 예시(수십 시간 암실 작업) + "However, digital images are one more step removed" (디지털의 추가 거리감 도입)<br><br>
+        <strong>(A):</strong> (B)의 "digital images" 내용을 받아 → 디지털 파일의 구조(비트, 0과 1)를 설명 — 현실과 가장 멀리 떨어진 이유 설명 (결론)
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 완성된 지문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Photography battles with the fantasy <span class="gr">[that it captures a neutral view of reality without modifying it]</span>. Susan Sontag refers to an official use of the printed photograph <span class="gr">{that passes for unquestionable proof [that a given thing happened]}</span>.</div>
+        <div class="sp-ko">사진은 그것이 변형 없이 현실의 중립적 시각을 포착한다는 환상과 씨름한다. / 수전 손탁은 어떤 일이 일어났다는 의심할 수 없는 증거로 통하는 인쇄된 사진의 공식적인 사용을 언급한다. <span class="sp-note">★ battle with ~: ~과 씨름하다 / that it captures ~: 동격절(fantasy 내용) / passes for: "~로 통하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">(C) However, she states her opinion [that 'photographs are as much an interpretation of the world as paintings and drawings']. Additionally, the art of dodging and burning during the transfer from negative to print was well established before Photoshop and digital photography.</div>
+        <div class="sp-ko">(C) 그러나 그녀는 '사진은 그림과 소묘만큼이나 세계에 대한 해석이다'라는 자신의 의견을 밝힌다. / 또한, 필름에서 인화지로의 전환 과정에서의 다징과 버닝의 기술은 포토샵과 디지털 사진이 나오기 전에 이미 잘 확립되어 있었다. <span class="sp-note">★ as much A as B: "B만큼이나 A" / was well established: 수동태(과거완료) — 이미 오래된 기술</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">(B) Ansel Adams is known for spending many hours in the darkroom developing a single print and he also said, 'dodging and burning are steps to take care of mistakes <span class="gr">{God made in establishing tonal relationships}</span>'. However, digital images tend to be one more step removed from reality.</div>
+        <div class="sp-ko">(B) 앤설 아담스는 한 장의 인화물을 현상하기 위해 암실에서 많은 시간을 보내는 것으로 유명하며, 그는 또한 '다징과 버닝은 색조 관계를 확립하는 데 있어 신이 저지른 실수를 처리하는 단계들이다'라고 말했다. / 그러나 디지털 이미지는 현실에서 한 단계 더 멀어지는 경향이 있다. <span class="sp-note">★ be known for V-ing: ~하는 것으로 유명하다 / mistakes God made: 목적격 관계대명사 생략 / one more step removed: 비교급 표현("한 단계 더 멀어진")</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">(A) While the negative in print photography is still an image, the file of a digital image is comprised of bits ― computerized 1's and 0's ― <span class="gr">{that are not an image until interpreted and displayed by a combination of software and an electronic display device}</span>.</div>
+        <div class="sp-ko">(A) 인쇄 사진의 필름 원판은 여전히 이미지이지만, 디지털 이미지의 파일은 소프트웨어와 전자 디스플레이 기기의 결합에 의해 해석되고 표시될 때까지는 이미지가 아닌 비트 — 전산화된 1과 0 — 로 구성된다. <span class="sp-note">★ While ~: 대조 접속사 / comprised of ~: 수동태("~로 구성되다") / until interpreted: 분사구문(시간, = until they are interpreted)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① battle with (씨름하다)</strong> — "Photography battles with the fantasy": "~과 씨름하다, ~에 맞서다"</p>
+      <p><strong>② as much A as B</strong> — "as much an interpretation as paintings and drawings": "그림만큼이나 해석"</p>
+      <p><strong>③ be known for V-ing</strong> — "Ansel Adams is known for spending many hours": "~하는 것으로 유명하다"</p>
+      <p><strong>④ comprised of (수동태)</strong> — "the file is comprised of bits": "~로 구성되다" (= is made up of)</p>
+      <p><strong>⑤ until + 분사구문</strong> — "not an image until interpreted and displayed": "해석되고 표시될 때까지는 이미지가 아닌"</p>
+    </div>
+  </div>
+</div><!-- end p006 -->
+
+
+<!-- ═══ 007 · Gatekeeping ═══ -->
+<div class="sec" id="p007">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0079 · p.084 · 007</div>
+    <div class="p-title">Gatekeeping in the News Media</div>
+    <div class="p-title-ko">뉴스 게이트키핑 — 편집자가 정보의 흐름을 결정한다</div>
+    <span class="p-type-badge">밑줄 친 부분 중 어법이 틀린 것</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">hypothetical</span><span class="voca-mean"> 가상의</span><div class="voca-syn">imaginary, theoretical</div></div>
+      <div class="voca-item"><span class="voca-word">press release</span><span class="voca-mean"> 보도 자료</span><div class="voca-syn">official announcement sent to media</div></div>
+      <div class="voca-item"><span class="voca-word">gatekeeping</span><span class="voca-mean"> 게이트키핑</span><div class="voca-syn">정보의 선택적 유통 행위 / gatekeeper 문지기</div></div>
+      <div class="voca-item"><span class="voca-word">blood drive</span><span class="voca-mean"> 헌혈 행사</span><div class="voca-syn">food drive 식품 모으기 / fundraising drive 기금 모금</div></div>
+      <div class="voca-item"><span class="voca-word">elect</span><span class="voca-mean"> 결정하다, 선출하다</span><div class="voca-syn">choose, decide, select</div></div>
+      <div class="voca-item"><span class="voca-word">newsroom</span><span class="voca-mean"> 뉴스 편집실</span><div class="voca-syn">editorial office</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage</div>
+    <div class="plain-box">
+      <p class="plain-sent">In a <span class="vw">hypothetical<span class="tt">가상의</span></span> situation, a local college's athletic department might send a <span class="vw">press release<span class="tt">보도 자료</span></span> to the media {<span class="ul-word">① informing</span> them about three events {happening on campus tomorrow}}: a women's soccer game, a track and field event, and a blood drive {sponsored by the men's tennis team}.</p>
+      <p class="plain-sent">The newspaper <span class="vw">elects<span class="tt">결정하다</span></span> to print only a story previewing the women's soccer game and <span class="ul-word">② ignores</span> both the track and field event and the blood drive.</p>
+      <p class="plain-sent">Therefore, readers {who use that newspaper as their only source of local information} might have no idea <span class="wrong-word">③ which</span> either the track and field event or the blood drive is happening.</p>
+      <p class="plain-sent">There are multiple events {happening at the college}, and it was not the readers who decided <span class="ul-word">④ [what was important]</span> ― the newspaper's editors decided for them.</p>
+      <p class="plain-sent">Situations like this one occur all the time in <span class="vw">newsrooms<span class="tt">뉴스 편집실</span></span> across the world and <span class="ul-word">⑤ perfectly</span> demonstrate the concept of <span class="vw">gatekeeping<span class="tt">게이트키핑</span></span>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항</div>
+    <div class="q-block">
+      <div class="q-type">밑줄 친 ①~⑤ 중 어법이 틀린 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> informing</div>
+        <div class="choice"><span class="cn">②</span> ignores</div>
+        <div class="wrong-choice"><span class="cn">③</span> <span class="wrong-word">which</span> ← 오답</div>
+        <div class="choice"><span class="cn">④</span> what</div>
+        <div class="choice"><span class="cn">⑤</span> perfectly</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">어법 정답</div>
+      <div class="ans-num">③ <span class="wrong-word">which</span> → <span class="right-word">that</span></div>
+      <div class="ans-exp">
+        <strong>오류:</strong> "readers might have no idea <em>③ which</em> either the track and field event or the blood drive is happening."<br>
+        "have no idea" 다음에는 <strong>명사절 접속사 that</strong>이 필요하다: "have no idea <strong>that</strong> S+V" = "~라는 것을 전혀 모르다"<br>
+        <em>which</em>는 의문사(어느 것인지)로 쓰이나 이 맥락에서는 단순히 "~라는 사실"을 나타내므로 that이 적절하다.<br><br>
+        <strong>나머지 적절 이유:</strong><br>
+        ① <em>informing</em> — 분사구문(= and informs / informing them ~): press release를 수식 ✓<br>
+        ② <em>ignores</em> — and로 연결된 병렬 동사(elects to print ~ and ignores ~) ✓<br>
+        ④ <em>what</em> — 관계대명사 what절(명사절: decided의 목적어) ✓<br>
+        ⑤ <em>perfectly</em> — 부사(demonstrate를 수식) ✓
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">In a hypothetical situation, a local college's athletic department might send a press release to the media {<span class="gr">① informing them about three events {happening on campus tomorrow}</span>}: a women's soccer game, a track and field event, and a blood drive {sponsored by the men's tennis team}.</div>
+        <div class="sp-ko">가상의 상황에서, 한 지역 대학의 체육부가 내일 캠퍼스에서 일어나는 세 가지 행사에 대해 언론에 알리는 보도 자료를 보낼 수 있다: 여자 축구 경기, 육상 경기, 그리고 남자 테니스 팀이 주최하는 헌혈 행사. <span class="sp-note">★ ① informing ~: 분사구문(press release를 수식, = that informs) / sponsored by ~: 수동 분사구</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The newspaper elects to print only a story previewing the women's soccer game and ② ignores both the track and field event and the blood drive.</div>
+        <div class="sp-ko">신문사는 여자 축구 경기를 미리 소개하는 기사만 게재하기로 결정하고, 육상 경기와 헌혈 행사 둘 다 무시한다. <span class="sp-note">★ elects to V: "V하기로 결정하다" / ② ignores: elects ~ and ignores ~의 병렬 동사 ✓</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Therefore, readers {who use that newspaper as their only source of local information} might have no idea <span class="wrong-word">③ which</span> <span class="right-word">(→ that)</span> either the track and field event or the blood drive is happening.</div>
+        <div class="sp-ko">따라서, 그 신문을 지역 정보의 유일한 출처로 사용하는 독자들은 육상 경기나 헌혈 행사 중 어느 것도 열리고 있다는 것을 전혀 모를 수 있다. <span class="sp-note">★ ③ which → that: "have no idea <u>that</u> ~" = "~라는 것을 전혀 모르다" / which는 "어느 것인지" 뉘앙스 — 여기서는 사실 인지 여부이므로 that</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">There are multiple events {happening at the college}, and it was not the readers who decided ④ <span class="gr">[what was important]</span> ― the newspaper's editors decided for them.</div>
+        <div class="sp-ko">대학에서 여러 행사가 일어나고 있으며, 무엇이 중요한지 결정한 것은 독자들이 아니라 신문 편집자들이 그들을 대신해 결정했다. <span class="sp-note">★ it was not ~ who V: 강조 구문("V한 것은 ~가 아니었다") / ④ what was important: 관계대명사 what절(decided의 목적어) ✓</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Situations like this one occur all the time in newsrooms across the world and ⑤ perfectly demonstrate the concept of gatekeeping.</div>
+        <div class="sp-ko">이와 같은 상황들은 전 세계 뉴스 편집실에서 항상 발생하며, 게이트키핑의 개념을 완벽하게 보여준다. <span class="sp-note">★ ⑤ perfectly: 부사(demonstrate 수식) ✓ / demonstrate: "보여주다, 증명하다"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① have no idea that ~ (★오답 포인트)</strong> — "have no idea <u>that</u> ~ is happening": "~라는 것을 전혀 모르다" — 명사절 접속사 that 필요. which는 의문사로 "어느 것인지"를 물을 때 사용</p>
+      <p><strong>② It was not ~ who V (강조 구문)</strong> — "it was not the readers <u>who</u> decided": "결정한 것은 독자들이 아니었다" — 주어 강조</p>
+      <p><strong>③ what S V (관계대명사 what 명사절)</strong> — "decided <u>what was important</u>": decided의 목적어 역할</p>
+      <p><strong>④ elect to V</strong> — "The newspaper <u>elects to</u> print only ~": "~하기로 결정하다" (= choose to V)</p>
+    </div>
+  </div>
+</div><!-- end p007 -->
+
+<!-- ═══ 008 · Occupational Specialization ═══ -->
+<div class="sec" id="p008">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0080 · p.085 · 008</div>
+    <div class="p-title">Occupational Specialization in Civilizations</div>
+    <div class="p-title-ko">문명의 성장과 직업 분화 — 로마의 콜레기아에서 중세의 길드까지</div>
+    <span class="p-type-badge">글의 제목으로 가장 적절한 것</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">flourish</span><span class="voca-mean"> 번성하다</span><div class="voca-syn">thrive, prosper</div></div>
+      <div class="voca-item"><span class="voca-word">designation</span><span class="voca-mean"> 직무, 명칭</span><div class="voca-syn">title, label / designate 지정하다</div></div>
+      <div class="voca-item"><span class="voca-word">practitioner</span><span class="voca-mean"> 전문직 종사자, 실무자</span><div class="voca-syn">professional, specialist</div></div>
+      <div class="voca-item"><span class="voca-word">differentiated</span><span class="voca-mean"> 분화된, 차별화된</span><div class="voca-syn">specialized, distinct</div></div>
+      <div class="voca-item"><span class="voca-word">communal</span><span class="voca-mean"> 공동체적인</span><div class="voca-syn">shared, collective / commune 공동체</div></div>
+      <div class="voca-item"><span class="voca-word">formalize</span><span class="voca-mean"> 공식화하다</span><div class="voca-syn">institutionalize, standardize</div></div>
+      <div class="voca-item"><span class="voca-word">collegia</span><span class="voca-mean"> 콜레기아 (로마 직업 조합)</span><div class="voca-syn">collegium의 복수 / professional association</div></div>
+      <div class="voca-item"><span class="voca-word">take hold</span><span class="voca-mean"> 자리 잡다, 뿌리내리다</span><div class="voca-syn">become established, take root</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage</div>
+    <div class="plain-box">
+      <p class="plain-sent">As civilizations started to grow and <span class="vw">flourish<span class="tt">번성하다</span></span>, people found they could accomplish more with less effort if they specialized and divided their work into separate <span class="vw">designations<span class="tt">직무, 명칭</span></span>.</p>
+      <p class="plain-sent">So, for example, the work of brick-making was conducted separately from the work of shipbuilding ― just as the work of laying roads was separate from the work of farming, {which was separate from the work of building dwellings or making pots}.</p>
+      <p class="plain-sent">Each line of work was its own distinct activity, {carried out by distinct <span class="vw">practitioners<span class="tt">전문직 종사자</span></span> {who developed their work into an institution of sorts}}.</p>
+      <p class="plain-sent">As civilization continued to develop, <span class="vw">differentiated<span class="tt">분화된</span></span> forms of work became more sophisticated, more specialized, and more <span class="vw">communal<span class="tt">공동체적인</span></span>.</p>
+      <p class="plain-sent">In ancient Rome, they became <span class="vw">formalized<span class="tt">공식화되다</span></span> with the creation of [what were called <span class="vw">collegia<span class="tt">콜레기아(직업 조합)</span></span>, or professional associations].</p>
+      <p class="plain-sent">There was, for example, a college of woodworkers, a college of merchant mariners, a college of wine dealers, and a college of planters.</p>
+      <p class="plain-sent">In ancient China, a similar system developed. By the Middle Ages, guilds, a similar type of organization, had <span class="vw">taken hold<span class="tt">자리 잡다</span></span> throughout much of Europe.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항</div>
+    <div class="q-block">
+      <div class="q-type">글의 제목으로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> The relationship between farming and road construction</div>
+        <div class="choice"><span class="cn">②</span> Conflicts among professional groups in ancient societies</div>
+        <div class="choice"><span class="cn">③</span> The influence of trade routes on guild formation in Europe</div>
+        <div class="correct-choice"><span class="cn">④</span> The development of occupational specialization in civilizations ← 정답</div>
+        <div class="choice"><span class="cn">⑤</span> The economic importance of construction work in early societies</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 &amp; 해설</div>
+      <div class="ans-num">④ The development of occupational specialization in civilizations</div>
+      <div class="ans-exp">
+        <strong>핵심 흐름:</strong> 문명의 성장 → 분업과 전문화 → 로마의 콜레기아 → 중국의 유사 시스템 → 중세의 길드로 이어지는 직업 전문화의 역사적 발전.<br><br>
+        ① 농업과 도로 건설의 관계: 단순 예시 중 하나에 불과. ② 직업 집단 간 갈등: 글에 없음. ③ 무역로의 영향: 언급 없음. ⑤ 건설 노동의 경제적 중요성: 주제 아님.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">As civilizations started to grow and flourish, people found <span class="gr">[they could accomplish more with less effort if they specialized and divided their work into separate designations]</span>.</div>
+        <div class="sp-ko">문명이 성장하고 번성하기 시작하면서, 사람들은 자신들의 일을 전문화하고 별도의 직무들로 나누면 더 적은 노력으로 더 많은 것을 성취할 수 있다는 것을 알게 되었다. <span class="sp-note">★ As ~: 시간 부사절 / found that절: "~를 알게 되었다" / if they specialized ~: 조건 부사절</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">So, for example, the work of brick-making was conducted separately from the work of shipbuilding ― just as the work of laying roads was separate from the work of farming, <span class="gr">{which was separate from the work of building dwellings or making pots}</span>.</div>
+        <div class="sp-ko">그래서, 예를 들어, 벽돌 제조 작업은 조선 작업과 별도로 수행되었다 — 마치 도로 포장 작업이 농업 작업과 분리되었던 것처럼, 농업 작업도 주거지 건설이나 도자기 제작 작업과 분리되었다. <span class="sp-note">★ just as ~: "마치 ~처럼"(비교 접속사) / which was separate from ~: 계속적 관계절(farming 부연)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Each line of work was its own distinct activity, <span class="gr">{carried out by distinct practitioners {who developed their work into an institution of sorts}}</span>.</div>
+        <div class="sp-ko">각 업무 분야는 고유한 뚜렷한 활동이었으며, 자신들의 업무를 일종의 제도로 발전시킨 고유한 종사자들에 의해 수행되었다. <span class="sp-note">★ carried out by ~: 수동 분사구(activity 수식) / of sorts: "일종의"(관용구)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">As civilization continued to develop, <span class="vw">differentiated<span class="tt">분화된</span></span> forms of work became more sophisticated, more specialized, and more communal.</div>
+        <div class="sp-ko">문명이 계속 발전함에 따라, 분화된 형태의 노동은 더 정교하고, 더 전문화되고, 더 공동체적이 되었다. <span class="sp-note">★ As ~: 시간/비례 부사절 / became more A, more B, and more C: 세 형용사 비교급 병렬</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In ancient Rome, they became formalized with the creation of <span class="gr">[what were called collegia, or professional associations]</span>.</div>
+        <div class="sp-ko">고대 로마에서, 그것들은 콜레기아, 즉 직업 조합이라고 불리는 것의 창설과 함께 공식화되었다. <span class="sp-note">★ what were called ~: 관계대명사 what절("~라고 불리는 것") / that is = or: 즉(부연)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">There was, for example, a college of woodworkers, a college of merchant mariners, a college of wine dealers, and a college of planters.</div>
+        <div class="sp-ko">예를 들어, 목수 조합, 상선 선원 조합, 포도주 판매상 조합, 농장주 조합이 있었다. <span class="sp-note">★ There was ~: 존재 구문 / 네 개의 college(조합) 병렬 나열</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In ancient China, a similar system developed. By the Middle Ages, guilds, a similar type of organization, had taken hold throughout much of Europe.</div>
+        <div class="sp-ko">고대 중국에서도 유사한 시스템이 발전했다. / 중세에 이르러, 유사한 유형의 조직인 길드가 유럽의 많은 지역에 자리를 잡았다. <span class="sp-note">★ a similar system: 로마의 collegia에 대응하는 중국 조합 시스템 / By the Middle Ages: "중세에 이르러"(기한 전치사 by) / had taken hold: 과거완료(중세 이전에 이미 자리 잡음)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① what were called ~ (관계대명사 what)</strong> — "the creation of what were called collegia": "콜레기아라고 불리는 것" — what = the thing(s) that</p>
+      <p><strong>② of sorts (관용구)</strong> — "an institution of sorts": "일종의 제도" — 완전한 제도는 아니지만 그 범주에 속하는</p>
+      <p><strong>③ by + 기한 (과거완료)</strong> — "By the Middle Ages … had taken hold": "중세에 이르러서는 이미 자리 잡혀 있었다"</p>
+    </div>
+  </div>
+</div><!-- end p008 -->
+
+<!-- ═══ 009 · Animal Psychology ═══ -->
+<div class="sec" id="p009">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0081 · p.086 · 009</div>
+    <div class="p-title">Animal Psychologists Redefine Psychology</div>
+    <div class="p-title-ko">동물 심리학자들의 반란 — 의식에서 행동으로</div>
+    <span class="p-type-badge">글의 제목으로 가장 적절한 것</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">object to</span><span class="voca-mean"> ~에 반대하다</span><div class="voca-syn">oppose, protest against</div></div>
+      <div class="voca-item"><span class="voca-word">strenuously</span><span class="voca-mean"> 격렬하게, 맹렬하게</span><div class="voca-syn">vigorously, fiercely / strenuous 격렬한</div></div>
+      <div class="voca-item"><span class="voca-word">instinct</span><span class="voca-mean"> 본능</span><div class="voca-syn">instinctive 본능적인</div></div>
+      <div class="voca-item"><span class="voca-word">motor</span><span class="voca-mean"> 운동의</span><div class="voca-syn">motor activities 운동 활동</div></div>
+      <div class="voca-item"><span class="voca-word">rebel</span><span class="voca-mean"> 반발하다, 반항하다</span><div class="voca-syn">revolt, resist / rebellion 반란</div></div>
+      <div class="voca-item"><span class="voca-word">offensive</span><span class="voca-mean"> 공세, 반격</span><div class="voca-syn">take the offensive: 공세를 취하다</div></div>
+      <div class="voca-item"><span class="voca-word">properly</span><span class="voca-mean"> 실은, 정확하게는</span><div class="voca-syn">strictly speaking, accurately</div></div>
+      <div class="voca-item"><span class="voca-word">glandular</span><span class="voca-mean"> 분비선의</span><div class="voca-syn">gland 분비샘 / glandular activities 분비선 활동</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage</div>
+    <div class="plain-box">
+      <p class="plain-sent">No one has objected so <span class="vw">strenuously<span class="tt">격렬하게</span></span> to [defining psychology as the science of consciousness], and [limiting it to consciousness], as the group of animal psychologists.</p>
+      <p class="plain-sent">By energetic work, they had proved [that the animal was a very good subject for psychological study], and had discovered much {that was important regarding <span class="vw">instinct<span class="tt">본능</span></span> and learning in animals}.</p>
+      <p class="plain-sent">But from the nature of the case, they could not observe the consciousness of animals; they could only observe their behavior, that is to say, the <span class="vw">motor<span class="tt">운동의</span></span> (and in some cases <span class="vw">glandular<span class="tt">분비선의</span></span>) activities of the animals under known conditions.</p>
+      <p class="plain-sent">When then the animal psychologists were warned by the mighty ones in the science [that they must interpret their results in terms of consciousness or not call themselves psychologists any longer], they <span class="vw">rebelled<span class="tt">반발하다</span></span>; and some of the best fighters among them took the <span class="vw">offensive<span class="tt">공세</span></span>, by insisting [that human psychology, no less than animal, was <span class="vw">properly<span class="tt">정확하게는</span></span> a study of behavior], and [that it had been a great mistake ever to define it as the science of consciousness].</p>
+      <div class="fn">* it(= ?) = psychology / "define it as the science of consciousness" = psychology를 의식의 과학으로 정의하는 것</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항</div>
+    <div class="q-block">
+      <div class="q-type">글의 제목으로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> The Dominance of Consciousness in Psychology</div>
+        <div class="choice"><span class="cn">②</span> How Consciousness Became the Core of Psychology</div>
+        <div class="choice"><span class="cn">③</span> Why Consciousness Should Remain Central to Psychology</div>
+        <div class="choice"><span class="cn">④</span> Inside Human Minds: Why Psychology Rejects Animal Studies</div>
+        <div class="correct-choice"><span class="cn">⑤</span> From Consciousness to Behavior: Animal Psychologists' Challenge ← 정답</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 &amp; 해설</div>
+      <div class="ans-num">⑤ From Consciousness to Behavior: Animal Psychologists' Challenge</div>
+      <div class="ans-exp">
+        <strong>핵심 흐름:</strong> 동물 심리학자들이 심리학을 의식의 과학으로 정의하는 것에 반대하고, 행동 연구로 심리학을 재정의해야 한다고 주장하며 반란을 일으켰다.<br><br>
+        <strong>⑤ 정답 이유:</strong> "From Consciousness to Behavior" = 심리학의 패러다임 전환(의식→행동) / "Animal Psychologists' Challenge" = 동물 심리학자들의 도전과 반란 → 글 전체 핵심을 정확히 포괄.<br><br>
+        ①②는 의식의 지배를 설명하지만 반란을 포함하지 않음. ③은 반대 입장. ④는 인간 심리학이 동물 연구를 거부한다는 잘못된 설명.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">No one has objected <span class="gr">so strenuously</span> to [defining psychology as the science of consciousness], and [limiting it to consciousness], <span class="gr">as the group of animal psychologists</span>.</div>
+        <div class="sp-ko">동물 심리학자 집단만큼 심리학을 의식의 과학으로 정의하는 것에, 그리고 그것을 의식에 한정하는 것에 그렇게 격렬하게 반대해온 사람은 없다. <span class="sp-note">★ No one has V-ed … as ~: "~만큼 ~해온 사람은 없다"(최상급 의미) / object to + 동명사: ~에 반대하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">By energetic work, they had proved [that the animal was a very good subject for psychological study], and had discovered much <span class="gr">{that was important regarding instinct and learning in animals}</span>.</div>
+        <div class="sp-ko">정력적인 연구로, 그들은 동물이 심리학 연구에 매우 좋은 피험체라는 것을 증명했고, 동물의 본능과 학습에 관해 중요한 많은 것들을 발견했다. <span class="sp-note">★ had proved ~ and had discovered: 과거완료 병렬 / much that was important: 관계절(much 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But from the nature of the case, they could not observe the consciousness of animals; they could only observe their behavior, that is to say, the motor (and in some cases glandular) activities of the animals under known conditions.</div>
+        <div class="sp-ko">그러나 상황의 본질상, 그들은 동물의 의식을 관찰할 수 없었다; 그들은 알려진 조건하에서의 동물들의 운동 (그리고 어떤 경우에는 분비선의) 활동들, 즉 그것들의 행동만을 관찰할 수 있었다. <span class="sp-note">★ from the nature of the case: "상황의 본질상"(관용구) / that is to say: "즉"(= that is = i.e.)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">When then the animal psychologists were warned by the mighty ones in the science <span class="gr">[that they must interpret their results in terms of consciousness or not call themselves psychologists any longer]</span>, they rebelled; and some of the best fighters among them took the offensive, by insisting <span class="gr">[that human psychology, no less than animal, was properly a study of behavior]</span>, and <span class="gr">[that it had been a great mistake ever to define it as the science of consciousness]</span>.</div>
+        <div class="sp-ko">그런 다음 동물 심리학자들이 학계의 권위자들로부터 의식의 관점으로 결과를 해석해야 하거나 더 이상 자신들을 심리학자라고 부르지 말아야 한다는 경고를 받았을 때, 그들은 반발했다; 그리고 그들 중 가장 뛰어난 전사들이 공세를 취하며, 인간 심리학도 동물 심리학과 다름없이 제대로 행동의 연구라고, 그리고 심리학을 의식의 과학으로 정의한 것은 큰 실수였다고 주장했다. <span class="sp-note">★ no less than ~: "~보다 못하지 않게, ~와 다름없이" / by insisting that ~ and that ~: 수단 분사구문(두 개의 that절 병렬)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① no one ~ as … (최상급 표현)</strong> — "No one has objected so strenuously … as the animal psychologists": "동물 심리학자들만큼 반대한 사람은 없다"</p>
+      <p><strong>② no less than (동등 표현)</strong> — "human psychology, <u>no less than</u> animal, was properly a study of behavior": "동물 심리학과 다름없이 인간 심리학도"</p>
+      <p><strong>③ by insisting + 병렬 that절</strong> — "by insisting <u>that</u> ~ and <u>that</u> ~": 두 개의 that절이 병렬로 insisting의 내용을 구성</p>
+      <p><strong>④ it had been a great mistake to V</strong> — "it had been a great mistake <u>ever to define it</u> as the science of consciousness": 가주어-진주어 / ever: 강조 부사</p>
+    </div>
+  </div>
+</div><!-- end p009 -->
+
+
+<!-- ═══ 010 · Urban Agriculture ═══ -->
+<div class="sec" id="p010">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0082 · p.087 · 010</div>
+    <div class="p-title">Botanical Gardens &amp; Urban Agriculture</div>
+    <div class="p-title-ko">식물원의 역할 — 도시 농업 연구와 기후 변화 교육</div>
+    <span class="p-type-badge">밑줄 친 부분 중 어법이 틀린 것</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">urban agriculture</span><span class="voca-mean"> 도시 농업</span><div class="voca-syn">urban farming</div></div>
+      <div class="voca-item"><span class="voca-word">nutrition</span><span class="voca-mean"> 영양</span><div class="voca-syn">nutrient 영양소 / nutritious 영양이 풍부한 / malnutrition 영양실조</div></div>
+      <div class="voca-item"><span class="voca-word">biodiversity</span><span class="voca-mean"> 생물 다양성</span><div class="voca-syn">variety of living species in an ecosystem</div></div>
+      <div class="voca-item"><span class="voca-word">alleviate</span><span class="voca-mean"> 경감하다</span><div class="voca-syn">relieve, ease, mitigate / alleviation 완화</div></div>
+      <div class="voca-item"><span class="voca-word">programmatic</span><span class="voca-mean"> 프로그램에 따른</span><div class="voca-syn">programmatic approaches 프로그램적 접근법</div></div>
+      <div class="voca-item"><span class="voca-word">in the midst of</span><span class="voca-mean"> ~ 속에서</span><div class="voca-syn">in the middle of, amid</div></div>
+      <div class="voca-item"><span class="voca-word">botanical garden</span><span class="voca-mean"> 식물원</span><div class="voca-syn">botany 식물학 / botanical 식물의</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage</div>
+    <div class="plain-box">
+      <p class="plain-sent">While many studies have described the potential benefits of urban agriculture, there is a need for more research <span class="gr">[that {<span class="ul-word">① measures</span> the impact of urban agriculture on food access, nutrition, and income generation}; {explores the potential of urban agriculture to <span class="vw">alleviate<span class="tt">경감하다</span></span> global challenges such as climate change and <span class="vw">biodiversity<span class="tt">생물 다양성</span></span> loss}; and {suggests ways to maximize the benefits of urban agriculture in relation to these issues}]</span>.</p>
+      <p class="plain-sent">Botanical gardens can use emerging research in these areas <span class="ul-word">② to inform</span> <span class="vw">programmatic<span class="tt">프로그램에 따른</span></span> approaches.</p>
+      <p class="plain-sent">In addition, researchers are exploring growing practices {<span class="wrong-word">③ what</span> can maximize production in urban spaces}.</p>
+      <p class="plain-sent">Botanical gardens may be able to contribute to this work [as well as <span class="ul-word">④ play</span> a role in educating urban gardeners and farmers about recommended practices for their regions, particularly <span class="vw">in the midst of<span class="tt">~ 속에서</span></span> a changing global climate].</p>
+      <p class="plain-sent">Finally, botanical gardens can benefit by sharing urban agriculture resources and approaches with one another, including lessons <span class="ul-word">⑤ learned</span> in program design, site design and operation, and partnership development to promote effective community engagement.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항</div>
+    <div class="q-block">
+      <div class="q-type">밑줄 친 ①~⑤ 중 어법이 틀린 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> measures</div>
+        <div class="choice"><span class="cn">②</span> to inform</div>
+        <div class="wrong-choice"><span class="cn">③</span> <span class="wrong-word">what</span> ← 오답</div>
+        <div class="choice"><span class="cn">④</span> play</div>
+        <div class="choice"><span class="cn">⑤</span> learned</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">어법 정답</div>
+      <div class="ans-num">③ <span class="wrong-word">what</span> → <span class="right-word">that</span> (또는 which)</div>
+      <div class="ans-exp">
+        <strong>오류:</strong> "researchers are exploring growing practices {③ <em>what</em> can maximize production in urban spaces}"<br>
+        선행사 <strong>growing practices</strong>를 수식하는 <u>관계절</u>이므로 관계대명사 <strong>that</strong>(또는 <strong>which</strong>)가 필요하다.<br>
+        <em>what</em>은 선행사를 포함하는 관계대명사 — 앞에 선행사가 있으면 사용 불가.<br><br>
+        <strong>나머지 적절 이유:</strong><br>
+        ① <em>measures</em> — research that ~ 관계절 내의 세 동사(measures / explores / suggests) 병렬 ✓<br>
+        ② <em>to inform</em> — "use ~ to inform ~": "~을 사용하여 ~에 정보를 제공하다" ✓<br>
+        ④ <em>play</em> — "as well as play": as well as + 원형(= to play와 병렬) ✓<br>
+        ⑤ <em>learned</em> — "lessons learned in ~": 수동 분사구(lessons 수식) ✓
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">While many studies have described the potential benefits of urban agriculture, there is a need for more research <span class="gr">[that {① measures …}; {explores …}; and {suggests …}]</span>.</div>
+        <div class="sp-ko">많은 연구들이 도시 농업의 잠재적 이점들을 설명해왔지만, 도시 농업이 식품 접근성, 영양, 소득 창출에 미치는 영향을 측정하고; 기후 변화와 생물 다양성 손실 같은 세계적 도전들을 경감하는 잠재력을 탐구하며; 이러한 문제들과 관련하여 도시 농업의 이점을 극대화하는 방법을 제안하는 더 많은 연구가 필요하다. <span class="sp-note">★ that measures ~ explores ~ suggests ~: 세 동사가 관계절 안에서 병렬 구조 / ① measures: 단수 주어 research에 호응 ✓</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Botanical gardens can use emerging research in these areas ② to inform programmatic approaches.</div>
+        <div class="sp-ko">식물원은 이 분야의 신흥 연구를 활용하여 ② 프로그램적 접근법에 정보를 제공할 수 있다. <span class="sp-note">★ ② to inform ~: 목적 to부정사 ✓ / use A to V: "A를 활용하여 V하다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In addition, researchers are exploring growing practices {<span class="wrong-word">③ what</span> <span class="right-word">(→ that)</span> can maximize production in urban spaces}.</div>
+        <div class="sp-ko">또한, 연구자들은 도시 공간에서 생산을 극대화할 수 있는 재배 방법들을 탐구하고 있다. <span class="sp-note">★ ③ what → that: 선행사 growing practices가 있으므로 what 불가 → that/which 필요 / are exploring: 현재진행(지속적 연구)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Botanical gardens may be able to contribute to this work [as well as ④ play a role in educating urban gardeners and farmers about recommended practices for their regions, particularly in the midst of a changing global climate].</div>
+        <div class="sp-ko">식물원은 이 작업에 기여할 수 있을 뿐만 아니라 / 특히 변화하는 세계 기후 속에서 해당 지역에 추천되는 관행에 대해 도시 정원사와 농부들을 교육하는 데도 역할을 할 수 있을 것이다. <span class="sp-note">★ as well as + V: "V할 뿐만 아니라" / ④ play: as well as가 전치사로 쓰일 때 원형/동명사 모두 가능 ✓</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Finally, botanical gardens can benefit by sharing urban agriculture resources and approaches with one another, including lessons <span class="gr">⑤ learned in program design, site design and operation, and partnership development</span> to promote effective community engagement.</div>
+        <div class="sp-ko">마지막으로, 식물원은 서로 도시 농업 자원과 접근법을 공유함으로써 이익을 얻을 수 있는데, 이는 프로그램 설계, 현장 설계 및 운영, 효과적인 지역 사회 참여를 촉진하기 위한 파트너십 개발에서 얻은 교훈들을 포함한다. <span class="sp-note">★ ⑤ learned in ~: 수동 분사구(lessons 후치 수식, = that were learned in ~) ✓</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① what vs that/which (★오답 포인트)</strong> — 선행사 있음 → <u>that/which</u>. what = 선행사 포함 관계대명사("~하는 것")이므로 선행사 앞에는 불가</p>
+      <p><strong>② 세 동사 병렬 관계절</strong> — "research that {measures ~}; {explores ~}; and {suggests ~}": 관계절 안에서 세 동사가 세미콜론으로 연결된 병렬</p>
+      <p><strong>③ as well as + 원형</strong> — "contribute to ~ as well as play a role": "기여할 뿐만 아니라 역할도 하다"</p>
+      <p><strong>④ 수동 분사구 learned</strong> — "lessons learned in program design": "프로그램 설계에서 얻은 교훈들"</p>
+    </div>
+  </div>
+</div><!-- end p010 -->
+
+<!-- ═══ 011 · Colonial Labour ═══ -->
+<div class="sec" id="p011">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0083 · p.088 · 011</div>
+    <div class="p-title">Colonial Labour Regimes &amp; Inequality</div>
+    <div class="p-title-ko">식민 노동 체제가 세계적 불평등을 심화시킨 두 가지 방식</div>
+    <span class="p-type-badge">전체 흐름과 관계없는 문장</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">colonial</span><span class="voca-mean"> 식민지의</span><div class="voca-syn">colony 식민지 / colonize 식민지로 만들다</div></div>
+      <div class="voca-item"><span class="voca-word">regime</span><span class="voca-mean"> 체제</span><div class="voca-syn">system, order / colonial labour regime 식민 노동 체제</div></div>
+      <div class="voca-item"><span class="voca-word">depress</span><span class="voca-mean"> 하락시키다, 억제하다</span><div class="voca-syn">suppress / depression 불경기, 우울증</div></div>
+      <div class="voca-item"><span class="voca-word">metropole / metropolitan</span><span class="voca-mean"> 본국의, 중심지</span><div class="voca-syn">the colonizing country</div></div>
+      <div class="voca-item"><span class="voca-word">compensate for</span><span class="voca-mean"> ~에 대해 보상하다</span><div class="voca-syn">pay compensation / compensation 보상</div></div>
+      <div class="voca-item"><span class="voca-word">lumber</span><span class="voca-mean"> 떠맡기다, 목재</span><div class="voca-syn">burden / lumber Haiti with a debt: 아이티에 빚을 떠맡기다</div></div>
+      <div class="voca-item"><span class="voca-word">fiscal</span><span class="voca-mean"> 재정적인</span><div class="voca-syn">fiscal policy 재정 정책 / fiscal crisis 재정 위기</div></div>
+      <div class="voca-item"><span class="voca-word">diplomatic</span><span class="voca-mean"> 외교적인</span><div class="voca-syn">diplomacy 외교 / diplomat 외교관</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage</div>
+    <div class="plain-box">
+      <p class="plain-sent"><span class="num-circle">①</span> <span class="vw">Colonial<span class="tt">식민지의</span></span> labour <span class="vw">regimes<span class="tt">체제</span></span> worsened global human inequality in two ways.</p>
+      <p class="plain-sent">First, they <span class="vw">depressed<span class="tt">하락시키다</span></span> payments to workers in the colonies, enabling the production of comparatively and historically cheap products {that nonetheless were highly profitable for the companies of the <span class="vw">metropolitan<span class="tt">본국의</span></span> colonizers}.</p>
+      <p class="plain-sent"><span class="num-circle">②</span> This sustained rising profits and the emergence of great fortunes in commerce, industry and finance in the metropole. Second, when enslaved peoples were freed, enslavers were fully <span class="vw">compensated<span class="tt">보상받다</span></span> for their loss of "property" based upon the "market value" of the enslaved people at the time.</p>
+      <div class="irrel"><span class="num-circle" style="border-color:var(--red);color:var(--red);">③</span> <span style="color:var(--red);font-weight:600;">[무관한 문장]</span> Discussions about compensation for slavery occasionally contributed to <span class="vw">diplomatic<span class="tt">외교적인</span></span> dialogue, promoting better understanding between countries.</div>
+      <p class="plain-sent"><span class="num-circle">④</span> In the case of Haiti, this compensation was paid by the newly independent country to the French elite, <span class="vw">lumbering<span class="tt">떠맡기다</span></span> Haiti with a <span class="vw">fiscal<span class="tt">재정적인</span></span> debt {that shaped the continuing underdevelopment of the country into the twentieth century}.</p>
+      <p class="plain-sent"><span class="num-circle">⑤</span> In the case of Britain, this compensation was paid by lower- and middle-class taxpayers in Britain over a very long period of time, transferring money to those {who had already benefited from enslavement for decades}.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항 &amp; 정답 해설</div>
+    <div class="q-block">
+      <div class="q-type">전체 흐름과 관계없는 문장은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="choice"><span class="cn">②</span></div>
+        <div class="wrong-choice"><span class="cn">③</span> ← 무관한 문장</div>
+        <div class="choice"><span class="cn">④</span></div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 &amp; 해설</div>
+      <div class="ans-num">③</div>
+      <div class="ans-exp">
+        <strong>글의 주제:</strong> 식민 노동 체제가 세계적 불평등을 심화시킨 두 가지 방식 — ① 식민지 임금 억제 → 본국 이윤 창출 / ② 노예 해방 시 노예 소유주에게 보상 → 피지배국 재정 악화 또는 하층민에게 비용 전가.<br><br>
+        <strong>③ 무관한 이유:</strong> ③은 노예제 보상에 대한 논의가 <u>외교적 대화와 국가 간 이해 증진</u>에 기여했다고 주장한다. 이는 글의 핵심 주제인 <u>불평등의 심화와 피지배층의 피해</u>에 정면으로 반하는 긍정적 측면을 제시하며, ④와 ⑤의 구체적 사례(아이티·영국)와도 자연스럽게 연결되지 않는다.<br><br>
+        <strong>흐름:</strong> ① 주제(불평등 심화 2가지) → ② 메커니즘1 + 메커니즘2 소개 → <span style="color:var(--red);">③ 무관</span> → ④ 사례1(아이티) → ⑤ 사례2(영국)
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Colonial labour regimes worsened global human inequality in two ways.</div>
+        <div class="sp-ko">식민 노동 체제들은 두 가지 방식으로 세계적 인간 불평등을 악화시켰다. <span class="sp-note">★ 주제문(thesis): 두 가지 방식을 예고 → 이후 First/Second로 전개 / worsened: "악화시키다"(↔ improved)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">First, they depressed payments to workers in the colonies, <span class="gr">enabling the production of comparatively and historically cheap products {that nonetheless were highly profitable for the companies of the metropolitan colonizers}</span>.</div>
+        <div class="sp-ko">첫째, 그것들은 식민지의 노동자들에 대한 급여를 하락시켜, 그럼에도 불구하고 본국 식민지 개척자들의 기업들에게는 매우 수익성이 높은 비교적·역사적으로 저렴한 제품의 생산을 가능하게 했다. <span class="sp-note">★ enabling ~: 분사구문(결과) / that nonetheless were ~: 관계절 / nonetheless: "그럼에도 불구하고"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This sustained rising profits and the emergence of great fortunes in commerce, industry and finance in the metropole.</div>
+        <div class="sp-ko">이것은 본국의 상업, 산업, 금융에서 이윤의 상승과 큰 재산의 출현을 지속시켰다. <span class="sp-note">★ This(= 식민지 임금 억제) / sustained: "지속시키다" / emergence 출현 / metropole: 식민지를 거느린 본국</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Second, when enslaved peoples were freed, enslavers were fully compensated for their loss of "property" based upon the "market value" of the enslaved people at the time.</div>
+        <div class="sp-ko">둘째, 노예가 된 사람들이 해방되었을 때, 노예 소유주들은 당시 노예화된 사람들의 "시장 가치"를 기반으로 그들의 "재산" 손실에 대해 완전히 보상받았다. <span class="sp-note">★ be compensated for ~: "~에 대해 보상받다"(수동태) / based upon ~: 분사구문(근거)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en" style="color:var(--red);">【무관 ③】 Discussions about compensation for slavery occasionally contributed to diplomatic dialogue, promoting better understanding between countries.</div>
+        <div class="sp-ko" style="border-left-color:var(--red);">노예제에 대한 보상에 관한 논의들은 가끔 외교적 대화에 기여하여 국가들 간의 더 나은 이해를 증진시켰다. <span class="sp-note" style="color:var(--red);background:#fff0f0;">★ 무관한 이유: 보상 논의의 외교적·긍정적 효과 → 식민 노동이 불평등을 심화시켰다는 글의 핵심 논지와 반대 방향 / occasionally: "가끔" / contribute to: ~에 기여하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In the case of Haiti, this compensation was paid by the newly independent country to the French elite, <span class="gr">lumbering Haiti with a fiscal debt {that shaped the continuing underdevelopment of the country into the twentieth century}</span>.</div>
+        <div class="sp-ko">아이티의 경우, 이 보상금은 새롭게 독립한 나라가 프랑스 지배층에게 지불했으며, 이는 20세기까지 그 나라의 지속적인 저개발을 형성한 재정적 부채를 아이티에 떠맡겼다. <span class="sp-note">★ lumbering Haiti with ~: 분사구문(결과) = "아이티에 ~을 떠맡기면서" / that shaped ~: 관계절(fiscal debt 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">In the case of Britain, this compensation was paid by lower- and middle-class taxpayers in Britain over a very long period of time, <span class="gr">transferring money to those {who had already benefited from enslavement for decades}</span>.</div>
+        <div class="sp-ko">영국의 경우, 이 보상금은 영국의 하층 및 중산층 납세자들이 매우 오랜 기간에 걸쳐 지불했으며, 수십 년 동안 이미 노예제로부터 이익을 얻은 사람들에게 돈을 이전시켰다. <span class="sp-note">★ transferring money to those: 분사구문(결과) / who had already benefited: 관계절(과거완료)</span></div>
+      </div>
+    </div>
+  </div>
+</div><!-- end p011 -->
+
+<!-- ═══ 012 · Morning vs Night ═══ -->
+<div class="sec" id="p012">
+  <div class="p-header">
+    <div class="p-code">#문항코드 26007-0084 · p.089 · 012</div>
+    <div class="p-title">Morning People vs. Night People</div>
+    <div class="p-title-ko">아침형 vs 저녁형 인간 — 오스카 와일드의 야행성 과시</div>
+    <span class="p-type-badge">글의 순서 배열</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">figure out</span><span class="voca-mean"> ~을 알아내다</span><div class="voca-syn">find out, determine, work out</div></div>
+      <div class="voca-item"><span class="voca-word">constraint</span><span class="voca-mean"> 제약</span><div class="voca-syn">limitation, restriction / constrain 제한하다</div></div>
+      <div class="voca-item"><span class="voca-word">leave ~ to one's own devices</span><span class="voca-mean"> ~을 자기 뜻대로 하게 놔두다</span><div class="voca-syn">let ~ do as one pleases</div></div>
+      <div class="voca-item"><span class="voca-word">flaunt</span><span class="voca-mean"> 과시하다</span><div class="voca-syn">show off, display / night-owl 야행성인 사람</div></div>
+      <div class="voca-item"><span class="voca-word">nod off</span><span class="voca-mean"> 깜빡 잠들다</span><div class="voca-syn">doze off, fall asleep</div></div>
+      <div class="voca-item"><span class="voca-word">acquaintance</span><span class="voca-mean"> 지인</span><div class="voca-syn">have an acquaintance with ~: ~을 조금 알다</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage (완성된 순서 B→C→A)</div>
+    <div class="plain-box">
+      <p class="plain-sent">You can use your days off to <span class="vw">figure out<span class="tt">알아내다</span></span> [whether you are a morning person or a night person]. Even though the alarm clock doesn't go off on weekends, some people still merrily leap out of bed.</p>
+      <p class="plain-sent"><strong>(B)</strong> Others pull their pillows over their heads, relieved that for once they won't be torn out of their sleep in the middle of the night; they can <span class="vw">nod off<span class="tt">깜빡 잠들다</span></span> again with visions of breakfast in bed at noon.</p>
+      <p class="plain-sent"><strong>(C)</strong> The natural differences between these types are enormous: If there were no outside <span class="vw">constraints<span class="tt">제약</span></span> and people could be left to their own devices, some would not go to bed until the others were already awake for the next day. Oscar Wilde enjoyed <span class="vw">flaunting<span class="tt">과시하다</span></span> his night-owl status.</p>
+      <p class="plain-sent"><strong>(A)</strong> When an <span class="vw">acquaintance<span class="tt">지인</span></span> asked the Irish writer [whether he could visit him at nine o'clock], Wilde replied, "You are a remarkable man! I could never stay awake as long as that. I am always in bed by five o'clock!"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항</div>
+    <div class="q-block">
+      <div class="q-type">주어진 글 다음에 이어질 글의 순서로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> (A) – (C) – (B)</div>
+        <div class="choice"><span class="cn">②</span> (B) – (A) – (C)</div>
+        <div class="correct-choice"><span class="cn">③</span> (B) – (C) – (A) ← 정답</div>
+        <div class="choice"><span class="cn">④</span> (C) – (A) – (B)</div>
+        <div class="choice"><span class="cn">⑤</span> (C) – (B) – (A)</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 &amp; 해설</div>
+      <div class="ans-num">③ (B) → (C) → (A)</div>
+      <div class="ans-exp">
+        <strong>도입:</strong> 휴일에 자신이 아침형인지 저녁형인지 알 수 있다 + "some people still merrily leap out of bed"(아침형 소개)<br><br>
+        <strong>(B):</strong> "Others pull their pillows over their heads" — 도입의 "some"(아침형)에 대비되는 "others"(저녁형) 소개. 저녁형 사람들의 구체적 행동 묘사.<br><br>
+        <strong>(C):</strong> "The natural differences between these types are enormous" — (B)에서 두 유형을 소개한 후 그 차이의 규모를 설명. "Oscar Wilde enjoyed flaunting his night-owl status" → 와일드 언급으로 연결 설정.<br><br>
+        <strong>(A):</strong> (C)에서 언급된 Oscar Wilde의 야행성 과시를 "an acquaintance asked <u>the Irish writer</u>"로 받아 구체적 일화 제시 (= 결론/예시)
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 완성된 지문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">You can use your days off to figure out <span class="gr">[whether you are a morning person or a night person]</span>. Even though the alarm clock doesn't go off on weekends, some people still merrily leap out of bed.</div>
+        <div class="sp-ko">당신은 아침형 인간인지 저녁형 인간인지 알아내기 위해 휴일을 활용할 수 있다. / 비록 알람 시계가 주말에 울리지 않더라도, 일부 사람들은 여전히 즐겁게 침대에서 뛰어나온다. <span class="sp-note">★ to figure out ~: 목적 to부정사 / whether ~: 명사절 / Even though ~: 양보 접속사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">(B) Others pull their pillows over their heads, <span class="gr">relieved that for once they won't be torn out of their sleep in the middle of the night</span>; they can nod off again with visions of breakfast in bed at noon.</div>
+        <div class="sp-ko">(B) 다른 사람들은 베개를 머리 위로 당기고, 이번만큼은 한밤중에 잠에서 떼어내지 않아도 된다는 것에 안도하며; 그들은 정오에 침대에서 아침 식사를 하는 상상을 하며 다시 깜빡 잠들 수 있다. <span class="sp-note">★ relieved that ~: 분사구문(감정 원인) / torn out of ~ : "~에서 끌어내어지다"(수동태)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">(C) The natural differences between these types are enormous: <span class="gr">If there were no outside constraints and people could be left to their own devices</span>, some would not go to bed until the others were already awake for the next day. Oscar Wilde enjoyed flaunting his night-owl status.</div>
+        <div class="sp-ko">(C) 이 유형들 사이의 자연적 차이는 엄청나다: 외부적 제약이 없고 사람들이 자신의 뜻대로 할 수 있다면, 일부는 다른 사람들이 이미 다음 날을 위해 깨어있을 때까지 잠자리에 들지 않을 것이다. / 오스카 와일드는 자신의 야행성을 과시하는 것을 즐겼다. <span class="sp-note">★ If there were ~ and could be: 가정법 과거(현실과 다른 가정) / would not go ~ until ~: "~할 때까지 ~하지 않을 것이다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">(A) When an acquaintance asked the Irish writer <span class="gr">[whether he could visit him at nine o'clock]</span>, Wilde replied, "You are a remarkable man! I could never stay awake as long as that. I am always in bed by five o'clock!"</div>
+        <div class="sp-ko">(A) 한 지인이 그 아일랜드 작가에게 아홉 시에 방문해도 되냐고 물었을 때, 와일드는 답했다, "당신은 놀라운 사람이군요! 저는 그렇게 오래 깨어있을 수가 없어요. 저는 항상 다섯 시에 잠자리에 들어요!" <span class="sp-note">★ whether he could visit him: 명사절(asked의 목적어) / as long as that: "그만큼 오래"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① some … others (대비 구조)</strong> — "some people still merrily leap" / "Others pull their pillows": 두 유형의 대비 — some: 아침형, others: 저녁형</p>
+      <p><strong>② If there were ~ (가정법 과거)</strong> — "If there were no outside constraints … some would not go to bed": 현재 사실의 반대를 가정 / "there were": be동사의 가정법 형태</p>
+      <p><strong>③ relieved that ~ (분사구문)</strong> — "pull their pillows, relieved that …": "~에 안도하며" — 감정 상태를 나타내는 분사구문</p>
+      <p><strong>④ by five o'clock (by + 기한)</strong> — "I am always in bed by five o'clock": "다섯 시까지는 항상 잠자리에 든다" — 기한을 나타내는 전치사 by</p>
+    </div>
+  </div>
+</div><!-- end p012 -->
+
+
+<!-- ═══ VOCABULARY ═══ -->
+<div class="sec" id="voca">
+  <div style="background:var(--ink);color:#fefcf8;padding:18px 26px;border-radius:8px 8px 0 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;opacity:.5;margin-bottom:4px;">7강 · Focus Vocabulary · 전체 통합</div>
+    <div style="font-family:'Crimson Pro',serif;font-size:1.28rem;font-weight:600;">7강 단어장 — Focus Vocabulary 전체</div>
+    <div style="font-size:.78rem;opacity:.58;margin-top:3px;">12개 지문 핵심 어휘 · 동의어 · 관련어 통합 정리</div>
+  </div>
+  <div class="card" style="border-radius:0 0 8px 8px;">
+    <div class="sec-divider">001 · 녹색 소비 / 002 · 학습 조언</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻</th><th>관련어 / 용례</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">alternative</td><td class="vw-mean">대체품, 대안</td><td class="vw-extra">an alternative to ~: ~에 대한 대안 / have no alternative but to-v: ~하지 않을 수 없다</td></tr>
+        <tr><td class="vw-word">sustainability</td><td class="vw-mean">지속 가능성</td><td class="vw-extra">sustainable 지속 가능한 / sustain 유지하다, (피해를) 입다</td></tr>
+        <tr><td class="vw-word">consumption</td><td class="vw-mean">소비</td><td class="vw-extra">consume 소비하다 / consumer 소비자 / green consumption 녹색 소비</td></tr>
+        <tr><td class="vw-word">management</td><td class="vw-mean">경영, 관리</td><td class="vw-extra">manageable 관리 가능한 / administration(조직 운영) / governance(공공 지배구조)</td></tr>
+        <tr><td class="vw-word">repetition</td><td class="vw-mean">반복</td><td class="vw-extra">repeat 반복하다 / rereading 다시 읽기 / intentionality 의도성</td></tr>
+        <tr><td class="vw-word">permanently</td><td class="vw-mean">영구적으로</td><td class="vw-extra">perpetually, indelibly / ↔ temporarily, momentarily</td></tr>
+        <tr><td class="vw-word">embed</td><td class="vw-mean">깊이 새기다, 삽입하다</td><td class="vw-extra">be embedded in ~에 깊이 박혀 있다 / embedded journalist 종군 기자</td></tr>
+        <tr><td class="vw-word">durable</td><td class="vw-mean">오래 지속되는</td><td class="vw-extra">long-lasting, enduring / durability 내구성 / durable learning 지속적 학습</td></tr>
+        <tr><td class="vw-word">pervasive</td><td class="vw-mean">널리 퍼져 있는</td><td class="vw-extra">widespread, ubiquitous, prevalent</td></tr>
+        <tr><td class="vw-word">burn ~ into memory</td><td class="vw-mean">~을 기억에 각인시키다</td><td class="vw-extra">burn it into your memory</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-divider">003 · 인종 교육 / 004 · 해양 오염</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻</th><th>관련어 / 용례</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">conform to</td><td class="vw-mean">~을 준수하다</td><td class="vw-extra">comply with, adhere to / ↔ rebel against, defy, diverge from</td></tr>
+        <tr><td class="vw-word">outperform</td><td class="vw-mean">능가하다</td><td class="vw-extra">surpass, excel / outweigh, outnumber, outlive</td></tr>
+        <tr><td class="vw-word">reinforce</td><td class="vw-mean">강화하다</td><td class="vw-extra">strengthen, consolidate / ↔ weaken, undermine</td></tr>
+        <tr><td class="vw-word">supremacy</td><td class="vw-mean">우월주의, 최상위</td><td class="vw-extra">white supremacy 백인 우월주의 / dominance, priority</td></tr>
+        <tr><td class="vw-word">taken-for-granted</td><td class="vw-mean">당연시되는</td><td class="vw-extra">assumed, unquestioned / taken-for-granted assumption 당연시되는 가정</td></tr>
+        <tr><td class="vw-word">counteract</td><td class="vw-mean">대응하다, 상쇄하다</td><td class="vw-extra">counteract the effect of ~: ~의 영향을 상쇄하다</td></tr>
+        <tr><td class="vw-word">tailored</td><td class="vw-mean">맞춤형의</td><td class="vw-extra">tailor-made / tailor 맞추다, 재단하다</td></tr>
+        <tr><td class="vw-word">holistic</td><td class="vw-mean">전체적인</td><td class="vw-extra">comprehensive / holistic description 전체적 설명</td></tr>
+        <tr><td class="vw-word">shed light on</td><td class="vw-mean">~을 해명하다</td><td class="vw-extra">cast/throw light on, clarify, explain</td></tr>
+        <tr><td class="vw-word">disrupt</td><td class="vw-mean">교란하다, 방해하다</td><td class="vw-extra">disturb / disruptive 파괴적인 / disruption 교란</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-divider">005 · 저작권 침해 / 006 · 사진</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻</th><th>관련어 / 용례</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">piracy</td><td class="vw-mean">불법 복제, 저작권 침해</td><td class="vw-extra">pirate 불법 복제하다 / anti-piracy law 저작권 침해 방지법</td></tr>
+        <tr><td class="vw-word">unauthorized</td><td class="vw-mean">무단의</td><td class="vw-extra">illegal, unlicensed / ↔ authorized 허가된</td></tr>
+        <tr><td class="vw-word">a fraction of</td><td class="vw-mean">~의 극히 일부</td><td class="vw-extra">a small portion of</td></tr>
+        <tr><td class="vw-word">mortify</td><td class="vw-mean">모멸감을 주다</td><td class="vw-extra">humiliate, embarrass / mortified 모멸감을 느끼는</td></tr>
+        <tr><td class="vw-word">think nothing of</td><td class="vw-mean">~을 아무렇지도 않게 여기다</td><td class="vw-extra">have no qualms about</td></tr>
+        <tr><td class="vw-word">fend off</td><td class="vw-mean">~을 막다</td><td class="vw-extra">ward off(예방), fight off(싸워서 물리치다)</td></tr>
+        <tr><td class="vw-word">write off</td><td class="vw-mean">결손으로 처리하다</td><td class="vw-extra">write off losses 손실 처리하다 / write off debt 부채 탕감</td></tr>
+        <tr><td class="vw-word">neutral</td><td class="vw-mean">중립적인</td><td class="vw-extra">impartial, unbiased / neutrality 중립</td></tr>
+        <tr><td class="vw-word">pass for</td><td class="vw-mean">~로 통하다</td><td class="vw-extra">be taken for, be accepted as</td></tr>
+        <tr><td class="vw-word">dodging / burning</td><td class="vw-mean">다징(밝게) / 버닝(어둡게)</td><td class="vw-extra">암실 현상 기술 / darkroom 암실</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-divider">007 · 게이트키핑 / 008 · 직업 분화 / 009 · 동물 심리학</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻</th><th>관련어 / 용례</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">gatekeeping</td><td class="vw-mean">게이트키핑 (정보의 선택적 유통)</td><td class="vw-extra">gatekeeper 문지기 / newsroom 뉴스 편집실</td></tr>
+        <tr><td class="vw-word">press release</td><td class="vw-mean">보도 자료</td><td class="vw-extra">official announcement sent to media</td></tr>
+        <tr><td class="vw-word">elect</td><td class="vw-mean">결정하다, 선출하다</td><td class="vw-extra">elect to V: ~하기로 결정하다 (= choose to V)</td></tr>
+        <tr><td class="vw-word">flourish</td><td class="vw-mean">번성하다</td><td class="vw-extra">thrive, prosper / ↔ decline, wither</td></tr>
+        <tr><td class="vw-word">formalize</td><td class="vw-mean">공식화하다</td><td class="vw-extra">institutionalize / formalized associations 공식 조합</td></tr>
+        <tr><td class="vw-word">communal</td><td class="vw-mean">공동체적인</td><td class="vw-extra">shared, collective / commune 공동체</td></tr>
+        <tr><td class="vw-word">take hold</td><td class="vw-mean">자리 잡다, 뿌리내리다</td><td class="vw-extra">become established, take root</td></tr>
+        <tr><td class="vw-word">object to</td><td class="vw-mean">~에 반대하다</td><td class="vw-extra">oppose, protest against / object to + 동명사</td></tr>
+        <tr><td class="vw-word">strenuously</td><td class="vw-mean">격렬하게</td><td class="vw-extra">vigorously, fiercely / strenuous 격렬한</td></tr>
+        <tr><td class="vw-word">rebel</td><td class="vw-mean">반발하다, 반항하다</td><td class="vw-extra">revolt, resist / rebellion 반란 / ↔ comply with</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-divider">010 · 도시 농업 / 011 · 식민 노동 / 012 · 아침저녁형</div>
+    <table class="voca-table">
+      <thead><tr><th>단어</th><th>뜻</th><th>관련어 / 용례</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">alleviate</td><td class="vw-mean">경감하다</td><td class="vw-extra">relieve, ease, mitigate / alleviation 완화</td></tr>
+        <tr><td class="vw-word">biodiversity</td><td class="vw-mean">생물 다양성</td><td class="vw-extra">variety of species in an ecosystem</td></tr>
+        <tr><td class="vw-word">in the midst of</td><td class="vw-mean">~ 속에서, 한가운데에</td><td class="vw-extra">in the middle of, amid / in the midst of climate change</td></tr>
+        <tr><td class="vw-word">colonial regime</td><td class="vw-mean">식민 지배 체제</td><td class="vw-extra">colony 식민지 / colonize 식민지로 만들다</td></tr>
+        <tr><td class="vw-word">depress (payments)</td><td class="vw-mean">급여를 하락시키다</td><td class="vw-extra">suppress / depression 불경기, 우울증, 저기압</td></tr>
+        <tr><td class="vw-word">compensate for</td><td class="vw-mean">~에 대해 보상하다</td><td class="vw-extra">pay compensation / compensation 보상금</td></tr>
+        <tr><td class="vw-word">lumber A with B</td><td class="vw-mean">A에게 B를 떠맡기다</td><td class="vw-extra">burden / lumber Haiti with a fiscal debt</td></tr>
+        <tr><td class="vw-word">fiscal</td><td class="vw-mean">재정적인</td><td class="vw-extra">fiscal policy 재정 정책 / fiscal crisis 재정 위기</td></tr>
+        <tr><td class="vw-word">flaunt</td><td class="vw-mean">과시하다</td><td class="vw-extra">show off, display / flaunt one's night-owl status</td></tr>
+        <tr><td class="vw-word">constraint</td><td class="vw-mean">제약</td><td class="vw-extra">limitation, restriction / leave ~ to one's own devices: 자기 뜻대로 놔두다</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:24px;padding:16px 20px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;">
+      <div style="font-size:.66rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:10px;">7강 어법 정답 총정리</div>
+      <table style="width:100%;font-size:.84rem;border-collapse:collapse;">
+        <thead><tr style="background:var(--ink);color:#fefcf8;"><th style="padding:7px 12px;text-align:left;">지문</th><th style="padding:7px 12px;">오답</th><th style="padding:7px 12px;">정답</th><th style="padding:7px 12px;text-align:left;">핵심 이유</th></tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border2);"><td style="padding:8px 12px;">001</td><td style="padding:8px 12px;color:var(--red);font-weight:700;">③ think</td><td style="padding:8px 12px;color:var(--orange);font-weight:700;">who think</td><td style="padding:8px 12px;">선행사 people → 관계대명사 who 필요</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);background:var(--bg);"><td style="padding:8px 12px;">002</td><td colspan="2" style="padding:8px 12px;color:var(--orange);font-weight:700;">제목 ④</td><td style="padding:8px 12px;">common advice fails to promote durable learning</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);"><td style="padding:8px 12px;">003</td><td colspan="2" style="padding:8px 12px;color:var(--orange);font-weight:700;">제목 ③</td><td style="padding:8px 12px;">White Supremacy Shapes Educators' Views</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);background:var(--bg);"><td style="padding:8px 12px;">004</td><td style="padding:8px 12px;color:var(--red);font-weight:700;">⑤ it</td><td style="padding:8px 12px;color:var(--orange);font-weight:700;">them</td><td style="padding:8px 12px;">marine ecosystems(복수) → 복수 대명사 them</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);"><td style="padding:8px 12px;">005</td><td colspan="2" style="padding:8px 12px;color:var(--orange);font-weight:700;">무관 ④</td><td style="padding:8px 12px;">piracy의 긍정 효과 = 글의 부정적 논지와 반대</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);background:var(--bg);"><td style="padding:8px 12px;">006</td><td colspan="2" style="padding:8px 12px;color:var(--orange);font-weight:700;">순서 ⑤ (C)→(B)→(A)</td><td style="padding:8px 12px;">손탁 반박 → 아담스 예시 → 디지털 비트 설명</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);"><td style="padding:8px 12px;">007</td><td style="padding:8px 12px;color:var(--red);font-weight:700;">③ which</td><td style="padding:8px 12px;color:var(--orange);font-weight:700;">that</td><td style="padding:8px 12px;">have no idea that ~: "~라는 것을 모르다" (명사절 that)</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);background:var(--bg);"><td style="padding:8px 12px;">008</td><td colspan="2" style="padding:8px 12px;color:var(--orange);font-weight:700;">제목 ④</td><td style="padding:8px 12px;">development of occupational specialization</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);"><td style="padding:8px 12px;">009</td><td colspan="2" style="padding:8px 12px;color:var(--orange);font-weight:700;">제목 ⑤</td><td style="padding:8px 12px;">From Consciousness to Behavior: Animal Psychologists' Challenge</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);background:var(--bg);"><td style="padding:8px 12px;">010</td><td style="padding:8px 12px;color:var(--red);font-weight:700;">③ what</td><td style="padding:8px 12px;color:var(--orange);font-weight:700;">that</td><td style="padding:8px 12px;">선행사 growing practices 있음 → that/which (what 불가)</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);"><td style="padding:8px 12px;">011</td><td colspan="2" style="padding:8px 12px;color:var(--orange);font-weight:700;">무관 ③</td><td style="padding:8px 12px;">외교적 이해 증진 = 불평등 심화 주제와 반대</td></tr>
+          <tr><td style="padding:8px 12px;">012</td><td colspan="2" style="padding:8px 12px;color:var(--orange);font-weight:700;">순서 ③ (B)→(C)→(A)</td><td style="padding:8px 12px;">저녁형 묘사 → 차이 설명 + 와일드 언급 → 와일드 일화</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div><!-- end voca -->
+
+</main>
+
+<script>
+const ids=['home','p001','p002','p003','p004','p005','p006','p007','p008','p009','p010','p011','p012','voca'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
