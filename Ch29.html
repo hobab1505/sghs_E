@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 29 · Politics, Economy, Society, Law | SGHS Critical Reading &amp; Writing</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --purple:#6b21a8;--purple-bg:rgba(107,33,168,.08);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1100px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.12rem;font-weight:600;letter-spacing:.04em;white-space:nowrap;}
+.hdr-sub{font-size:.65rem;opacity:.5;margin-top:2px;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:5px 13px;border-radius:4px;font-size:.71rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.nb.kj{border-color:rgba(107,33,168,.5);color:#c084fc;}
+.nb.kj:hover,.nb.kj.on{background:var(--purple);border-color:var(--purple);color:#fff;}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* HOME */
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:13px;margin-top:20px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 22px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 4px 18px var(--shadow);}
+.toc-card.kj-card{border-color:rgba(107,33,168,.3);}
+.toc-card.kj-card:hover{border-color:var(--purple);}
+.toc-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:9px;letter-spacing:.08em;}
+.toc-badge.kj{background:var(--purple);}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1.03rem;font-weight:600;margin-bottom:3px;line-height:1.4;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+/* Pass header */
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 26px;border-radius:8px 8px 0 0;}
+.p-header.kj-header{background:linear-gradient(135deg,#3b0764,#1e1b4b);}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.6rem;opacity:.5;margin-bottom:4px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.3rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.79rem;opacity:.6;margin-top:3px;font-style:italic;}
+.p-type-badge{display:inline-block;margin-top:9px;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 11px;border-radius:20px;letter-spacing:.1em;}
+.p-type-badge.kj{background:var(--purple);}
+/* Cards */
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:22px 26px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.card-lbl.kj-lbl{color:var(--purple);}
+/* Passage box */
+.plain-box{background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:22px 26px;position:relative;}
+.plain-box::before{content:'본문';position:absolute;top:-10px;left:14px;background:var(--paper);padding:0 7px;font-size:.6rem;letter-spacing:.15em;color:var(--ink);font-weight:700;}
+.plain-box.kj-box{border-color:var(--purple);}
+.plain-box.kj-box::before{color:var(--purple);}
+.plain-sent{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.95;color:var(--ink);margin-bottom:3px;}
+.blank-box{display:inline-block;border-bottom:2.5px solid var(--ink);min-width:160px;vertical-align:bottom;margin:0 3px;}
+.blank-box.ans{border-bottom-color:var(--orange);color:var(--orange);font-weight:700;}
+.num-circle{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--ink);font-size:.7rem;font-weight:700;margin:0 2px;vertical-align:middle;}
+.fn{font-size:.75rem;color:var(--ink3);margin-top:12px;border-top:1px solid var(--border2);padding-top:9px;font-style:italic;line-height:1.6;}
+/* Vocab */
+.voca-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:6px;}
+.voca-item{background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:8px 12px;font-size:.82rem;}
+.voca-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.92rem;}
+.voca-mean{color:var(--ink2);margin-left:4px;}
+.voca-syn{font-size:.75rem;color:var(--ink3);margin-top:2px;}
+/* Q blocks */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:18px 22px;margin-bottom:12px;}
+.q-block.kj-q{background:#faf5ff;border-color:rgba(107,33,168,.2);}
+.q-type{font-size:.65rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;text-transform:uppercase;}
+.q-type.kj{color:var(--purple);}
+.q-stem{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:12px;}
+.q-ts{font-size:.84rem;color:var(--ink2);line-height:2.1;}
+.q-ts .ts-item{margin-bottom:3px;}
+.bk{display:inline-block;border-bottom:2px solid var(--ink);min-width:90px;margin:0 2px;vertical-align:bottom;}
+.choices{display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+.choice{font-size:.87rem;line-height:1.55;padding:7px 11px;border-radius:5px;color:var(--ink2);}
+.cn{display:inline-block;font-weight:700;color:var(--ink);margin-right:4px;}
+.correct-choice{background:var(--orange-bg);border:1px solid rgba(192,80,16,.25);color:var(--ink);}
+.correct-choice .cn{color:var(--orange);}
+.wrong-choice{background:var(--red-bg);border:1px solid rgba(176,26,26,.2);}
+.irrel-sent{background:var(--red-bg);border-left:4px solid var(--red);padding:10px 16px;margin:6px 0;border-radius:0 6px 6px 0;font-family:'Crimson Pro',serif;font-size:1.02rem;line-height:1.9;}
+/* Answers */
+.ans-box{margin-top:12px;padding:16px 20px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-box+.ans-box{margin-top:9px;}
+.ans-box.kj-ans{background:var(--purple-bg);border-color:rgba(107,33,168,.2);}
+.ans-lbl{font-size:.62rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:7px;}
+.ans-lbl.kj{color:var(--purple);}
+.ans-num{font-size:1.02rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-num.kj{color:var(--purple);}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.72;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.ans.kj{color:var(--purple);text-decoration-color:var(--purple);}
+.wrong-word{color:var(--red);font-weight:700;text-decoration:underline;text-decoration-color:var(--red);}
+.right-word{color:var(--orange);font-weight:700;}
+/* Tooltip words */
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:4px 9px;border-radius:5px;font-size:.71rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+/* Syntax */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:22px 26px;margin-bottom:18px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:14px;background:var(--paper);padding:0 7px;font-size:.6rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.03rem;line-height:1.9;color:var(--ink);}
+.sp-ko{font-size:.8rem;color:var(--ink2);line-height:1.65;padding-left:11px;border-left:3px solid var(--border);margin-top:4px;}
+.sp-note{display:inline-block;font-size:.72rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 5px;border-radius:3px;margin-left:5px;}
+/* Grammar note */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:12px 16px;margin-top:9px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.76rem;letter-spacing:.06em;margin-bottom:7px;}
+.gr-note p{font-size:.81rem;color:var(--ink2);line-height:1.65;margin-bottom:5px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+/* Topic / Framework */
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:13px 18px;border-radius:0 7px 7px 0;margin-bottom:12px;font-size:.88rem;line-height:1.65;}
+.topic-box.kj-topic{border-left-color:var(--purple);}
+.topic-ko{margin-top:7px;font-size:.78rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:7px;font-style:italic;}
+.fw-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:8px 13px;text-align:left;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:12px 13px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-bottom:3px;}
+.step-badge.kj{background:var(--purple);}
+.fw-ko{margin-top:6px;font-size:.77rem;color:var(--ink3);border-top:1px dashed var(--border2);padding-top:6px;}
+.main-idea-box{background:#fff8f0;border:1px solid rgba(176,90,30,.25);border-radius:8px;padding:14px 18px;margin-top:12px;font-size:.83rem;line-height:1.75;}
+.main-idea-box h4{color:var(--accent2);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;font-weight:700;}
+/* Connected exam box */
+.connect-box{background:#faf5ff;border:1px solid rgba(107,33,168,.25);border-radius:8px;padding:16px 20px;margin-top:14px;}
+.connect-ttl{font-size:.68rem;font-weight:700;letter-spacing:.15em;color:var(--purple);text-transform:uppercase;margin-bottom:10px;}
+.connect-item{font-size:.83rem;color:var(--ink2);line-height:1.7;margin-bottom:6px;padding-left:12px;border-left:3px solid var(--purple);}
+/* Vocab table */
+.voca-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.voca-table th{background:var(--bg);padding:7px 13px;text-align:left;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:7px 13px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.5;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.93rem;}
+.vw-mean{color:var(--ink2);}
+.vw-extra{font-size:.76rem;color:var(--ink3);margin-top:2px;}
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card,.passage-box,.plain-box{padding:14px 16px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Ch29 · Politics, Economy, Society, Law</div>
+      <div class="hdr-sub">SGHS Critical Reading &amp; Writing · Suah Kim — 기출+3지문 · 빈칸·제목·무관문장</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">목차</button>
+      <button class="nb kj" onclick="show('p0')">기출 · 빈칸완성</button>
+      <button class="nb" onclick="show('p1')">지문1 · 제목선택</button>
+      <button class="nb" onclick="show('p2')">지문2 · 빈칸완성</button>
+      <button class="nb" onclick="show('p3')">지문3 · 무관문장</button>
+      <button class="nb" onclick="show('voca')">단어장</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.65rem;margin-bottom:6px;">Chapter 29 — Politics, Economy, Society, Law</h1>
+  <p style="font-size:.86rem;color:var(--ink3);margin-bottom:6px;">SGHS Critical Reading &amp; Writing · Suah Kim &nbsp;|&nbsp; 기출(2026 9월 모평) + 3개 지문 + 단어장</p>
+  <p style="font-size:.82rem;color:var(--ink3);margin-bottom:22px;padding:10px 14px;background:#faf5ff;border-left:4px solid var(--purple);border-radius:0 6px 6px 0;">💡 이 챕터는 수능 기출 연계 지문을 포함합니다. 각 지문의 <strong>빈칸 논리·구조 파악 → 구문 해석 → 연계 출제 포인트</strong> 순으로 학습하세요.</p>
+  <div class="toc-grid">
+    <a class="toc-card kj-card" onclick="show('p0')">
+      <div class="toc-badge kj">기출 · 2026 9월 모평 · 빈칸완성</div>
+      <div class="toc-en">Lotteries as Impartial Collective Choice</div>
+      <div class="toc-ko">결정론적 집단 선택의 한계 → 제비뽑기(추첨)의 필요성 / 빈칸: cannot be resolved without resorting to chance</div>
+    </a>
+    <a class="toc-card" onclick="show('p1')">
+      <div class="toc-badge">지문1 · 제목 선택</div>
+      <div class="toc-en">Law Is Not as Inaccessible as You Think</div>
+      <div class="toc-ko">법은 일상에 녹아 있다 — 전문가 아닌 사람도 법의 본질을 이해할 수 있다 / 정답 ③</div>
+    </a>
+    <a class="toc-card" onclick="show('p2')">
+      <div class="toc-badge">지문2 · 빈칸 완성</div>
+      <div class="toc-en">The Internet Disrupts Fashion Retail Power</div>
+      <div class="toc-ko">인터넷이 패션 시장에서 소비자 권력을 강화한다 / 빈칸: maintain control over pricing and consumer trends</div>
+    </a>
+    <a class="toc-card" onclick="show('p3')">
+      <div class="toc-badge">지문3 · 무관한 문장</div>
+      <div class="toc-en">Environmental Racism &amp; Black Communities</div>
+      <div class="toc-ko">환경적 인종차별과 흑인 공동체의 불균형적 피해 / 무관문장 ②</div>
+    </a>
+    <a class="toc-card" onclick="show('voca')">
+      <div class="toc-badge">단어장</div>
+      <div class="toc-en">Chapter 29 Word &amp; Phrase List</div>
+      <div class="toc-ko">교재 제공 어휘 전체 + 추가 핵심 표현 · 연계 표현 정리</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ 기출 · 빈칸완성 ═══ -->
+<div class="sec" id="p0">
+  <div class="p-header kj-header">
+    <div class="p-code">2026학년도 9월 모의평가 · 빈칸완성 기출</div>
+    <div class="p-title">Lotteries as Impartial Collective Choice</div>
+    <div class="p-title-ko">집단 선택에서 결정론적 방법의 한계 — 제비뽑기(추첨)의 역할</div>
+    <span class="p-type-badge kj">빈칸에 들어갈 말 완성</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl kj-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">agent</span><span class="voca-mean"> 행위자, 참여자</span><div class="voca-syn">participant, actor / multiple agents 다수의 행위자</div></div>
+      <div class="voca-item"><span class="voca-word">deterministic</span><span class="voca-mean"> 결정론적인</span><div class="voca-syn">predetermined, fixed / ↔ probabilistic(확률적인)</div></div>
+      <div class="voca-item"><span class="voca-word">anonymity</span><span class="voca-mean"> 익명성</span><div class="voca-syn">namelessness / anonymous 익명의 / anonymity: 결과가 행위자의 정체성에 무관해야 함</div></div>
+      <div class="voca-item"><span class="voca-word">neutrality</span><span class="voca-mean"> 중립성</span><div class="voca-syn">impartiality / neutral 중립적인 / neutrality: 대안들에 대한 동등한 대우</div></div>
+      <div class="voca-item"><span class="voca-word">impartiality</span><span class="voca-mean"> 공정성</span><div class="voca-syn">fairness, objectivity / impartial 공정한</div></div>
+      <div class="voca-item"><span class="voca-word">tie</span><span class="voca-mean"> 동률, 무승부</span><div class="voca-syn">draw / no tie: 동률이 없을 때만 결정론적</div></div>
+      <div class="voca-item"><span class="voca-word">draw a lot</span><span class="voca-mean"> 추첨하다, 제비 뽑기</span><div class="voca-syn">lottery / lot 제비 / draw lots 추첨하다</div></div>
+      <div class="voca-item"><span class="voca-word">reside in</span><span class="voca-mean"> ~에 있다, 존재하다</span><div class="voca-syn">lie in, exist in / 거주하다의 뜻도 있음</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl kj-lbl">02 Passage — 원문</div>
+    <div class="plain-box kj-box">
+      <p class="plain-sent">When <span class="vw">gathering<span class="tt">취합하다</span></span> the preferences of multiple <span class="vw">agents<span class="tt">행위자</span></span> into one collective choice, it is easily seen that certain cases <span class="blank-box" style="min-width:200px;"> </span>.</p>
+      <p class="plain-sent">For example, if there are two alternatives, a and b, and two agents such that one prefers a and the other one b, there is no <span class="vw">deterministic<span class="tt">결정론적인</span></span> way of selecting a single alternative without violating one of two basic fairness conditions known as <span class="vw">anonymity<span class="tt">익명성</span></span> and <span class="vw">neutrality<span class="tt">중립성</span></span>.</p>
+      <p class="plain-sent"><span class="vw">Anonymity<span class="tt">익명성</span></span> requires that the collective choice ought to be independent of the agents' identities whereas <span class="vw">neutrality<span class="tt">중립성</span></span> requires <span class="vw">impartiality<span class="tt">공정성</span></span> towards the alternatives.</p>
+      <p class="plain-sent">Allowing lotteries as social outcomes hence seems like a necessity for impartial collective choice.</p>
+      <p class="plain-sent">Indeed, most common "deterministic" social choice functions such as plurality rule are only deterministic as long as there is no <span class="vw">tie<span class="tt">동률</span></span>, which is usually resolved by <span class="vw">drawing a lot<span class="tt">추첨하다</span></span>.</p>
+      <p class="plain-sent">The use of lotteries for the selection of officials interestingly goes back to the world's first democracy in Athens, where it was widely regarded as a principal characteristic of democracy, and has recently gained increasing attention in political science.</p>
+      <div class="fn">* plurality: 복수(다수결)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl kj-lbl">03 문항 — 빈칸 + Topic / Text Structure / Main Idea</div>
+    <div class="q-block kj-q">
+      <div class="q-type kj">★ Fill in the blank</div>
+      <div class="q-stem">"certain cases <span style="border-bottom:2.5px solid var(--purple);min-width:260px;display:inline-block;margin:0 4px;"> </span>"</div>
+      <div style="font-size:.84rem;color:var(--ink2);margin-top:8px;">→ cannot be resolved without resorting to c<span class="bk" style="min-width:120px;display:inline-block;"></span></div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Topic</div>
+      <div class="q-ts"><span class="bk" style="min-width:80px;display:inline-block;"></span> as a solution to i<span class="bk" style="min-width:100px;display:inline-block;"></span> c<span class="bk" style="min-width:120px;display:inline-block;"></span> decision-making</div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Text Structure</div>
+      <div class="q-ts">
+        <div class="ts-item">- Problem: Deterministic collective choice inevitably v<span class="bk"></span> fairness in <span class="bk" style="min-width:60px;display:inline-block;"></span> situations</div>
+        <div class="ts-item">- Solution: introducing <span class="bk" style="min-width:120px;display:inline-block;"></span> as a fair and historically grounded alternative</div>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Main Idea</div>
+      <div class="q-ts">When deterministic methods cannot s<span class="bk"></span> both fairness conditions, lotteries become a necessary and j<span class="bk"></span> tool for social choice.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 정답 &amp; 해설</div>
+    <div class="ans-box kj-ans">
+      <div class="ans-lbl kj">빈칸 정답</div>
+      <div class="ans-num kj">cannot be resolved without resorting to <span class="ans kj">chance</span> (또는 lotteries)</div>
+      <div class="ans-exp">
+        <strong>빈칸 논리 파악:</strong> 도입부 "certain cases _____"는 글 전체의 문제 제기다.<br><br>
+        <strong>논리 흐름:</strong><br>
+        ① 두 행위자가 서로 다른 대안을 선호하는 상황 → 결정론적으로 선택 불가<br>
+        ② 왜냐하면: 익명성(행위자의 정체성에서 독립)과 중립성(대안에 대한 공정성) 두 조건을 동시에 만족하는 결정론적 방법이 없기 때문<br>
+        ③ 따라서 추첨(lottery)이 필요 → "chance(우연/추첨)에 의존하지 않고서는 해결될 수 없는" 경우들이 있다<br><br>
+        <strong>✅ 정답 완성:</strong> "certain cases <u>cannot be resolved without resorting to chance/lotteries</u>"<br>
+        → "특정 사례들은 우연(추첨)에 의존하지 않고서는 해결될 수 없다"
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Topic / Text Structure / Main Idea 정답</div>
+      <div class="ans-exp">
+        <strong>Topic:</strong> <span class="ans kj">lotteries</span> as a solution to <span class="ans kj">impartial</span> <span class="ans kj">collective</span> decision-making<br><br>
+        <strong>Text Structure:</strong> v = <span class="ans">violates</span> / tie situations / introducing <span class="ans">lotteries</span><br><br>
+        <strong>Main Idea:</strong> s = <span class="ans">satisfy</span> / j = <span class="ans">justified</span>
+      </div>
+    </div>
+    <div class="connect-box">
+      <div class="connect-ttl">🔗 기출 연계 포인트 — 수능 대비</div>
+      <div class="connect-item"><strong>핵심 개념 이해:</strong> anonymity(익명성)와 neutrality(중립성)의 정의와 차이를 명확히 — anonymity는 <u>누가</u> 선택했는지가 결과에 영향 없어야 함, neutrality는 <u>무엇을</u> 선택하든 동등하게 대우해야 함</div>
+      <div class="connect-item"><strong>빈칸 유형 전략:</strong> 빈칸이 도입부에 있을 때 → 뒤에 오는 'For example'(예시)이 빈칸의 내용을 구체화하므로, 예시에서 거꾸로 빈칸 내용을 추론</div>
+      <div class="connect-item"><strong>연계 어휘:</strong> resort to(의존하다) / deterministic(결정론적) / impartial(공정한) / collective choice(집단 선택) — 사회선택이론 관련 지문에서 반복 출제</div>
+      <div class="connect-item"><strong>역사적 근거:</strong> 아테네 민주주의에서의 추첨 사용 = 현대적 개념(lottery as democracy)의 역사적 정당성 부여 → '정당화된(justified)' 도구임을 뒷받침</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">When <span class="gr">gathering the preferences of multiple agents into one collective choice</span>, it is easily seen that certain cases <span class="blank-box ans">cannot be resolved without resorting to chance</span>.</div>
+        <div class="sp-ko">다수 행위자들의 선호를 하나의 집단적 선택으로 취합할 때, 특정 사례들은 우연(추첨)에 의존하지 않고서는 해결될 수 없다는 것을 쉽게 알 수 있다. <span class="sp-note">★ When V-ing ~: 분사구문(시간, 주절의 주어=we) / it is ~ that ~: 가주어-진주어 / resort to ~: ~에 의존하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For example, <span class="gr">if there are two alternatives, a and b, and two agents such that one prefers a and the other one b</span>, there is no deterministic way of selecting a single alternative without violating one of two basic fairness conditions known as anonymity and neutrality.</div>
+        <div class="sp-ko">예를 들어, a와 b 두 대안이 있고 한 명은 a를, 다른 한 명은 b를 선호하는 두 행위자가 있는 경우, 익명성과 중립성으로 알려진 두 가지 기본 공정성 조건 중 하나를 위반하지 않고서는 단일 대안을 결정론적으로 선택하는 방법이 없다. <span class="sp-note">★ such that ~: "~하도록, ~인 방식으로" / without violating ~: "~을 위반하지 않고서는" / known as ~: 수동 분사구</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Anonymity requires <span class="gr">[that the collective choice ought to be independent of the agents' identities]</span> whereas neutrality requires impartiality towards the alternatives.</div>
+        <div class="sp-ko">익명성은 집단적 선택이 행위자들의 정체성에 독립적이어야 한다고 요구하는 반면, 중립성은 대안들에 대한 공정성을 요구한다. <span class="sp-note">★ requires that ~: "~을 요구하다"(that절) / ought to be independent: 당위(~이어야 한다) / whereas: 대조 접속사</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Allowing lotteries as social outcomes hence seems like a necessity for impartial collective choice.</div>
+        <div class="sp-ko">따라서, 복권(추첨)을 사회적 결과로 허용하는 것은 공정한 집단적 선택을 위한 필연적 요소로 보인다. <span class="sp-note">★ Allowing ~ (동명사 주어): "~을 허용하는 것은" / hence: 따라서 / seems like a necessity: "필연성처럼 보인다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Indeed, most common "deterministic" social choice functions such as plurality rule are only deterministic <span class="gr">as long as there is no tie</span>, <span class="gr">which is usually resolved by drawing a lot</span>.</div>
+        <div class="sp-ko">실제로, 다수결 규칙과 같은 가장 흔한 "결정론적" 사회 선택 함수들은 동률이 없는 한에서만 결정론적인데, 동률은 대개 추첨으로 해결된다. <span class="sp-note">★ as long as ~: "~인 한" / which is resolved ~: 계속적 관계절(tie 부연) / drawing a lot: 추첨하기</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The use of lotteries for the selection of officials interestingly goes back to the world's first democracy in Athens, <span class="gr">where it was widely regarded as a principal characteristic of democracy</span>, and has recently gained increasing attention in political science.</div>
+        <div class="sp-ko">공직자 선발을 위한 추첨 사용은 흥미롭게도 세계 최초의 민주주의인 아테네까지 거슬러 올라가는데, 거기서 그것은 민주주의의 주요 특징으로 널리 여겨졌으며, 최근 정치학에서 점점 더 많은 주목을 받고 있다. <span class="sp-note">★ goes back to ~: "~까지 거슬러 올라가다" / where ~: 관계부사절(Athens 부연) / has recently gained: 현재완료(최근 변화)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① 가주어-진주어 it ~ that ~</strong> — "it is easily seen that certain cases ~": that절이 진주어, it은 형식상 주어</p>
+      <p><strong>② without V-ing (부정 수단)</strong> — "without violating one of two ~ conditions": "~을 위반하지 않고서는" — 이중 부정으로 "반드시 위반하게 된다" 함의</p>
+      <p><strong>③ as long as (조건)</strong> — "only deterministic as long as there is no tie": "동률이 없는 한에서만 결정론적"</p>
+      <p><strong>④ go back to (거슬러 올라가다)</strong> — "goes back to the world's first democracy in Athens": 역사적 선례 제시로 정당성 부여</p>
+      <p><strong>⑤ such that (관계절)</strong> — "two agents such that one prefers a and the other b": "한 명은 a를, 다른 한 명은 b를 선호하는 두 행위자"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl kj-lbl">06 Topic &amp; Logical Framework</div>
+    <div class="topic-box kj-topic">
+      <strong>Topic:</strong> Lotteries as a solution to impartial collective decision-making
+      <div class="topic-ko">공정한 집단적 의사결정의 해결책으로서의 추첨(제비뽑기)</div>
+    </div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge kj">① Problem</span></td><td>결정론적 집단 선택 → 익명성·중립성 두 공정성 조건 동시 만족 불가</td><td class="fw-ko">두 행위자가 서로 다른 대안을 선호할 때 결정론적 선택은 반드시 공정성 위반</td></tr>
+        <tr><td><span class="step-badge kj">② Logic</span></td><td>익명성 = 정체성 독립 / 중립성 = 대안 공정성<br>두 조건을 동시에 만족하는 결정론적 방법 없음</td><td class="fw-ko">두 개념의 정의 + 왜 동시 충족이 불가능한지 설명</td></tr>
+        <tr><td><span class="step-badge kj">③ Solution</span></td><td>추첨(lottery)을 사회적 결과로 허용 → 공정한 집단 선택의 필연적 요소</td><td class="fw-ko">추첨이 논리적으로 유일한 해결책임</td></tr>
+        <tr><td><span class="step-badge kj">④ Evidence</span></td><td>다수결도 동률(tie)이 있으면 추첨으로 해결<br>아테네 민주주의의 역사적 선례</td><td class="fw-ko">실제 사례(다수결+추첨)와 역사적 근거로 주장 정당화</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p0 -->
+
+
+<!-- ═══ P1 · Law is Not Inaccessible ═══ -->
+<div class="sec" id="p1">
+  <div class="p-header">
+    <div class="p-code">Chapter 29 · 지문 1</div>
+    <div class="p-title">Law Is Not as Inaccessible as You Think</div>
+    <div class="p-title-ko">법은 비밀이 아니다 — 일상 속에 녹아 있는 법의 본질</div>
+    <span class="p-type-badge">글의 제목으로 가장 적절한 것</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">reside in</span><span class="voca-mean"> ~에 있다, 존재하다</span><div class="voca-syn">lie in, exist in / "law resides in the books": 법은 책 속에 있다</div></div>
+      <div class="voca-item"><span class="voca-word">substance</span><span class="voca-mean"> 실질적 내용, 본질</span><div class="voca-syn">essence, core / basic substance of the law: 법의 기본 내용</div></div>
+      <div class="voca-item"><span class="voca-word">embody</span><span class="voca-mean"> 구현하다, 포함하다</span><div class="voca-syn">incorporate, contain / embodied in: ~에 내포된</div></div>
+      <div class="voca-item"><span class="voca-word">commentary</span><span class="voca-mean"> 해설, 논평</span><div class="voca-syn">analysis, explanation / a commentary on: ~에 대한 해설</div></div>
+      <div class="voca-item"><span class="voca-word">cross one's fingers</span><span class="voca-mean"> 약속을 무효화하다 / 행운을 빌다</span><div class="voca-syn">약속할 때 손가락 꼬기 → 약속 무효화의 상징</div></div>
+      <div class="voca-item"><span class="voca-word">Statute of Frauds</span><span class="voca-mean"> 사기 방지법</span><div class="voca-syn">중요 계약은 서면으로 해야 한다는 원칙의 법적 근거</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">Along with the mistaken notion that the law <span class="vw">resides in<span class="tt">~에 존재하다</span></span> the books goes the equally mistaken idea that law is secret, or at least inaccessible to the ordinary person.</p>
+      <p class="plain-sent">To understand and apply the law at the advanced, technical level that lawyers do requires professional knowledge, but to understand the basic <span class="vw">substance<span class="tt">실질적 내용</span></span> of the law does not.</p>
+      <p class="plain-sent">Law reflects life.</p>
+      <p class="plain-sent">The principles and issues <span class="vw">embodied<span class="tt">내포된</span></span> in the law are not different from those that we experience in other aspects of our lives.</p>
+      <p class="plain-sent">Contract law, for example, is a <span class="vw">commentary<span class="tt">해설, 논평</span></span> on the way people make, interpret, keep, and break their promises in commercial and noncommercial settings.</p>
+      <p class="plain-sent">Few nonlawyers can describe the objective theory of contract formation or the <span class="vw">Statute of Frauds<span class="tt">사기 방지법</span></span>, but they have thought a lot about contracts and promises.</p>
+      <p class="plain-sent">If you <span class="vw">cross your fingers<span class="tt">약속을 무효화하다 / 행운을 빌다</span></span> when you make a promise, does it mean that the promise doesn't count?</p>
+      <p class="plain-sent">If your newly purchased television doesn't work, can you return it to the store?</p>
+      <p class="plain-sent">And so on.</p>
+      <div class="fn">* embody: 구현하다, 포함하다 &nbsp;&nbsp;** commentary: 해설 &nbsp;&nbsp;*** Statute of Frauds: 사기 방지법</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항 — 제목 선택 + Topic / Text Structure / Main Idea 빈칸</div>
+    <div class="q-block">
+      <div class="q-type">글의 제목으로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> Why Contract Law Is More Complicated Than It Appears</div>
+        <div class="choice"><span class="cn">②</span> The Challenges of Applying Law in Daily Life</div>
+        <div class="correct-choice"><span class="cn">③</span> The Everyday Meanings of Legal Concepts ← 정답</div>
+        <div class="choice"><span class="cn">④</span> Decoding Legal Language: A Frustrating Puzzle</div>
+        <div class="choice"><span class="cn">⑤</span> Exploring the Difference Between Law and Social Morality</div>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Text Structure</div>
+      <div class="q-ts">
+        <div class="ts-item">- Claim: Law is not as s<span class="bk"></span> or i<span class="bk"></span> as commonly believed</div>
+        <div class="ts-item">- Support 1: A<span class="bk" style="min-width:60px;display:inline-block;"></span> legal application requires e<span class="bk"></span>, but basic understanding does not</div>
+        <div class="ts-item">- Support 2: Law reflects everyday life — legal principles and issues m<span class="bk"></span> common human experiences</div>
+        <div class="ts-item">- Support 3: Ordinary people already e<span class="bk"></span> with legal concepts i<span class="bk" style="min-width:80px;display:inline-block;"></span> through daily situations</div>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Main Idea</div>
+      <div class="q-ts">Despite the m<span class="bk"></span> that law is inaccessible to non-experts, its basic principles are g<span class="bk"></span> in everyday human experience and are therefore u<span class="bk"></span> to ordinary people.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">제목 정답</div>
+      <div class="ans-num">③ The Everyday Meanings of Legal Concepts</div>
+      <div class="ans-exp">
+        <strong>핵심 흐름:</strong> 법이 전문가만의 영역이라는 오해를 반박하고, 법의 원리가 이미 일상 경험 속에 있음을 보여준다.<br><br>
+        <strong>③ 정답 이유:</strong> "Everyday Meanings" = 법 개념들이 일상에서 이미 다루어진다는 의미 → 계약 파기(fingers crossing), TV 환불 등의 예시와 정확히 일치.<br><br>
+        <strong>오답 분석:</strong><br>
+        ① 계약법이 복잡하다 → 글의 주장 반대 (복잡하지 않다는 것이 핵심)<br>
+        ② 법을 일상에 적용하는 어려움 → 글은 어렵지 않다고 주장<br>
+        ④ 법률 언어 해독의 어려움 → 역시 반대 방향<br>
+        ⑤ 법과 사회적 도덕의 차이 → 글에서 다루지 않음
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Text Structure / Main Idea 정답</div>
+      <div class="ans-exp">
+        s = <span class="ans">secret</span> / i = <span class="ans">inaccessible</span><br>
+        A = <span class="ans">Advanced</span> / e = <span class="ans">expertise/expert knowledge</span><br>
+        m = <span class="ans">mirror</span> / e = <span class="ans">engage</span> / i = <span class="ans">intuitively/implicitly</span><br>
+        m = <span class="ans">misconception/myth</span> / g = <span class="ans">grounded/rooted</span> / u = <span class="ans">understandable/accessible</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">Along with the mistaken notion <span class="gr">{that the law resides in the books}</span> goes the equally mistaken idea <span class="gr">{that law is secret, or at least inaccessible to the ordinary person}</span>.</div>
+        <div class="sp-ko">법이 책 속에 있다는 잘못된 개념과 함께, 법이 비밀이거나 적어도 일반인에게 접근 불가능하다는 똑같이 잘못된 생각도 존재한다. <span class="sp-note">★ Along with ~ goes ~: 도치(장소 부사구 전치 → V+S 어순) / notion that ~: 동격절 / at least: "적어도"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en"><span class="gr">To understand and apply the law at the advanced, technical level {that lawyers do}</span> requires professional knowledge, but <span class="gr">to understand the basic substance of the law</span> does not.</div>
+        <div class="sp-ko">변호사들이 하는 것처럼 고급·전문적 수준에서 법을 이해하고 적용하는 것은 전문적 지식이 필요하지만, 법의 기본적인 실질적 내용을 이해하는 것은 그렇지 않다. <span class="sp-note">★ to understand ~ requires ~: to부정사 주어 / that lawyers do: 관계절(the level 수식) / does not (= does not require ~): 생략</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Law reflects life. The principles and issues <span class="gr">{embodied in the law}</span> are not different from <span class="gr">{those that we experience in other aspects of our lives}</span>.</div>
+        <div class="sp-ko">법은 삶을 반영한다. / 법에 내포된 원리와 쟁점들은 우리가 삶의 다른 측면에서 경험하는 것들과 다르지 않다. <span class="sp-note">★ embodied in ~: 수동 분사구(후치 수식) / those that ~: those = the principles and issues / are not different from ~: "~와 다르지 않다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Contract law, for example, is a commentary on <span class="gr">[the way people make, interpret, keep, and break their promises in commercial and noncommercial settings]</span>.</div>
+        <div class="sp-ko">예를 들어, 계약법은 상업적·비상업적 환경에서 사람들이 약속을 맺고, 해석하고, 지키고, 어기는 방식에 대한 해설이다. <span class="sp-note">★ a commentary on ~: "~에 대한 해설" / the way (that/in which) S V: "S가 V하는 방식" / make-interpret-keep-break: 4개 동사 병렬</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Few nonlawyers can describe the objective theory of contract formation or the Statute of Frauds, but they have thought a lot about contracts and promises.</div>
+        <div class="sp-ko">변호사가 아닌 사람 중 계약 형성의 객관적 이론이나 사기 방지법을 설명할 수 있는 사람은 거의 없지만, 그들은 계약과 약속에 대해 많이 생각해왔다. <span class="sp-note">★ Few ~: "거의 없는"(부정) / A or B: "A 또는 B" / but: 역접(전문 지식 없어도 개념은 안다)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">If you cross your fingers when you make a promise, does it mean that the promise doesn't count? If your newly purchased television doesn't work, can you return it to the store? And so on.</div>
+        <div class="sp-ko">약속할 때 손가락을 꼬면, 그것은 약속이 유효하지 않다는 것을 의미하는가? / 새로 구입한 텔레비전이 작동하지 않는다면, 가게에 반환할 수 있는가? / 기타 등등. <span class="sp-note">★ cross one's fingers: "약속을 무효화하다/행운을 빌다" / count: "유효하다, 중요하다" / And so on: "기타 등등"(일상적 법적 상황의 개방형 나열)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① 도치 구문 Along with ~ goes ~</strong> — "Along with the mistaken notion ~ goes the equally mistaken idea": 장소/부가어 전치 → 주어-동사 도치 (goes + the idea)</p>
+      <p><strong>② to부정사 주어 (주어 자리의 to부정사)</strong> — "To understand ~ requires / to understand ~ does not": 두 to부정사가 각각 주어 역할</p>
+      <p><strong>③ the way S V (관계절)</strong> — "the way people make, interpret, keep, and break their promises": 4개 동사의 병렬 — that/in which 생략 가능</p>
+      <p><strong>④ Few vs. a few (양의 차이)</strong> — "Few nonlawyers can describe ~": Few = 거의 없다(부정적) vs. a few = 약간 있다(긍정적)</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">06 Topic &amp; Logical Framework</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> The everyday, accessible nature of basic legal concepts
+      <div class="topic-ko">기본 법 개념의 일상적이고 접근 가능한 특성</div>
+    </div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Claim</span></td><td>법은 비밀이 아니며 일반인에게도 접근 가능하다 (두 가지 오해 반박)</td><td class="fw-ko">법 = 책 속의 비밀이라는 통념을 정면 반박</td></tr>
+        <tr><td><span class="step-badge">② Support 1</span></td><td>전문가 수준 적용 ≠ 기본 내용 이해 (전문 지식 불필요)</td><td class="fw-ko">이해와 적용의 수준을 분리 — 기본 이해는 누구나 가능</td></tr>
+        <tr><td><span class="step-badge">③ Support 2</span></td><td>법 = 삶의 반영 / 법 원리 = 일상 경험과 동일</td><td class="fw-ko">"Law reflects life": 핵심 주장의 3단어 요약</td></tr>
+        <tr><td><span class="step-badge">④ Support 3</span></td><td>계약법 = 약속의 해설 / 비전문가도 법적 질문을 이미 생각함</td><td class="fw-ko">손가락 꼬기·TV 환불 예시 → 일상이 곧 법</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div><!-- end p1 -->
+
+<!-- ═══ P2 · Fashion Marketplace ═══ -->
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">Chapter 29 · 지문 2</div>
+    <div class="p-title">The Internet Disrupts Fashion Retail Power</div>
+    <div class="p-title-ko">인터넷이 패션 시장의 권력을 소매업자에서 소비자로 이동시킨다</div>
+    <span class="p-type-badge">빈칸에 들어갈 말을 완성하시오</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">comparative</span><span class="voca-mean"> 비교적인, 상대적인</span><div class="voca-syn">relative / comparative information: 비교 정보</div></div>
+      <div class="voca-item"><span class="voca-word">retailer</span><span class="voca-mean"> 소매업자</span><div class="voca-syn">retail 소매의 / retailer ↔ customer</div></div>
+      <div class="voca-item"><span class="voca-word">facilitate</span><span class="voca-mean"> 촉진하다</span><div class="voca-syn">enable, promote / ↔ debilitate(약화시키다)</div></div>
+      <div class="voca-item"><span class="voca-word">couple with</span><span class="voca-mean"> ~와 결합하다</span><div class="voca-syn">combine with, pair with / coupled with: ~와 결합된</div></div>
+      <div class="voca-item"><span class="voca-word">brand</span><span class="voca-mean"> 브랜드화하다</span><div class="voca-syn">label / 'brand me': 자신을 브랜드처럼 만들다</div></div>
+      <div class="voca-item"><span class="voca-word">differentiate</span><span class="voca-mean"> 차별화하다</span><div class="voca-syn">distinguish / differentiate oneself: 자신을 차별화하다</div></div>
+      <div class="voca-item"><span class="voca-word">force up</span><span class="voca-mean"> 끌어올리다</span><div class="voca-syn">drive up, push up / force up the desire: 욕구를 끌어올리다</div></div>
+      <div class="voca-item"><span class="voca-word">affordable</span><span class="voca-mean"> 가격이 알맞은</span><div class="voca-syn">reasonably priced / ↔ expensive, pricey</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage — 원문</div>
+    <div class="plain-box">
+      <p class="plain-sent">The internet has transformed the fashion marketplace, making it increasingly difficult to <span class="blank-box" style="min-width:200px;"> </span>.</p>
+      <p class="plain-sent">Consumers can browse for product information and prices and gain <span class="vw">comparative<span class="tt">비교적인</span></span> information almost instantaneously, making them more informed than ever before, <span class="vw">transferring<span class="tt">이전하다</span></span> the balance of power from the <span class="vw">retailer<span class="tt">소매업자</span></span> to the customer.</p>
+      <p class="plain-sent">This is exacerbated by open and real-time access to fashion shows, <span class="vw">facilitated<span class="tt">촉진된</span></span> through livestreaming, <span class="vw">coupled with<span class="tt">~와 결합된</span></span> social media access to celebrity looks and lifestyles and the sharing of all aspects of life on social media.</p>
+      <p class="plain-sent">Consumers use fashion choices to express their individual style and personality, especially those promoting '<span class="vw">brand<span class="tt">브랜드화하다</span></span> me' on social media.</p>
+      <p class="plain-sent">The traditional two-season offer is no longer seen as enough, with consumers demanding new products throughout the whole year.</p>
+      <p class="plain-sent">This creates a problem for fashion <span class="vw">retailers<span class="tt">소매업자</span></span> as many consumers are looking for more exclusive pieces to <span class="vw">differentiate<span class="tt">차별화하다</span></span> themselves, <span class="vw">forcing up<span class="tt">끌어올리다</span></span> the desire for trend-led ever more rapidly changing styles, while still demanding <span class="vw">affordable<span class="tt">가격이 알맞은</span></span> prices.</p>
+      <div class="fn">* browse: 검색하다 &nbsp;&nbsp;** exacerbate: 심화시키다</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항 — 빈칸 완성 + Topic / Text Structure / Main Idea</div>
+    <div class="q-block">
+      <div class="q-type">★ Fill in the blank</div>
+      <div class="q-stem">"making it increasingly difficult to <span style="border-bottom:2.5px solid var(--ink);min-width:220px;display:inline-block;margin:0 4px;"> </span>"</div>
+      <div style="font-size:.84rem;color:var(--ink2);margin-top:8px;">→ maintain c<span class="bk" style="min-width:90px;display:inline-block;"></span> over p<span class="bk" style="min-width:80px;display:inline-block;"></span> and consumer t<span class="bk" style="min-width:90px;display:inline-block;"></span></div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Topic</div>
+      <div class="q-ts">the internet's i<span class="bk"></span> on c<span class="bk"></span> power in the fashion industry</div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Text Structure</div>
+      <div class="q-ts">
+        <div class="ts-item">- Claim: R<span class="bk"></span>' growing difficulty in internet-transformed fashion marketplace</div>
+        <div class="ts-item">- Support 1: Consumers have i<span class="bk"></span> a<span class="bk" style="min-width:60px;display:inline-block;"></span> to info → p<span class="bk" style="min-width:50px;display:inline-block;"></span> s<span class="bk" style="min-width:50px;display:inline-block;"></span> from retailers to customers</div>
+        <div class="ts-item">- Support 2: Real-time access + social media e<span class="bk"></span> to celebrity styles further e<span class="bk"></span> consumers</div>
+        <div class="ts-item">- Support 3: Demand for y<span class="bk"></span> new + exclusive products creates a d<span class="bk"></span> for retailers</div>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Main Idea</div>
+      <div class="q-ts">By giving instant access to information and trends, the <span class="bk" style="min-width:80px;display:inline-block;"></span> has shifted market power away from fashion <span class="bk" style="min-width:80px;display:inline-block;"></span>, forcing them to constantly meet consumers' c<span class="bk" style="min-width:60px;display:inline-block;"></span> d<span class="bk" style="min-width:60px;display:inline-block;"></span> for both exclusivity and affordability.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">빈칸 정답</div>
+      <div class="ans-num">maintain <span class="ans">control</span> over <span class="ans">pricing</span> and consumer <span class="ans">trends</span></div>
+      <div class="ans-exp">
+        <strong>빈칸 논리 파악:</strong> "making it increasingly difficult to _____"의 주어는 '인터넷'이다. 인터넷이 점점 어렵게 만드는 것은 무엇인가?<br><br>
+        <strong>글 전체 흐름 역추적:</strong><br>
+        ① 소비자가 가격·제품 비교 정보를 즉시 얻음 → 권력이 소매업자에서 소비자로 이동<br>
+        ② 패션쇼 실시간 접근 + 셀럽 라이프스타일 공유 → 소비자 정보력 더욱 강화<br>
+        ③ 연중 새 제품 + 개성 표현 + 합리적 가격 동시 요구 → 소매업자의 딜레마<br><br>
+        → 소매업자가 점점 어렵게 된 것 = <strong>가격과 소비자 트렌드에 대한 통제력 유지</strong><br>
+        <strong>✅ maintain control over pricing and consumer trends</strong>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Topic / Text Structure / Main Idea 정답</div>
+      <div class="ans-exp">
+        <strong>Topic:</strong> i = <span class="ans">impact</span> / c = <span class="ans">consumer</span><br>
+        <strong>Text Structure:</strong> R = <span class="ans">Retailers</span> / i = <span class="ans">instant/immediate</span>, a = <span class="ans">access</span> / p = <span class="ans">power</span>, s = <span class="ans">shift/transfer</span><br>
+        e = <span class="ans">exposure</span> / e = <span class="ans">empowers</span> / y = <span class="ans">year-round</span> / d = <span class="ans">dilemma/difficulty</span><br>
+        <strong>Main Idea:</strong> internet / retailers / c = <span class="ans">conflicting</span>, d = <span class="ans">demands</span>
+      </div>
+    </div>
+    <div class="connect-box">
+      <div class="connect-ttl">🔗 연계 출제 포인트 — 독해 심화</div>
+      <div class="connect-item"><strong>빈칸 유형 전략:</strong> 빈칸이 도입부 마지막에 올 때 → 이후 전개(Consumers can ~ / This is exacerbated by ~ / This creates a problem)가 빈칸의 세부 근거이므로, 이를 역으로 종합하여 추상적 표현으로 표현</div>
+      <div class="connect-item"><strong>핵심 구조어:</strong> exacerbate(악화시키다), coupled with(~와 결합된), force up(끌어올리다) — 이 어휘들이 소비자 권력 강화 과정을 연결함</div>
+      <div class="connect-item"><strong>'brand me' 개념:</strong> 소셜 미디어에서 개인을 브랜드처럼 만드는 문화 → 패션 선택이 정체성 표현 수단 → 소비자 개인화 욕구 강화 → 소매업자 부담 증가</div>
+      <div class="connect-item"><strong>역설적 소비자 요구:</strong> exclusivity(독점성) + affordability(저렴함) 동시 요구 = 소매업자 입장에서 상충되는 요구 (mutual exclusivity 딜레마)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The internet has transformed the fashion marketplace, <span class="gr">making it increasingly difficult to <span class="blank-box ans">maintain control over pricing and consumer trends</span></span>.</div>
+        <div class="sp-ko">인터넷은 패션 시장을 변화시켜, 가격과 소비자 트렌드에 대한 통제력을 유지하는 것을 점점 더 어렵게 만들었다. <span class="sp-note">★ making it difficult to V: 분사구문(결과) / it = 형식 목적어 / to V = 진짜 목적어</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Consumers can browse for product information and prices and gain comparative information almost instantaneously, <span class="gr">making them more informed than ever before</span>, <span class="gr">transferring the balance of power from the retailer to the customer</span>.</div>
+        <div class="sp-ko">소비자들은 제품 정보와 가격을 검색하고 비교 정보를 거의 즉각적으로 얻을 수 있어, 그들을 그 어느 때보다 더 잘 알게 만들고, 소매업자에서 소비자로 권력의 균형을 이동시킨다. <span class="sp-note">★ making them ~ + transferring ~: 연속 분사구문(결과·연쇄) / than ever before: "그 어느 때보다 더"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This is exacerbated by open and real-time access to fashion shows, <span class="gr">facilitated through livestreaming</span>, <span class="gr">coupled with social media access to celebrity looks and lifestyles</span> and the sharing of all aspects of life on social media.</div>
+        <div class="sp-ko">이것은 라이브스트리밍을 통해 촉진된 패션쇼에 대한 개방적이고 실시간 접근, 그리고 셀럽의 외모와 라이프스타일에 대한 소셜 미디어 접근과 소셜 미디어에서의 삶의 모든 측면 공유에 의해 더욱 심화된다. <span class="sp-note">★ be exacerbated by ~: "~에 의해 더욱 악화되다" / facilitated through ~: 수동 분사구 / coupled with ~: "~와 결합된"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Consumers use fashion choices to express their individual style and personality, especially those <span class="gr">promoting 'brand me' on social media</span>.</div>
+        <div class="sp-ko">소비자들은 패션 선택을 개인적인 스타일과 개성을 표현하기 위해 사용하는데, 특히 소셜 미디어에서 '브랜드 나'를 홍보하는 사람들이 그러하다. <span class="sp-note">★ to express ~: 목적 to부정사 / those promoting ~: those(= consumers) + 현재분사구(후치 수식)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The traditional two-season offer is no longer seen as enough, <span class="gr">with consumers demanding new products throughout the whole year</span>.</div>
+        <div class="sp-ko">전통적인 두 시즌 상품은 더 이상 충분한 것으로 여겨지지 않으며, 소비자들은 연중 내내 새로운 제품을 요구한다. <span class="sp-note">★ no longer: "더 이상 ~않다" / with + O + V-ing: 부대상황(소비자들이 요구하면서)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This creates a problem for fashion retailers <span class="gr">as many consumers are looking for more exclusive pieces to differentiate themselves</span>, <span class="gr">forcing up the desire for trend-led ever more rapidly changing styles</span>, while still demanding affordable prices.</div>
+        <div class="sp-ko">많은 소비자들이 자신을 차별화하기 위해 더 독점적인 제품을 찾으면서 트렌드 주도의 점점 더 빠르게 변하는 스타일에 대한 욕구를 끌어올리면서도 여전히 적정한 가격을 요구하기 때문에, 이것은 패션 소매업자들에게 문제를 만든다. <span class="sp-note">★ as ~: 이유 접속사 / forcing up ~: 분사구문(연쇄 결과) / while still demanding ~: 대조적 동시상황</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① making it difficult to V (가목적어 구문)</strong> — "making it increasingly difficult to maintain control": it = 형식 목적어, to maintain ~ = 진목적어</p>
+      <p><strong>② 연속 분사구문</strong> — "making them more informed ~ , transferring the balance ~": 두 분사구문이 연속으로 결과를 나타냄</p>
+      <p><strong>③ coupled with (결합 표현)</strong> — "facilitated through livestreaming, coupled with social media access": "라이브스트리밍으로 촉진되고 소셜 미디어 접근과 결합된"</p>
+      <p><strong>④ those V-ing (후치 수식)</strong> — "especially those promoting 'brand me'": those = consumers who promote ~</p>
+      <p><strong>⑤ with + O + V-ing (부대상황)</strong> — "with consumers demanding new products": "소비자들이 ~를 요구하는 가운데"</p>
+    </div>
+  </div>
+</div><!-- end p2 -->
+
+
+<!-- ═══ P3 · Environmental Racism ═══ -->
+<div class="sec" id="p3">
+  <div class="p-header">
+    <div class="p-code">Chapter 29 · 지문 3</div>
+    <div class="p-title">Environmental Racism &amp; Black Communities</div>
+    <div class="p-title-ko">환경적 인종차별 — 흑인 공동체가 불균형적으로 지는 유해 시설의 부담</div>
+    <span class="p-type-badge">전체 흐름과 관계 없는 문장</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item"><span class="voca-word">oppressive</span><span class="voca-mean"> 억압하는</span><div class="voca-syn">tyrannical / oppression 억압 / white supremacy 백인 우월주의</div></div>
+      <div class="voca-item"><span class="voca-word">neglect</span><span class="voca-mean"> 방치하다</span><div class="voca-syn">abandon, ignore / neglected area 방치된 지역</div></div>
+      <div class="voca-item"><span class="voca-word">run-down</span><span class="voca-mean"> 낙후된, 황폐한</span><div class="voca-syn">dilapidated, deteriorated / run-down area 낙후된 지역</div></div>
+      <div class="voca-item"><span class="voca-word">hazardous</span><span class="voca-mean"> 유해한, 위험한</span><div class="voca-syn">harmful, dangerous / hazardous waste 유해 폐기물</div></div>
+      <div class="voca-item"><span class="voca-word">situate</span><span class="voca-mean"> 위치시키다</span><div class="voca-syn">place, locate / situated 위치한</div></div>
+      <div class="voca-item"><span class="voca-word">redlining</span><span class="voca-mean"> 특정 지역 차별 관행</span><div class="voca-syn">은행·보험 회사에 의한 특정 경계 지역 지정 / 유해 시설의 의도적 배치</div></div>
+      <div class="voca-item"><span class="voca-word">disproportionately</span><span class="voca-mean"> 불균형적으로</span><div class="voca-syn">unevenly, unequally / disproportionate 불균형적인</div></div>
+      <div class="voca-item"><span class="voca-word">pollutant</span><span class="voca-mean"> 오염 물질</span><div class="voca-syn">contaminant / air pollutant 대기 오염 물질</div></div>
+      <div class="voca-item"><span class="voca-word">counterpart</span><span class="voca-mean"> 동등한 상대</span><div class="voca-syn">equivalent, equal / white counterparts: 백인 상대방</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 Passage — 원문 (무관문장 ② 표시)</div>
+    <div class="plain-box">
+      <p class="plain-sent">What deeply affected so many Black communities globally was not only that they could not metaphorically breathe because of the <span class="vw">oppressive<span class="tt">억압하는</span></span> forms and limits of white supremacy, but also that so many Black communities literally cannot breathe because of environmental racism.</p>
+      <p class="plain-sent"><span class="num-circle">①</span> Similarly to Black communities in the UK, Black Americans are also more likely to live near landfills, industrial plants and fossil-fuel infrastructure.</p>
+      <div class="irrel-sent"><span class="num-circle" style="border-color:var(--red);color:var(--red);">②</span> <span style="color:var(--red);font-weight:600;">[무관한 문장]</span> While some Black Americans have started community projects to turn <span class="vw">neglected<span class="tt">방치된</span></span> or <span class="vw">run-down<span class="tt">낙후된</span></span> areas into youth centers or art spaces, these efforts often face challenges because of a lack of local support and simple safety concerns.</div>
+      <p class="plain-sent"><span class="num-circle">③</span> The process by which this <span class="vw">hazardous<span class="tt">유해한</span></span> infrastructure is deliberately <span class="vw">situated<span class="tt">위치시켜진</span></span> close to African American communities is called <span class="vw">redlining<span class="tt">특정 지역 차별 관행</span></span>.</p>
+      <p class="plain-sent"><span class="num-circle">④</span> This process means that fossil-fuelled power plants and <span class="vw">hazardous<span class="tt">유해한</span></span>-waste facilities are <span class="vw">disproportionately<span class="tt">불균형적으로</span></span> and deliberately situated in Black or ethnic-minority neighbourhoods.</p>
+      <p class="plain-sent"><span class="num-circle">⑤</span> As a result of this, Black Americans are three times more likely to die from exposure to air <span class="vw">pollutants<span class="tt">오염 물질</span></span> than their white <span class="vw">counterparts<span class="tt">동등한 상대</span></span>.</p>
+      <div class="fn">* oppressive: 억압하는 &nbsp;&nbsp;** white supremacy: 백인 우월주의</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항 — 무관문장 + Topic / Text Structure / Main Idea 빈칸</div>
+    <div class="q-block">
+      <div class="q-type">전체 흐름과 관계 없는 문장은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span></div>
+        <div class="wrong-choice"><span class="cn">②</span> ← 무관한 문장</div>
+        <div class="choice"><span class="cn">③</span></div>
+        <div class="choice"><span class="cn">④</span></div>
+        <div class="choice"><span class="cn">⑤</span></div>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Topic</div>
+      <div class="q-ts"><span class="bk" style="min-width:70px;display:inline-block;"></span> racism and its d<span class="bk"></span> impact on Black communities</div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Text Structure</div>
+      <div class="q-ts">
+        <div class="ts-item">- Claim: Black communities suffer from both metaphorical and literal i<span class="bk"></span> to breathe — o<span class="bk"></span> and racism</div>
+        <div class="ts-item">- Support 1: Black Americans are d<span class="bk"></span> exposed to hazardous infrastructure</div>
+        <div class="ts-item">- Support 2: This d<span class="bk"></span> placement near m<span class="bk"></span> neighborhoods is known as <span class="bk" style="min-width:90px;display:inline-block;"></span></div>
+        <div class="ts-item">- Support 3: As a result, Black Americans face significantly higher m<span class="bk"></span> rates from air pollution</div>
+      </div>
+    </div>
+    <div class="q-block">
+      <div class="q-type">★ Main Idea</div>
+      <div class="q-ts">Black communities bear an u<span class="bk"></span> burden of environmental racism, as hazardous infrastructure is d<span class="bk"></span> situated in their neighborhoods, leading to severe consequences.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 정답 &amp; 해설</div>
+    <div class="ans-box">
+      <div class="ans-lbl">무관문장 정답</div>
+      <div class="ans-num">②</div>
+      <div class="ans-exp">
+        <strong>글의 주제:</strong> 환경적 인종차별(environmental racism) — 유해 시설이 의도적으로 흑인 거주 지역 근처에 배치되어 흑인 공동체가 불균형적으로 피해를 입는다.<br><br>
+        <strong>② 무관한 이유:</strong> ②는 "흑인 미국인들이 방치된 지역을 청소년 센터나 예술 공간으로 바꾸는 지역 사회 프로젝트를 시작했다"는 내용이다. 이는 <u>공동체의 능동적 대응(resilience/activism)</u>을 다루어, 환경적 인종차별로 인한 <u>피해와 불평등 심화</u>라는 글의 논지와 방향이 다르다. ③④⑤는 redlining의 메커니즘(③)→ 구체적 시설 배치(④)→ 사망률 결과(⑤)로 논리적으로 연결된다.<br><br>
+        <strong>흐름 확인:</strong> 도입(호흡 은유) → ①(유해시설 근처 거주) → <span style="color:var(--red);">②[무관]</span> → ③(redlining 정의) → ④(redlining 결과) → ⑤(사망률 통계)
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">Topic / Text Structure / Main Idea 정답</div>
+      <div class="ans-exp">
+        <strong>Topic:</strong> environmental / d = <span class="ans">disproportionate</span><br><br>
+        <strong>Text Structure:</strong><br>
+        i = <span class="ans">inability</span> / o = <span class="ans">oppression</span><br>
+        d = <span class="ans">disproportionately</span><br>
+        d = <span class="ans">deliberate</span> / m = <span class="ans">minority</span> / <span class="ans">redlining</span><br>
+        m = <span class="ans">mortality</span><br><br>
+        <strong>Main Idea:</strong> u = <span class="ans">unequal/unfair/unjust</span> / d = <span class="ans">deliberately</span>
+      </div>
+    </div>
+    <div class="connect-box">
+      <div class="connect-ttl">🔗 연계 출제 포인트 — 심화 이해</div>
+      <div class="connect-item"><strong>이중 의미 구조:</strong> "cannot breathe" — 은유적(metaphorically): 백인 우월주의에 의한 억압 / 문자적(literally): 대기 오염으로 인한 물리적 호흡 불가 → 수능 지문에서 자주 나오는 이중 의미 구조</div>
+      <div class="connect-item"><strong>Redlining 개념:</strong> 원래 은행·보험회사가 특정 지역(주로 흑인 거주지)에 서비스를 거부하던 관행 → 지문에서는 유해 시설을 의도적으로 소수 집단 거주지 근처에 배치하는 과정으로 확장 사용</div>
+      <div class="connect-item"><strong>무관문장 전략:</strong> ②의 "While ~ community projects"는 피해(harm)의 논지에서 벗어나 희망/대응(resilience)의 내용 → 글의 논리 방향성(악화·불균형)과 충돌</div>
+      <div class="connect-item"><strong>통계적 증거:</strong> "three times more likely to die" = 구체적 수치를 통한 불균형 증명 → 수능 지문에서 통계 수치는 주장의 직접 근거로 출제됨</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en"><span class="gr">[What deeply affected so many Black communities globally]</span> was not only that they could not metaphorically breathe because of the oppressive forms and limits of white supremacy, but also that so many Black communities literally cannot breathe because of environmental racism.</div>
+        <div class="sp-ko">전 세계의 많은 흑인 공동체들에게 깊이 영향을 미친 것은, 그들이 백인 우월주의의 억압적인 형태와 한계 때문에 은유적으로 숨 쉴 수 없었다는 것뿐만 아니라, 너무나도 많은 흑인 공동체들이 환경적 인종차별 때문에 말 그대로 숨 쉴 수 없다는 것이기도 했다. <span class="sp-note">★ What ~ was ~: 관계대명사 what절(명사절, 주어) / not only ~ but also ~: "~뿐만 아니라 ~도" / metaphorically vs. literally: 은유적 vs. 문자적</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">① Similarly to Black communities in the UK, Black Americans are also more likely to live near landfills, industrial plants and fossil-fuel infrastructure.</div>
+        <div class="sp-ko">① 영국의 흑인 공동체와 마찬가지로, 흑인 미국인들도 쓰레기 매립지, 산업 시설, 화석 연료 인프라 근처에 살 가능성이 더 높다. <span class="sp-note">★ Similarly to ~: "~와 마찬가지로" / be more likely to V: "V할 가능성이 더 높다"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en" style="color:var(--red);">【무관 ②】 While some Black Americans have started community projects to turn neglected or run-down areas into youth centers or art spaces, these efforts often face challenges because of a lack of local support and simple safety concerns.</div>
+        <div class="sp-ko" style="border-left-color:var(--red);">② 일부 흑인 미국인들이 방치되거나 낙후된 지역을 청소년 센터나 예술 공간으로 바꾸는 지역 사회 프로젝트를 시작했지만, 이러한 노력들은 종종 지역 지원 부족과 단순한 안전 우려 때문에 어려움에 직면한다. <span class="sp-note" style="color:var(--red);background:#fff0f0;">★ 무관 이유: 흑인 공동체의 대응(resilience)을 다루어 환경적 인종차별의 피해·불균형이라는 논지와 방향 충돌 / turn A into B: A를 B로 바꾸다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">③ The process <span class="gr">[by which this hazardous infrastructure is deliberately situated close to African American communities]</span> is called redlining.</div>
+        <div class="sp-ko">③ 이 유해한 인프라가 아프리카계 미국인 공동체 가까이에 의도적으로 위치하는 과정은 레드라이닝이라고 불린다. <span class="sp-note">★ by which ~: 관계사구(the process 수식, = the process in which ~ is situated by) / is called ~: 수동태("~라고 불리다")</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">④ This process means <span class="gr">[that fossil-fuelled power plants and hazardous-waste facilities are disproportionately and deliberately situated in Black or ethnic-minority neighbourhoods]</span>.</div>
+        <div class="sp-ko">④ 이 과정은 화석 연료 발전소와 유해 폐기물 시설이 흑인 또는 소수 민족 거주 지역에 불균형적으로 그리고 의도적으로 위치함을 의미한다. <span class="sp-note">★ means that ~: "~을 의미한다" / disproportionately and deliberately: 두 부사의 병렬 강조(불균형적 + 의도적)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">⑤ As a result of this, Black Americans are <span class="gr">three times more likely to die</span> from exposure to air pollutants than their white counterparts.</div>
+        <div class="sp-ko">⑤ 이로 인해, 흑인 미국인들은 대기 오염 물질에 노출되어 사망할 가능성이 백인 상대방보다 세 배 더 높다. <span class="sp-note">★ As a result of ~: "~의 결과로" / three times more likely: 배수 비교("세 배 더 ~할 가능성") / counterpart: "동등한 상대, 대응하는 사람"</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 핵심 구문 포인트</div>
+      <p><strong>① What ~ was (관계대명사 what 주어절)</strong> — "What deeply affected ~ was not only ~ but also ~": What절이 주어, was = 동사, not only A but also B = 보어</p>
+      <p><strong>② not only A but also B</strong> — "not only that ~ (metaphorically) but also that ~ (literally)": 두 that절이 병렬 — 은유적·문자적 이중 의미 강조</p>
+      <p><strong>③ by which (관계사구)</strong> — "the process by which ~ is situated": = "the process in which ~ is situated by [someone]" — 전치사 전치 관계절</p>
+      <p><strong>④ disproportionately and deliberately (부사 병렬)</strong> — 두 부사가 병렬로 "불균형적이고 의도적으로"를 강조 — 환경 인종차별의 구조적 의도성을 드러내는 핵심 표현</p>
+      <p><strong>⑤ times more likely to V (배수 비교)</strong> — "three times more likely to die than ~": "~보다 V할 가능성이 N배 더 높다"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">06 Topic &amp; Logical Framework</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> Environmental racism and its disproportionate impact on Black communities
+      <div class="topic-ko">환경적 인종차별과 흑인 공동체에 대한 불균형적 영향</div>
+    </div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic &amp; 내용</th><th>한국어 요약</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Claim</span></td><td>흑인 공동체: 은유적(억압) + 문자적(환경 오염) 두 겹의 "숨 쉴 수 없음"</td><td class="fw-ko">백인 우월주의 + 환경적 인종차별의 이중 피해</td></tr>
+        <tr><td><span class="step-badge">② Support 1</span></td><td>① 흑인 미국인 → 쓰레기 매립지·산업 시설·화석 연료 인프라 근처 거주 가능성 높음</td><td class="fw-ko">영국 사례와의 비교로 보편성 확인</td></tr>
+        <tr><td><span class="step-badge">③ Support 2</span></td><td>③④ 레드라이닝(redlining): 유해 시설을 <u>의도적으로</u> 아프리카계 미국인 공동체 근처에 배치하는 과정</td><td class="fw-ko">redlining = 불균형의 구조적·의도적 원인</td></tr>
+        <tr><td><span class="step-badge">④ Result</span></td><td>⑤ 흑인 미국인: 대기 오염 물질 노출 사망률 = 백인의 <strong>3배</strong></td><td class="fw-ko">구체적 통계로 불균형적 결과 증명</td></tr>
+      </tbody>
+    </table>
+    <div class="main-idea-box">
+      <h4>Main Idea</h4>
+      Black communities bear an <u>unequal/unjust</u> burden of environmental racism, as hazardous infrastructure is <u>deliberately</u> situated in their neighborhoods, leading to severe health consequences.
+      <div style="margin-top:8px;font-size:.8rem;color:var(--ink3);font-style:italic;">흑인 공동체는 환경적 인종차별의 불공평한 부담을 지고 있으며, 유해 인프라가 의도적으로 그들의 거주 지역에 위치하여 심각한 건강 결과로 이어진다.</div>
+    </div>
+  </div>
+</div><!-- end p3 -->
+
+<!-- ═══ VOCABULARY ═══ -->
+<div class="sec" id="voca">
+  <div style="background:var(--ink);color:#fefcf8;padding:20px 26px;border-radius:8px 8px 0 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;opacity:.5;margin-bottom:4px;">Chapter 29 · Word &amp; Phrase List · 전체 통합</div>
+    <div style="font-family:'Crimson Pro',serif;font-size:1.28rem;font-weight:600;">단어장 — Politics, Economy, Society, Law</div>
+    <div style="font-size:.78rem;opacity:.58;margin-top:3px;">교재 제공 어휘 전체 + 기출 연계 핵심 표현</div>
+  </div>
+  <div class="card" style="border-radius:0 0 8px 8px;">
+
+    <div style="font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--purple);margin:0 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border2);">기출 · 집단 선택 / 지문1 · 법과 일상</div>
+    <table class="voca-table">
+      <thead><tr><th>단어 / 표현</th><th>뜻</th><th>동의어 / 관련어 / 용례</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">agent</td><td class="vw-mean">행위자, 참여자</td><td class="vw-extra">participant, actor / multiple agents 다수의 행위자 / (≠ passive recipient)</td></tr>
+        <tr><td class="vw-word">deterministic</td><td class="vw-mean">결정론적인</td><td class="vw-mean">predetermined / ↔ probabilistic(확률적) / stochastic(확률론적)</td></tr>
+        <tr><td class="vw-word">anonymity</td><td class="vw-mean">익명성</td><td class="vw-extra">namelessness / anonymous 익명의 / [集단선택] 결과가 행위자 정체성에 무관</td></tr>
+        <tr><td class="vw-word">neutrality</td><td class="vw-mean">중립성</td><td class="vw-extra">impartiality / neutral 중립적인 / [集단선택] 대안들에 대한 동등한 대우</td></tr>
+        <tr><td class="vw-word">impartiality</td><td class="vw-mean">공정성</td><td class="vw-extra">fairness, objectivity / impartial 공정한 / ↔ bias, partiality</td></tr>
+        <tr><td class="vw-word">tie</td><td class="vw-mean">동률, 무승부</td><td class="vw-extra">draw / break a tie 동률 타파 / no tie 상황에서만 결정론적</td></tr>
+        <tr><td class="vw-word">draw a lot</td><td class="vw-mean">추첨하다</td><td class="vw-extra">lottery, raffle / lot 제비 / draw lots 추첨하다</td></tr>
+        <tr><td class="vw-word">reside in</td><td class="vw-mean">~에 있다, 존재하다 / 거주하다</td><td class="vw-extra">lie in, exist in / "law resides in the books" = 법이 책 속에 있다</td></tr>
+        <tr><td class="vw-word">substance</td><td class="vw-mean">실질적 내용, 본질</td><td class="vw-extra">essence, core / the basic substance of the law 법의 기본 내용</td></tr>
+        <tr><td class="vw-word">cross one's fingers</td><td class="vw-mean">약속을 무효화하다 / 행운을 빌다</td><td class="vw-extra">약속할 때 손가락 꼬기 → 법적 맥락에서 약속 무효화 상징</td></tr>
+      </tbody>
+    </table>
+
+    <div style="font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:22px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border2);">지문2 · 패션 시장 / 지문3 · 환경 인종차별</div>
+    <table class="voca-table">
+      <thead><tr><th>단어 / 표현</th><th>뜻</th><th>동의어 / 관련어 / 용례</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">comparative</td><td class="vw-mean">비교적인, 상대적인</td><td class="vw-extra">relative / comparative information 비교 정보 / comparatively 비교적으로</td></tr>
+        <tr><td class="vw-word">retailer</td><td class="vw-mean">소매업자</td><td class="vw-extra">retail 소매 / wholesale 도매 / retailer ↔ customer 권력 이동</td></tr>
+        <tr><td class="vw-word">facilitate</td><td class="vw-mean">촉진하다</td><td class="vw-extra">enable, promote / ↔ debilitate(약화시키다) / facilitated through livestreaming</td></tr>
+        <tr><td class="vw-word">couple with</td><td class="vw-mean">~와 결합하다</td><td class="vw-extra">combine with, pair with / coupled with ~: ~와 결합된(수동 분사구)</td></tr>
+        <tr><td class="vw-word">brand</td><td class="vw-mean">브랜드화하다</td><td class="vw-extra">label / 'brand me' = 자신을 브랜드처럼 만들다</td></tr>
+        <tr><td class="vw-word">differentiate</td><td class="vw-mean">차별화하다</td><td class="vw-extra">distinguish / differentiate oneself from others 타인과 차별화하다</td></tr>
+        <tr><td class="vw-word">force up</td><td class="vw-mean">끌어올리다</td><td class="vw-extra">drive up, push up / force up the desire: 욕구를 끌어올리다</td></tr>
+        <tr><td class="vw-word">affordable</td><td class="vw-mean">가격이 알맞은</td><td class="vw-extra">reasonably priced / ↔ expensive / affordability 가격 접근성</td></tr>
+        <tr><td class="vw-word">oppressive</td><td class="vw-mean">억압하는</td><td class="vw-extra">tyrannical / oppression 억압 / oppressive forms of white supremacy</td></tr>
+        <tr><td class="vw-word">neglect</td><td class="vw-mean">방치하다</td><td class="vw-extra">abandon, ignore / neglected area 방치된 지역 / (≠ care for)</td></tr>
+        <tr><td class="vw-word">run-down</td><td class="vw-mean">낙후된, 황폐한</td><td class="vw-extra">dilapidated, deteriorated / run-down area 낙후된 지역</td></tr>
+        <tr><td class="vw-word">hazardous</td><td class="vw-mean">유해한, 위험한</td><td class="vw-extra">harmful, dangerous / hazardous waste 유해 폐기물 / hazardous infrastructure 유해 인프라</td></tr>
+        <tr><td class="vw-word">situate</td><td class="vw-mean">위치시키다</td><td class="vw-extra">place, locate / deliberately situated: 의도적으로 위치시킨(수동태)</td></tr>
+        <tr><td class="vw-word">redlining</td><td class="vw-mean">특정 지역 차별 관행</td><td class="vw-extra">원래: 은행·보험사의 특정 지역 서비스 거부 → 확장: 유해 시설의 소수자 지역 의도적 배치</td></tr>
+        <tr><td class="vw-word">disproportionately</td><td class="vw-mean">불균형적으로</td><td class="vw-extra">unevenly, unequally / disproportionate 불균형적인 / ↔ proportionally</td></tr>
+        <tr><td class="vw-word">pollutant</td><td class="vw-mean">오염 물질</td><td class="vw-extra">contaminant / air pollutant 대기 오염 물질 / pollute 오염시키다</td></tr>
+        <tr><td class="vw-word">counterpart</td><td class="vw-mean">동등한 상대</td><td class="vw-extra">equivalent, equal / white counterparts: 백인 상대방(비교 기준)</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:24px;padding:16px 20px;background:#faf5ff;border:1px solid rgba(107,33,168,.2);border-radius:8px;">
+      <div style="font-size:.66rem;font-weight:700;letter-spacing:.15em;color:var(--purple);text-transform:uppercase;margin-bottom:12px;">📌 Chapter 29 정답 총정리</div>
+      <table style="width:100%;font-size:.84rem;border-collapse:collapse;">
+        <thead><tr style="background:var(--ink);color:#fefcf8;"><th style="padding:7px 12px;text-align:left;">지문</th><th style="padding:7px 12px;text-align:left;">유형</th><th style="padding:7px 12px;text-align:left;">정답</th><th style="padding:7px 12px;text-align:left;">핵심 포인트</th></tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border2);background:#faf5ff;"><td style="padding:8px 12px;font-weight:700;color:var(--purple);">기출</td><td style="padding:8px 12px;">빈칸완성</td><td style="padding:8px 12px;font-weight:700;color:var(--purple);">cannot be resolved without resorting to chance</td><td style="padding:8px 12px;">결정론적 선택 → 익명성·중립성 동시 충족 불가 → 추첨 필요</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);"><td style="padding:8px 12px;font-weight:700;">지문1</td><td style="padding:8px 12px;">제목선택</td><td style="padding:8px 12px;font-weight:700;color:var(--orange);">③ The Everyday Meanings of Legal Concepts</td><td style="padding:8px 12px;">법 = 일상 반영 / 비전문가도 이해 가능</td></tr>
+          <tr style="border-bottom:1px solid var(--border2);background:var(--bg);"><td style="padding:8px 12px;font-weight:700;">지문2</td><td style="padding:8px 12px;">빈칸완성</td><td style="padding:8px 12px;font-weight:700;color:var(--orange);">maintain control over pricing and consumer trends</td><td style="padding:8px 12px;">인터넷 → 소비자 정보력↑ → 소매업자 통제력↓</td></tr>
+          <tr><td style="padding:8px 12px;font-weight:700;">지문3</td><td style="padding:8px 12px;">무관문장</td><td style="padding:8px 12px;font-weight:700;color:var(--orange);">② 지역 사회 프로젝트</td><td style="padding:8px 12px;">피해/불균형 논지에서 대응/희망으로 방향 전환</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div><!-- end voca -->
+
+</main>
+
+<script>
+const ids=['home','p0','p1','p2','p3','voca'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
