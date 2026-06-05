@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7강 001–012 수능 대비 마스터 완성본 | Focus Framework · Advanced English Reading II</title>
+<link href="https://fonts.googleapis.com/css2 family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;--blue-bg:rgba(26,75,140,.07);
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --purple:#6b21a8;--purple-bg:rgba(107,33,168,.07);
+  --gold:#92600a;--gold-bg:rgba(146,96,10,.09);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1200px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.1rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.64rem;opacity:.5;margin-top:2px;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:5px 10px;border-radius:4px;font-size:.7rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.wrap{max-width:1200px;margin:0 auto;padding:28px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:13px;margin-top:20px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:15px 18px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 4px 18px var(--shadow);}
+.toc-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:7px;letter-spacing:.05em;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:.95rem;font-weight:600;margin-bottom:3px;line-height:1.4;}
+.toc-ko{font-size:.75rem;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+.strategy-box{background:linear-gradient(135deg,#1c1812,#3d2c1a);color:#fefcf8;border-radius:10px;padding:22px 26px;margin-bottom:8px;}
+.strategy-ttl{font-size:.66rem;font-weight:700;letter-spacing:.2em;color:#f0c060;text-transform:uppercase;margin-bottom:12px;}
+.strategy-item{font-size:.85rem;line-height:1.75;opacity:.9;margin-bottom:7px;padding-left:14px;border-left:3px solid #f0c060;}
+
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 26px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.6rem;opacity:.5;margin-bottom:4px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.3rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.79rem;opacity:.6;margin-top:3px;font-style:italic;}
+.p-type-badge{display:inline-block;margin-top:9px;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 11px;border-radius:20px;letter-spacing:.1em;}
+
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:22px 26px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.struct-para{border:1.5px solid var(--border);border-radius:10px;margin-bottom:18px;overflow:hidden;}
+.struct-tag{padding:8px 18px;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.struct-tag.intro{background:var(--blue-bg);color:var(--blue);border-bottom:1.5px solid rgba(26,75,140,.18);}
+.struct-tag.dev{background:var(--green-bg);color:var(--green);border-bottom:1.5px solid rgba(26,107,58,.18);}
+.struct-tag.concl{background:var(--orange-bg);color:var(--orange);border-bottom:1.5px solid rgba(192,80,16,.18);}
+.struct-body{padding:16px 20px;}
+.struct-en{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.95;color:var(--ink);margin-bottom:12px;}
+.struct-sum{background:var(--bg);border-radius:7px;padding:12px 16px;margin-top:4px;}
+.struct-sum-lbl{font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:5px;}
+.struct-sum-en{font-size:.86rem;color:var(--ink);font-style:italic;line-height:1.65;margin-bottom:6px;}
+.struct-sum-ko{font-size:.8rem;color:var(--ink2);line-height:1.65;border-top:1px dashed var(--border);padding-top:6px;}
+
+.voca-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:6px;}
+.voca-item{background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:8px 12px;font-size:.82rem;}
+.voca-item.hot{border-color:rgba(146,96,10,.4);background:var(--gold-bg);}
+.voca-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.92rem;}
+.voca-mean{color:var(--ink2);margin-left:4px;}
+.voca-syn{font-size:.75rem;color:var(--ink3);margin-top:2px;}
+.hot-mark{display:inline-block;font-size:.58rem;background:var(--gold);color:#fff;padding:1px 6px;border-radius:10px;font-weight:700;margin-left:4px;vertical-align:middle;}
+
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:18px 22px;margin-bottom:12px;}
+.q-type{font-size:.65rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;text-transform:uppercase;}
+.q-stem{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:12px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;line-height:1.55;padding:7px 11px;border-radius:5px;color:var(--ink2);}
+.cn{display:inline-block;font-weight:700;color:var(--ink);margin-right:4px;}
+.correct-choice{background:var(--orange-bg);border:1px solid rgba(192,80,16,.25);color:var(--ink);}
+.correct-choice .cn{color:var(--orange);}
+.wrong-choice{background:var(--red-bg);border:1px solid rgba(176,26,26,.2);}
+
+.ans-box{margin-top:12px;padding:16px 20px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-lbl{font-size:.62rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:7px;}
+.ans-num{font-size:1.02rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.72;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;}
+.wrong-word{color:var(--red);font-weight:700;text-decoration:underline;}
+.right-word{color:var(--orange);font-weight:700;}
+
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:22px 26px;margin-bottom:18px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:14px;background:var(--paper);padding:0 7px;font-size:.6rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.03rem;line-height:1.9;color:var(--ink);}
+.sp-ko{font-size:.8rem;color:var(--ink2);line-height:1.65;padding-left:11px;border-left:3px solid var(--border);margin-top:4px;}
+.sp-note{display:inline-block;font-size:.72rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 5px;border-radius:3px;margin-left:5px;}
+
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:12px 16px;margin-top:9px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.76rem;letter-spacing:.06em;margin-bottom:7px;}
+.gr-note p{font-size:.81rem;color:var(--ink2);line-height:1.65;margin-bottom:5px;}
+
+.sn-box{background:var(--gold-bg);border:1px solid rgba(146,96,10,.3);border-radius:8px;padding:16px 20px;margin-top:14px;}
+.sn-ttl{font-size:.66rem;font-weight:700;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+.sn-item{font-size:.83rem;color:var(--ink2);line-height:1.72;margin-bottom:8px;padding-left:12px;border-left:3px solid var(--gold);}
+.sn-item strong{color:var(--ink);}
+
+.fw-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:8px 13px;text-align:left;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:12px 13px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:20px;}
+
+.my-summary{border:2px dashed var(--border);border-radius:8px;padding:14px 18px;margin-top:12px;background:var(--paper);}
+.my-summary-lbl{font-size:.64rem;font-weight:700;letter-spacing:.14em;color:var(--ink3);text-transform:uppercase;margin-bottom:8px;}
+.my-summary-line{border-bottom:1.5px solid var(--border);height:32px;margin-bottom:6px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:13px 18px;border-radius:0 7px 7px 0;margin-bottom:12px;font-size:.88rem;line-height:1.65;}
+.topic-ko{margin-top:7px;font-size:.78rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:7px;font-style:italic;}
+
+.voca-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.voca-table th{background:var(--bg);padding:7px 13px;text-align:left;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:7px 13px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.5;}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.93rem;}
+
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:4px 9px;border-radius:5px;font-size:.71rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card,.passage-box,.struct-body{padding:14px 16px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">7강 001–012 · 수능 완벽 마스터</div>
+      <div class="hdr-sub">Focus Framework · Advanced English Reading II · EBS 완전 분석 통합 자료</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">학습 전략</button>
+      <button class="nb" onclick="show('p001')">001</button>
+      <button class="nb" onclick="show('p002')">002</button>
+      <button class="nb" onclick="show('p003')">003</button>
+      <button class="nb" onclick="show('p004')">004</button>
+      <button class="nb" onclick="show('p005')">005</button>
+      <button class="nb" onclick="show('p006')">006</button>
+      <button class="nb" onclick="show('p007')">007</button>
+      <button class="nb" onclick="show('p008')">008</button>
+      <button class="nb" onclick="show('p009')">009</button>
+      <button class="nb" onclick="show('p010')">010</button>
+      <button class="nb" onclick="show('p011')">011</button>
+      <button class="nb" onclick="show('p012')">012</button>
+      <button class="nb" onclick="show('voca')">종합단어장</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.65rem;margin-bottom:6px;">7강 001–012 — EBS 연계 최고점 대비 통합 자료</h1>
+  <p style="font-size:.86rem;color:var(--ink3);margin-bottom:20px;">단락 구조 분석(Logical Framework) → 구문 정독 및 어법 훈련 → 수능 변형 완벽 예측</p>
+
+  <div class="strategy-box">
+    <div class="strategy-ttl">🎯 고난도 수능 영어 변형 정복을 위한 5대 전략</div>
+    <div class="strategy-item"><strong>1단계 · 단락 구조화(Logical Framework):</strong> Introduction → Development → Conclusion 흐름을 뇌리에 각인시켜 순서/삽입 변형을 원천 방어합니다.</div>
+    <div class="strategy-item"><strong>2단계 · 패러프레이징 동의어 훈련:</strong> 선택지에서 변형되어 출제되는 핵심 어휘의 수능 동의어 네트워크를 마스터합니다.</div>
+    <div class="strategy-item"><strong>3단계 · 고난도 구문 분석:</strong> 문맥 속 생략, 유사관계대명사, 전치사 잔류 절 등 오답률 상위권 어법 테마를 입체적으로 분석합니다.</div>
+    <div class="strategy-item"><strong>4단계 · 함축 의미 및 지칭 추론 예측:</strong> 단순 해석을 넘어 지문 속 대명사들과 핵심 메타포의 함축적 의미를 정확히 정렬합니다.</div>
+  </div>
+
+  <div class="toc-grid">
+    <a class="toc-card" onclick="show('p001')"><div class="toc-badge">001 · 어법</div><div class="toc-en">Green Consumers</div><div class="toc-ko">녹색 소비자의 구매력과 지속가능성</div></a>
+    <a class="toc-card" onclick="show('p002')"><div class="toc-badge">002 · 제목</div><div class="toc-en">Common Study Advice</div><div class="toc-ko">반복 암기의 허상과 지속적 학습</div></a>
+    <a class="toc-card" onclick="show('p003')"><div class="toc-badge">003 · 제목</div><div class="toc-en">White Supremacy</div><div class="toc-ko">미국 교육 현장의 숨겨진 백인 중심 주의</div></a>
+    <a class="toc-card" onclick="show('p004')"><div class="toc-badge">004 · 어법</div><div class="toc-en">Marine Plastic Pollution</div><div class="toc-ko">해양 플라스틱 오염과 데이터 기반 접근</div></a>
+    <a class="toc-card" onclick="show('p005')"><div class="toc-badge">005 · 흐름</div><div class="toc-en">Digital Piracy in Publishing</div><div class="toc-ko">출판 산업의 불법 복제와 인식의 이중잣대</div></a>
+    <a class="toc-card" onclick="show('p006')"><div class="toc-badge">006 · 순서</div><div class="toc-en">Photography &amp; Digital File</div><div class="toc-ko">사진의 현실 왜곡과 디지털화의 의미</div></a>
+    <a class="toc-card" onclick="show('p007')"><div class="toc-badge">007 · 주제</div><div class="toc-en">Concept of Gatekeeping</div><div class="toc-ko">뉴스룸의 게이트키핑과 정보 유통의 통제</div></a>
+    <a class="toc-card" onclick="show('p008')"><div class="toc-badge">008 · 제목</div><div class="toc-en">Occupational Specialization</div><div class="toc-ko">문명 발달에 따른 직업적 분화와 조직화</div></a>
+    <a class="toc-card" onclick="show('p009')"><div class="toc-badge">009 · 제목</div><div class="toc-en">Animal Psychology Challenge</div><div class="toc-ko">동물 심리학자들의 행동 중심 정의로의 반란</div></a>
+    <a class="toc-card" onclick="show('p010')"><div class="toc-badge">010 · 어법</div><div class="toc-en">Botanical Gardens &amp; Urban Ag</div><td class="toc-ko">도시 농업 발전을 위한 식물원의 다각적 역할</td></a>
+    <a class="toc-card" onclick="show('p011')"><div class="toc-badge">011 · 흐름</div><div class="toc-en">Colonial Labour Regimes</div><div class="toc-ko">식민지 노동 체제가 초래한 글로벌 불평등</div></a>
+    <a class="toc-card" onclick="show('p012')"><div class="toc-badge">012 · 순서</div><div class="toc-en">Morning vs. Night People</div><div class="toc-ko">생체 시계에 따른 수면 성향의 선천적 차이</div></a>
+  </div>
+</div>
+
+<div class="sec" id="p001">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 078 · #번 001 · #문항코드 26007-0061</div>
+    <div class="p-title">Green Consumers &amp; Purchasing Power</div>
+    <div class="p-title-ko">녹색 소비자 — 구매력으로 지속가능성을 추구하는 사람들</div>
+    <span class="p-type-badge">어법 변형 완벽 대비</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">alternative</span><span class="voca-mean">대체품, 대안</span><div class="voca-syn">substitute, replacement</div></div>
+      <div class="voca-item"><span class="voca-word">sustainability</span><span class="voca-mean">지속 가능성</span><div class="voca-syn">maintainability</div></div>
+      <div class="voca-item"><span class="voca-word">management</span><span class="voca-mean">경영, 관리</span><div class="voca-syn">administration, governance, supervision</div></div>
+      <div class="voca-item"><span class="voca-word">vital</span><span class="voca-mean">매우 중요한</span><div class="voca-syn">crucial, essential, critical</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 단락 구조 독해</div>
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 INTRODUCTION</div>
+      <div class="struct-body">
+        <div class="struct-en">Green consumers, compared with non-green consumers, prefer purchasing environmentally-friendly products over the standard <span class="vw">alternatives<span class="tt">대체품</span></span> available.</div>
+      </div>
+    </div>
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT</div>
+      <div class="struct-body">
+        <div class="struct-en">Green consumers believe that they are guided by their <span class="vw">internal<span class="tt">내적인</span></span> control, so they would not leave responsibilities to others. They are ordinary people <span class="right-word">thinking</span> that business operations have a <span class="vw">vital<span class="tt">중요한</span></span> role.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 정답 및 구문 해설</div>
+    <div class="ans-box">
+      <div class="ans-num">정답: ③ think → thinking / who think</div>
+      <div class="ans-exp">한 문장 안에서 본동사 are가 이미 존재하므로 접속사 없이 동사원형 think가 충돌할 수 없습니다. 명사 people을 수식하는 분사형태나 주격 관계대명사 절로 고쳐야 합니다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Topic &amp; Logical Framework</div>
+    <div class="topic-box"><strong>Topic:</strong> Green consumers use their purchasing power to drive environmental sustainability and corporate responsibility.</div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">1</span></td><td>Green consumers prefer eco-friendly products over standard choices.</td></tr>
+        <tr><td><span class="step-badge">2</span></td><td>Firms internalize socio-environmental costs &amp; adopt green marketing.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p002">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 079 · #번 002 · #문항코드 26007-0074</div>
+    <div class="p-title">Common Study Advice Is Often Wrong</div>
+    <div class="p-title-ko">흔한 학습 조언의 허상 — 단순 반복은 지속적 학습을 만들지 못한다</div>
+    <span class="p-type-badge">제목 유형 마스터</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">plain</span><span class="voca-mean">완전히, 분명히</span><div class="voca-syn">clearly, completely, absolutely</div></div>
+      <div class="voca-item"><span class="voca-word">permanently</span><span class="voca-mean">영구적으로</span><div class="voca-syn">perpetually, for good ↔ temporarily</div></div>
+      <div class="voca-item hot"><span class="voca-word">durable</span><span class="voca-mean">오래 지속되는</span><div class="voca-syn">long-lasting, enduring</div></div>
+      <div class="voca-item"><span class="voca-word">embed</span><span class="voca-mean">깊이 새기다</span><div class="voca-syn">imprint, engrave</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 단락 구조 독해</div>
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 INTRODUCTION</div>
+      <div class="struct-body">
+        <div class="struct-en">[What students are advised to do] is often <span class="vw">plain<span class="tt">완전히</span></span> wrong.</div>
+      </div>
+    </div>
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT</div>
+      <div class="struct-body">
+        <div class="struct-en">Belief in the power of rereading and repetition is <span class="vw">pervasive<span class="tt">만연한</span></span>, but the truth is you usually can't <span class="vw">embed<span class="tt">새기다</span></span> something in memory simply by repeating it. It doesn't work for <span class="vw">durable<span class="tt">지속적인</span></span> learning.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 정답 및 변형 포인트</div>
+    <div class="ans-box">
+      <div class="ans-num">정답: ④ common study advice that fails to promote durable learning</div>
+      <div class="ans-exp">글의 중반부 역접문인 "but the truth is..." 이후 단순 반복 암기가 장기적인 지속적 학습(durable learning)에 효과가 없음을 명확히 지적하고 있습니다.</div>
+    </div>
+    <div class="sn-box">
+      <div class="sn-ttl">🎯 수능 변형 출제 포인트</div>
+      <div class="sn-item"><strong>지칭 추론 변형:</strong> 지문 내의 3개의 대명사 'it'이 각각 가리키는 대상(기억해야 할 내용 / 전화번호 / 단순 반복 전략)이 다른 것을 구별하는 문제가 출제 유력합니다.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">04 Topic &amp; Logical Framework</div>
+    <div class="topic-box"><strong>Topic:</strong> Common study advice advocating for repetition and intentionality is widespread but ineffective for durable learning.</div>
+  </div>
+</div>
+
+<div class="sec" id="p003">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 080 · #번 003 · #문항코드 26007-0075</div>
+    <div class="p-title">White Supremacy in American Education</div>
+    <div class="p-title-ko">미국 교육의 백인 우월주의 — 이중 잣대와 숨겨진 교육과정</div>
+    <span class="p-type-badge">비판적 독해 완성</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">conform to</span><span class="voca-mean">~을 준수하다</span><div class="voca-syn">comply with, adhere to, abide by</div></div>
+      <div class="voca-item"><span class="voca-word">outperform</span><span class="voca-mean">능가하다</span><div class="voca-syn">surpass, excel</div></div>
+      <div class="voca-item hot"><span class="voca-word">address</span><span class="voca-mean">문제를 다루다, 해결하다</span><div class="voca-syn">deal with, tackle, resolve</div></div>
+      <div class="voca-item"><span class="voca-word">disrupt</span><span class="voca-mean">무너뜨리다, 해체하다</span><div class="voca-syn">dismantle, destabilize</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 단락 구조 독해</div>
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 INTRODUCTION</div>
+      <div class="struct-body">
+        <div class="struct-en">American educators saw Asian American parenting as <span class="vw">deviant<span class="tt">일탈적인</span></span> and felt white middle class standard is the norm that others should <span class="vw">conform to<span class="tt">따르다</span></span>.</div>
+      </div>
+    </div>
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT</div>
+      <div class="struct-body">
+        <div class="struct-en">Educators make significant efforts to <span class="vw">address<span class="tt">해결하다</span></span> learning gaps but do not <span class="vw">disrupt<span class="tt">해체하다</span></span> the white <span class="vw">supremacy<span class="tt">우월주의</span></span> embedded in standard practices.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 정답 및 어법 핵심</div>
+    <div class="ans-box">
+      <div class="ans-num">정답: ③ How White Supremacy Shapes American Educators' Views</div>
+      <div class="ans-exp">미국 학교 현장에서 백인 중산층의 행동 방식을 정상 기준으로 상정하고 소수 인종의 문화를 비정상 혹은 일탈로 규정하는 구조적 문제를 비판하는 글입니다.</div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 고난도 대동사 구문</div>
+      <p><strong>"whereas black and Latinx youths are"</strong> 뒤에 생략된 어구는 <strong>expected to emulate (whites)</strong>입니다. 앞에 있는 be동사 구문을 대신하므로 일반동사 대동사인 do나/did로 바꾸어 오답을 유도하는 수능 어법 변형에 주의하십시오.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p004">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 081 · #번 004 · #문항코드 26007-0076</div>
+    <div class="p-title">Marine Plastic Pollution &amp; Quantitative Approaches</div>
+    <div class="p-title-ko">해양 플라스틱 오염 — 홀리스틱 분석을 위한 정량적 데이터의 필연성</div>
+    <span class="p-type-badge">밑줄 친 부분 중 어법이 틀린 것 고르기 변형</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">counteract</span><span class="voca-mean">상쇄하다, 대응하다</span><div class="voca-syn">neutralize, offset</div></div>
+      <div class="voca-item"><span class="voca-word">zoo</span><span class="voca-mean">혼잡한 상태, 아수라장</span><div class="voca-syn">chaos, messy collection</div></div>
+      <div class="voca-item hot"><span class="voca-word">shed light on</span><span class="voca-mean">~을 설명하다, 명확히 하다</span><div class="voca-syn">clarify, explain, illuminate</div></div>
+      <div class="voca-item"><span class="voca-word">holistic</span><span class="voca-mean">전체적인, 종합적인</span><div class="voca-syn">comprehensive, all-inclusive</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 단락 구조 독해</div>
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 INTRODUCTION</div>
+      <div class="struct-body">
+        <div class="struct-en">Marine plastic pollution is a complex problem that involves vast geographic domains. To <span class="vw">counteract<span class="tt">대응하다</span></span> this planetary threat, we need tailored instruments.</div>
+      </div>
+    </div>
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT</div>
+      <div class="struct-body">
+        <div class="struct-en">Laboratory experiments are fundamental, yet this <span class="vw">zoo<span class="tt">혼잡한 무리</span></span> of data is still insufficient to provide a <span class="vw">holistic<span class="tt">전체적인</span></span> description. Quantitative methods can help to <span class="vw">shed light on<span class="tt">규명하다</span></span> hidden aspects.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 문항 출제 및 어법 오류 수정</div>
+    <div class="q-block">
+      <div class="q-type">다음 밑줄 친 부분 중, 어법상 틀린 것은?</div>
+      <div class="q-stem">In addition, researchers are exploring growing practices ③ <span class="wrong-word">what</span> can maximize production in urban spaces... [실제 지문 응용 변형]</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> occurrences occurring on many levels (현재분사) ✓</div>
+        <div class="choice"><span class="cn">②</span> what can be regarded as a threat (선행사 없는 관계사) ✓</div>
+        <div class="wrong-choice"><span class="cn">③</span> practices <span class="wrong-word">what</span> → <span class="right-word">that / which</span> (주격 관계대명사)</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">어법 실무 분석</div>
+      <div class="ans-num">정답: ③ what → that 또는 which</div>
+      <div class="ans-exp">선행사인 'growing practices'가 명백히 존재하므로 선행사를 자체적으로 포함하는 관계대명사인 <strong>what</strong>은 올 수 없으며, 제한적 용법의 주격 관계대명사인 <strong>that</strong>이나 <strong>which</strong>로 교체해야 마땅합니다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p005">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 082 · #번 005 · #문항코드 26007-0077</div>
+    <div class="p-title">Digital Formats &amp; Intellectual Piracy</div>
+    <div class="p-title-ko">출판 산업의 불법 복제 — 디지털화가 불러온 도덕적 이중잣대</div>
+    <span class="p-type-badge">무관한 문장 찾기 완벽 방어</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">piracy</span><span class="voca-mean">저작권 침해, 불법 복제</span><div class="voca-syn">copyright infringement</div></div>
+      <div class="voca-item"><span class="voca-word">appropriate</span><span class="voca-mean">도용하다, 무단 전용하다</span><div class="voca-syn">misappropriate, take without permission</div></div>
+      <div class="voca-item hot"><span class="voca-word">mortified</span><span class="voca-mean">모멸감을 느끼는, 극도로 창피한</span><div class="voca-syn">humiliated, deeply embarrassed</div></div>
+      <div class="voca-item"><span class="voca-word">write off</span><span class="voca-mean">손실로 처리하다, 감면하다</span><div class="voca-syn">cancel, charge off as a loss</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 단락 구조 독해</div>
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 INTRODUCTION</div>
+      <div class="struct-body">
+        <div class="struct-en">One factor that influences the publisher's ability to sell materials is piracy. Digital formats make piracy easier whether texts are <span class="vw">appropriated<span class="tt">도용되는</span></span> for personal use.</div>
+      </div>
+    </div>
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT (도덕적 이중성)</div>
+      <div class="struct-body">
+        <div class="struct-en">Individuals who would be <span class="vw">mortified<span class="tt">수치스러워할</span></span> at the idea of shoplifting a print copy often think nothing of reading a pirated online version.</div>
+        <div class="struct-sum">
+          <div class="struct-sum-lbl">⚠️ 흐름 침투 오답 예시 (⚠️ 무관한 문장)</div>
+          <div class="struct-sum-ko" style="color:var(--red);">[🚨 오답 패턴] "Discussions about compensation for slavery occasionally contributed to diplomatic dialogue..." (→ 노예제 보상 논의는 본문의 디지털 불법복제 및 출판사 손실 방어 기전과 아무런 논리적 연관이 없습니다.)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 수능 출제 예상 핵심</div>
+    <table class="fw-table">
+      <thead><tr><th>주요 메커니즘</th><th>내용 기술</th></tr></thead>
+      <tbody>
+        <tr><td>소비자의 이중성</td><td>실물 책을 훔치는 행위(shoplifting)에는 수치심을 느끼나, 디지털 무단 도용에는 죄책감이 없음.</td></tr>
+        <tr><td>기업의 대응</td><td>출판사는 지속적으로 보안 장치(digital safeguards)를 고도화하고, 방어 실패 시 금융 손실로 과감히 회계 처리(<span class="vw">write off<span class="tt">결손 처리</span></span>)함.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="p006">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 083 · #번 006 · #문항코드 26007-0078</div>
+    <div class="p-title">Photography: Illusion of Neutrality</div>
+    <div class="p-title-ko">사진의 중립성이라는 환상 — 아날로그 다징/버닝에서 디지털 비트까지</div>
+    <span class="p-type-badge">글의 순서 배열 변형 완벽 대비</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">pass for</span><span class="voca-mean">~로 통하다, 인정받다</span><div class="voca-syn">be accepted as, be regarded as</div></div>
+      <div class="voca-item"><span class="voca-word">unquestionable</span><span class="voca-mean">의문의 여지가 없는</span><div class="voca-syn">indisputable, certain</div></div>
+      <div class="voca-item hot"><span class="voca-word">removed</span><span class="voca-mean">동떨어진, 격리된</span><div class="voca-syn">distant, separated, isolated</div></div>
+      <div class="voca-item"><span class="voca-word">dodging &amp; burning</span><span class="voca-mean">다징과 버닝(밝기 조절 인화 기법)</span><div class="voca-syn">traditional darkroom exposure modification</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 순서 배열의 논리적 단서 정렬</div>
+    <div class="struct-para">
+      <div class="struct-tag intro">📋 [주어진 글] - 사진이 현실을 그대로 포착한다는 대중적 환상</div>
+      <div class="struct-body">
+        <div class="struct-en">Photography battles with the fantasy that it captures a neutral view of reality. Susan Sontag refers to an official use of the photograph that <span class="vw">passes for<span class="tt">~로 통하는</span></span> <span class="vw">unquestionable<span class="tt">확실한</span></span> proof.</div>
+      </div>
+    </div>
+    <div class="struct-para">
+      <div class="struct-tag concl">⛓️ 논리 순서 고리: (C) → (B) → (A)</div>
+      <div class="struct-body">
+        <p style="margin-bottom:8px;"><strong>(C) 반론의 시작:</strong> "However, she states her opinion..." 사진 역시 회화나 소묘처럼 세계의 '주관적 해석(interpretation)'에 불과함을 Sontag의 의견으로 귀결.</p>
+        <p style="margin-bottom:8px;"><strong>(B) 전통 사진의 조작 사례:</strong> 아날로그 장인 안셀 애덤스의 암실 작업 기술을 소개하며 "dodging and burning"이 신의 실수를 교정하는 편집 단계임을 설명. 하단부에 "However, digital images tend to be one more step <span class="vw">removed<span class="tt">동떨어진</span></span> from reality"를 배치하여 디지털로의 전환점 마련.</p>
+        <p><strong>(A) 디지털 비트의 물리적 본질:</strong> 디지털 파일은 컴퓨터화된 1과 0의 조합(bits)에 불과하며, 소프트웨어에 의해 디스플레이 장치에 표현되기 전까지는 이미지조차 아님을 폭로하며 최종적 왜곡성 증명.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p007">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 084 · #번 007 · #문항코드 26007-0079</div>
+    <div class="p-title">The Mechanics of News Gatekeeping</div>
+    <div class="p-title-ko">미디어의 게이트키핑 — 뉴스의 가치는 편집자가 결정한다</div>
+    <span class="p-type-badge">주제 및 요약문 완성 대비</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">hypothetical</span><span class="voca-mean">가상의, 가정의</span><div class="voca-syn">theoretical, assumed, speculative</div></div>
+      <div class="voca-item"><span class="voca-word">gatekeeping</span><span class="voca-mean">게이트키핑(정보 유통 여부 결정 행위)</span><div class="voca-syn">news filtering, information control</div></div>
+      <div class="voca-item hot"><span class="voca-word">elect</span><span class="voca-mean">선택하다, 결정하다</span><div class="voca-syn">choose, decide, opt to</div></div>
+      <div class="voca-item"><span class="voca-word">press release</span><span class="voca-mean">보도 자료</span><div class="voca-syn">official media statement</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 단락 구조 독해</div>
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 INTRODUCTION (가정적 상황 전개)</div>
+      <div class="struct-body">
+        <div class="struct-en">In a <span class="vw">hypothetical<span class="tt">가상의</span></span> situation, a college sends a <span class="vw">press release<span class="tt">보도자료</span></span> about three on-campus events to the media.</div>
+      </div>
+    </div>
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT &amp; CONCLUSION (필터링의 실체)</div>
+      <div class="struct-body">
+        <div class="struct-en">The newspaper <span class="vw">elects<span class="tt">결정한다</span></span> to print only one story and ignores the other two. Readers have no idea what they missed. This perfectly demonstrates the concept of <span class="vw">gatekeeping<span class="tt">게이트키핑</span></span>.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 수능 핵심 요약문 완성 매핑</div>
+    <div class="topic-box">
+      <strong>[수능 예상 요약]</strong> Rather than audiences choosing what is informative, the media practice of <u>gatekeeping</u> empowers editors to <u>filter</u> real-world occurrences.
+      <div class="topic-ko">→ 독자가 유익한 것을 직접 고르는 대신, 게이트키핑이라는 미디어 관행이 편집자들에게 현실의 사건들을 필터링하고 걸러내는 권한을 부여한다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p008">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 085 · #번 008 · #문항코드 26007-0080</div>
+    <div class="p-title">Evolution of Occupational Specialization</div>
+    <div class="p-title-ko">직업 전문화의 역사 — 문명의 발달과 전문 조합(Guild)의 형성</div>
+    <span class="p-type-badge">글의 제목 유형 마스터</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">flourish</span><span class="voca-mean">번성하다, 번창하다</span><div class="voca-syn">thrive, prosper</div></div>
+      <div class="voca-item"><span class="voca-word">designation</span><span class="voca-mean">지정, 명칭, 직무</span><div class="voca-syn">appointment, official role title</div></div>
+      <div class="voca-item hot"><span class="voca-word">communal</span><span class="voca-mean">공동체의, 공공의</span><div class="voca-syn">collective, shared, public</div></div>
+      <div class="voca-item"><span class="voca-word">collegia / guild</span><span class="voca-mean">직업 조합, 길드</span><div class="voca-syn">professional trade associations</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 문항 선택지 완벽 소거법</div>
+    <div class="q-block">
+      <div class="q-stem">글의 제목으로 가장 적절한 고유 선택지는 무엇인가?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> Conflicts among professional groups in ancient societies (갈등 없음) ❌</div>
+        <div class="choice"><span class="cn">②</span> The economic importance of construction work in early societies (지엽적) ❌</div>
+        <div class="correct-choice"><span class="cn">④</span> The development of occupational specialization in civilizations ✓ 정답</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-exp">문명이 성장하고 <span class="vw">flourish<span class="tt">번창함</span></span>에 따라 노동의 효율성을 극대화하기 위해 업무를 고유한 분화 형태(<span class="vw">designation<span class="tt">직무</span></span>)로 나누고, 로마의 collegia 및 중세의 길드(guild)처럼 정교하고 <span class="vw">communal<span class="tt">공동체적인</span></span> 제도적 조직으로 정착해 나간 과정을 역사적으로 추적하는 지문입니다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p009">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 086 · #번 009 · #문항코드 26007-0081</div>
+    <div class="p-title">Behaviorism: Animal Psychologists' Challenge</div>
+    <div class="p-title-ko">심리학 패러다임의 대전환 — 의식의 과학에서 행동의 과학으로</div>
+    <span class="p-type-badge">고난도 빈칸 추론 대비</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">strenuously</span><span class="voca-mean">격렬하게, 강력하게</span><div class="voca-syn">vigorously, strongly, fiercely</div></div>
+      <div class="voca-item"><span class="voca-word">object to</span><span class="voca-mean">~에 반대하다</span><div class="voca-syn">oppose, protest against</div></div>
+      <div class="voca-item hot"><span class="voca-word">offensive</span><span class="voca-mean">공세, 공격적인 행동</span><div class="voca-syn">counter-attack, assault</div></div>
+      <div class="voca-item"><span class="voca-word">glandular</span><span class="voca-mean">분비선의</span><div class="voca-syn">relating to gastric or hormonal glands</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 단락 구조 독해</div>
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 INTRODUCTION (반발의 태동)</div>
+      <div class="struct-body">
+        <div class="struct-en">No one has <span class="vw">objected so strenuously<span class="tt">맹렬히 반대하다</span></span> to defining psychology as the science of consciousness as the group of animal psychologists.</div>
+      </div>
+    </div>
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT &amp; CONCLUSION (공세와 선언)</div>
+      <div class="struct-body">
+        <div class="struct-en">They could not observe the consciousness of animals; they could only observe physical behavior. When threatened by traditionalists, they took the <span class="vw">offensive<span class="tt">공세</span></span>, insisting that human psychology, no less than animal, was a study of behavior.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 수능 변형 고찰</div>
+    <div class="ans-box">
+      <div class="ans-num">핵심 제목: ⑤ From Consciousness to Behavior: Animal Psychologists' Challenge</div>
+      <div class="ans-exp">빈칸 추론으로 변형될 경우, 마지막 문장의 <strong>"properly a study of behavior"</strong> 혹은 <strong>"great mistake ever to define it as the science of consciousness"</strong>가 출제 영순위 영역입니다. 동물 심리학자들이 행동주의 심리학의 초석을 다지는 패러다임 투쟁의 핵심 역사가 담겨 있습니다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p010">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 087 · #번 010 · #문항코드 26007-0082</div>
+    <div class="p-title">Botanical Gardens &amp; Urban Agriculture</div>
+    <div class="p-title-ko">도시 농업과 식물원의 시너지 — 연구, 교육, 네트워크의 중심지</div>
+    <span class="p-type-badge">어법 변형 마스터</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">alleviate</span><span class="voca-mean">경감하다, 완화하다</span><div class="voca-syn">relieve, ease, mitigate, lessen</div></div>
+      <div class="voca-item"><span class="voca-word">inform</span><span class="voca-mean">영향을 미치다, 지식을 주다</span><div class="voca-syn">shape, guide, enlighten</div></div>
+      <div class="voca-item hot"><span class="voca-word">biodiversity</span><span class="voca-mean">생물 다양성</span><div class="voca-syn">ecological variety of species</div></div>
+      <div class="voca-item"><span class="voca-word">programmatic</span><span class="voca-mean">프로그램에 따른</span><div class="voca-syn">systematic, plan-based</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 단락 구조 독해</div>
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 INTRODUCTION</div>
+      <div class="struct-body">
+        <div class="struct-en">There is a need for research that explores the potential of urban agriculture to <span class="vw">alleviate<span class="tt">경감하다</span></span> global challenges such as climate change and <span class="vw">biodiversity<span class="tt">생물다양성</span></span> loss.</div>
+      </div>
+    </div>
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT</div>
+      <div class="struct-body">
+        <div class="struct-en">Botanical gardens can use emerging research to <span class="vw">inform<span class="tt">영향을 미치다</span></span> <span class="vw">programmatic<span class="tt">프로그램 상의</span></span> approaches and share resources including lessons learned.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 변형 어법 포인트 검증</div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 분사 형태 일치 훈련</div>
+      <p>지문 최하단부의 <strong>"lessons learned in program design..."</strong> 구문에서 lessons를 후치수식하는 <strong>learned</strong>는 과거분사 형태가 완벽합니다. (교훈은 인간에 의해 '학습되는' 대상이기 때문입니다.) 수능 변형 문제에서 learning으로 왜곡 출제 시 즉시 소거해내야 합니다.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p011">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 088 · #번 011 · #문항코드 26007-0083</div>
+    <div class="p-title">Colonial Labour Regimes &amp; Inequality</div>
+    <div class="p-title-ko">식민지 노동 체제와 경제적 불평등의 고착화 과정</div>
+    <span class="p-type-badge">문장 삽입/흐름 파악 변형 대비</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">depress</span><span class="voca-mean">하락시키다, 억제하다</span><div class="voca-syn">lower, devalue, suppress</div></div>
+      <div class="voca-item"><span class="voca-word">metropolitan</span><span class="voca-mean">본국의, 대도시의</span><div class="voca-syn">imperial center, homeland of colonizers</div></div>
+      <div class="voca-item hot"><span class="voca-word">lumber</span><span class="voca-mean">(부담 등을) 떠맡기다</span><div class="voca-syn">burden, saddle with</div></div>
+      <div class="voca-item"><span class="voca-word">fiscal</span><span class="voca-mean">재정적인, 국고의</span><div class="voca-syn">financial, budgetary</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 이중적 수탈 메커니즘 도식화</div>
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 수탈 방식 1: 임금의 강제 하락</div>
+      <div class="struct-body">
+        <div class="struct-en">They <span class="vw">depressed<span class="tt">하락시켰다</span></span> payments to workers in colonies, enabling cheap production highly profitable for the <span class="vw">metropolitan<span class="tt">제국 본국</span></span> corporations.</div>
+      </div>
+    </div>
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 수탈 방식 2: 해방 시 노예주의 손실 보상 전가</div>
+      <div class="struct-body">
+        <div class="struct-en">When enslaved peoples were freed, enslavers were fully compensated. In Haiti, this compensation <span class="vw">lumbered<span class="tt">부담을 지웠다</span></span> the country with a massive <span class="vw">fiscal<span class="tt">재정적</span></span> debt, causing century-long underdevelopment.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 수능 변형 완벽 격파</div>
+    <div class="ans-box">
+      <div class="ans-lbl">⚠️ 흐름 침투 오답 및 삽입 포인트</div>
+      <div class="ans-exp"><strong>문장 삽입 출제 지점:</strong> "Second, when enslaved peoples were freed..." 문장은 뒤이어 등장하는 구체적 역사 사례(아이티가 프랑스 엘리트에게 배상금을 지급하여 재정 위기에 빠진 사례)의 논리적 전제이므로 문장 삽입 시험의 최고 명당입니다. 중간에 '외교적 화합을 증진시켰다'는 식의 긍정문이 들어오면 무조건 흐름상 유해한 오답으로 골라내십시오.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="p012">
+  <div class="p-header">
+    <div class="p-code">#강 07 · #쪽 089 · #번 012 · #문항코드 26007-0084</div>
+    <div class="p-title">Biological Clocks: Chronotypes</div>
+    <div class="p-title-ko">아침형 인간과 저녁형 인간 — 제약이 없을 때 드러나는 선천적 sleep 성향</div>
+    <span class="p-type-badge">글의 순서 및 서술형 요약 완전 정복</span>
+  </div>
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">constraint</span><span class="voca-mean">제약, 구속</span><div class="voca-syn">limitation, restriction, restraint</div></div>
+      <div class="voca-item"><span class="voca-word">leave to one's own devices</span><span class="voca-mean">~을 자기 뜻대로 하게 내버려두다</span><div class="voca-syn">leave alone to act independently</div></div>
+      <div class="voca-item hot"><span class="voca-word">flaunt</span><span class="voca-mean">과시하다, 자랑해 보이다</span><div class="voca-syn">show off, display proudly</div></div>
+      <div class="voca-item"><span class="voca-word">nod off</span><span class="voca-mean">꾸벅꾸벅 졸다, 잠에 들다</span><div class="voca-syn">doze off, fall asleep briefly</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-lbl">02 순서 논리의 황금 고리 정리</div>
+    <table class="fw-table">
+      <thead><tr><th>단락 단서</th><th>논리적 전개 구조</th></tr></thead>
+      <tbody>
+        <tr><td><strong>[제시문]</strong></td><td>주말이나 쉬는 날 알람이 없을 때 아침형 인간과 야행성 인간의 본질적 성향을 구별할 기회가 옴.</td></tr>
+        <tr><td><strong>(B) 유형의 분화</strong></td><td>알람이 없어도 신나게 일어나는 자들이 있는 반면, 다른 이들(Others)은 베개를 뒤집어쓰고 정오에 침대에서 브런치를 먹는 상상을 하며 다시 <span class="vw">nod off<span class="tt">깜빡 졸다</span></span>함.</td></tr>
+        <tr><td><strong>(C) 일반화 &amp; 인물 도입</strong></td><td>외부적 <span class="vw">constraint<span class="tt">제약</span></span>이 없고 인간이 <span class="vw">자기 뜻대로 행동하게 방치될<span class="tt">leave to own devices</span></span> 때, 두 집단 간의 격차는 거대함. 야행성 성향을 <span class="vw">flaunt<span class="tt">과시하기</span></span> 좋아했던 작가 오스카 와일드 일화 도입부.</td></tr>
+        <tr><td><strong>(A) 구체적 일화 완성</strong></td><td>오전 9시에 방문해도 되냐는 지인의 질문에 "나는 새벽 5시에 취침하므로 그때까지 깨어있을 수 없다"고 응수하는 오스카 와일드의 극단적 야행성 위트 대화로 종결.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-lbl">03 Topic &amp; My Summary 완성 필드</div>
+    <div class="topic-box"><strong>Topic:</strong> Free from external constraints, the biological differences between morning types and night-owls manifest dramatically.</div>
+    <div class="my-summary">
+      <div class="my-summary-lbl">✍️ MY SUMMARY — 주관식 한 줄 요약문 작성 코너</div>
+      <div class="my-summary-line"></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="voca">
+  <div style="background:var(--ink);color:#fefcf8;padding:20px 26px;border-radius:8px 8px 0 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;opacity:.5;margin-bottom:4px;">7강 001–012 통합 최상위권 전용 어휘 가이드</div>
+    <div style="font-family:'Crimson Pro',serif;font-size:1.28rem;font-weight:600;">수능 동의어/반의어 최종 정리 네트워크</div>
+  </div>
+  <div class="card" style="border-radius:0 0 8px 8px;">
+    <table class="voca-table">
+      <thead><tr><th>핵심 단어</th><th>뜻</th><th>수능 변형 유력 동의어망</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">alternative</td><td>대체품, 대안</td><td>substitute, replacement</td></tr>
+        <tr><td class="vw-word">durable</td><td>오래 지속되는</td><td>long-lasting, enduring, permanent</td></tr>
+        <tr><td class="vw-word">conform to</td><td>규칙을 준수하다</td><td>comply with, adhere to, abide by</td></tr>
+        <tr><td class="vw-word">address</td><td>문제를 해결하다</td><td>deal with, tackle, solve, cope with</td></tr>
+        <tr><td class="vw-word">counteract</td><td>상쇄, 대응하다</td><td>neutralize, offset, balance out</td></tr>
+        <tr><td class="vw-word">mortified</td><td>극도로 창피한</td><td>humiliated, deeply embarrassed</td></tr>
+        <tr><td class="vw-word">alleviate</td><td>고통을 경감하다</td><td>relieve, ease, mitigate, diminish</td></tr>
+        <tr><td class="vw-word">constraint</td><td>외부적 제약</td><td>limitation, restriction, barrier</td></tr>
+        <tr><td class="vw-word">flaunt</td><td>거만하게 과시하다</td><td>show off, boast, display ostentatiously</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+
+<script>
+const ids=['home','p001','p002','p003','p004','p005','p006','p007','p008','p009','p010','p011','p012','voca'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
