@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3차 단어 퀴즈 — 7강·8강</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;background:#f5f5f0;min-height:100vh;padding:1.5rem 1rem}
+.wrap{max-width:700px;margin:0 auto}
+.top{margin-bottom:1.25rem}
+.top h1{font-size:22px;font-weight:700;color:#111;margin-bottom:3px}
+.top p{font-size:13px;color:#888}
+/* Main set tabs */
+.msec{margin-bottom:1rem}
+.mlabel{font-size:11px;font-weight:700;color:#aaa;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.mrow{display:flex;gap:6px;flex-wrap:wrap}
+.mtab{padding:8px 16px;font-size:13px;border:1.5px solid #ddd;border-radius:10px;cursor:pointer;background:#fff;color:#444;transition:all .15s;font-weight:500;line-height:1.3;text-align:center}
+.mtab small{display:block;font-size:10px;opacity:.65;margin-top:1px}
+.mtab:hover{background:#f0f0f0}
+.mtab.s0.on{background:#1565C0;border-color:#1565C0;color:#fff}
+.mtab.s1.on{background:#6A1B9A;border-color:#6A1B9A;color:#fff}
+.mtab.s2.on{background:#00838F;border-color:#00838F;color:#fff}
+.mtab.s3.on{background:#2E7D32;border-color:#2E7D32;color:#fff}
+/* Practice tabs */
+.psec{margin-bottom:1.25rem}
+.prow{display:flex;gap:5px;flex-wrap:wrap}
+.ptab{padding:6px 14px;font-size:13px;border:1px solid #ddd;border-radius:99px;cursor:pointer;background:#fff;color:#444;transition:all .15s;font-weight:500}
+.ptab:hover{background:#f0f0f0}
+.ptab.on{color:#fff;font-weight:700}
+.ptab.on.c0{background:#1565C0;border-color:#1565C0}
+.ptab.on.c1{background:#6A1B9A;border-color:#6A1B9A}
+.ptab.on.c2{background:#00838F;border-color:#00838F}
+.ptab.on.c3{background:#2E7D32;border-color:#2E7D32}
+/* word list */
+.wl-toggle{font-size:13px;color:#555;cursor:pointer;margin-bottom:1rem;display:flex;align-items:center;gap:5px;user-select:none}
+.wordlist{background:#fff;border:1px solid #e8e8e8;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.25rem;display:none}
+.wordlist.show{display:block}
+.wl-title{font-size:11px;font-weight:700;color:#888;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.word-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px}
+.word-row{display:flex;gap:6px;font-size:12.5px;padding:4px 7px;border-radius:5px;background:#f9f9f7}
+.wen{font-weight:600;color:#1a1a2e;min-width:95px;flex-shrink:0}
+.wko{color:#555;line-height:1.4}
+/* progress */
+.prog-wrap{margin-bottom:1.25rem}
+.prog-meta{display:flex;justify-content:space-between;font-size:13px;color:#666;margin-bottom:5px}
+.prog-track{height:5px;background:#e0e0e0;border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;border-radius:99px;transition:width .3s}
+.pf0{background:#1565C0}.pf1{background:#6A1B9A}.pf2{background:#00838F}.pf3{background:#2E7D32}.pfo{background:#E8821A}
+/* card */
+.card{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:6px;margin-bottom:10px}
+.ba{background:#E3F2FD;color:#1565C0}
+.bb{background:#E8F5E9;color:#2E7D32}
+.bc{background:#FFF8E1;color:#E65100}
+.qword{font-size:19px;font-weight:600;color:#111;margin-bottom:4px;line-height:1.4}
+.qsub{font-size:13px;color:#888;margin-bottom:1.2rem}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:420px){.opts{grid-template-columns:1fr}}
+.opt{padding:11px 14px;font-size:14px;border:1px solid #ddd;border-radius:9px;cursor:pointer;background:#fff;color:#222;text-align:left;line-height:1.4;transition:all .15s}
+.opt:hover:not(.dis){background:#f5f5f5}
+.opt.ok{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20;font-weight:500}
+.opt.no{background:#FFEBEE;border-color:#C62828;color:#B71C1C}
+.opt.show{background:#E3F2FD;border-color:#1565C0;color:#0D47A1;font-weight:500}
+.opt.dis{pointer-events:none}
+.fill-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fill-inp{flex:1;min-width:160px;padding:10px 13px;font-size:15px;border:1px solid #ddd;border-radius:9px;outline:none;transition:border .15s}
+.fill-inp:focus{border-color:#555}
+.fill-inp.ok{border-color:#2E7D32;background:#E8F5E9;color:#1B5E20}
+.fill-inp.no{border-color:#C62828;background:#FFEBEE;color:#B71C1C}
+.sub-btn{padding:10px 18px;font-size:14px;border:1px solid #ccc;border-radius:9px;cursor:pointer;background:#fff;color:#333;transition:all .15s;white-space:nowrap}
+.sub-btn:hover{background:#eee}
+.fb{margin-top:8px;font-size:13px}
+.fb.ok{color:#2E7D32}.fb.no{color:#C62828}
+.hint{font-size:12px;color:#aaa;margin-top:6px}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem}
+.nbtn{padding:9px 20px;font-size:14px;border:1px solid #ccc;border-radius:9px;cursor:pointer;background:#fff;color:#333;transition:all .15s}
+.nbtn:hover{background:#eee}
+.nbtn:disabled{opacity:.4;pointer-events:none}
+.nxt{color:#fff;display:none}
+.nxt.c0{background:#1565C0;border-color:#1565C0}
+.nxt.c1{background:#6A1B9A;border-color:#6A1B9A}
+.nxt.c2{background:#00838F;border-color:#00838F}
+.nxt.c3{background:#2E7D32;border-color:#2E7D32}
+/* score */
+.score-wrap{background:#fff;border:1px solid #e8e8e8;border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.score-top{text-align:center;padding:2rem 1.5rem 1.25rem}
+.score-pct{font-size:54px;font-weight:700;line-height:1}
+.score-unit{font-size:24px}
+.score-sub{font-size:15px;color:#444;margin-top:5px;font-weight:500}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 1.5rem 1.5rem}
+.sbox{background:#f7f7f5;border-radius:9px;padding:.85rem;text-align:center}
+.sn{font-size:24px;font-weight:600}.sl{font-size:12px;color:#888;margin-top:3px}
+.score-acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:0 1.5rem 1.25rem}
+/* wrong */
+.review-sec{border-top:1px solid #f0f0f0;padding:1.25rem 1.5rem 1.5rem}
+.review-sec h3{font-size:14px;font-weight:700;color:#C05E00;margin-bottom:10px}
+.wrong-list{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem;max-height:220px;overflow-y:auto}
+.wi{display:flex;gap:10px;align-items:baseline;padding:7px 10px;background:#FFF5EB;border-radius:7px;font-size:14px}
+.wi-en{font-weight:600;color:#7C3A00;min-width:120px;flex-shrink:0}
+.wi-ko{color:#9A5500;font-size:13px}
+.review-btns{display:flex;gap:8px}
+.rbtn{flex:1;padding:11px;font-size:13px;font-weight:600;border:none;border-radius:9px;cursor:pointer;transition:background .15s}
+.rbtn-flash{background:#EDE6FF;color:#5B3FC8}
+.rbtn-flash:hover{background:#D9CCFF}
+.rbtn-retry{background:#FFF0E0;color:#C05E00;border:1px solid #FFCC80}
+.rbtn-retry:hover{background:#FFE0B2}
+/* flashcard */
+.flash-wrap{background:#fff;border:1px solid #e8e8e8;border-radius:14px;padding:1.5rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.flash-count{font-size:13px;color:#888;text-align:center;margin-bottom:10px}
+.flash-card{background:#F8F9FF;border:1.5px dashed #B0BEC5;border-radius:12px;padding:2rem 1.5rem;text-align:center;cursor:pointer;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:1rem;transition:all .15s}
+.flash-card:hover{border-color:#555;background:#F0F2F5}
+.flash-word{font-size:23px;font-weight:700;color:#111;margin-bottom:4px;line-height:1.4}
+.flash-meaning{font-size:17px;color:#1A237E;margin-top:10px;display:none;line-height:1.5}
+.flash-tap{font-size:12px;color:#ccc;margin-top:12px}
+.flash-nav{display:flex;gap:8px}
+.flash-nav button{flex:1;padding:11px;font-size:14px;border:1px solid #ddd;border-radius:9px;cursor:pointer;background:#fff;transition:all .15s;font-weight:500}
+.fknew{background:#E8F5E9;border-color:#2E7D32;color:#1B5E20}
+.fknew:hover{background:#C8E6C9}
+.fskip{background:#f5f5f5;color:#555}
+.fskip:hover{background:#eee}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>📚 3차 단어 퀴즈</h1>
+    <p>Advanced English Reading II — 7강 · 8강 · 30문제 × 5연습</p>
+  </div>
+
+  <div class="msec">
+    <div class="mlabel">📂 세트 선택</div>
+    <div class="mrow" id="mainTabs"></div>
+  </div>
+
+  <div class="psec">
+    <div class="mlabel">🔁 연습 문제</div>
+    <div class="prow" id="pracTabs"></div>
+  </div>
+
+  <div class="wl-toggle" id="wlToggle" onclick="toggleWL()">
+    <span id="wlArr">▶</span> <span id="wlLabel">단어 목록 보기</span>
+  </div>
+  <div class="wordlist" id="wordlist">
+    <div class="wl-title" id="wlTitle"></div>
+    <div class="word-grid" id="wordGrid"></div>
+  </div>
+
+  <div id="quizArea"></div>
+</div>
+
+<script>
+const W7A=[
+  {w:'standard',m:'일반적인'},
+  {w:'alternative',m:'대체품, 대안'},
+  {w:'internal',m:'내적인'},
+  {w:'ordinary',m:'보통의'},
+  {w:'vital',m:'매우 중요한'},
+  {w:'consumption',m:'소비'},
+  {w:'demand',m:'요구하다'},
+  {w:'management',m:'경영'},
+  {w:'target',m:'목표로 삼다'},
+  {w:'sustainability',m:'지속 가능성'},
+  {w:'plain',m:'완전히, 분명히'},
+  {w:'repetition',m:'반복'},
+  {w:'permanently',m:'영구적으로'},
+  {w:'caption',m:'캡션, 사진·삽화 등에 붙인 설명'},
+  {w:'rereading',m:'다시 읽기'},
+  {w:'intentionality',m:'의도성'},
+  {w:'embed',m:'깊이 새기다, 삽입하다'},
+  {w:'durable',m:'오래 지속되는, 영속적인'},
+  {w:'correspondingly',m:'그에 상응하여'},
+  {w:'standard',m:'표준, 기준; 표준의'},
+  {w:'conform to',m:'~을 준수하다'},
+  {w:'outperform',m:'더 뛰어나다, 능가하다'},
+  {w:'bullying',m:'괴롭힘'},
+  {w:'rationale',m:'설명, 이유, 근거'},
+  {w:'predominantly',m:'대부분, 대개'},
+  {w:'reinforce',m:'강화하다'},
+  {w:'curriculum',m:'교육 과정'},
+  {w:'informal',m:'비공식적인'},
+  {w:'constitute',m:'구성하다'},
+  {w:'integrated',m:'통합적인, 통합된'},
+  {w:'reasonably',m:'상당히, 꽤'},
+  {w:'resourced',m:'자원을 갖춘'},
+  {w:'address',m:'문제 등을 다루다, 해결하다'},
+  {w:'disrupt',m:'무너뜨리다, 붕괴시키다'},
+  {w:'supremacy',m:'우월주의'},
+  {w:'embed',m:'내포하다'},
+  {w:'taken-for-granted',m:'당연시되는'},
+  {w:'assumption',m:'전제, 가정'},
+  {w:'contribute to',m:'~의 한 원인이 되다'},
+  {w:'frame',m:'표현하다'},
+  {w:'marine',m:'해양의'},
+  {w:'implication',m:'영향'},
+  {w:'geographic',m:'지리적인'},
+  {w:'domain',m:'영역'},
+  {w:'counteract',m:'대응하다'},
+  {w:'planetary',m:'지구의, 이 세상의'},
+  {w:'boundary',m:'한계선'},
+  {w:'tailored',m:'맞춤형의'},
+  {w:'accessible',m:'접근할 수 있는'},
+  {w:'fundamental',m:'필수적인'},
+  {w:'capture',m:'포착하다'},
+  {w:'insufficient',m:'불충분한'},
+  {w:'pervasive',m:'만연한'},
+  {w:'exploit',m:'활용하다'},
+  {w:'ultimately',m:'궁극적으로'},
+  {w:'shed light on',m:'~을 설명하다, 해명하다'},
+  {w:'investigate',m:'조사하다'},
+  {w:'timely',m:'시의적절한'},
+  {w:'comprehensive',m:'종합적인'},
+  {w:'disrupt',m:'교란하다, 방해하다'},
+  {w:'publisher',m:'출판사'},
+  {w:'material',m:'자료'},
+  {w:'piracy',m:'불법 복제, 저작권 침해'},
+  {w:'unauthorized',m:'무단의, 허가받지 않은'},
+  {w:'copyright',m:'저작권을 주다; 저작권'},
+  {w:'phenomenon',m:'현상'},
+  {w:'date back to',m:'시기가 …까지 거슬러 올라가다'},
+  {w:'reign',m:'통치, 치세'},
+  {w:'format',m:'형식'},
+  {w:'appropriate',m:'도용하다'},
+  {w:'a fraction of',m:'~의 아주 작은 부분, 일부'},
+  {w:'retail',m:'소매의'},
+  {w:'shoplift',m:'상점에서 훔치다'},
+  {w:'think nothing of',m:'~을 아무렇지도 않게 생각하다'},
+  {w:'pirate',m:'불법 복제하다'},
+  {w:'legally',m:'합법적으로'},
+  {w:'safeguard',m:'보호 장치'},
+  {w:'estimate',m:'추정하다'},
+  {w:'battle with',m:'~과 싸우다'},
+  {w:'neutral',m:'중립적인'},
+  {w:'modify',m:'수정하다'},
+  {w:'official',m:'공적인, 공식적인'},
+  {w:'pass for',m:'~로 통하다'},
+  {w:'unquestionable',m:'의문의 여지가 없는'},
+  {w:'negative',m:'사진의 원판, 네거티브'},
+  {w:'comprised of',m:'~로 구성된'},
+  {w:'computerized',m:'전산화된'},
+  {w:'interpret',m:'해석하다'},
+  {w:'darkroom',m:'암실'},
+  {w:'develop',m:'필름을 현상하다'},
+  {w:'tonal',m:'색조의, 음영의'},
+  {w:'removed',m:'동떨어진'},
+  {w:'transfer',m:'전환'},
+  {w:'established',m:'자리 잡힌, 확립된'},
+  {w:'hypothetical',m:'가상의'},
+  {w:'local',m:'지역의'},
+  {w:'track and field event',m:'육상 경기'},
+  {w:'blood drive',m:'헌혈 행사'},
+  {w:'sponsor',m:'주최하다, 후원하다'},
+];
+const W7B=[
+  {w:'elect',m:'결정하다, 선출하다'},
+  {w:'preview',m:'미리 소개하다'},
+  {w:'ignore',m:'무시하다'},
+  {w:'source',m:'출처'},
+  {w:'information',m:'정보'},
+  {w:'editor',m:'편집자'},
+  {w:'occur',m:'발생하다'},
+  {w:'newsroom',m:'뉴스 편집실'},
+  {w:'gatekeeping',m:'게이트 키핑, 정보의 선택적 유통 행위'},
+  {w:'flourish',m:'번성하다'},
+  {w:'accomplish',m:'성취하다'},
+  {w:'specialize',m:'전문화하다'},
+  {w:'designation',m:'특정 목적을 위한 직무, 명칭'},
+  {w:'conduct',m:'수행하다'},
+  {w:'distinct',m:'고유한, 뚜렷이 다른'},
+  {w:'practitioner',m:'특정 전문직의 종사자, 실무자'},
+  {w:'institution',m:'제도'},
+  {w:'of sorts',m:'일종의, 보잘것없는'},
+  {w:'differentiated',m:'분화된, 차별화된'},
+  {w:'sophisticated',m:'정교한, 복잡한'},
+  {w:'communal',m:'공동체적인'},
+  {w:'formalize',m:'형식을 갖추게 하다, 공식화하다'},
+  {w:'association',m:'조합, 협회, 단체'},
+  {w:'college',m:'조합, 대학, 전문학교'},
+  {w:'similar',m:'유사한'},
+  {w:'take hold',m:'자리 잡다, 뿌리내리다'},
+  {w:'object to',m:'~에 반대하다'},
+  {w:'define',m:'정의하다'},
+  {w:'limit',m:'제한하다'},
+  {w:'energetic',m:'효과적인, 강력한'},
+  {w:'instinct',m:'본능'},
+  {w:'observe',m:'관찰하다'},
+  {w:'motor',m:'운동의'},
+  {w:'rebel',m:'반발하다, 반항하다'},
+  {w:'offensive',m:'공세, 반격'},
+  {w:'insist',m:'주장하다'},
+  {w:'properly',m:'실은, 정확하게는'},
+  {w:'potential',m:'잠재적인; 잠재력'},
+  {w:'benefit',m:'이점; 이익을 얻다'},
+  {w:'urban',m:'도시의'},
+  {w:'measure',m:'측정하다'},
+  {w:'impact',m:'영향'},
+  {w:'access',m:'접근성'},
+  {w:'nutrition',m:'영양'},
+  {w:'income',m:'소득'},
+  {w:'biodiversity',m:'생물 다양성'},
+  {w:'maximize',m:'극대화하다'},
+  {w:'inform',m:'영향을 미치다'},
+  {w:'programmatic',m:'프로그램에 따른'},
+  {w:'approach',m:'접근법'},
+  {w:'contribute',m:'기여하다'},
+  {w:'in the midst of',m:'~ 속에서, 한가운데에'},
+  {w:'colonial',m:'식민지의'},
+  {w:'regime',m:'체제'},
+  {w:'inequality',m:'불평등'},
+  {w:'depress',m:'하락시키다, 억제하다'},
+  {w:'payment',m:'급여'},
+  {w:'profitable',m:'수익성 있는'},
+  {w:'colonizer',m:'본토에서 식민지로 이주한 사람'},
+  {w:'commerce',m:'상업'},
+  {w:'finance',m:'금융'},
+  {w:'enslaved',m:'노예가 된, 노예화된'},
+  {w:'compensate for',m:'~에 대해 보상하다'},
+  {w:'property',m:'재산'},
+  {w:'diplomatic',m:'외교적인'},
+  {w:'independent',m:'독립한'},
+  {w:'elite',m:'엘리트, 지배층'},
+  {w:'debt',m:'빚, 부채'},
+  {w:'shape',m:'형성하다'},
+  {w:'continuing',m:'지속적인'},
+  {w:'benefit from',m:'~로부터 이익을 얻다'},
+  {w:'day off',m:'쉬는 날'},
+  {w:'figure out',m:'~을 알아내다'},
+  {w:'morning person',m:'아침형 인간'},
+  {w:'night person',m:'저녁형 인간'},
+  {w:'acquaintance',m:'지인'},
+  {w:'remarkable',m:'대단한, 놀라운'},
+  {w:'pillow',m:'베개'},
+  {w:'nod off',m:'깜빡 잠들다'},
+  {w:'enormous',m:'매우 큰, 엄청난'},
+  {w:'constraint',m:'제약'},
+  {w:'leave ~ to one\'s own devices',m:'~을 자기 뜻대로 하게 놔두다'},
+  {w:'night-owl',m:'야행성의, 야행성인 사람'},
+  {w:'status',m:'성향'},
+];
+const W8A=[
+  {w:'atmospheric',m:'대기의'},
+  {w:'overall',m:'전체적인'},
+  {w:'absorb',m:'흡수하다'},
+  {w:'potentially',m:'잠재적으로'},
+  {w:'hinder',m:'방해하다'},
+  {w:'marine',m:'해양의'},
+  {w:'erode',m:'저하시키다, 침식하다'},
+  {w:'coral reef',m:'산호초'},
+  {w:'biodiversity',m:'생물 다양성'},
+  {w:'severe',m:'심각한'},
+  {w:'adverse',m:'부정적인'},
+  {w:'function',m:'기능'},
+  {w:'reservoir',m:'저장소'},
+  {w:'sophisticated',m:'정교한'},
+  {w:'enormous',m:'엄청난'},
+  {w:'generate',m:'생성하다'},
+  {w:'neural network',m:'신경망'},
+  {w:'massive',m:'막대한, 거대한'},
+  {w:'fundamentally',m:'근본적으로'},
+  {w:'string',m:'연속'},
+  {w:'weight',m:'가중치, 입력 중요도의 조절 값'},
+  {w:'decode',m:'해석하다'},
+  {w:'contain',m:'포함하다'},
+  {w:'adjust',m:'조정되다'},
+  {w:'slightly',m:'조금, 약간'},
+  {w:'be involved in',m:'~에 포함되어 있다'},
+  {w:'mark',m:'나타내다, 표시하다'},
+  {w:'efficient',m:'효율적인'},
+  {w:'response',m:'응답'},
+  {w:'be linked to',m:'~과 관련되다'},
+  {w:'separate',m:'분리하다'},
+  {w:'double-edged sword',m:'양날의 검'},
+  {w:'adapt to',m:'~에 적응하다'},
+  {w:'hyper-productivity',m:'초생산성'},
+  {w:'conversation',m:'대화'},
+  {w:'arrival',m:'등장, 도착'},
+  {w:'urgent',m:'긴급한'},
+  {w:'division',m:'구분'},
+  {w:'era',m:'시대'},
+  {w:'immediate',m:'즉각적인'},
+  {w:'entirely',m:'전적으로, 전부'},
+  {w:'habitat',m:'서식지'},
+  {w:'pursue',m:'추구하다, 계속하다'},
+  {w:'refer to ~ as',m:'~을 …이라고 부르다, 일컫다'},
+  {w:'diminish',m:'줄어들다'},
+  {w:'glacier',m:'빙하'},
+  {w:'heightened',m:'증가한'},
+  {w:'resource',m:'자원'},
+  {w:'outweigh',m:'~보다 더 크다, ~보다 중요하다'},
+  {w:'overcrowding',m:'과밀, 혼잡'},
+  {w:'sustainable',m:'지속 가능한'},
+  {w:'implement',m:'실행하다'},
+  {w:'sustainability best practice',m:'지속 가능성 최우수 실천 사례'},
+  {w:'site-specific',m:'특정 장소에 맞춘, 장소 맞춤형의'},
+  {w:'call upon',m:'~을 요구하다'},
+  {w:'destination',m:'관광지, 목적지'},
+  {w:'engage with',m:'~과 관계를 맺다'},
+  {w:'utilize',m:'활용하다'},
+  {w:'significant',m:'중요한, 상당한'},
+  {w:'dump',m:'버리다'},
+  {w:'landfill',m:'쓰레기 매립지'},
+  {w:'ecosystem',m:'생태계'},
+  {w:'disposal',m:'처리, 처분'},
+  {w:'recycle',m:'재활용하다'},
+  {w:'livestock feed',m:'가축 사료'},
+  {w:'extract',m:'추출하다'},
+  {w:'lessen',m:'줄이다'},
+  {w:'degradation',m:'악화, 타락'},
+  {w:'recover',m:'획득하다, 회수하다, 회복하다'},
+  {w:'value-added',m:'부가 가치의'},
+  {w:'requirement',m:'요건'},
+  {w:'financial',m:'재정적인'},
+  {w:'incentive',m:'유인'},
+  {w:'in light of',m:'~을 고려하여, 감안하여'},
+  {w:'promising',m:'유망한'},
+  {w:'procedural',m:'절차적인'},
+  {w:'expertise',m:'전문성, 전문 지식'},
+  {w:'aptly put',m:'적절히 표현하자면'},
+  {w:'attribute',m:'속성, 자질'},
+  {w:'critical',m:'대단히 중요한'},
+  {w:'thrive',m:'성공하다, 번성하다'},
+  {w:'workforce',m:'노동 시장'},
+  {w:'acquire',m:'습득하다'},
+  {w:'accounting',m:'회계학'},
+  {w:'degree',m:'학위'},
+  {w:'inevitable',m:'피할 수 없는'},
+  {w:'existence',m:'생활, 삶, 존재'},
+  {w:'engage in',m:'~에 참여하다'},
+  {w:'transaction',m:'거래'},
+  {w:'adapt ~ to',m:'~을 …에 맞추어 조정하다'},
+  {w:'predatory',m:'약탈하는'},
+  {w:'prehistoric',m:'선사 시대의'},
+  {w:'tribute',m:'공물'},
+  {w:'barter economy',m:'물물 교환 경제'},
+  {w:'hunter-gatherer community',m:'수렵 채집 공동체'},
+  {w:'strive',m:'노력하다, 애쓰다'},
+  {w:'self-sufficiency',m:'자급자족'},
+  {w:'long-distance',m:'장거리의'},
+  {w:'impulse',m:'충동'},
+  {w:'fuel',m:'~의 원동력이 되다, 연료를 공급하다'},
+];
+const W8B=[
+  {w:'immense',m:'거대한'},
+  {w:'civilisation',m:'문명'},
+  {w:'maritime',m:'해상의, 바다의, 해양의'},
+  {w:'the Mediterranean',m:'지중해'},
+  {w:'establish',m:'확립하다'},
+  {w:'foundation',m:'토대, 기초'},
+  {w:'commercial',m:'상업의'},
+  {w:'employee',m:'직원'},
+  {w:'founder',m:'창업자, 설립자'},
+  {w:'employer',m:'고용주'},
+  {w:'growth rate',m:'성장률'},
+  {w:'attractiveness',m:'매력'},
+  {w:'opportunity cost',m:'기회비용'},
+  {w:'likelihood',m:'가능성'},
+  {w:'performance',m:'성과, 실적'},
+  {w:'distribution',m:'분포'},
+  {w:'potential',m:'잠재력'},
+  {w:'wage',m:'임금'},
+  {w:'self-employed',m:'자영업을 하는'},
+  {w:'make the leap',m:'과감한 결정을 내리다'},
+  {w:'evidence',m:'증거'},
+  {w:'internal',m:'체내의, 내부의'},
+  {w:'immerse',m:'액체 속에 잠그다'},
+  {w:'estimate',m:'추정하다'},
+  {w:'interval',m:'시간의 간격'},
+  {w:'perceive',m:'인식하다, 인지하다'},
+  {w:'overestimate',m:'과대평가하다'},
+  {w:'operate',m:'활동하다, 작동하다'},
+  {w:'temporal',m:'시간의'},
+  {w:'norm',m:'기준, 규범'},
+  {w:'metronome',m:'메트로놈, 박절기'},
+  {w:'subjective',m:'주관적인'},
+  {w:'theorist',m:'이론가'},
+  {w:'aging',m:'노화'},
+  {w:'generation',m:'세대'},
+  {w:'relevant',m:'관련 있는'},
+  {w:'sociologist',m:'사회학자'},
+  {w:'publish',m:'출판하다'},
+  {w:'era',m:'시대'},
+  {w:'be characterized by',m:'~의 특징이 있다'},
+  {w:'common',m:'공통된, 공동의'},
+  {w:'distinguish',m:'구별하다'},
+  {w:'keenly',m:'강하게, 날카롭게'},
+  {w:'automatically',m:'자동적으로'},
+  {w:'psychological',m:'심리적인'},
+  {w:'identity',m:'정체성'},
+  {w:'consciousness',m:'의식'},
+  {w:'suggest',m:'시사하다, 넌지시 말하다'},
+  {w:'merely',m:'단순히, 단지'},
+  {w:'expose',m:'접하게 하다, 노출시키다'},
+  {w:'belong to',m:'~에 속하다'},
+  {w:'promising',m:'유망한'},
+  {w:'currently',m:'현재'},
+  {w:'at least',m:'적어도'},
+  {w:'identify',m:'식별하다, 분간하다'},
+  {w:'characteristic',m:'특유의'},
+  {w:'signature',m:'표시, 기호'},
+  {w:'arise from',m:'~에서 발생하다'},
+  {w:'tissue',m:'조직'},
+  {w:'indicate',m:'보여 주다, 나타내다'},
+  {w:'be correlated with',m:'~과 상관관계가 있다'},
+  {w:'insight',m:'통찰력'},
+  {w:'come to grips with',m:'~을 이해하게 되다'},
+  {w:'organic chemistry',m:'유기 화학'},
+  {w:'organic compound',m:'유기 화합물'},
+  {w:'construct',m:'구성하다'},
+  {w:'principle',m:'원리'},
+  {w:'molecular',m:'분자의'},
+  {w:'bonding',m:'결합'},
+  {w:'reactivity',m:'반응성'},
+  {w:'longevity',m:'수명, 장수'},
+  {w:'accordingly',m:'따라서, 그러므로'},
+  {w:'profession',m:'직업'},
+  {w:'be comprised of',m:'~로 구성되어 있다'},
+  {w:'odor',m:'냄새'},
+  {w:'pesticide',m:'살충제'},
+];
+
+const ALL=[...W7A,...W7B,...W8A,...W8B];
+
+const MSETS=[
+  {id:0,label:'7강 세트1',sub:'1–100번 · 99단어',words:W7A,c:'c0',pf:'pf0'},
+  {id:1,label:'7강 세트2',sub:'101–184번 · 84단어',words:W7B,c:'c1',pf:'pf1'},
+  {id:2,label:'8강 세트1',sub:'1–100번 · 100단어',words:W8A,c:'c2',pf:'pf2'},
+  {id:3,label:'8강 세트2',sub:'101–177번 · 76단어',words:W8B,c:'c3',pf:'pf3'},
+];
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+
+function genPracSets(words){
+  // 5 practice sets, each 30 words
+  // Ensure good coverage: first 3 sets partition the words, then random
+  const sh=shuffle([...words]);
+  const size=30;
+  const sets=[];
+  for(let i=0;i<5;i++){
+    // rotate through with some overlap
+    const start=(i*25)%words.length;
+    const pool=[];
+    for(let j=0;j<size;j++) pool.push(sh[(start+j)%words.length]);
+    sets.push(pool);
+  }
+  return sets;
+}
+
+function makeOpts(correct,n=4){
+  return shuffle([correct,...shuffle(ALL.filter(x=>x.w!==correct.w)).slice(0,n-1)]);
+}
+
+function buildQs(pool){
+  return pool.map((word,i)=>{
+    const isPhrase=word.w.includes('~')||word.w.length>22;
+    const t=isPhrase?(i%2):(i%3);
+    if(t===0)return{type:'A',word,opts:makeOpts(word,4),answer:word.m};
+    if(t===1){const o=shuffle(ALL.filter(x=>x.w!==word.w))[0];return{type:'B',word,opts:shuffle([word,o]),answer:word.w,prompt:word.m};}
+    return{type:'C',word,answer:word.w};
+  });
+}
+
+function markWrong(word){if(!wrongWords.find(x=>x.w===word.w))wrongWords.push(word);}
+function esc(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let aMain=0, aPrac=0;
+let pracSets=[];
+let cq=0,ans=[],qs=[],isDone=false;
+let wrongWords=[],flashPool=[],flashIdx=0,flashRevealed=false,flashMode=false;
+let mode='quiz';
+
+function selectMain(idx){
+  aMain=idx; aPrac=0;
+  pracSets=genPracSets(MSETS[idx].words);
+  cq=0;ans=[];wrongWords=[];qs=buildQs(pracSets[0]);isDone=false;flashMode=false;mode='quiz';
+  updateWordList();
+  render();
+}
+
+function selectPrac(idx){
+  aPrac=idx;
+  cq=0;ans=[];wrongWords=[];qs=buildQs(pracSets[idx]);isDone=false;flashMode=false;mode='quiz';
+  render();
+}
+
+// ── WORD LIST ─────────────────────────────────────────────────────────────────
+function updateWordList(){
+  const ms=MSETS[aMain];
+  document.getElementById('wlLabel').textContent=`단어 목록 보기 (${ms.words.length}개)`;
+  document.getElementById('wlTitle').textContent=ms.label+' · '+ms.sub;
+  document.getElementById('wordGrid').innerHTML=
+    ms.words.map(w=>`<div class="word-row"><span class="wen">${w.w}</span><span class="wko">${w.m}</span></div>`).join('');
+}
+function toggleWL(){
+  const el=document.getElementById('wordlist'),ar=document.getElementById('wlArr');
+  el.classList.toggle('show');ar.textContent=el.classList.contains('show')?'▼':'▶';
+}
+
+// ── RENDER TABS ───────────────────────────────────────────────────────────────
+function renderTabs(){
+  // main tabs
+  const mel=document.getElementById('mainTabs');mel.innerHTML='';
+  MSETS.forEach((ms,i)=>{
+    const b=document.createElement('button');
+    b.className=`mtab s${i}`+(aMain===i&&mode==='quiz'?' on':'');
+    b.innerHTML=`${ms.label}<small>${ms.sub}</small>`;
+    b.onclick=()=>selectMain(i);
+    mel.appendChild(b);
+  });
+  // practice tabs
+  const pel=document.getElementById('pracTabs');pel.innerHTML='';
+  const c=MSETS[aMain].c;
+  for(let i=0;i<5;i++){
+    const b=document.createElement('button');
+    b.className=`ptab ${c}`+(aPrac===i&&mode==='quiz'?' on':'');
+    b.textContent=`연습${i+1}`;
+    const pi=i;
+    b.onclick=()=>selectPrac(pi);
+    pel.appendChild(b);
+  }
+}
+
+// ── MAIN RENDER ───────────────────────────────────────────────────────────────
+function render(){
+  renderTabs();
+  if(flashMode){renderFlash();return;}
+  if(cq>=qs.length){renderScore();return;}
+  renderQ();
+}
+
+// ── SCORE ─────────────────────────────────────────────────────────────────────
+function renderScore(){
+  const total=qs.length,ok=ans.filter(Boolean).length;
+  const pct=Math.round(ok/total*100);
+  const color=pct>=80?'#1D9E75':pct>=60?'#E8821A':'#C62828';
+  const label=mode==='wrong'?'오답 재도전':`${MSETS[aMain].label} 연습${aPrac+1}`;
+  let wrongSec='';
+  if(!wrongWords.length){
+    wrongSec=`<div class="review-sec" style="text-align:center;padding:1.5rem">
+      <div style="font-size:36px;margin-bottom:8px">🎉</div>
+      <p style="font-size:15px;font-weight:600;color:#2E7D32">모두 정답! 완벽해요!</p>
+    </div>`;
+  } else {
+    wrongSec=`<div class="review-sec">
+      <h3>❌ 틀린 단어 ${wrongWords.length}개</h3>
+      <div class="wrong-list">${wrongWords.map(w=>`<div class="wi"><span class="wi-en">${w.w}</span><span class="wi-ko">${w.m}</span></div>`).join('')}</div>
+      <div class="review-btns">
+        <button class="rbtn rbtn-flash" onclick="startFlash()">🃏 플래시카드 복습</button>
+        <button class="rbtn rbtn-retry" onclick="retryWrong()">📝 틀린 것만 다시 풀기</button>
+      </div>
+    </div>`;
+  }
+  const ms=MSETS[aMain];
+  const nextPracBtn=mode==='quiz'&&aPrac<4
+    ?`<button class="nbtn" style="background:${ms.id===0?'#1565C0':ms.id===1?'#6A1B9A':ms.id===2?'#00838F':'#2E7D32'};color:#fff;border:none" onclick="selectPrac(${aPrac+1})">연습${aPrac+2} →</button>`:'';
+  document.getElementById('quizArea').innerHTML=`
+  <div class="score-wrap">
+    <div class="score-top">
+      <p style="font-size:13px;color:#888;margin-bottom:6px">${label} 완료</p>
+      <div class="score-pct" style="color:${color}">${pct}<span class="score-unit">%</span></div>
+      <p class="score-sub">${ok} / ${total} 정답</p>
+    </div>
+    <div class="score-grid">
+      <div class="sbox"><div class="sn" style="color:#2E7D32">${ok}</div><div class="sl">정답</div></div>
+      <div class="sbox"><div class="sn" style="color:#C62828">${total-ok}</div><div class="sl">오답</div></div>
+      <div class="sbox"><div class="sn">${total}</div><div class="sl">전체</div></div>
+    </div>
+    <div class="score-acts">
+      <button class="nbtn" onclick="selectPrac(aPrac)">🔄 다시 풀기</button>
+      ${nextPracBtn}
+    </div>
+    ${wrongSec}
+  </div>`;
+}
+
+function retryWrong(){
+  if(!wrongWords.length)return;
+  mode='wrong';cq=0;ans=[];
+  qs=buildQs(shuffle([...wrongWords]));
+  isDone=false;flashMode=false;render();
+}
+
+// ── FLASHCARD ─────────────────────────────────────────────────────────────────
+function startFlash(){
+  flashPool=shuffle([...wrongWords]);flashIdx=0;flashRevealed=false;flashMode=true;render();
+}
+function renderFlash(){
+  if(!flashPool.length||flashIdx>=flashPool.length){
+    flashMode=false;
+    document.getElementById('quizArea').innerHTML=`
+    <div class="flash-wrap" style="text-align:center;padding:2.5rem 1.5rem">
+      <div style="font-size:36px;margin-bottom:10px">✅</div>
+      <p style="font-size:16px;font-weight:600;color:#2E7D32;margin-bottom:4px">플래시카드 완료!</p>
+      <p style="font-size:13px;color:#888;margin-bottom:1.5rem">틀린 단어를 모두 확인했어요.</p>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="nbtn" onclick="flashPool=shuffle([...wrongWords]);flashIdx=0;flashRevealed=false;flashMode=true;render()">🔄 다시 보기</button>
+        <button class="nbtn" style="background:#E8821A;color:#fff;border-color:#E8821A" onclick="retryWrong()">📝 퀴즈로 풀기</button>
+      </div>
+    </div>`;
+    renderTabs();return;
+  }
+  const word=flashPool[flashIdx];
+  document.getElementById('quizArea').innerHTML=`
+  <div class="flash-wrap">
+    <div class="flash-count">플래시카드 ${flashIdx+1} / ${flashPool.length} · 남은 단어 ${flashPool.length}개</div>
+    <div class="flash-card" onclick="revealFlash()">
+      <p style="font-size:10px;font-weight:700;color:#B0BEC5;letter-spacing:.08em;margin-bottom:8px">ENGLISH</p>
+      <div class="flash-word">${word.w}</div>
+      <div class="flash-meaning" id="fm">${word.m}</div>
+      <p class="flash-tap" id="ft">탭해서 뜻 확인 👆</p>
+    </div>
+    <div class="flash-nav">
+      <button class="fskip" onclick="flashIdx++;flashRevealed=false;render()">다음 →</button>
+      <button class="fknew" onclick="flashPool.splice(flashIdx,1);if(flashIdx>=flashPool.length)flashIdx=Math.max(0,flashPool.length-1);flashRevealed=false;if(!flashPool.length){flashMode=false;}render()">알았어요 ✓</button>
+    </div>
+    <p style="font-size:11px;color:#ccc;text-align:center;margin-top:8px">알았어요를 누르면 이 단어는 목록에서 제거돼요</p>
+  </div>`;
+  renderTabs();
+  if(flashRevealed){const fm=document.getElementById('fm'),ft=document.getElementById('ft');if(fm)fm.style.display='block';if(ft)ft.style.display='none';}
+}
+function revealFlash(){
+  flashRevealed=true;
+  const fm=document.getElementById('fm'),ft=document.getElementById('ft');
+  if(fm)fm.style.display='block';if(ft)ft.style.display='none';
+}
+
+// ── QUESTION ──────────────────────────────────────────────────────────────────
+function renderQ(){
+  const q=qs[cq],total=qs.length,pct=Math.round(cq/total*100);
+  const ms=MSETS[aMain];
+  const pf=mode==='wrong'?'pfo':ms.pf;
+  const c=ms.c;
+  const label=mode==='wrong'?'오답 재도전':`${ms.label} · 연습${aPrac+1}`;
+  let h=`<div class="prog-wrap">
+    <div class="prog-meta"><span>${label} — 문제 ${cq+1} / ${total}</span><span>✅ ${ans.filter(Boolean).length}개 정답</span></div>
+    <div class="prog-track"><div class="prog-fill ${pf}" style="width:${pct}%"></div></div>
+  </div>
+  <div class="card">`;
+
+  if(q.type==='A'){
+    h+=`<span class="badge ba">영→한 선택</span>
+    <p class="qword">${q.word.w}</p><p class="qsub">뜻을 고르세요</p>
+    <div class="opts" id="opts">`;
+    q.opts.forEach((o,i)=>{h+=`<button class="opt" id="opt${i}" onclick="ansA(${i},'${esc(o.m)}','${esc(q.answer)}',${q.opts.length})">${o.m}</button>`;});
+    h+=`</div>`;
+  } else if(q.type==='B'){
+    h+=`<span class="badge bb">한→영 선택 (2지선다)</span>
+    <p class="qword">${q.prompt}</p><p class="qsub">알맞은 영단어 또는 표현을 고르세요</p>
+    <div class="opts" id="opts">`;
+    q.opts.forEach((o,i)=>{h+=`<button class="opt" id="opt${i}" onclick="ansB(${i},'${esc(o.w)}','${esc(q.answer)}',${q.opts.length})">${o.w}</button>`;});
+    h+=`</div>`;
+  } else {
+    h+=`<span class="badge bc">영단어 직접 입력</span>
+    <p class="qword">${q.word.m}</p><p class="qsub">해당하는 영단어 또는 표현을 입력하세요</p>
+    <div class="fill-row">
+      <input type="text" class="fill-inp" id="fillI" placeholder="입력..." onkeydown="if(event.key==='Enter')ansC('${esc(q.answer)}')">
+      <button class="sub-btn" onclick="ansC('${esc(q.answer)}')">확인</button>
+    </div>
+    <div class="fb" id="fb"></div>
+    <p class="hint">대소문자 구분 없음</p>`;
+  }
+  h+=`</div>
+  <div class="nav">
+    <button class="nbtn" id="skipBtn" onclick="skipQ()">건너뛰기</button>
+    <button class="nbtn nxt ${c}" id="nextBtn" onclick="nextQ()">다음 문제 →</button>
+  </div>`;
+  document.getElementById('quizArea').innerHTML=h;
+  isDone=false;
+  if(q.type==='C') setTimeout(()=>{const el=document.getElementById('fillI');if(el)el.focus();},50);
+}
+
+function ansA(idx,chosen,correct,n){
+  if(isDone)return;isDone=true;
+  const ok=chosen===correct;ans.push(ok);if(!ok)markWrong(qs[cq].word);
+  for(let i=0;i<n;i++){const b=document.getElementById('opt'+i);if(!b)continue;b.classList.add('dis');if(b.textContent===correct)b.classList.add('show');if(i===idx&&!ok)b.classList.add('no');if(i===idx&&ok)b.classList.add('ok');}
+  document.getElementById('nextBtn').style.display='inline-block';document.getElementById('skipBtn').disabled=true;
+}
+function ansB(idx,chosen,correct,n){
+  if(isDone)return;isDone=true;
+  const ok=chosen===correct;ans.push(ok);if(!ok)markWrong(qs[cq].word);
+  for(let i=0;i<n;i++){const b=document.getElementById('opt'+i);if(!b)continue;b.classList.add('dis');if(b.textContent===correct)b.classList.add('show');if(i===idx&&!ok)b.classList.add('no');if(i===idx&&ok)b.classList.add('ok');}
+  document.getElementById('nextBtn').style.display='inline-block';document.getElementById('skipBtn').disabled=true;
+}
+function ansC(correct){
+  if(isDone)return;
+  const inp=document.getElementById('fillI');if(!inp)return;
+  const val=inp.value.trim().toLowerCase().replace(/\s+/g,' ');
+  const ok=val===correct.toLowerCase().replace(/\s+/g,' ');
+  isDone=true;ans.push(ok);if(!ok)markWrong(qs[cq].word);
+  inp.classList.add(ok?'ok':'no');inp.disabled=true;
+  const fb=document.getElementById('fb');
+  if(fb){fb.innerHTML=ok?`<span class="ok">✓ 정답입니다!</span>`:`<span class="no">✗ 정답: <strong>${correct}</strong></span>`;fb.className='fb'+(ok?' ok':' no');}
+  document.getElementById('nextBtn').style.display='inline-block';document.getElementById('skipBtn').disabled=true;
+}
+function skipQ(){markWrong(qs[cq].word);ans.push(false);nextQ();}
+function nextQ(){cq++;isDone=false;render();}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+selectMain(0);
+</script>
+</body>
+</html>
