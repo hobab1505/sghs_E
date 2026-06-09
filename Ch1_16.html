@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1(16) 수능 대비 완성 | 비평적 읽기와 쓰기 B · SGHS</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f2ec;--paper:#fefcf8;--ink:#1c1812;--ink2:#4a3f30;--ink3:#7a6e60;
+  --accent:#7c3d12;--accent2:#b05a1e;
+  --blue:#1a4b8c;--blue-light:#2563b0;--blue-bg:rgba(26,75,140,.07);
+  --green:#1a6b3a;--green-bg:rgba(26,107,58,.09);
+  --orange:#c05010;--orange-bg:rgba(192,80,16,.09);
+  --red:#b01a1a;--red-bg:rgba(176,26,26,.08);
+  --purple:#6b21a8;--purple-bg:rgba(107,33,168,.07);
+  --gold:#92600a;--gold-bg:rgba(146,96,10,.09);
+  --border:#ddd5c5;--border2:#ece5d8;--shadow:rgba(80,50,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+.site-header{background:var(--ink);color:#fefcf8;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.hdr-inner{max-width:1100px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.hdr-title{font-family:'Crimson Pro',serif;font-size:1.1rem;font-weight:600;letter-spacing:.04em;}
+.hdr-sub{font-size:.64rem;opacity:.5;margin-top:2px;}
+.hdr-nav{display:flex;gap:5px;flex-wrap:wrap;}
+.nb{background:transparent;border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:5px 13px;border-radius:4px;font-size:.71rem;cursor:pointer;transition:all .18s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;}
+.nb:hover,.nb.on{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 18px 80px;}
+.sec{display:none;animation:fin .28s ease;}
+.sec.on{display:block;}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* HOME */
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:13px;margin-top:20px;}
+.toc-card{background:var(--paper);border:1.5px solid var(--border);border-radius:8px;padding:18px 22px;cursor:pointer;transition:all .2s;color:inherit;display:block;}
+.toc-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 4px 18px var(--shadow);}
+.toc-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:9px;letter-spacing:.08em;}
+.toc-en{font-family:'Crimson Pro',serif;font-size:1.02rem;font-weight:600;margin-bottom:3px;line-height:1.4;}
+.toc-ko{font-size:.78rem;color:var(--ink3);}
+/* strategy banner */
+.strategy-box{background:linear-gradient(135deg,#1c1812,#3d2c1a);color:#fefcf8;border-radius:10px;padding:22px 26px;margin-bottom:8px;}
+.strategy-ttl{font-size:.66rem;font-weight:700;letter-spacing:.2em;color:#f0c060;text-transform:uppercase;margin-bottom:12px;}
+.strategy-item{font-size:.85rem;line-height:1.75;opacity:.9;margin-bottom:7px;padding-left:14px;border-left:3px solid #f0c060;}
+/* Pass header */
+.p-header{background:var(--ink);color:#fefcf8;padding:20px 26px;border-radius:8px 8px 0 0;}
+.p-code{font-family:'JetBrains Mono',monospace;font-size:.6rem;opacity:.5;margin-bottom:4px;}
+.p-title{font-family:'Crimson Pro',serif;font-size:1.3rem;font-weight:600;line-height:1.4;}
+.p-title-ko{font-size:.79rem;opacity:.6;margin-top:3px;font-style:italic;}
+.p-type-badge{display:inline-block;margin-top:9px;background:var(--accent2);color:#fff;font-size:.62rem;font-weight:700;padding:2px 11px;border-radius:20px;letter-spacing:.1em;}
+/* Cards */
+.card{background:var(--paper);border:1px solid var(--border);border-top:none;padding:22px 26px;}
+.card:last-child{border-radius:0 0 8px 8px;}
+.card+.card{border-top:1px solid var(--border);}
+.card-lbl{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+/* 단락 구조 독해 */
+.struct-para{border:1.5px solid var(--border);border-radius:10px;margin-bottom:18px;overflow:hidden;}
+.struct-tag{padding:8px 18px;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:8px;}
+.struct-tag.intro{background:var(--blue-bg);color:var(--blue);border-bottom:1.5px solid rgba(26,75,140,.18);}
+.struct-tag.dev{background:var(--green-bg);color:var(--green);border-bottom:1.5px solid rgba(26,107,58,.18);}
+.struct-tag.concl{background:var(--orange-bg);color:var(--orange);border-bottom:1.5px solid rgba(192,80,16,.18);}
+.struct-body{padding:16px 20px;}
+.struct-en{font-family:'Crimson Pro',serif;font-size:1.04rem;line-height:1.95;color:var(--ink);margin-bottom:12px;}
+.struct-sum{background:var(--bg);border-radius:7px;padding:12px 16px;margin-top:4px;}
+.struct-sum-lbl{font-size:.62rem;font-weight:700;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:5px;}
+.struct-sum-en{font-size:.86rem;color:var(--ink);font-style:italic;line-height:1.65;margin-bottom:6px;}
+.struct-sum-ko{font-size:.8rem;color:var(--ink2);line-height:1.65;border-top:1px dashed var(--border);padding-top:6px;}
+/* vocab */
+.voca-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:6px;}
+.voca-item{background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:8px 12px;font-size:.82rem;}
+.voca-item.hot{border-color:rgba(146,96,10,.4);background:var(--gold-bg);}
+.voca-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.92rem;}
+.voca-mean{color:var(--ink2);margin-left:4px;}
+.voca-syn{font-size:.75rem;color:var(--ink3);margin-top:2px;}
+.hot-mark{display:inline-block;font-size:.58rem;background:var(--gold);color:#fff;padding:1px 6px;border-radius:10px;font-weight:700;margin-left:4px;vertical-align:middle;}
+/* q blocks */
+.q-block{background:#fdfaf6;border:1.5px solid var(--border);border-radius:8px;padding:18px 22px;margin-bottom:12px;}
+.q-type{font-size:.65rem;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;text-transform:uppercase;}
+.q-stem{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.6;margin-bottom:12px;}
+.choices{display:flex;flex-direction:column;gap:6px;}
+.choice{font-size:.87rem;line-height:1.55;padding:7px 11px;border-radius:5px;color:var(--ink2);}
+.cn{display:inline-block;font-weight:700;color:var(--ink);margin-right:4px;}
+.correct-choice{background:var(--orange-bg);border:1px solid rgba(192,80,16,.25);color:var(--ink);}
+.correct-choice .cn{color:var(--orange);}
+.wrong-choice{background:var(--red-bg);border:1px solid rgba(176,26,26,.2);}
+/* answer */
+.ans-box{margin-top:12px;padding:16px 20px;background:var(--orange-bg);border:1px solid rgba(192,80,16,.22);border-radius:8px;}
+.ans-box+.ans-box{margin-top:9px;}
+.ans-lbl{font-size:.62rem;font-weight:700;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:7px;}
+.ans-num{font-size:1.02rem;font-weight:700;color:var(--orange);margin-bottom:7px;}
+.ans-exp{font-size:.83rem;color:var(--ink2);line-height:1.72;}
+.ans-exp strong{color:var(--ink);}
+.ans{color:var(--orange);font-weight:700;text-decoration:underline;text-decoration-color:var(--orange);}
+.wrong-word{color:var(--red);font-weight:700;text-decoration:underline;text-decoration-color:var(--red);}
+.right-word{color:var(--orange);font-weight:700;}
+.ul-word{font-weight:700;text-decoration:underline;text-decoration-color:var(--ink);}
+/* tooltips */
+.vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
+.vw .tt{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(3px);background:var(--ink);color:#fefcf8;padding:4px 9px;border-radius:5px;font-size:.71rem;white-space:nowrap;z-index:99;opacity:0;visibility:hidden;transition:all .18s;pointer-events:none;font-family:'Noto Sans KR',sans-serif;font-weight:400;}
+.vw .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
+.vw:hover .tt{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.gr{color:var(--green);font-weight:600;background:var(--green-bg);padding:0 2px;border-radius:2px;}
+/* syntax */
+.passage-box{background:var(--paper);border:2px solid var(--border);border-radius:8px;padding:22px 26px;margin-bottom:18px;position:relative;}
+.passage-box::before{content:'구문 분석';position:absolute;top:-10px;left:14px;background:var(--paper);padding:0 7px;font-size:.6rem;letter-spacing:.15em;color:var(--accent);font-weight:700;}
+.sp{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--border2);}
+.sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.sp-en{font-family:'Crimson Pro',serif;font-size:1.03rem;line-height:1.9;color:var(--ink);}
+.sp-ko{font-size:.8rem;color:var(--ink2);line-height:1.65;padding-left:11px;border-left:3px solid var(--border);margin-top:4px;}
+.sp-note{display:inline-block;font-size:.72rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 5px;border-radius:3px;margin-left:5px;}
+/* grammar note */
+.gr-note{background:#f0f9f2;border:1px solid rgba(26,107,58,.22);border-radius:6px;padding:12px 16px;margin-top:9px;}
+.gr-note-ttl{font-weight:700;color:var(--green);font-size:.76rem;letter-spacing:.06em;margin-bottom:7px;}
+.gr-note p{font-size:.81rem;color:var(--ink2);line-height:1.65;margin-bottom:5px;}
+.gr-note p:last-child{margin-bottom:0;}
+.gr-note strong{color:var(--ink);}
+/* suneung box */
+.sn-box{background:var(--gold-bg);border:1px solid rgba(146,96,10,.3);border-radius:8px;padding:16px 20px;margin-top:14px;}
+.sn-ttl{font-size:.66rem;font-weight:700;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+.sn-item{font-size:.83rem;color:var(--ink2);line-height:1.72;margin-bottom:8px;padding-left:12px;border-left:3px solid var(--gold);}
+.sn-item strong{color:var(--ink);}
+.sn-item:last-child{margin-bottom:0;}
+/* paraphrase/framework table */
+.fw-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.fw-table th{background:var(--ink);color:#fefcf8;padding:8px 13px;text-align:left;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.fw-table td{padding:12px 13px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.65;}
+.fw-table tr:last-child td{border-bottom:none;}
+.fw-table tr:nth-child(even) td{background:var(--bg);}
+.step-badge{display:inline-block;background:var(--accent2);color:#fff;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-bottom:3px;}
+.my-summary{border:2px dashed var(--border);border-radius:8px;padding:14px 18px;margin-top:12px;background:var(--paper);}
+.my-summary-lbl{font-size:.64rem;font-weight:700;letter-spacing:.14em;color:var(--ink3);text-transform:uppercase;margin-bottom:8px;}
+.my-summary-line{border-bottom:1.5px solid var(--border);height:32px;margin-bottom:6px;}
+.topic-box{background:var(--bg);border-left:4px solid var(--accent2);padding:13px 18px;border-radius:0 7px 7px 0;margin-bottom:12px;font-size:.88rem;line-height:1.65;}
+.topic-ko{margin-top:7px;font-size:.78rem;color:var(--ink3);border-top:1px dashed var(--border);padding-top:7px;font-style:italic;}
+/* voca table */
+.voca-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.voca-table th{background:var(--bg);padding:7px 13px;text-align:left;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--border);font-weight:700;}
+.voca-table td{padding:7px 13px;border-bottom:1px solid var(--border2);vertical-align:top;line-height:1.5;}
+.voca-table tr:last-child td{border-bottom:none;}
+.voca-table tr:hover td{background:var(--bg);}
+.vw-word{font-family:'Crimson Pro',serif;font-weight:600;color:var(--blue);font-size:.93rem;}
+.vw-mean{color:var(--ink2);}
+.vw-extra{font-size:.76rem;color:var(--ink3);margin-top:2px;}
+@media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card,.passage-box,.struct-body{padding:14px 16px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-title">Chapter 1(16) · 수능 대비 완성</div>
+      <div class="hdr-sub">SGHS 영어 비평적 읽기와 쓰기 B — 단락구조 독해 + 수능 변형 대비</div>
+    </div>
+    <nav class="hdr-nav">
+      <button class="nb on" onclick="show('home')">학습 전략</button>
+      <button class="nb" onclick="show('pG')">G · 시계와 반복</button>
+      <button class="nb" onclick="show('p2')">2 · 대리 기능</button>
+      <button class="nb" onclick="show('voca')">단어장</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<div class="sec on" id="home">
+  <h1 style="font-family:'Crimson Pro',serif;font-size:1.65rem;margin-bottom:6px;">Chapter 1(16) — 수능 최고점 대비 학습 자료</h1>
+  <p style="font-size:.86rem;color:var(--ink3);margin-bottom:20px;">EBS 수능 연계 · 단락 구조 독해 → 구문 → 수능 변형 출제 대비까지 한 번에 | SGHS 영어 비평적 읽기와 쓰기 B</p>
+
+  <div class="strategy-box">
+    <div class="strategy-ttl">🎯 수능 연계 학습 전략 — 이 자료의 사용법</div>
+    <div class="strategy-item"><strong>1단계 · 단락 구조 독해:</strong> 각 단락을 Introduction → Development → Conclusion 역할로 파악하며 읽기. 수능 연계 변형은 지문 구조를 그대로 두고 문제 유형만 바꾸므로, <u>구조 파악이 모든 유형의 기초</u>.</div>
+    <div class="strategy-item"><strong>2단계 · 단락 요약 암기:</strong> 각 단락의 영어 요약문(Summary)을 패러프레이징 표현으로 익히기. 수능 정답 선택지는 본문 표현을 <u>다른 단어로 바꿔</u> 출제됨 (repetitive → iterative / flexible → adaptive 등).</div>
+    <div class="strategy-item"><strong>3단계 · 구문 해석 정독:</strong> 어법 문제뿐 아니라 빈칸·순서·삽입 모든 유형의 근거는 정확한 구문 이해에서 나옴.</div>
+    <div class="strategy-item"><strong>4단계 · 수능 변형 출제 예상:</strong> 각 지문 끝의 변형 포인트로 빈칸·요약문·어법 변형 출제에 대비. EBS 연계는 같은 지문이 <u>다른 유형으로</u> 출제됨.</div>
+    <div class="strategy-item"><strong>5단계 · MY SUMMARY 작성:</strong> 각 지문을 자기 문장으로 한 줄 요약 → 요약문 완성 유형 + 서술형 대비.</div>
+  </div>
+
+  <div class="toc-grid">
+    <div class="toc-card" onclick="show('pG')">
+      <div class="toc-badge">G · 주제 · Chapter 1(16)-G</div>
+      <div class="toc-en">Clocks as Repetitive Processes</div>
+      <div class="toc-ko">시계의 본질 — 모든 시간 측정은 반복적 과정에 기반한다 / 주제·빈칸·요약문 변형 1순위</div>
+    </div>
+    <div class="toc-card" onclick="show('p2')">
+      <div class="toc-badge">2 · 주제 · Chapter 1(16)-2</div>
+      <div class="toc-en">Vicarious Functioning in Biological Systems</div>
+      <div class="toc-ko">뇌와 생물의 대리 기능 — 대안적 경로로 같은 기능 달성 / 정답 ③</div>
+    </div>
+    <div class="toc-card" onclick="show('voca')">
+      <div class="toc-badge">단어장</div>
+      <div class="toc-en">G &amp; 2 Focus Vocabulary + 수능 동의어 네트워크</div>
+      <div class="toc-ko">수능 빈출 동의어·반의어 연결망으로 정리</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ G ═══ -->
+<div class="sec" id="pG">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(16) · 지문 G · SGHS 영어 비평적 읽기와 쓰기 B</div>
+    <div class="p-title">Clocks as Repetitive Processes</div>
+    <div class="p-title-ko">시계의 본질 — 모든 시간 측정은 반복적·반복적(iterative) 과정에 기반한다</div>
+    <span class="p-type-badge">주제 / 빈칸추론 / 요약문 완성 변형 대비</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary — 수능 동의어 네트워크</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">repetitive</span><span class="voca-mean"> 반복적인</span><span class="hot-mark">핵심어</span><div class="voca-syn">iterative(반복적인·순환적인), recurrent, cyclical / repetition 반복 / repeat 반복하다</div></div>
+      <div class="voca-item hot"><span class="voca-word">iteration</span><span class="voca-mean"> 반복, 순환</span><span class="hot-mark">수능빈출</span><div class="voca-syn">iterate 반복하다 / iterative process 반복적 과정 — repetitive와 동의어로 핵심 패러프레이징</div></div>
+      <div class="voca-item"><span class="voca-word">embody</span><span class="voca-mean"> 구현하다, 체현하다</span><div class="voca-syn">embody A in B: B에 A를 구현하다 / embodiment 체현, 화신</div></div>
+      <div class="voca-item hot"><span class="voca-word">indefinite</span><span class="voca-mean"> 무한한, 불확실한</span><span class="hot-mark">구별주의</span><div class="voca-syn">indefinitely 무한정 / indefinite period 무한한 기간 / ↔ definite(확실한), finite(유한한)</div></div>
+      <div class="voca-item"><span class="voca-word">drip</span><span class="voca-mean"> (물이) 똑똑 떨어지다</span><div class="voca-syn">drip at a steady pace 일정한 속도로 떨어지다 — 물시계(water clock)의 작동 원리</div></div>
+      <div class="voca-item hot"><span class="voca-word">vibrate</span><span class="voca-mean"> 진동하다</span><span class="hot-mark">핵심어</span><div class="voca-syn">vibration 진동 / vibrate regularly 규칙적으로 진동하다 — 석영시계의 원리</div></div>
+      <div class="voca-item"><span class="voca-word">radiocarbon dating</span><span class="voca-mean"> 방사성 탄소 연대 측정</span><div class="voca-syn">carbon-14(C-14) decay(붕괴)를 활용 / long-scale clock의 예시</div></div>
+      <div class="voca-item hot"><span class="voca-word">decay</span><span class="voca-mean"> 붕괴, 소멸</span><span class="hot-mark">수능빈출</span><div class="voca-syn">decay of atoms 원자의 붕괴 / deteriorate, decompose / moral decay 도덕적 부패</div></div>
+      <div class="voca-item"><span class="voca-word">continuous</span><span class="voca-mean"> 연속적인</span><div class="voca-syn">continual(반복적 재발생) vs continuous(끊임없이 이어짐) 구별! / ↔ discrete(불연속적인)</div></div>
+      <div class="voca-item"><span class="voca-word">masked</span><span class="voca-mean"> 가려진, 위장된</span><div class="voca-syn">mask 가리다·감추다 / at first masked = initially hidden: 처음에는 숨겨져 있는</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 단락 구조 독해 — Introduction → Development → Conclusion</div>
+
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 INTRODUCTION — 주제 제시 (sent. 1–2)</div>
+      <div class="struct-body">
+        <div class="struct-en">We usually think of a clock as a physical thing, like an alarm clock or a wristwatch. But a clock is really a <span class="vw">process<span class="tt">과정</span></span> <span class="vw">embodied<span class="tt">구현된</span></span> in a machine, and the nature of that process is <span class="vw">repetitive<span class="tt">반복적인</span></span>.</div>
+        <div class="struct-sum">
+          <div class="struct-sum-lbl">Summary — 패러프레이징 표현 주목</div>
+          <div class="struct-sum-en">Challenging the common notion of a clock as a physical object, the author <u>redefines</u> it as a <u>repetitive process</u> embedded in a machine.</div>
+          <div class="struct-sum-ko">→ But으로 시작하는 반전 구조가 글의 핵심 주장. "physical thing → process"가 글 전체의 논리적 전환점. 수능 주제·제목 선택지에서 "redefine / reconceptualize clock"이 핵심 표현.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT 1 — 근거 및 예시 (sent. 3–5)</div>
+      <div class="struct-body">
+        <div class="struct-en">A clock can be almost any process [that repeats itself over and over again for an <span class="vw">indefinite<span class="tt">무한한</span></span> period]. Water clocks <span class="vw">drip<span class="tt">떨어지다</span></span> at a steady pace; quartz crystals <span class="vw">vibrate<span class="tt">진동하다</span></span> regularly. Indeed, it is almost impossible to think of a clock [that does not depend on a <span class="vw">repetitive<span class="tt">반복적인</span></span> cycle of events].</div>
+        <div class="struct-sum">
+          <div class="struct-sum-lbl">Summary</div>
+          <div class="struct-sum-en">Virtually all clocks — from water clocks to quartz crystal oscillators — function by means of <u>recurring cycles</u>, making it nearly impossible to conceive of a timekeeper that is not iterative.</div>
+          <div class="struct-sum-ko">→ 물시계(dripping) + 석영 시계(vibrating)의 두 예시로 반복 원리를 구체화. "it is (almost) impossible to think of ~" 구문 — 수능 강조 구문의 전형. water clock = 물이 일정하게 떨어지는 反復, quartz = 전자기적 진동의 反復.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT 2 — 예외처럼 보이는 사례 반박 (sent. 6–9)</div>
+      <div class="struct-body">
+        <div class="struct-en">The only example [that comes to mind readily] is a candle marked in hours. But here too there is <span class="vw">iteration<span class="tt">반복</span></span> — the repeated burning of molecules of wax — so this too is an <span class="vw">iterative<span class="tt">반복적인</span></span> process, although at first <span class="vw">masked<span class="tt">가려진</span></span>.</div>
+        <div class="struct-sum">
+          <div class="struct-sum-lbl">Summary</div>
+          <div class="struct-sum-en">Even the candle clock — the most apparent exception — is revealed to be iterative: the repeated combustion of wax molecules constitutes an iterative process, merely <u>concealed at first glance</u>.</div>
+          <div class="struct-sum-ko">→ 양보 역접 구조: "The only exception … But here too ~". 이 구조가 수능 삽입·순서 변형의 기준점. "although at first masked" = "겉으로 보이지 않을 뿐, 사실은 반복적"이라는 논리의 핵심.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-para">
+      <div class="struct-tag concl">📙 CONCLUSION — 더 큰 사례로 확장 (sent. 10–11)</div>
+      <div class="struct-body">
+        <div class="struct-en">The use of <span class="vw">radiocarbon dating<span class="tt">방사성 탄소 연대 측정</span></span> is another, much longer scale clock [that also appears to be like this]. It seems to yield a smooth time scale but in fact does not: the <span class="vw">decay<span class="tt">붕괴</span></span> of atoms of carbon-14 is repetitive, although on a large scale it gives the appearance of being <span class="vw">continuous<span class="tt">연속적인</span></span>.</div>
+        <div class="struct-sum">
+          <div class="struct-sum-lbl">Summary</div>
+          <div class="struct-sum-en">Even radiocarbon dating — a seemingly <u>continuous</u> timescale — is in fact grounded in the <u>discrete, repetitive decay of C-14 atoms</u>, confirming the universality of iterative processes in timekeeping.</div>
+          <div class="struct-sum-ko">→ 개발 2와 동일한 "겉으로는 연속적/예외적 → 하지만 실제론 반복적" 구조를 더 큰 스케일(과학적·지질학적 시간)로 확장. "appears to be ~ but in fact does not"이 글 전체의 반복 논증 패턴의 완결.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">We usually think of a clock as a physical thing, <span class="gr">like an alarm clock or a wristwatch</span>.</div>
+        <div class="sp-ko">우리는 보통 시계를 물리적인 것, 예컨대 자명종이나 손목시계 같은 것으로 생각한다. <span class="sp-note">★ think of A as B: A를 B로 여기다 / like: 전치사("~처럼, 예를 들면")</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">But a clock is really a process <span class="gr">embodied in a machine</span>, and the nature of that process is repetitive.</div>
+        <div class="sp-ko">그러나 시계는 사실 기계 속에 구현된 과정이며, 그 과정의 본질은 반복적이다. <span class="sp-note">★ embodied in ~: 수동 분사구(= which is embodied in) / and: 두 개의 서술어(is / is)를 병치</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">A clock can be almost any process <span class="gr">[that repeats itself over and over again for an indefinite period]</span>.</div>
+        <div class="sp-ko">시계는 무한한 기간 동안 반복적으로 스스로를 되풀이하는 거의 모든 과정일 수 있다. <span class="sp-note">★ that repeats itself: 관계절(process 수식) / over and over again: 반복 부사구 / for an indefinite period: 전치사구(기간)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Water clocks drip <span class="gr">at a steady pace</span>; quartz crystals vibrate regularly.</div>
+        <div class="sp-ko">물시계는 일정한 속도로 똑똑 떨어지고, 석영 결정체는 규칙적으로 진동한다. <span class="sp-note">★ 세미콜론(;): 두 독립절을 같은 논리로 연결 — 둘 다 반복의 예시</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Indeed, <span class="gr">it is almost impossible to think of</span> a clock <span class="gr">[that does not depend on a repetitive cycle of events]</span>.</div>
+        <div class="sp-ko">실제로, 사건의 반복적인 순환에 의존하지 않는 시계를 생각하는 것은 거의 불가능하다. <span class="sp-note">★ it is impossible to V: 가주어-진주어(to부정사) / think of A that ~: A를 ~로 생각하다 / depend on: ~에 의존하다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The only example [that comes to mind readily] is a candle <span class="gr">marked in hours</span>. But here too there is iteration — the repeated burning of molecules of wax — so this too is an iterative process, <span class="gr">although at first masked</span>.</div>
+        <div class="sp-ko">쉽게 떠오르는 유일한 예는 시간 단위로 표시된 양초다. 그러나 여기에도 반복이 있는데 — 왁스 분자의 반복적인 연소 — 그래서 이것 또한 반복적 과정이다, 비록 처음에는 가려져 있지만. <span class="sp-note">★ marked in hours: 수동 분사구(candle 수식) / here too: "여기에도(또한)" — 양보의 확장 / although at first masked: 분사구문(= although it is at first masked)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">The use of radiocarbon dating is another, much longer scale clock <span class="gr">[that also appears to be like this]</span>.</div>
+        <div class="sp-ko">방사성 탄소 연대 측정의 사용은 또 다른, 훨씬 더 긴 스케일의 시계로, 이것도 이와 같아 보인다. <span class="sp-note">★ that also appears to be: 관계절 / appear to V: ~처럼 보이다 / much longer scale: much + 비교급(강조)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It seems to yield a smooth time scale but in fact does not: the decay of atoms of carbon-14 is repetitive, <span class="gr">although on a large scale it gives the appearance of being continuous</span>.</div>
+        <div class="sp-ko">그것은 부드러운 시간 척도를 산출하는 것처럼 보이지만 실제로는 그렇지 않다. 탄소-14 원자의 붕괴는 반복적이지만, 큰 규모에서는 연속적인 것처럼 보인다. <span class="sp-note">★ seem to V but in fact does not: "~처럼 보이나 사실은 그렇지 않다" — 글의 핵심 반박 패턴 / give the appearance of V-ing: ~인 것처럼 보이게 하다 / although on a large scale: 분사구문(= although it is on a large scale)</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 수능 어법·독해 핵심 포인트</div>
+      <p><strong>① think of A as B vs. think of A that ~</strong> — "think of a clock as a physical thing" (A를 B로 여기다) vs. "think of a clock that repeats itself" (A를 떠올리다): 전치사 as와 관계절 that의 차이를 구별할 것. 수능 어법 선택지의 단골.</p>
+      <p><strong>② 가주어 it + impossible to V</strong> — "it is almost impossible to think of a clock": to부정사가 진주어. "almost"의 위치 — impossible 앞에 위치하여 정도 수식.</p>
+      <p><strong>③ although + 분사구문 (생략 패턴)</strong> — "although at first masked" = "although it is at first masked": 주어 + be동사 생략 분사구문. 수능 어법 '접속사 + 분사구문' 패턴.</p>
+      <p><strong>④ give the appearance of V-ing</strong> — "appear to be"의 명사구 패턴. "give the impression of / take on the appearance of"와 함께 패러프레이징 대비.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 Topic &amp; Logical Framework + MY SUMMARY</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> All methods of timekeeping, even those that appear continuous, ultimately depend on repetitive cycles or iterative events.
+      <div class="topic-ko">연속적으로 보이는 것까지 포함해 모든 시간 측정 방법은 결국 반복적인 순환이나 반복적 사건에 의존한다.</div>
+    </div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>핵심 표현 (패러프레이징)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>A clock is not a physical object but a repetitive process.</td><td>physical thing → process embodied in a machine</td></tr>
+        <tr><td><span class="step-badge">② Development 1</span></td><td>Water clocks and quartz crystals illustrate the universality of repetitive cycles.</td><td>drip / vibrate = recurring cycle of events</td></tr>
+        <tr><td><span class="step-badge">③ Development 2</span></td><td>Even the candle clock, an apparent exception, is iterative (burning of wax molecules).</td><td>although at first masked = concealed at first glance</td></tr>
+        <tr><td><span class="step-badge">④ Conclusion</span></td><td>Radiocarbon dating also relies on repetitive C-14 decay, despite appearing continuous.</td><td>appears to be continuous = gives the appearance of being continuous ≠ actually is</td></tr>
+      </tbody>
+    </table>
+    <div class="my-summary">
+      <div class="my-summary-lbl">✍️ MY SUMMARY — 나만의 한 문장 요약 (요약문 완성 유형 대비)</div>
+      <div class="my-summary-line"></div>
+      <div class="my-summary-line"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 수능 변형 출제 예상 포인트</div>
+    <div class="sn-box">
+      <div class="sn-ttl">🎯 이 지문이 수능에 나온다면 — 변형 유형별 대비</div>
+      <div class="sn-item"><strong>주제 유형 변형 1순위:</strong> "All timekeeping methods, however they appear, are ultimately based on <u>repetitive / iterative processes</u>." — 정답 선택지 표현: "the iterative nature underlying all forms of time measurement" / 오답 패턴: 물리적 시계의 종류(types of clocks), 방사성 탄소 연대 측정의 정확성(accuracy of radiocarbon dating) 등.</div>
+      <div class="sn-item"><strong>빈칸추론 변형 1순위:</strong> "But a clock is really a process _____ in a machine, and the nature of that process is repetitive." → 빈칸 = embodied / "it is almost impossible to think of a clock that does not depend on _____ of events." → 빈칸 = a repetitive cycle. 근거: 글 전체가 '반복' 개념의 예시화 구조.</div>
+      <div class="sn-item"><strong>요약문 완성 변형:</strong> "Although clocks are often perceived as (A) <u>physical</u> objects, they are in reality systems driven by (B) <u>iterative</u> processes, as demonstrated by water clocks, candle clocks, and radiocarbon dating." — A: physical/material/tangible, B: iterative/repetitive/cyclical</div>
+      <div class="sn-item"><strong>순서 배열 변형:</strong> 지문 구조상 "예외처럼 보이는 양초 → 사실은 반복 → 방사성 탄소 연대도 마찬가지" 흐름이 단락 순서 유형으로 자주 출제됨. "But here too"와 "another … also" 연결사가 핵심 단서.</div>
+      <div class="sn-item"><strong>어법 변형 1순위:</strong> "it is almost impossible to think of a clock <u>that</u> does not depend on ~" — 관계대명사 that vs. 접속사 that 구별 / "a candle <u>marked</u> in hours" — 수동 분사 vs. 능동 분사 구별.</div>
+    </div>
+  </div>
+</div><!-- end pG -->
+
+
+<!-- ═══ 2 ═══ -->
+<div class="sec" id="p2">
+  <div class="p-header">
+    <div class="p-code">Chapter 1(16) · 지문 2 · SGHS 영어 비평적 읽기와 쓰기 B</div>
+    <div class="p-title">Vicarious Functioning in Biological Systems</div>
+    <div class="p-title-ko">대리 기능 — 뇌와 생물 시스템은 대안적 경로로 같은 기능을 달성한다</div>
+    <span class="p-type-badge">주제 · 정답 ③ + 수능 변형 대비</span>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">01 Focus Vocabulary — 수능 동의어 네트워크</div>
+    <div class="voca-grid">
+      <div class="voca-item hot"><span class="voca-word">vicarious</span><span class="voca-mean"> 대리의, 간접적인</span><span class="hot-mark">핵심 키워드</span><div class="voca-syn">vicarious functioning 대리 기능 / vicarious experience 간접 경험 — "대리(代理)"의 뉘앙스: 원래 경로가 막혔을 때 다른 경로가 '대신' 작동</div></div>
+      <div class="voca-item hot"><span class="voca-word">perceptual system</span><span class="voca-mean"> 지각 체계</span><span class="hot-mark">수능빈출</span><div class="voca-syn">perception 지각 / perceptual 지각의 / perceive 인식하다 — 시각·청각·촉각 등을 통한 정보 처리 시스템</div></div>
+      <div class="voca-item"><span class="voca-word">illumination</span><span class="voca-mean"> (불)빛, 조명</span><div class="voca-syn">illuminate 밝히다·조명하다 / illumination conditions 조명 조건</div></div>
+      <div class="voca-item hot"><span class="voca-word">flexibility</span><span class="voca-mean"> 유연성</span><span class="hot-mark">수능빈출</span><div class="voca-syn">flexible 유연한 / adaptability(적응성), versatility(다재다능) / ↔ rigidity(경직성)</div></div>
+      <div class="voca-item"><span class="voca-word">cue</span><span class="voca-mean"> 단서, 신호</span><div class="voca-syn">rely on cues 단서에 의존하다 / contextual cue 맥락적 단서 / visual cue 시각적 단서</div></div>
+      <div class="voca-item hot"><span class="voca-word">navigate</span><span class="voca-mean"> 항법하다, 길을 찾다</span><span class="hot-mark">다의어</span><div class="voca-syn">navigation 항법 / rely on the stars to navigate 별자리로 길을 찾다 / navigate a website 웹사이트를 탐색하다</div></div>
+      <div class="voca-item"><span class="voca-word">landmark</span><span class="voca-mean"> 지형지물, 이정표</span><div class="voca-syn">rely on landmarks 지형지물에 의존하다 / landmark decision 획기적 판결</div></div>
+      <div class="voca-item hot"><span class="voca-word">caricature</span><span class="voca-mean"> 캐리커처, 희화화</span><span class="hot-mark">예시 핵심</span><div class="voca-syn">recognize a face in caricatures 캐리커처에서 얼굴 알아보기 → 최소한의 특징만으로도 인식 가능</div></div>
+      <div class="voca-item"><span class="voca-word">external feature</span><span class="voca-mean"> 외적 특징</span><div class="voca-syn">↔ internal feature 내적 특징 / hair and head shape(외적) vs. eyes, nose, mouth(내적)</div></div>
+      <div class="voca-item"><span class="voca-word">magnetic sense</span><span class="voca-mean"> 자기감각</span><div class="voca-syn">지구 자기장을 감지하는 능력 — 철새의 항법 대안 경로 3번째</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">02 단락 구조 독해 — Introduction → Development → Examples/Conclusion</div>
+
+    <div class="struct-para">
+      <div class="struct-tag intro">📘 INTRODUCTION — 인간 지각 체계의 특성 (sent. 1–2)</div>
+      <div class="struct-body">
+        <div class="struct-en">The human <span class="vw">perceptual system<span class="tt">지각 체계</span></span> is designed to recognize objects under changing <span class="vw">illuminations<span class="tt">조명 조건</span></span>, situations, and contexts. It is extraordinarily adapted to a constantly changing world.</div>
+        <div class="struct-sum">
+          <div class="struct-sum-lbl">Summary</div>
+          <div class="struct-sum-en">The human perceptual system is <u>remarkably suited</u> to function under varying environmental conditions — a testament to its extraordinary <u>adaptability</u>.</div>
+          <div class="struct-sum-ko">→ "designed to + V" = "extraordinarily adapted to": 동의 표현 나란히 등장. "changing illuminations, situations, contexts" = 세 가지 변화 조건의 열거. 수능 선택지에서 "adaptable / flexible / resilient" 계열로 패러프레이징.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-para">
+      <div class="struct-tag dev">📗 DEVELOPMENT — 뇌의 유연한 경로 전환 (sent. 3–5)</div>
+      <div class="struct-body">
+        <div class="struct-en">To deal with this uncertainty, the brain uses not one, but multiple routes. If one is blocked, it takes another route. This immense <span class="vw">flexibility<span class="tt">유연성</span></span> of the brain to rely on changing <span class="vw">cues<span class="tt">단서</span></span>, according to whatever is available, is known as <span class="vw">vicarious<span class="tt">대리의</span></span> functioning.</div>
+        <div class="struct-sum">
+          <div class="struct-sum-lbl">Summary — 핵심 개념 정의</div>
+          <div class="struct-sum-en">The brain's <u>capacity to switch to alternative routes</u> when the primary one is obstructed — relying on whatever cue is available — is termed <u>vicarious functioning</u>.</div>
+          <div class="struct-sum-ko">→ 3문장 구조: 현상 제시 → 원리 설명 → 개념 명명(naming). "not one, but multiple routes"가 '대안 경로' 개념의 핵심. "blocked → takes another route" = 조건문으로 개념 설명. 수능 빈칸에서 "vicarious functioning"이 빈칸 1순위.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="struct-para">
+      <div class="struct-tag concl">📙 EXAMPLES/CONCLUSION — 생물 시스템의 사례 (sent. 6–12)</div>
+      <div class="struct-body">
+        <div class="struct-en">It can be found in most biological systems. For instance, migrating birds fly thousands of miles and may rely on the stars to <span class="vw">navigate<span class="tt">항법하다</span></span>. But if it's a cloudy day, they may instead rely on <span class="vw">landmarks<span class="tt">지형지물</span></span> or their magnetic sense. Similarly, the brain can recognize a face by the shape of the eyes, nose, and mouth. In extreme cases, only a few lines are sufficient, as when we recognize the face of a celebrity in <span class="vw">caricatures<span class="tt">캐리커처</span></span> made with just a few pencil strokes. Face recognition also functions even when parts of a face are covered and internal features such as eyes are hardly visible. In this case, the brain relies on external features such as hair and head shape.</div>
+        <div class="struct-sum">
+          <div class="struct-sum-lbl">Summary — 예시 구조 파악</div>
+          <div class="struct-sum-en">Vicarious functioning appears in both animal navigation and human face recognition: migrating birds switch between stars, landmarks, and magnetic sense; the brain identifies faces via eyes/nose/mouth, minimal lines in caricatures, or external features like hair when internal cues are unavailable.</div>
+          <div class="struct-sum-ko">→ 예시 2개 병렬: (1) 철새 항법 [stars → landmarks → magnetic sense] / (2) 얼굴 인식 [eyes+nose+mouth → 캐리커처 몇 선 → 외적 특징(머리·얼굴형)]. "Similarly" = 두 예시의 병렬을 표시하는 담화 표지.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">03 문항 &amp; 정답 해설</div>
+    <div class="q-block">
+      <div class="q-type">주제(What is the passage mainly about?)로 가장 적절한 것은?</div>
+      <div class="choices">
+        <div class="choice"><span class="cn">①</span> The evolutionary advantages of specialized perceptual mechanisms</div>
+        <div class="choice"><span class="cn">②</span> The role of environmental cues in shaping cognitive development</div>
+        <div class="correct-choice"><span class="cn">③</span> The capacity of biological systems to achieve the same function through alternative means ← 정답</div>
+        <div class="choice"><span class="cn">④</span> The importance of visual information in object and face recognition</div>
+        <div class="choice"><span class="cn">⑤</span> The similarities between animal navigation and human perception</div>
+      </div>
+    </div>
+    <div class="ans-box">
+      <div class="ans-lbl">정답 해설 — 선택지 분석 전략</div>
+      <div class="ans-num">③ The capacity of biological systems to achieve the same function through alternative means</div>
+      <div class="ans-exp">
+        <strong>주제 유형 풀이 공식:</strong> 핵심 개념 "vicarious functioning"의 정의를 선택지에서 찾는다 = "대안적 수단으로 같은 기능을 달성하는 능력".<br><br>
+        <strong>③ 정답 근거 매핑:</strong><br>
+        • "biological systems" ← "most biological systems" (지문 6번 문장)<br>
+        • "achieve the same function" ← 철새의 항법, 뇌의 얼굴 인식 모두 같은 최종 기능 달성<br>
+        • "through alternative means" ← "multiple routes / if one is blocked, it takes another route"<br><br>
+        <strong>오답 소거:</strong><br>
+        ① evolutionary advantages(진화적 이점) — 진화가 주제가 아니라, 기능적 유연성이 주제<br>
+        ② shaping cognitive development(인지 발달을 형성) — 발달(development) 언급 없음<br>
+        ④ importance of visual information — 시각뿐 아니라 자기감각·외형 특징 등 다양한 경로가 핵심<br>
+        ⑤ similarities between animal navigation and human perception — 유사성 비교가 아닌, 공통 원리(vicarious functioning) 설명이 목적
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">04 구문 해석 — 원문 전체</div>
+    <div class="passage-box">
+      <div class="sp">
+        <div class="sp-en">The human perceptual system is designed <span class="gr">to recognize objects</span> <span class="gr">under changing illuminations, situations, and contexts</span>.</div>
+        <div class="sp-ko">인간의 지각 체계는 변화하는 조명, 상황, 맥락 하에서 사물을 인식하도록 설계되어 있다. <span class="sp-note">★ be designed to V: "~하도록 설계되어 있다" / under changing ~: 전치사구(조건) — 세 명사의 열거</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It is extraordinarily adapted to a constantly changing world.</div>
+        <div class="sp-ko">그것은 끊임없이 변화하는 세계에 특별히 적응되어 있다. <span class="sp-note">★ be adapted to + 명사: ~에 적응되어 있다 (to는 전치사!) / extraordinarily: 특별히, 놀랍도록</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">To deal with this uncertainty, the brain uses not one, but multiple routes.</div>
+        <div class="sp-ko">이러한 불확실성에 대처하기 위해, 뇌는 하나가 아니라 여러 경로를 사용한다. <span class="sp-note">★ To deal with: 목적 부사구(= in order to deal with) / not one, but multiple: "not A but B" 강조 대조 — 수능 빈칸 단서로 자주 활용</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">If one is blocked, it takes another route.</div>
+        <div class="sp-ko">만약 하나가 막히면, 그것(뇌)은 다른 경로를 택한다. <span class="sp-note">★ If + S + V: 조건 부사절 / one = one route / it = the brain: 지시어 추론 — 수능 지칭 추론 유형 대비</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">This immense flexibility of the brain <span class="gr">[to rely on changing cues, according to whatever is available]</span>, is known as vicarious functioning.</div>
+        <div class="sp-ko">이용 가능한 것이 무엇이든 변화하는 단서에 의존하는 뇌의 이 엄청난 유연성은 대리 기능이라고 알려져 있다. <span class="sp-note">★ flexibility of the brain to rely on ~: "to rely on"은 flexibility 수식(형용사적 to부정사) / according to whatever is available: "이용 가능한 것은 무엇이든" — whatever = anything that / be known as: ~로 알려지다</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">It can be found in most biological systems.</div>
+        <div class="sp-ko">그것(대리 기능)은 대부분의 생물학적 시스템에서 발견될 수 있다. <span class="sp-note">★ It = vicarious functioning: 지시어 추론 / most: "대부분의"(= the majority of)</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">For instance, migrating birds fly thousands of miles and may rely on the stars <span class="gr">to navigate</span>. But if it's a cloudy day, they may instead rely on landmarks or their magnetic sense.</div>
+        <div class="sp-ko">예를 들어, 철새들은 수천 마일을 날아가며 항법을 위해 별에 의존할 수 있다. 그러나 흐린 날에는, 대신 지형지물이나 자기감각에 의존할 수 있다. <span class="sp-note">★ migrating birds: 현재분사(birds 수식 — 이동 중인 새) / to navigate: 목적의 부사구 / instead: 대안 경로 전환의 신호어</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Similarly, the brain can recognize a face <span class="gr">by the shape of the eyes, nose, and mouth</span>. In extreme cases, only a few lines are sufficient, as when we recognize the face of a celebrity in caricatures <span class="gr">made with just a few pencil strokes</span>.</div>
+        <div class="sp-ko">마찬가지로, 뇌는 눈, 코, 입의 모양으로 얼굴을 인식할 수 있다. 극단적인 경우, 단지 몇 개의 선만으로도 충분한데, 예컨대 우리가 불과 몇 번의 연필 획으로 만들어진 캐리커처에서 유명인의 얼굴을 알아볼 때처럼. <span class="sp-note">★ Similarly: 새로운 예시 도입 담화 표지 / by + 명사: 수단("~에 의해") / made with: 수동 분사구(caricatures 수식) / as when: "마치 ~할 때처럼"</span></div>
+      </div>
+      <div class="sp">
+        <div class="sp-en">Face recognition also functions <span class="gr">even when parts of a face are covered</span> and internal features such as eyes are hardly visible. In this case, the brain relies on external features such as hair and head shape.</div>
+        <div class="sp-ko">얼굴 인식은 얼굴의 일부가 가려지고 눈과 같은 내적 특징이 거의 보이지 않을 때에도 기능한다. 이 경우, 뇌는 머리카락과 두상 같은 외적 특징에 의존한다. <span class="sp-note">★ even when: "~할 때조차도" 양보 부사절 / hardly: 부정 부사("거의 ~않는") / internal vs. external: 핵심 대조 — 수능 빈칸 단서</span></div>
+      </div>
+    </div>
+    <div class="gr-note">
+      <div class="gr-note-ttl">🟢 수능 어법·독해 핵심 포인트</div>
+      <p><strong>① be adapted to + 명사 (to는 전치사)</strong> — "It is extraordinarily adapted to a constantly changing world": look forward to, be devoted to, be committed to와 동일 패턴. to 뒤에 동명사 또는 명사!</p>
+      <p><strong>② not A, but B 강조 대조</strong> — "not one, but multiple routes": B가 글쓴이의 핵심 주장. 수능 빈칸 문제에서 "not A, but ___(B)" 형태로 빈칸이 B에 위치하는 경우 매우 많음.</p>
+      <p><strong>③ 지시어 추론 — it (세 개)</strong> — "It is extraordinarily adapted"(= the human perceptual system) / "it takes another route"(= the brain) / "It can be found"(= vicarious functioning): 지칭 추론 유형 대비.</p>
+      <p><strong>④ even when + 수동태 절</strong> — "even when parts of a face are covered": even when이 양보의 강조 표현. "and internal features … are hardly visible"과 병렬. hardly = scarcely (부정 부사 — 수능 어법 빈출).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">05 Topic &amp; Logical Framework + MY SUMMARY</div>
+    <div class="topic-box">
+      <strong>Topic:</strong> The human perceptual system demonstrates vicarious functioning by flexibly using multiple routes and alternative cues for recognition.
+      <div class="topic-ko">인간의 지각 체계는 인식을 위해 여러 경로와 대안적 단서를 유연하게 사용함으로써 대리 기능을 보여준다.</div>
+    </div>
+    <table class="fw-table">
+      <thead><tr><th>Step</th><th>Logic</th><th>핵심 표현 (패러프레이징)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="step-badge">① Introduction</span></td><td>The human perceptual system is remarkably flexible in changing conditions.</td><td>designed to = extraordinarily adapted to</td></tr>
+        <tr><td><span class="step-badge">② Development</span></td><td>The brain uses multiple routes; if one is blocked, it uses another. This is vicarious functioning.</td><td>multiple routes = alternative means / blocked = obstructed</td></tr>
+        <tr><td><span class="step-badge">③ Example 1</span></td><td>Migrating birds: stars → landmarks → magnetic sense</td><td>rely on ~ instead = switch to an alternative cue</td></tr>
+        <tr><td><span class="step-badge">④ Example 2</span></td><td>Face recognition: internal features → few lines → external features</td><td>internal/external features = alternative cues for the same function</td></tr>
+      </tbody>
+    </table>
+    <div class="my-summary">
+      <div class="my-summary-lbl">✍️ MY SUMMARY — 나만의 한 문장 요약</div>
+      <div class="my-summary-line"></div>
+      <div class="my-summary-line"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-lbl">06 수능 변형 출제 예상 포인트</div>
+    <div class="sn-box">
+      <div class="sn-ttl">🎯 이 지문이 수능에 나온다면</div>
+      <div class="sn-item"><strong>빈칸추론 변형 1순위:</strong> "This immense flexibility of the brain to rely on changing cues … is known as <u>vicarious functioning</u>" — 빈칸 = "vicarious functioning" 자리. 근거: 앞의 "not one, but multiple routes" + "if one is blocked" 전체가 빈칸 단어의 정의.</div>
+      <div class="sn-item"><strong>빈칸추론 변형 2순위:</strong> "the brain uses not one, but <u>multiple routes</u>" — 빈칸 = multiple routes / alternative means. 근거: 철새(stars/landmarks/magnetic)와 얼굴인식(내부/최소/외부) 두 예시 모두 '여러 경로' 개념 지지.</div>
+      <div class="sn-item"><strong>요약문 완성 변형:</strong> "Biological systems, including the human brain, exhibit (A) <u>vicarious</u> functioning — the ability to use (B) <u>alternative</u> cues when the primary route is unavailable." — A: vicarious/flexible/adaptive, B: alternative/different/substitute</div>
+      <div class="sn-item"><strong>무관한 문장 삽입 변형:</strong> 예시 단락(철새 + 얼굴 인식)의 중간에 '전혀 다른 생물 종의 감각 기관 진화' 관련 문장을 무관 문장으로 삽입하는 유형. 기준: "Similarly"로 연결되는 두 예시의 논리적 흐름(같은 기능, 다른 경로) 유지 여부.</div>
+      <div class="sn-item"><strong>지칭 추론 변형:</strong> "it" 세 개의 지시 대상 — "It is extraordinarily adapted"(= perceptual system) / "it takes another route"(= the brain) / "It can be found"(= vicarious functioning) — 밑줄 지칭 추론 유형으로 출제 가능.</div>
+      <div class="sn-item"><strong>어법 변형 1순위:</strong> "be adapted to a <u>constantly changing</u> world" — to 뒤의 동명사(전치사 to) vs. to부정사 구별 / "migrating birds" — 현재분사(형용사) vs. 동명사 구별.</div>
+    </div>
+  </div>
+</div><!-- end p2 -->
+
+
+<!-- ═══ VOCA ═══ -->
+<div class="sec" id="voca">
+  <div style="background:var(--ink);color:#fefcf8;padding:20px 26px;border-radius:8px 8px 0 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;opacity:.5;margin-bottom:4px;">Chapter 1(16) · G &amp; 2 · Focus Vocabulary 통합 + 수능 동의어 네트워크</div>
+    <div style="font-family:'Crimson Pro',serif;font-size:1.28rem;font-weight:600;">단어장 — 수능 동의어·반의어 연결망</div>
+    <div style="font-size:.78rem;opacity:.58;margin-top:3px;">수능 선택지는 본문 표현의 동의어로 출제됩니다 — 네트워크로 암기하세요</div>
+  </div>
+  <div class="card" style="border-radius:0 0 8px 8px;">
+    <table class="voca-table">
+      <thead><tr><th>단어/표현</th><th>뜻</th><th>수능 동의어 네트워크 / 용례 / 어원</th></tr></thead>
+      <tbody>
+        <tr><td class="vw-word">repetitive</td><td class="vw-mean">반복적인</td><td class="vw-extra">iterative, recurrent, cyclical / repetition 반복 / repetitive process = iterative process: G 지문의 핵심 패러프레이징 쌍</td></tr>
+        <tr><td class="vw-word">iteration</td><td class="vw-mean">반복, 순환</td><td class="vw-extra">iterate 반복하다 / iterative 반복적인 / G 지문: 양초의 연소 = "repeated burning" = iteration</td></tr>
+        <tr><td class="vw-word">embody</td><td class="vw-mean">구현하다</td><td class="vw-extra">embodied in a machine 기계 속에 구현된 / embody + 명사: ~을 체현하다 / embodiment 화신, 구현체</td></tr>
+        <tr><td class="vw-word">indefinite</td><td class="vw-mean">무한한, 불확실한</td><td class="vw-extra">↔ definite(확실한) / indefinitely 무한정 / for an indefinite period 무한한 기간 동안</td></tr>
+        <tr><td class="vw-word">decay</td><td class="vw-mean">붕괴, 부패</td><td class="vw-extra">decay of atoms 원자 붕괴 / deteriorate, decompose / moral decay 도덕적 붕괴 — 맥락별 구별 중요</td></tr>
+        <tr><td class="vw-word">continuous vs. continual</td><td class="vw-mean">연속적인 vs. 반복적인</td><td class="vw-extra">continuous: 끊임없이 이어지는 / continual: 중간중간 끊기면서 반복되는 — 수능 어법 단골 혼동 어휘</td></tr>
+        <tr><td class="vw-word">masked</td><td class="vw-mean">가려진</td><td class="vw-extra">mask 가리다·감추다 / at first masked = initially concealed / ↔ revealed, exposed, apparent</td></tr>
+        <tr><td class="vw-word">vicarious</td><td class="vw-mean">대리의, 간접의</td><td class="vw-extra">vicarious functioning 대리 기능 / vicarious experience 대리 경험(남을 통한 간접 경험) — 수능 핵심 키워드</td></tr>
+        <tr><td class="vw-word">perceptual</td><td class="vw-mean">지각의</td><td class="vw-extra">perception 지각 / perceive 인식하다 / perceptual system 지각 체계 / perpetual(영구적인)과 혼동 주의!</td></tr>
+        <tr><td class="vw-word">flexibility</td><td class="vw-mean">유연성</td><td class="vw-extra">flexible 유연한 / adaptability, versatility / ↔ rigidity, inflexibility / immense flexibility 엄청난 유연성</td></tr>
+        <tr><td class="vw-word">cue</td><td class="vw-mean">단서, 신호</td><td class="vw-extra">rely on cues 단서에 의존 / contextual cue, visual cue / take one's cue from ~: ~에서 단서를 얻다</td></tr>
+        <tr><td class="vw-word">navigate</td><td class="vw-mean">항법하다, 탐색하다</td><td class="vw-extra">navigation 항법 / rely on the stars to navigate / navigate through ~: ~을 헤쳐나가다</td></tr>
+        <tr><td class="vw-word">landmark</td><td class="vw-mean">지형지물, 이정표</td><td class="vw-extra">rely on landmarks / landmark decision 획기적 판결 / set a landmark 이정표를 세우다</td></tr>
+        <tr><td class="vw-word">sufficient</td><td class="vw-mean">충분한</td><td class="vw-extra">sufficient for ~: ~에 충분한 / suffice 충분하다 / sufficiency 충분함 / ↔ insufficient, inadequate</td></tr>
+        <tr><td class="vw-word">internal vs. external</td><td class="vw-mean">내적 vs. 외적</td><td class="vw-extra">internal features: 눈·코·입 / external features: 머리카락·두상 / 2 지문의 핵심 대조 — 대안 경로 전환의 기준</td></tr>
+        <tr><td class="vw-word">be adapted to</td><td class="vw-mean">~에 적응되어 있다</td><td class="vw-extra">to는 전치사! → 뒤에 명사/동명사 / be adapted to + 명사 = be designed to + V와 동의 구조</td></tr>
+        <tr><td class="vw-word">hardly / scarcely / barely</td><td class="vw-mean">거의 ~않는</td><td class="vw-extra">준부정 부사 3총사 — "internal features are hardly visible" / 수능 어법: 이 단어가 있으면 문장은 이미 부정문 취급</td></tr>
+        <tr><td class="vw-word">give the appearance of V-ing</td><td class="vw-mean">~인 것처럼 보이다</td><td class="vw-extra">= appear to be / seem to be / give the impression of / take on the appearance of</td></tr>
+        <tr><td class="vw-word">radiocarbon dating</td><td class="vw-mean">방사성 탄소 연대 측정</td><td class="vw-extra">carbon-14의 방사성 붕괴(decay) 속도를 이용해 유기물의 연대를 추정하는 방법 — G 지문 결론의 핵심 예시</td></tr>
+        <tr><td class="vw-word">extraordinary</td><td class="vw-mean">비범한, 특별히</td><td class="vw-extra">extraordinarily adapted 특별히 적응된 / extraordinary flexibility 놀라운 유연성 / ↔ ordinary, common</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:24px;padding:16px 20px;background:var(--gold-bg);border:1px solid rgba(146,96,10,.3);border-radius:8px;">
+      <div style="font-size:.66rem;font-weight:700;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;">📌 Chapter 1(16) 정답 + 수능 변형 1순위 총정리</div>
+      <table style="width:100%;font-size:.84rem;border-collapse:collapse;">
+        <thead><tr style="background:var(--ink);color:#fefcf8;"><th style="padding:7px 12px;text-align:left;">지문</th><th style="padding:7px 12px;text-align:left;">출제 유형 &amp; 정답 방향</th><th style="padding:7px 12px;text-align:left;">수능 변형 1순위</th></tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border2);"><td style="padding:8px 12px;font-weight:700;">G · 시계와 반복</td><td style="padding:8px 12px;">주제: <span style="color:var(--orange);font-weight:700;">모든 시간 측정은 반복적 과정</span> / 글의 구조: 반박-확장</td><td style="padding:8px 12px;">빈칸: "a <u>repetitive/iterative</u> process" / 요약문: (A) physical → process, (B) continuous → iterative</td></tr>
+          <tr style="background:var(--bg);"><td style="padding:8px 12px;font-weight:700;">2 · 대리 기능</td><td style="padding:8px 12px;">주제: <span style="color:var(--orange);font-weight:700;">정답 ③</span> — 대안적 수단으로 같은 기능 달성</td><td style="padding:8px 12px;">빈칸: "<u>vicarious functioning</u>" / 지칭: it 3개 구별 / 어법: be adapted to(전치사 to)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px;padding:16px 20px;background:var(--blue-bg);border:1px solid rgba(26,75,140,.2);border-radius:8px;">
+      <div style="font-size:.66rem;font-weight:700;letter-spacing:.15em;color:var(--blue);text-transform:uppercase;margin-bottom:10px;">🔗 두 지문의 공통 원리 — 수능 통합적 사고 대비</div>
+      <div style="font-size:.84rem;color:var(--ink2);line-height:1.75;">
+        <strong style="color:var(--ink);">G 지문 (시계):</strong> 겉으로는 연속적/단순해 보이는 것 → 실제로는 반복적 과정의 집합<br>
+        <strong style="color:var(--ink);">2 지문 (지각):</strong> 겉으로는 하나의 경로 → 실제로는 여러 대안 경로의 유연한 전환<br>
+        <span style="display:block;margin-top:8px;padding-left:12px;border-left:3px solid var(--blue);"><strong>공통 주제:</strong> 표면적 단순성 아래의 <u>다층적·반복적·대안적 구조</u>. 수능에서 "겉으로 보이는 것 ≠ 실제"의 논리 패턴은 빈칸·주제·요약문 유형 모두에 걸쳐 반복 출제됨.</span>
+      </div>
+    </div>
+  </div>
+</div><!-- end voca -->
+
+</main>
+
+<script>
+const ids=['home','pG','p2','voca'];
+function show(id){
+  ids.forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on');});
+  const t=document.getElementById(id);if(t)t.classList.add('on');
+  const btns=document.querySelectorAll('.nb');
+  btns.forEach(b=>b.classList.remove('on'));
+  const idx=ids.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
