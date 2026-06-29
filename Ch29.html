@@ -114,6 +114,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
 .sp{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--border2);}
 .sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
 .sp-en{font-family:'Crimson Pro',serif;font-size:1.03rem;line-height:1.9;color:var(--ink);}
+.subj{color:#1a4b8c;font-weight:600;}
+.verb{color:#1a6b3a;font-weight:600;}
+.subj .gr{color:#1a4b8c;background:rgba(26,75,140,.10);}
+.verb .gr{color:#1a6b3a;}
+.slash{color:#b0a896;font-weight:400;margin:0 3px;}
+.sv-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;padding:8px 14px;background:var(--bg);border-radius:7px;font-size:.74rem;}
+.sv-legend span{display:inline-flex;align-items:center;gap:5px;}
+.sv-dot{display:inline-block;width:11px;height:11px;border-radius:50%;}
 .sp-ko{font-size:.8rem;color:var(--ink2);line-height:1.65;padding-left:11px;border-left:3px solid var(--border);margin-top:4px;}
 .sp-note{display:inline-block;font-size:.72rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 5px;border-radius:3px;margin-left:5px;}
 /* Grammar note */
@@ -302,28 +310,29 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
   <div class="card">
     <div class="card-lbl">05 구문 해석 — 원문 전체</div>
     <div class="passage-box">
-      <div class="sp">
-        <div class="sp-en">When <span class="gr">gathering the preferences of multiple agents into one collective choice</span>, it is easily seen that certain cases <span class="blank-box ans">cannot be resolved without resorting to chance</span>.</div>
+      <div class="sv-legend"><span><span class="sv-dot" style="background:#1a4b8c;"></span> 주어(S)</span><span><span class="sv-dot" style="background:#1a6b3a;"></span> 동사(V)</span><span><span class="slash">/</span> 의미 단위 끊기</span><span><span class="gr" style="padding:1px 4px;">초록 음영</span> = 구·절 묶음</span></div>
+          <div class="sp">
+        <div class="sp-en">When <span class="gr">gathering the preferences of multiple agents into one collective choice</span>, <span class="slash">/</span> <span class="subj">it</span> <span class="slash">/</span> <span class="verb">is</span> easily <span class="verb">seen</span> <span class="slash">/</span> that <span class="subj">certain cases</span> <span class="slash">/</span> <span class="verb"><span class="blank-box ans">cannot be resolved</span></span> without resorting to chance.</div>
         <div class="sp-ko">다수 행위자들의 선호를 하나의 집단적 선택으로 취합할 때, 특정 사례들은 우연(추첨)에 의존하지 않고서는 해결될 수 없다는 것을 쉽게 알 수 있다. <span class="sp-note">★ When V-ing ~: 분사구문(시간, 주절의 주어=we) / it is ~ that ~: 가주어-진주어 / resort to ~: ~에 의존하다</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">For example, <span class="gr">if there are two alternatives, a and b, and two agents such that one prefers a and the other one b</span>, there is no deterministic way of selecting a single alternative without violating one of two basic fairness conditions known as anonymity and neutrality.</div>
+        <div class="sp-en">For example, <span class="gr">if there are two alternatives, a and b, and two agents such that one prefers a and the other one b</span>, <span class="slash">/</span> <span class="verb">there is</span> <span class="subj">no deterministic way</span> of selecting a single alternative <span class="slash">/</span> without violating one of two basic fairness conditions known as anonymity and neutrality.</div>
         <div class="sp-ko">예를 들어, a와 b 두 대안이 있고 한 명은 a를, 다른 한 명은 b를 선호하는 두 행위자가 있는 경우, 익명성과 중립성으로 알려진 두 가지 기본 공정성 조건 중 하나를 위반하지 않고서는 단일 대안을 결정론적으로 선택하는 방법이 없다. <span class="sp-note">★ such that ~: "~하도록, ~인 방식으로" / without violating ~: "~을 위반하지 않고서는" / known as ~: 수동 분사구</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Anonymity requires <span class="gr">[that the collective choice ought to be independent of the agents' identities]</span> whereas neutrality requires impartiality towards the alternatives.</div>
+        <div class="sp-en"><span class="subj">Anonymity</span> <span class="slash">/</span> <span class="verb">requires</span> <span class="gr">[that the collective choice ought to be independent of the agents' identities]</span> <span class="slash">/</span> whereas <span class="subj">neutrality</span> <span class="slash">/</span> <span class="verb">requires</span> impartiality towards the alternatives.</div>
         <div class="sp-ko">익명성은 집단적 선택이 행위자들의 정체성에 독립적이어야 한다고 요구하는 반면, 중립성은 대안들에 대한 공정성을 요구한다. <span class="sp-note">★ requires that ~: "~을 요구하다"(that절) / ought to be independent: 당위(~이어야 한다) / whereas: 대조 접속사</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Allowing lotteries as social outcomes hence seems like a necessity for impartial collective choice.</div>
+        <div class="sp-en"><span class="subj">Allowing lotteries as social outcomes</span> hence <span class="slash">/</span> <span class="verb">seems like</span> a necessity for impartial collective choice.</div>
         <div class="sp-ko">따라서, 복권(추첨)을 사회적 결과로 허용하는 것은 공정한 집단적 선택을 위한 필연적 요소로 보인다. <span class="sp-note">★ Allowing ~ (동명사 주어): "~을 허용하는 것은" / hence: 따라서 / seems like a necessity: "필연성처럼 보인다"</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Indeed, most common "deterministic" social choice functions such as plurality rule are only deterministic <span class="gr">as long as there is no tie</span>, <span class="gr">which is usually resolved by drawing a lot</span>.</div>
+        <div class="sp-en">Indeed, <span class="subj">most common "deterministic" social choice functions such as plurality rule</span> <span class="slash">/</span> <span class="verb">are</span> only deterministic <span class="gr">as long as there is no tie</span>, <span class="gr">which is usually resolved by drawing a lot</span>.</div>
         <div class="sp-ko">실제로, 다수결 규칙과 같은 가장 흔한 "결정론적" 사회 선택 함수들은 동률이 없는 한에서만 결정론적인데, 동률은 대개 추첨으로 해결된다. <span class="sp-note">★ as long as ~: "~인 한" / which is resolved ~: 계속적 관계절(tie 부연) / drawing a lot: 추첨하기</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">The use of lotteries for the selection of officials interestingly goes back to the world's first democracy in Athens, <span class="gr">where it was widely regarded as a principal characteristic of democracy</span>, and has recently gained increasing attention in political science.</div>
+        <div class="sp-en"><span class="subj">The use of lotteries for the selection of officials</span> interestingly <span class="slash">/</span> <span class="verb">goes back to</span> the world's first democracy in Athens, <span class="gr">where it was widely regarded as a principal characteristic of democracy</span>, <span class="slash">/</span> and <span class="verb">has</span> recently <span class="verb">gained</span> increasing attention in political science.</div>
         <div class="sp-ko">공직자 선발을 위한 추첨 사용은 흥미롭게도 세계 최초의 민주주의인 아테네까지 거슬러 올라가는데, 거기서 그것은 민주주의의 주요 특징으로 널리 여겨졌으며, 최근 정치학에서 점점 더 많은 주목을 받고 있다. <span class="sp-note">★ goes back to ~: "~까지 거슬러 올라가다" / where ~: 관계부사절(Athens 부연) / has recently gained: 현재완료(최근 변화)</span></div>
       </div>
     </div>
@@ -449,28 +458,29 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
   <div class="card">
     <div class="card-lbl">05 구문 해석 — 원문 전체</div>
     <div class="passage-box">
-      <div class="sp">
-        <div class="sp-en">Along with the mistaken notion <span class="gr">{that the law resides in the books}</span> goes the equally mistaken idea <span class="gr">{that law is secret, or at least inaccessible to the ordinary person}</span>.</div>
+      <div class="sv-legend"><span><span class="sv-dot" style="background:#1a4b8c;"></span> 주어(S)</span><span><span class="sv-dot" style="background:#1a6b3a;"></span> 동사(V)</span><span><span class="slash">/</span> 의미 단위 끊기</span><span><span class="gr" style="padding:1px 4px;">초록 음영</span> = 구·절 묶음</span></div>
+          <div class="sp">
+        <div class="sp-en">Along with the mistaken notion <span class="gr">{that the law resides in the books}</span> <span class="slash">/</span> <span class="verb">goes</span> <span class="subj">the equally mistaken idea</span> <span class="gr">{that law is secret, or at least inaccessible to the ordinary person}</span>.</div>
         <div class="sp-ko">법이 책 속에 있다는 잘못된 개념과 함께, 법이 비밀이거나 적어도 일반인에게 접근 불가능하다는 똑같이 잘못된 생각도 존재한다. <span class="sp-note">★ Along with ~ goes ~: 도치(장소 부사구 전치 → V+S 어순) / notion that ~: 동격절 / at least: "적어도"</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en"><span class="gr">To understand and apply the law at the advanced, technical level {that lawyers do}</span> requires professional knowledge, but <span class="gr">to understand the basic substance of the law</span> does not.</div>
+        <div class="sp-en"><span class="subj"><span class="gr">To understand and apply the law at the advanced, technical level {that lawyers do}</span></span> <span class="slash">/</span> <span class="verb">requires</span> professional knowledge, <span class="slash">/</span> but <span class="subj"><span class="gr">to understand the basic substance of the law</span></span> <span class="slash">/</span> <span class="verb">does not</span>.</div>
         <div class="sp-ko">변호사들이 하는 것처럼 고급·전문적 수준에서 법을 이해하고 적용하는 것은 전문적 지식이 필요하지만, 법의 기본적인 실질적 내용을 이해하는 것은 그렇지 않다. <span class="sp-note">★ to understand ~ requires ~: to부정사 주어 / that lawyers do: 관계절(the level 수식) / does not (= does not require ~): 생략</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Law reflects life. The principles and issues <span class="gr">{embodied in the law}</span> are not different from <span class="gr">{those that we experience in other aspects of our lives}</span>.</div>
+        <div class="sp-en"><span class="subj">Law</span> <span class="slash">/</span> <span class="verb">reflects</span> life. <span class="slash">/</span> <span class="subj">The principles and issues</span> <span class="gr">{embodied in the law}</span> <span class="slash">/</span> <span class="verb">are not</span> different from <span class="gr">{those that we experience in other aspects of our lives}</span>.</div>
         <div class="sp-ko">법은 삶을 반영한다. / 법에 내포된 원리와 쟁점들은 우리가 삶의 다른 측면에서 경험하는 것들과 다르지 않다. <span class="sp-note">★ embodied in ~: 수동 분사구(후치 수식) / those that ~: those = the principles and issues / are not different from ~: "~와 다르지 않다"</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Contract law, for example, is a commentary on <span class="gr">[the way people make, interpret, keep, and break their promises in commercial and noncommercial settings]</span>.</div>
+        <div class="sp-en"><span class="subj">Contract law</span>, for example, <span class="slash">/</span> <span class="verb">is</span> a commentary on <span class="gr">[the way people make, interpret, keep, and break their promises in commercial and noncommercial settings]</span>.</div>
         <div class="sp-ko">예를 들어, 계약법은 상업적·비상업적 환경에서 사람들이 약속을 맺고, 해석하고, 지키고, 어기는 방식에 대한 해설이다. <span class="sp-note">★ a commentary on ~: "~에 대한 해설" / the way (that/in which) S V: "S가 V하는 방식" / make-interpret-keep-break: 4개 동사 병렬</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Few nonlawyers can describe the objective theory of contract formation or the Statute of Frauds, but they have thought a lot about contracts and promises.</div>
+        <div class="sp-en"><span class="subj">Few nonlawyers</span> <span class="slash">/</span> <span class="verb">can describe</span> the objective theory of contract formation or the Statute of Frauds, <span class="slash">/</span> but <span class="subj">they</span> <span class="slash">/</span> <span class="verb">have thought</span> a lot about contracts and promises.</div>
         <div class="sp-ko">변호사가 아닌 사람 중 계약 형성의 객관적 이론이나 사기 방지법을 설명할 수 있는 사람은 거의 없지만, 그들은 계약과 약속에 대해 많이 생각해왔다. <span class="sp-note">★ Few ~: "거의 없는"(부정) / A or B: "A 또는 B" / but: 역접(전문 지식 없어도 개념은 안다)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">If you cross your fingers when you make a promise, does it mean that the promise doesn't count? If your newly purchased television doesn't work, can you return it to the store? And so on.</div>
+        <div class="sp-en">If you cross your fingers when you make a promise, <span class="slash">/</span> <span class="verb">does</span> <span class="subj">it</span> <span class="slash">/</span> <span class="verb">mean</span> that the promise doesn't count? <span class="slash">/</span> If your newly purchased television doesn't work, <span class="slash">/</span> <span class="verb">can</span> <span class="subj">you</span> <span class="slash">/</span> <span class="verb">return</span> it to the store? And so on.</div>
         <div class="sp-ko">약속할 때 손가락을 꼬면, 그것은 약속이 유효하지 않다는 것을 의미하는가? / 새로 구입한 텔레비전이 작동하지 않는다면, 가게에 반환할 수 있는가? / 기타 등등. <span class="sp-note">★ cross one's fingers: "약속을 무효화하다/행운을 빌다" / count: "유효하다, 중요하다" / And so on: "기타 등등"(일상적 법적 상황의 개방형 나열)</span></div>
       </div>
     </div>
@@ -599,28 +609,29 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
   <div class="card">
     <div class="card-lbl">05 구문 해석 — 원문 전체</div>
     <div class="passage-box">
-      <div class="sp">
-        <div class="sp-en">The internet has transformed the fashion marketplace, <span class="gr">making it increasingly difficult to <span class="blank-box ans">maintain control over pricing and consumer trends</span></span>.</div>
+      <div class="sv-legend"><span><span class="sv-dot" style="background:#1a4b8c;"></span> 주어(S)</span><span><span class="sv-dot" style="background:#1a6b3a;"></span> 동사(V)</span><span><span class="slash">/</span> 의미 단위 끊기</span><span><span class="gr" style="padding:1px 4px;">초록 음영</span> = 구·절 묶음</span></div>
+          <div class="sp">
+        <div class="sp-en"><span class="subj">The internet</span> <span class="slash">/</span> <span class="verb">has transformed</span> the fashion marketplace, <span class="gr">making it increasingly difficult to <span class="blank-box ans">maintain control over pricing and consumer trends</span></span>.</div>
         <div class="sp-ko">인터넷은 패션 시장을 변화시켜, 가격과 소비자 트렌드에 대한 통제력을 유지하는 것을 점점 더 어렵게 만들었다. <span class="sp-note">★ making it difficult to V: 분사구문(결과) / it = 형식 목적어 / to V = 진짜 목적어</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Consumers can browse for product information and prices and gain comparative information almost instantaneously, <span class="gr">making them more informed than ever before</span>, <span class="gr">transferring the balance of power from the retailer to the customer</span>.</div>
+        <div class="sp-en"><span class="subj">Consumers</span> <span class="slash">/</span> <span class="verb">can browse</span> for product information and prices <span class="slash">/</span> and <span class="verb">gain</span> comparative information almost instantaneously, <span class="gr">making them more informed than ever before</span>, <span class="gr">transferring the balance of power from the retailer to the customer</span>.</div>
         <div class="sp-ko">소비자들은 제품 정보와 가격을 검색하고 비교 정보를 거의 즉각적으로 얻을 수 있어, 그들을 그 어느 때보다 더 잘 알게 만들고, 소매업자에서 소비자로 권력의 균형을 이동시킨다. <span class="sp-note">★ making them ~ + transferring ~: 연속 분사구문(결과·연쇄) / than ever before: "그 어느 때보다 더"</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">This is exacerbated by open and real-time access to fashion shows, <span class="gr">facilitated through livestreaming</span>, <span class="gr">coupled with social media access to celebrity looks and lifestyles</span> and the sharing of all aspects of life on social media.</div>
+        <div class="sp-en"><span class="subj">This</span> <span class="slash">/</span> <span class="verb">is exacerbated</span> by open and real-time access to fashion shows, <span class="gr">facilitated through livestreaming</span>, <span class="gr">coupled with social media access to celebrity looks and lifestyles</span> and the sharing of all aspects of life on social media.</div>
         <div class="sp-ko">이것은 라이브스트리밍을 통해 촉진된 패션쇼에 대한 개방적이고 실시간 접근, 그리고 셀럽의 외모와 라이프스타일에 대한 소셜 미디어 접근과 소셜 미디어에서의 삶의 모든 측면 공유에 의해 더욱 심화된다. <span class="sp-note">★ be exacerbated by ~: "~에 의해 더욱 악화되다" / facilitated through ~: 수동 분사구 / coupled with ~: "~와 결합된"</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Consumers use fashion choices to express their individual style and personality, especially those <span class="gr">promoting 'brand me' on social media</span>.</div>
+        <div class="sp-en"><span class="subj">Consumers</span> <span class="slash">/</span> <span class="verb">use</span> fashion choices to express their individual style and personality, <span class="slash">/</span> especially those <span class="gr">promoting 'brand me' on social media</span>.</div>
         <div class="sp-ko">소비자들은 패션 선택을 개인적인 스타일과 개성을 표현하기 위해 사용하는데, 특히 소셜 미디어에서 '브랜드 나'를 홍보하는 사람들이 그러하다. <span class="sp-note">★ to express ~: 목적 to부정사 / those promoting ~: those(= consumers) + 현재분사구(후치 수식)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">The traditional two-season offer is no longer seen as enough, <span class="gr">with consumers demanding new products throughout the whole year</span>.</div>
+        <div class="sp-en"><span class="subj">The traditional two-season offer</span> <span class="slash">/</span> <span class="verb">is</span> no longer <span class="verb">seen</span> as enough, <span class="gr">with consumers demanding new products throughout the whole year</span>.</div>
         <div class="sp-ko">전통적인 두 시즌 상품은 더 이상 충분한 것으로 여겨지지 않으며, 소비자들은 연중 내내 새로운 제품을 요구한다. <span class="sp-note">★ no longer: "더 이상 ~않다" / with + O + V-ing: 부대상황(소비자들이 요구하면서)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">This creates a problem for fashion retailers <span class="gr">as many consumers are looking for more exclusive pieces to differentiate themselves</span>, <span class="gr">forcing up the desire for trend-led ever more rapidly changing styles</span>, while still demanding affordable prices.</div>
+        <div class="sp-en"><span class="subj">This</span> <span class="slash">/</span> <span class="verb">creates</span> a problem for fashion retailers <span class="gr">as many consumers are looking for more exclusive pieces to differentiate themselves</span>, <span class="gr">forcing up the desire for trend-led ever more rapidly changing styles</span>, while still demanding affordable prices.</div>
         <div class="sp-ko">많은 소비자들이 자신을 차별화하기 위해 더 독점적인 제품을 찾으면서 트렌드 주도의 점점 더 빠르게 변하는 스타일에 대한 욕구를 끌어올리면서도 여전히 적정한 가격을 요구하기 때문에, 이것은 패션 소매업자들에게 문제를 만든다. <span class="sp-note">★ as ~: 이유 접속사 / forcing up ~: 분사구문(연쇄 결과) / while still demanding ~: 대조적 동시상황</span></div>
       </div>
     </div>
@@ -739,28 +750,29 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
   <div class="card">
     <div class="card-lbl">05 구문 해석 — 원문 전체</div>
     <div class="passage-box">
-      <div class="sp">
-        <div class="sp-en"><span class="gr">[What deeply affected so many Black communities globally]</span> was not only that they could not metaphorically breathe because of the oppressive forms and limits of white supremacy, but also that so many Black communities literally cannot breathe because of environmental racism.</div>
+      <div class="sv-legend"><span><span class="sv-dot" style="background:#1a4b8c;"></span> 주어(S)</span><span><span class="sv-dot" style="background:#1a6b3a;"></span> 동사(V)</span><span><span class="slash">/</span> 의미 단위 끊기</span><span><span class="gr" style="padding:1px 4px;">초록 음영</span> = 구·절 묶음</span></div>
+          <div class="sp">
+        <div class="sp-en"><span class="subj"><span class="gr">[What deeply affected so many Black communities globally]</span></span> <span class="slash">/</span> <span class="verb">was</span> not only that they could not metaphorically breathe because of the oppressive forms and limits of white supremacy, <span class="slash">/</span> but also that so many Black communities literally cannot breathe because of environmental racism.</div>
         <div class="sp-ko">전 세계의 많은 흑인 공동체들에게 깊이 영향을 미친 것은, 그들이 백인 우월주의의 억압적인 형태와 한계 때문에 은유적으로 숨 쉴 수 없었다는 것뿐만 아니라, 너무나도 많은 흑인 공동체들이 환경적 인종차별 때문에 말 그대로 숨 쉴 수 없다는 것이기도 했다. <span class="sp-note">★ What ~ was ~: 관계대명사 what절(명사절, 주어) / not only ~ but also ~: "~뿐만 아니라 ~도" / metaphorically vs. literally: 은유적 vs. 문자적</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">① Similarly to Black communities in the UK, Black Americans are also more likely to live near landfills, industrial plants and fossil-fuel infrastructure.</div>
+        <div class="sp-en">① Similarly to Black communities in the UK, <span class="slash">/</span> <span class="subj">Black Americans</span> <span class="slash">/</span> <span class="verb">are</span> also more likely to live near landfills, industrial plants and fossil-fuel infrastructure.</div>
         <div class="sp-ko">① 영국의 흑인 공동체와 마찬가지로, 흑인 미국인들도 쓰레기 매립지, 산업 시설, 화석 연료 인프라 근처에 살 가능성이 더 높다. <span class="sp-note">★ Similarly to ~: "~와 마찬가지로" / be more likely to V: "V할 가능성이 더 높다"</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en" style="color:var(--red);">【무관 ②】 While some Black Americans have started community projects to turn neglected or run-down areas into youth centers or art spaces, these efforts often face challenges because of a lack of local support and simple safety concerns.</div>
+        <div class="sp-en" style="color:var(--red);">【무관 ②】 While some Black Americans have started community projects to turn neglected or run-down areas into youth centers or art spaces, <span class="slash" style="color:#d99;">/</span> these efforts often face challenges because of a lack of local support and simple safety concerns.</div>
         <div class="sp-ko" style="border-left-color:var(--red);">② 일부 흑인 미국인들이 방치되거나 낙후된 지역을 청소년 센터나 예술 공간으로 바꾸는 지역 사회 프로젝트를 시작했지만, 이러한 노력들은 종종 지역 지원 부족과 단순한 안전 우려 때문에 어려움에 직면한다. <span class="sp-note" style="color:var(--red);background:#fff0f0;">★ 무관 이유: 흑인 공동체의 대응(resilience)을 다루어 환경적 인종차별의 피해·불균형이라는 논지와 방향 충돌 / turn A into B: A를 B로 바꾸다</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">③ The process <span class="gr">[by which this hazardous infrastructure is deliberately situated close to African American communities]</span> is called redlining.</div>
+        <div class="sp-en">③ <span class="subj">The process</span> <span class="gr">[by which this hazardous infrastructure is deliberately situated close to African American communities]</span> <span class="slash">/</span> <span class="verb">is called</span> redlining.</div>
         <div class="sp-ko">③ 이 유해한 인프라가 아프리카계 미국인 공동체 가까이에 의도적으로 위치하는 과정은 레드라이닝이라고 불린다. <span class="sp-note">★ by which ~: 관계사구(the process 수식, = the process in which ~ is situated by) / is called ~: 수동태("~라고 불리다")</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">④ This process means <span class="gr">[that fossil-fuelled power plants and hazardous-waste facilities are disproportionately and deliberately situated in Black or ethnic-minority neighbourhoods]</span>.</div>
+        <div class="sp-en">④ <span class="subj">This process</span> <span class="slash">/</span> <span class="verb">means</span> <span class="gr">[that fossil-fuelled power plants and hazardous-waste facilities are disproportionately and deliberately situated in Black or ethnic-minority neighbourhoods]</span>.</div>
         <div class="sp-ko">④ 이 과정은 화석 연료 발전소와 유해 폐기물 시설이 흑인 또는 소수 민족 거주 지역에 불균형적으로 그리고 의도적으로 위치함을 의미한다. <span class="sp-note">★ means that ~: "~을 의미한다" / disproportionately and deliberately: 두 부사의 병렬 강조(불균형적 + 의도적)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">⑤ As a result of this, Black Americans are <span class="gr">three times more likely to die</span> from exposure to air pollutants than their white counterparts.</div>
+        <div class="sp-en">⑤ As a result of this, <span class="slash">/</span> <span class="subj">Black Americans</span> <span class="slash">/</span> <span class="verb">are</span> <span class="gr">three times more likely to die</span> from exposure to air pollutants than their white counterparts.</div>
         <div class="sp-ko">⑤ 이로 인해, 흑인 미국인들은 대기 오염 물질에 노출되어 사망할 가능성이 백인 상대방보다 세 배 더 높다. <span class="sp-note">★ As a result of ~: "~의 결과로" / three times more likely: 배수 비교("세 배 더 ~할 가능성") / counterpart: "동등한 상대, 대응하는 사람"</span></div>
       </div>
     </div>
