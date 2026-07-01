@@ -157,6 +157,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
 .order-arrow{color:var(--accent2);font-size:1.2rem;font-weight:700;}
 
 @media(max-width:640px){.hdr-inner{flex-direction:column;align-items:flex-start;}.card{padding:16px;}.plain-box,.passage-box{padding:16px 18px;}}
+
+/* ─── 주어/동사 색상 표기 ─── */
+.subj{color:#1a4b8c;font-weight:700;}
+.subj .gr{color:#1a4b8c;}
+.subj .vw{color:#1a4b8c;border-bottom-color:#1a4b8c;}
+.vb{color:#1a6b3a;font-weight:700;background:rgba(26,107,58,.09);padding:0 2px;border-radius:2px;}
+.sv-slash{color:#888;font-weight:400;margin:0 2px;}
 </style>
 </head>
 <body>
@@ -264,36 +271,36 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
     <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
     <div class="passage-box">
       <div class="sp">
-        <div class="sp-en">One word is <span class="vw">inextricably<span class="tt">풀 수 없게</span></span> associated with geography: <em>where</em>.</div>
-        <div class="sp-ko">하나의 단어가 지리학과 불가분하게 연결되어 있다: "어디에"(where). <span class="sp-note">★ be associated with ~: "~와 연결되어 있다" (수동태)</span></div>
+        <div class="sp-en"><span class="subj">One word</span> <span class="sv-slash">//</span> <span class="vb">is</span> <span class="vw">inextricably<span class="tt">풀 수 없게</span></span> associated with geography: <em>where</em>.</div>
+        <div class="sp-ko"><span class="subj">하나의 단어</span>가 <span class="sv-slash">//</span> 지리학과 불가분하게 <span class="vb">연결되어 있다</span>: "어디에"(where). <span class="sp-note">★ be associated with ~: '~와 연결되어 있다' (수동태)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">That is because geography starts from the <span class="vw">premise<span class="tt">전제</span></span> <span class="gr">[that it matters where something takes place on Earth's surface]</span>.</div>
-        <div class="sp-ko">그것은 지리학이 무언가가 지구 표면의 어디에서 일어나는지가 중요하다는 전제에서 출발하기 때문이다. <span class="sp-note">★ the premise that ~ (동격 that절) / it matters where ~: 가주어·진주어 where절</span></div>
+        <div class="sp-en"><span class="subj">That</span> <span class="vb">is</span> because <span class="subj">geography</span> <span class="vb">starts</span> from the <span class="vw">premise<span class="tt">전제</span></span> <span class="gr">[that <span class="subj">it</span> <span class="vb">matters</span> where <span class="subj">something</span> <span class="vb">takes place</span> on Earth's surface].</span></div>
+        <div class="sp-ko"><span class="subj">그것</span>은 <span class="vb">이다</span> / <span class="subj">지리학</span>이 무언가가 지구 표면의 어디에서 일어나는지가 중요하다는 전제에서 <span class="vb">출발하기</span> 때문에. <span class="sp-note">★ the premise that ~ (동격 that절) / it matters where ~: 가주어·진주어 / something takes place: 종속절 S+V</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">The key questions are not simply "where" questions, though; they are "why there" and "so what" questions.</div>
-        <div class="sp-ko">그러나 핵심 질문들은 단순히 "어디에" 질문들이 아니다; 그것들은 "왜 거기에"와 "그래서 어떻게" 질문들이다. <span class="sp-note">★ though: "그러나" (문말 위치 — 양보의 부사) / not simply A but B</span></div>
+        <div class="sp-en"><span class="subj">The key questions</span> <span class="vb">are</span> not simply "where" questions, though; <span class="subj">they</span> <span class="vb">are</span> "why there" and "so what" questions.</div>
+        <div class="sp-ko"><span class="subj">핵심 질문들</span>은 <span class="sv-slash">//</span> 단순히 "어디에" 질문들이 <span class="vb">아니다</span>, 그러나; <span class="subj">그것들</span>은 <span class="sv-slash">//</span> "왜 거기에"와 "그래서 어떻게" 질문들이다. <span class="sp-note">★ though: 문말 양보 부사 / 세미콜론(;): 관련 두 절 연결</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en"><span class="vw">Getting to<span class="tt">~에 도달하다</span></span> such questions means <span class="gr">taking spatial <span class="vw">arrangements<span class="tt">배치, 배열</span></span>, <span class="vw">variations<span class="tt">차이, 변화</span></span>, and <span class="vw">interconnections<span class="tt">상호 연결</span></span> seriously</span>.</div>
-        <div class="sp-ko">그러한 질문들에 도달한다는 것은 공간적 배치, 차이, 상호 연결을 진지하게 고려하는 것을 의미한다. <span class="sp-note">★ Getting to ~: 동명사 주어 / mean + -ing: "~을 의미하다" / take A seriously: "A를 진지하게 고려하다"</span></div>
+        <div class="sp-en"><span class="subj"><span class="vw">Getting to<span class="tt">~에 도달하다</span></span> such questions</span> <span class="sv-slash">//</span> <span class="vb">means</span> <span class="gr">taking spatial <span class="vw">arrangements<span class="tt">배치, 배열</span></span>, <span class="vw">variations<span class="tt">차이, 변화</span></span>, and <span class="vw">interconnections<span class="tt">상호 연결</span></span> seriously</span>.</div>
+        <div class="sp-ko"><span class="subj">그러한 질문들에 도달한다는 것</span>은 <span class="sv-slash">//</span> 공간적 배치, 차이, 상호 연결을 진지하게 고려하는 것을 <span class="vb">의미한다</span>. <span class="sp-note">★ Getting to ~: 동명사 주어 / mean + -ing: '~을 의미하다'</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Engaging in even the simplest day-to-day activity / requires some <span class="vw">appreciation<span class="tt">이해, 인식</span></span> of spatial circumstances — <span class="gr">where to find food and services, how to get to work places, and the like</span>.</div>
-        <div class="sp-ko">심지어 가장 단순한 일상 활동에 참여하는 것도 / 공간적 상황에 대한 어느 정도의 이해를 필요로 한다 — 음식과 서비스를 어디서 찾을지, 직장에 어떻게 가야 할지 등. <span class="sp-note">★ Engaging in ~: 동명사 주어 / where/how to V: "어디/어떻게 ~할지" (의문사 + to부정사)</span></div>
+        <div class="sp-en"><span class="subj">Engaging in even the simplest day-to-day activity</span> <span class="sv-slash">//</span> <span class="vb">requires</span> some <span class="vw">appreciation<span class="tt">이해, 인식</span></span> of spatial circumstances <span class="sv-slash">/</span> — <span class="gr">where to find food and services, how to get to work places, and the like</span>.</div>
+        <div class="sp-ko"><span class="subj">심지어 가장 단순한 일상 활동에 참여하는 것</span>도 <span class="sv-slash">//</span> 공간적 상황에 대한 어느 정도의 이해를 <span class="vb">필요로 한다</span> <span class="sv-slash">/</span> — 음식과 서비스를 어디서 찾을지, 직장에 어떻게 가야 할지 등. <span class="sp-note">★ Engaging in ~: 동명사 주어 / where/how to V: 의문사 + to부정사</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Moving up in scale, without some awareness of <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>, it is difficult / to make <span class="vw">reasoned<span class="tt">논리적인</span></span> business or policy judgments, make sense of events, or <span class="vw">grasp<span class="tt">이해하다</span></span> some of the basic forces shaping life on the planet.</div>
-        <div class="sp-ko">규모를 높여서, [빈칸]에 대한 어느 정도의 인식 없이는, / 논리적인 사업이나 정책 판단을 내리거나, 사건들을 이해하거나, 지구상의 삶을 형성하는 기본적인 힘들 중 일부를 파악하기 어렵다. <span class="sp-note">★ it is difficult to V (가주어·진주어) / 3개 병렬: make ~ / make sense ~ / grasp ~</span></div>
+        <div class="sp-en">Moving up in scale, without some awareness of <span class="bk">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>, <span class="subj">it</span> <span class="vb">is</span> difficult <span class="sv-slash">//</span> to <span class="vb">make</span> <span class="vw">reasoned<span class="tt">논리적인</span></span> business or policy judgments, <span class="sv-slash">/</span> <span class="vb">make</span> sense of events, <span class="sv-slash">/</span> or <span class="vb">grasp</span> some of the basic forces <span class="gr">shaping life on the planet</span>.</div>
+        <div class="sp-ko"><span class="subj">It</span>은 어렵다 <span class="sv-slash">//</span> 논리적인 사업·정책 판단을 <span class="vb">내리거나</span>, <span class="sv-slash">/</span> 사건들을 <span class="vb">이해하거나</span>, <span class="sv-slash">/</span> 지구상의 삶을 형성하는 기본적인 힘들을 <span class="vb">파악하기</span>. [빈칸]에 대한 인식 없이는. <span class="sp-note">★ it is difficult to V (가주어·진주어) / 병렬 3개: make / make sense / grasp</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Locating a new store or public service / requires taking into consideration <span class="gr">population distributions, the location of roads and utilities, socio-economic patterns, and more</span>.</div>
-        <div class="sp-ko">새 상점이나 공공 서비스의 위치를 정하는 것은 / 인구 분포, 도로와 공공시설의 위치, 사회경제적 패턴 등을 고려하는 것을 필요로 한다. <span class="sp-note">★ take ~ into consideration: "~을 고려하다" = take ~ into account / 동명사 주어</span></div>
+        <div class="sp-en"><span class="subj">Locating a new store or public service</span> <span class="sv-slash">//</span> <span class="vb">requires</span> taking into consideration <span class="gr">population distributions, the location of roads and utilities, socio-economic patterns, and more</span>.</div>
+        <div class="sp-ko"><span class="subj">새 상점이나 공공 서비스의 위치를 정하는 것</span>은 <span class="sv-slash">//</span> 인구 분포, 도로와 공공시설의 위치, 사회경제적 패턴 등을 고려하는 것을 <span class="vb">필요로 한다</span>. <span class="sp-note">★ Locating ~: 동명사 주어 / take ~ into consideration: '~을 고려하다'</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Understanding why and where <span class="vw">migration<span class="tt">이주</span></span> happens / requires consideration of the political organization of territory, the spatial consequences of discrimination, socio-economic patterns, and the <span class="vw">layout<span class="tt">배치</span></span> of the physical environment.</div>
-        <div class="sp-ko">이주가 왜, 어디서 일어나는지를 이해하는 것은 / 영토의 정치적 조직, 차별의 공간적 결과, 사회경제적 패턴, 그리고 물리적 환경의 배치를 고려해야 한다. <span class="sp-note">★ Understanding ~: 동명사 주어 / why and where: 의문사절 병렬</span></div>
+        <div class="sp-en"><span class="subj">Understanding why and where <span class="vw">migration<span class="tt">이주</span></span> happens</span> <span class="sv-slash">//</span> <span class="vb">requires</span> consideration of the political organization of territory, the spatial consequences of discrimination, socio-economic patterns, and the <span class="vw">layout<span class="tt">배치</span></span> of the physical environment.</div>
+        <div class="sp-ko"><span class="subj">이주가 왜, 어디서 일어나는지를 이해하는 것</span>은 <span class="sv-slash">//</span> 영토의 정치적 조직, 차별의 공간적 결과, 사회경제적 패턴, 그리고 물리적 환경의 배치를 <span class="vb">고려해야 한다</span>. <span class="sp-note">★ Understanding ~: 동명사 주어 / why and where: 간접의문문 병렬</span></div>
       </div>
     </div>
     <div class="gr-note">
@@ -394,36 +401,36 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
     <div class="card-lbl">02 구문 해석 — 원문 &amp; 구문별 해석</div>
     <div class="passage-box">
       <div class="sp">
-        <div class="sp-en">Perhaps nothing has <span class="vw">revolutionized<span class="tt">혁신하다</span></span> the study of human-environment interactions / more than the development of spatially explicit methods for collecting and analyzing data.</div>
-        <div class="sp-ko">아마도 공간 명시적 데이터 수집·분석 방법의 개발만큼 / 인간-환경 상호작용 연구를 혁신한 것은 없을 것이다. <span class="sp-note">★ nothing ~ more than ~: "~ 만큼 ~한 것은 없다" (최상급 의미)</span></div>
+        <div class="sp-en">Perhaps <span class="subj">nothing</span> <span class="sv-slash">//</span> <span class="vb">has revolutionized</span> the study of human-environment interactions <span class="sv-slash">/</span> more than the development of spatially explicit methods for collecting and analyzing data.</div>
+        <div class="sp-ko">아마도 <span class="subj">아무것도</span> <span class="sv-slash">//</span> 인간-환경 상호작용 연구를 <span class="vb">혁신하지</span> 않았을 것이다 <span class="sv-slash">/</span> 공간 명시적 데이터 수집·분석 방법의 개발만큼. <span class="sp-note">★ nothing ~ more than ~: '~ 만큼 ~한 것은 없다' (최상급 의미)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Just a few decades ago, most natural and social scientists collected their data without precise spatial <span class="vw">referents<span class="tt">지시 대상, 준거점</span></span>.</div>
-        <div class="sp-ko">불과 몇십 년 전만 해도, 대부분의 자연 과학자와 사회 과학자들은 정확한 공간적 준거점 없이 데이터를 수집했다. <span class="sp-note">★ without precise spatial referents: "정확한 공간적 준거점 없이"</span></div>
+        <div class="sp-en">Just a few decades ago, <span class="subj">most natural and social scientists</span> <span class="vb">collected</span> their data without precise spatial <span class="vw">referents<span class="tt">지시 대상, 준거점</span></span>.</div>
+        <div class="sp-ko">불과 몇십 년 전만 해도, <span class="subj">대부분의 자연·사회 과학자들</span>은 <span class="sv-slash">//</span> 정확한 공간적 준거점 없이 데이터를 <span class="vb">수집했다</span>. <span class="sp-note">★ without precise spatial referents: '정확한 공간적 준거점 없이'</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en"><span class="vw">References were made to<span class="tt">~을 언급하다</span></span> watersheds, to communities, to villages, to cities, to <span class="vw">proximity<span class="tt">근처, 근접</span></span> to rivers, and so on.</div>
-        <div class="sp-ko">유역, 공동체, 마을, 도시, 강 근처 등에 대한 언급이 이루어졌다. <span class="sp-note">★ make reference to ~: "~을 언급하다" / and so on: "등등"</span></div>
+        <div class="sp-en"><span class="subj">References</span> <span class="vb">were made</span> to watersheds, to communities, to villages, to cities, to <span class="vw">proximity<span class="tt">근처, 근접</span></span> to rivers, and so on.</div>
+        <div class="sp-ko"><span class="subj">언급들</span>이 유역, 공동체, 마을, 도시, 강 근처 등에 대해 <span class="vb">이루어졌다</span>. <span class="sp-note">★ make reference to ~: '~을 언급하다' (수동태 / References: 복수 주어)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">In some cases (in anthropology mostly), there was even the custom of <span class="gr">changing the name of the community and even its location</span>, "to protect the <span class="vw">informants<span class="tt">정보 제공자</span></span>."</div>
-        <div class="sp-ko">일부 경우에(주로 인류학에서), 심지어 "정보 제공자들을 보호하기 위해" 공동체의 이름과 심지어 그 위치를 바꾸는 관습이 있었다. <span class="sp-note">★ the custom of -ing: "~하는 관습" / of: 동격</span></div>
+        <div class="sp-en">In some cases (in anthropology mostly), <span class="subj">there</span> <span class="vb">was</span> even <span class="subj">the custom</span> of <span class="gr">changing the name of the community and even its location</span>, "to protect the <span class="vw">informants<span class="tt">정보 제공자</span></span>."</div>
+        <div class="sp-ko">일부 경우에(주로 인류학에서), <span class="subj">심지어 ~하는 관습</span>이 <span class="vb">있었다</span> <span class="sv-slash">/</span> 공동체의 이름과 심지어 그 위치를 바꾸는, "정보 제공자들을 보호하기 위해." <span class="sp-note">★ there was: 존재 구문 / 진주어 = the custom of changing ~</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">While <span class="vw">confidentiality<span class="tt">기밀성, 비밀 유지</span></span> remains an important concern <span class="gr">when working with human subjects</span>, the extreme <span class="gr">to which this was done</span> was largely <span class="vw">unjustified<span class="tt">정당화되지 않은</span></span>.</div>
-        <div class="sp-ko">비록 기밀성이 인간 연구 대상자들과 작업할 때 중요한 관심사로 남아있지만, / 이것이 행해진 극단적인 정도는 대체로 정당화되지 않았다. <span class="sp-note">★ While(양보절) / the extreme to which ~: "~가 행해진 극단적인 정도" (관계절) / when working: 분사구문</span></div>
+        <div class="sp-en">While <span class="subj"><span class="vw">confidentiality<span class="tt">기밀성, 비밀 유지</span></span></span> <span class="vb">remains</span> an important concern <span class="gr">when working with human subjects</span>, <span class="sv-slash">/</span> <span class="subj">the extreme <span class="gr">{to which this was done}</span></span> <span class="sv-slash">//</span> <span class="vb">was</span> largely <span class="vw">unjustified<span class="tt">정당화되지 않은</span></span>.</div>
+        <div class="sp-ko">비록 <span class="subj">기밀성</span>이 인간 연구 대상자들과 작업할 때 중요한 관심사로 <span class="vb">남아있지만</span>, <span class="sv-slash">/</span> <span class="subj">이것이 행해진 극단적인 정도</span>는 <span class="sv-slash">//</span> 대체로 <span class="vb">정당화되지 않았다</span>. <span class="sp-note">★ While(양보절) / the extreme to which ~: 전치사+관계대명사</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Everyone knew more or less where these studied communities were, and anyone interested could have found out.</div>
-        <div class="sp-ko">모든 사람들은 이 연구된 공동체들이 어디에 있는지를 대략 알고 있었고, 관심이 있는 사람이라면 누구든지 알아낼 수 있었을 것이다. <span class="sp-note">★ more or less: "대략, 어느 정도" / could have found out: 과거의 가능성</span></div>
+        <div class="sp-en"><span class="subj">Everyone</span> <span class="vb">knew</span> more or less where <span class="subj">these studied communities</span> <span class="vb">were</span>, and <span class="subj">anyone interested</span> <span class="vb">could have found</span> out.</div>
+        <div class="sp-ko"><span class="subj">모든 사람들</span>은 이 연구된 공동체들이 어디에 있는지를 대략 <span class="vb">알고 있었고</span>, <span class="sv-slash">/</span> <span class="subj">관심 있는 사람이라면 누구든지</span> 알아낼 수 <span class="vb">있었을 것이다</span>. <span class="sp-note">★ more or less: '대략' / could have found out: 과거의 가능성 / 종속절 S+V도 표기</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en"><span class="vw">Be that as it may<span class="tt">그렇다 하더라도</span></span>, there was very little interest, except in geography, to precisely locate a study area on a map with coordinates.</div>
-        <div class="sp-ko">그렇다 하더라도, 지리학을 제외하고는, 좌표로 지도에 연구 지역을 정확히 위치시키는 것에 관심이 거의 없었다. <span class="sp-note">★ be that as it may: "그렇다 하더라도" = nevertheless / except in geography: 삽입구</span></div>
+        <div class="sp-en"><span class="vw">Be that as it may<span class="tt">그렇다 하더라도</span></span>, <span class="subj">there</span> <span class="vb">was</span> very little interest, except in geography, to precisely locate a study area on a map with coordinates.</div>
+        <div class="sp-ko">그렇다 하더라도, <span class="sv-slash">/</span> 지리학을 제외하고는, 좌표로 지도에 연구 지역을 정확히 위치시키는 것에 관심이 거의 <span class="vb">없었다</span>. <span class="sp-note">★ be that as it may: '그렇다 하더라도' / there was: 존재 구문</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Geography <span class="vw">persisted<span class="tt">지속하다, 고집하다</span></span>, and finally convinced the rest of us, <span class="gr">[that place was fundamentally important to understand human-environment dynamics]</span>.</div>
-        <div class="sp-ko">지리학은 지속적으로 주장했고, 마침내 나머지 사람들을 납득시켰다, / 장소가 인간-환경 역학을 이해하는 데 근본적으로 중요하다는 것을. <span class="sp-note">★ convince O that ~: "O에게 ~라는 것을 납득시키다" (5형식)</span></div>
+        <div class="sp-en"><span class="subj">Geography</span> <span class="vb">persisted</span>, and finally <span class="vb">convinced</span> the rest of us, <span class="sv-slash">/</span> <span class="gr">[that <span class="subj">place</span> <span class="vb">was</span> fundamentally important to understand human-environment dynamics]</span>.</div>
+        <div class="sp-ko"><span class="subj">지리학</span>은 <span class="vb">지속적으로 주장했고</span>, 마침내 나머지 사람들을 <span class="vb">납득시켰다</span>, <span class="sv-slash">/</span> <span class="subj">장소</span>가 인간-환경 역학을 이해하는 데 근본적으로 <span class="vb">중요하다</span>는 것을. <span class="sp-note">★ convince O that ~: 목적어절 / that절 안에도 S/V 표기</span></div>
       </div>
     </div>
     <div class="gr-note">
@@ -532,32 +539,32 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
     <div class="card-lbl">02 구문 해석 — 완성된 지문 &amp; 구문별 해석</div>
     <div class="passage-box">
       <div class="sp">
-        <div class="sp-en">[도입] The idea <span class="gr">[that our senses may be <span class="vw">deceiving<span class="tt">속이다</span></span> us]</span> was <span class="vw">taken up<span class="tt">(주제를) 다루다</span></span> by the French philosopher and mathematician René Descartes.</div>
-        <div class="sp-ko">우리의 감각이 우리를 속이고 있을 수 있다는 생각은 프랑스의 철학자이자 수학자인 René Descartes에 의해 다루어졌다. <span class="sp-note">★ The idea that ~ (동격 that절) / be taken up: "다루어지다" (수동태)</span></div>
+        <div class="sp-en">[도입] <span class="subj">The idea <span class="gr">[that our senses may be <span class="vb">deceiving</span> us]</span></span> <span class="sv-slash">//</span> <span class="vb">was taken up</span> by the French philosopher and mathematician René Descartes.</div>
+        <div class="sp-ko"><span class="subj">우리의 감각이 우리를 속이고 있을 수 있다는 생각</span>은 <span class="sv-slash">//</span> 프랑스의 철학자이자 수학자인 René Descartes에 의해 <span class="vb">다루어졌다</span>. <span class="sp-note">★ The idea that ~ (동격 that절) / was taken up: 수동태</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">[(C)-1] He realized <span class="gr">[that sometimes our senses give us a false impression]</span> — a straight stick in a glass of water appears to be <span class="vw">bent<span class="tt">구부러진</span></span>, for example.</div>
-        <div class="sp-ko">그는 때때로 우리의 감각이 우리에게 거짓 인상을 줄 수 있다는 것을 깨달았다 — 예를 들어 물 한 잔 속의 곧은 막대기가 구부러진 것처럼 보인다. <span class="sp-note">★ realized that ~: 목적어절 / appear to be bent: "구부러진 것처럼 보이다"</span></div>
+        <div class="sp-en">[(C)-1] <span class="subj">He</span> <span class="vb">realized</span> <span class="gr">[that sometimes <span class="subj">our senses</span> <span class="vb">give</span> us a false impression]</span> <span class="sv-slash">/</span> — <span class="subj">a straight stick in a glass of water</span> <span class="vb">appears</span> to be <span class="vw">bent<span class="tt">구부러진</span></span>, for example.</div>
+        <div class="sp-ko"><span class="subj">그</span>는 <span class="sv-slash">//</span> 때때로 <span class="subj">우리의 감각</span>이 우리에게 거짓 인상을 <span class="vb">준다</span>는 것을 <span class="vb">깨달았다</span> <span class="sv-slash">/</span> — 예를 들어 <span class="subj">물 한 잔 속의 곧은 막대기</span>가 구부러진 것처럼 <span class="vb">보인다</span>. <span class="sp-note">★ realized that ~: 목적어절 / a straight stick appears: 예시문 S+V도 표기</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">[(C)-2] And <span class="gr">if we know that they can be unreliable</span>, it would be wrong to trust them completely — everything <span class="gr">[that we experience with our senses]</span> might be false.</div>
-        <div class="sp-ko">그리고 만약 우리가 그것들이 신뢰할 수 없다는 것을 안다면, 그것들을 완전히 신뢰하는 것은 잘못일 것이다 — 우리가 감각으로 경험하는 모든 것이 거짓일 수 있다. <span class="sp-note">★ it would be wrong to V: 가주어·진주어 가정법 / everything that ~: 관계절</span></div>
+        <div class="sp-en">[(C)-2] And <span class="gr">if <span class="subj">we</span> <span class="vb">know</span> that they can be unreliable</span>, <span class="sv-slash">/</span> <span class="subj">it</span> <span class="vb">would be</span> wrong to trust them completely <span class="sv-slash">/</span> — <span class="subj">everything <span class="gr">[that we experience with our senses]</span></span> <span class="vb">might be</span> false.</div>
+        <div class="sp-ko">그리고 <span class="gr">만약 <span class="subj">우리</span>가 그것들이 신뢰할 수 없다는 것을 <span class="vb">안다면</span></span>, <span class="sv-slash">/</span> <span class="subj">it</span>은 그것들을 완전히 신뢰하는 것이 <span class="vb">잘못일 것이다</span> <span class="sv-slash">/</span> — <span class="subj">우리가 감각으로 경험하는 모든 것</span>이 <span class="vb">거짓일 수 있다</span>. <span class="sp-note">★ if절: 조건 부사절 / it would be wrong to V: 가주어·진주어 / everything that ~: 관계절</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">[(A)-1] It might even be <span class="gr">[that we are asleep, and that the world we are experiencing is no more than a dream, or that God or some <span class="vw">mischievous<span class="tt">장난기 많은</span></span> power is making us believe things that are not really true]</span>.</div>
-        <div class="sp-ko">심지어 우리가 잠들어 있거나, 우리가 경험하는 세계가 꿈에 불과하거나, 신이나 장난기 많은 힘이 우리로 하여금 사실이 아닌 것들을 믿게 만들고 있을 수도 있다. <span class="sp-note">★ It might be that ~: 가주어·진주어 / that절 3개 병렬 / no more than: "~에 불과한"</span></div>
+        <div class="sp-en">[(A)-1] <span class="subj">It</span> <span class="vb">might even be</span> <span class="gr">[that <span class="subj">we</span> <span class="vb">are</span> asleep, <span class="sv-slash">/</span> and that <span class="subj">the world we are experiencing</span> <span class="vb">is</span> no more than a dream, <span class="sv-slash">/</span> or that <span class="subj">God or some mischievous power</span> <span class="vb">is making</span> us believe things that are not really true]</span>.</div>
+        <div class="sp-ko"><span class="subj">It</span>은 <span class="vb">일 수도 있다</span> <span class="sv-slash">/</span> <span class="subj">우리</span>가 잠들어 있거나, <span class="sv-slash">/</span> <span class="subj">우리가 경험하는 세계</span>가 꿈에 불과하거나, <span class="sv-slash">/</span> <span class="subj">신이나 장난기 많은 힘</span>이 우리로 하여금 사실이 아닌 것들을 믿게 <span class="vb">만들고 있을</span>. <span class="sp-note">★ it might be that ~: 가주어·진주어 / that절 3개 병렬 / no more than: '~에 불과한'</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">[(A)-2] If that is the case, though, we can never know anything for sure.</div>
-        <div class="sp-ko">그러나 만약 그것이 사실이라면, 우리는 어떤 것도 확실하게 알 수 없다. <span class="sp-note">★ If that is the case: "만약 그것이 사실이라면" / for sure: "확실히"</span></div>
+        <div class="sp-en">[(A)-2] If <span class="subj">that</span> <span class="vb">is</span> the case, though, <span class="sv-slash">/</span> <span class="subj">we</span> <span class="vb">can never know</span> anything for sure.</div>
+        <div class="sp-ko">그러나 만약 <span class="subj">그것</span>이 <span class="vb">사실이라면</span>, <span class="sv-slash">/</span> <span class="subj">우리</span>는 어떤 것도 확실하게 <span class="vb">알 수 없다</span>. <span class="sp-note">★ If that is the case: '만약 그것이 사실이라면' / for sure: '확실히'</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">[(B)-1] But Descartes then showed <span class="gr">[that there was one thing he could be sure of]</span>: In order to be <span class="vw">deceived<span class="tt">속임을 당하다</span></span>, he must exist, and exist as a thing that thinks.</div>
-        <div class="sp-ko">그러나 데카르트는 그가 확신할 수 있는 한 가지가 있다는 것을 보여주었다: / 속임을 당하기 위해서는 그는 존재해야 하고, 생각하는 것으로 존재해야 한다. <span class="sp-note">★ show that ~: "~라는 것을 보여주다" / in order to be deceived: "속임을 당하기 위해서는"</span></div>
+        <div class="sp-en">[(B)-1] But <span class="subj">Descartes</span> <span class="vb">showed</span> <span class="gr">[that there <span class="vb">was</span> one thing <span class="subj">he</span> <span class="vb">could be sure of</span>]</span>: <span class="sv-slash">/</span> In order to be <span class="vw">deceived<span class="tt">속임을 당하다</span></span>, <span class="subj">he</span> <span class="vb">must exist</span>, and <span class="vb">exist</span> as a thing <span class="gr">that <span class="vb">thinks</span></span>.</div>
+        <div class="sp-ko"><span class="subj">데카르트</span>는 <span class="vb">보여주었다</span> <span class="sv-slash">/</span> <span class="gr"><span class="subj">그</span>가 확신할 수 있는 한 가지가 <span class="vb">있다</span>는 것을</span>: <span class="sv-slash">/</span> 속임을 당하기 위해서는, <span class="subj">he</span>는 <span class="vb">존재해야 하고</span>, 생각하는 것으로 <span class="vb">존재해야 한다</span>. <span class="sp-note">★ show that ~: 목적어절 / there was: 존재 구문 / that thinks: 관계절</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">[(B)-2] So, although his senses could not be trusted, he could be sure he existed as something <span class="gr">[that was capable of thinking and reasoning]</span>.</div>
-        <div class="sp-ko">따라서 비록 그의 감각은 신뢰할 수 없었지만, 그는 생각하고 추론할 수 있는 무언가로 존재한다는 것을 확신할 수 있었다. <span class="sp-note">★ although(양보절) / be capable of -ing: "~할 수 있는" → cogito ergo sum</span></div>
+        <div class="sp-en">[(B)-2] So, although <span class="subj">his senses</span> <span class="vb">could not be trusted</span>, <span class="sv-slash">/</span> <span class="subj">he</span> <span class="vb">could be sure</span> <span class="subj">he</span> <span class="vb">existed</span> as something <span class="gr">[that <span class="vb">was capable of</span> thinking and reasoning]</span>.</div>
+        <div class="sp-ko">따라서 비록 <span class="subj">그의 감각</span>은 <span class="vb">신뢰할 수 없었지만</span>, <span class="sv-slash">/</span> <span class="subj">그</span>는 <span class="vb">확신할 수 있었다</span> <span class="subj">그</span>가 생각하고 추론할 수 있는 무언가로 <span class="vb">존재한다</span>는 것을. <span class="sp-note">★ although(양보절) / be capable of -ing: '~할 수 있는' → cogito ergo sum</span></div>
       </div>
     </div>
     <div class="gr-note">
@@ -659,32 +666,32 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
     <div class="card-lbl">02 구문 해석 — 완성된 지문 &amp; 구문별 해석</div>
     <div class="passage-box">
       <div class="sp">
-        <div class="sp-en">Hunters in the Ache tribe, <span class="gr">living in the Paraguayan jungle</span>, have a lot of <span class="vw">ups and downs<span class="tt">기복, 좋을 때와 나쁠 때</span></span> in their success at the hunt.</div>
-        <div class="sp-ko">파라과이 정글에 사는 아체 부족의 사냥꾼들은 사냥의 성공에 있어 많은 기복이 있다. <span class="sp-note">★ living in ~: 현재분사구, Hunters 수식</span></div>
+        <div class="sp-en"><span class="subj">Hunters in the Ache tribe, <span class="gr">living in the Paraguayan jungle,</span></span> <span class="vb">have</span> a lot of <span class="vw">ups and downs<span class="tt">기복, 좋을 때와 나쁠 때</span></span> in their success at the hunt.</div>
+        <div class="sp-ko"><span class="subj">파라과이 정글에 사는 아체 부족의 사냥꾼들</span>은 <span class="sv-slash">//</span> 사냥의 성공에 있어 많은 기복이 <span class="vb">있다</span>. <span class="sp-note">★ living in ~: 현재분사구, Hunters 수식</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Some days they bring home much more food than they could possibly eat; other days they come home empty-handed.</div>
-        <div class="sp-ko">어떤 날은 그들이 먹을 수 있는 것보다 훨씬 더 많은 음식을 집으로 가져온다; 다른 날은 빈손으로 집에 온다. <span class="sp-note">★ more ~ than they could possibly eat: "먹을 수 있는 것보다 더 많은" / empty-handed: "빈손으로"</span></div>
+        <div class="sp-en">Some days <span class="subj">they</span> <span class="vb">bring</span> home much more food than <span class="subj">they</span> <span class="vb">could possibly eat</span>; <span class="sv-slash">/</span> other days <span class="subj">they</span> <span class="vb">come</span> home empty-handed.</div>
+        <div class="sp-ko">어떤 날은 <span class="subj">그들</span>이 먹을 수 있는 것보다 훨씬 더 많은 음식을 집으로 <span class="vb">가져오고</span>; <span class="sv-slash">/</span> 다른 날은 <span class="subj">그들</span>이 빈손으로 집에 <span class="vb">온다</span>. <span class="sp-note">★ than they could possibly eat: 비교 부사절 S+V도 표기</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">( <span class="nc">①</span> ) <span class="gr">If a man caught a wild pig and hoarded it for himself and his family</span>, much of it would go to waste (there are no deep-freeze refrigerators in the Paraguayan jungle).</div>
-        <div class="sp-ko">만약 어떤 남자가 멧돼지를 잡아 자신과 가족을 위해 비축한다면, 그것의 많은 부분이 낭비될 것이다 (파라과이 정글에는 냉동 냉장고가 없다). <span class="sp-note">★ 가정법 과거: If ~ caught, ~ would go to waste (현재 사실의 반대 가정)</span></div>
+        <div class="sp-en">( ① ) <span class="gr">If <span class="subj">a man</span> <span class="vb">caught</span> a wild pig and <span class="vb">hoarded</span> it for himself and his family</span>, <span class="sv-slash">/</span> <span class="subj">much of it</span> <span class="vb">would go</span> to waste <span class="sv-slash">/</span> (<span class="subj">there</span> <span class="vb">are</span> no deep-freeze refrigerators in the Paraguayan jungle).</div>
+        <div class="sp-ko">만약 <span class="subj">어떤 남자</span>가 멧돼지를 <span class="vb">잡아</span> 자신과 가족을 위해 <span class="vb">비축한다면</span>, <span class="sv-slash">/</span> <span class="subj">그것의 많은 부분</span>이 낭비될 <span class="vb">것이다</span> <span class="sv-slash">/</span> (<span class="subj">파라과이 정글에</span>는 냉동 냉장고가 <span class="vb">없다</span>). <span class="sp-note">★ 가정법 과거: If ~ caught, ~ would go / there are: 존재 구문도 표기</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">( <span class="nc">②</span> ) During unlucky periods, individual hunters and their families would starve.</div>
-        <div class="sp-ko">운이 좋지 않은 기간에는 개인 사냥꾼들과 그 가족들이 굶주릴 것이다. <span class="sp-note">★ would starve: 가정법 과거의 결과절 (비축할 경우의 결과)</span></div>
+        <div class="sp-en">( ② ) During unlucky periods, <span class="subj">individual hunters and their families</span> <span class="vb">would starve</span>.</div>
+        <div class="sp-ko">운이 좋지 않은 기간에는 <span class="sv-slash">/</span> <span class="subj">개인 사냥꾼들과 그 가족들</span>이 <span class="vb">굶주릴 것이다</span>. <span class="sp-note">★ would starve: 가정법 과거의 결과</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">[ 삽입 위치 <span class="nc" style="border-color:var(--orange);color:var(--orange);">④</span> ] <span style="color:var(--accent2);">Instead of <span class="gr">living by a philosophy of "rugged individualism,"</span> however, hunters <span class="gr">[who have a lucky day]</span> share their meat with other families.</span></div>
-        <div class="sp-ko">그러나 "단호한 개인주의" 철학에 따라 살기보다는, 운이 좋은 날을 보낸 사냥꾼들이 다른 가족들과 고기를 나눈다. <span class="sp-note">★ Instead of -ing: "~하는 대신에" / however(역접) / who절: 관계절</span></div>
+        <div class="sp-en">[ 삽입 위치 <span class="nc" style="border-color:var(--orange);color:var(--orange);">④</span> ] Instead of living by a philosophy of "rugged individualism," however, <span class="sv-slash">/</span> <span class="subj">hunters <span class="gr">[who <span class="vb">have</span> a lucky day]</span></span> <span class="vb">share</span> their meat with other families.</div>
+        <div class="sp-ko">"단호한 개인주의" 철학에 따라 살기보다는, 그러나, <span class="sv-slash">/</span> <span class="subj">운이 좋은 날을 보낸 사냥꾼들</span>이 다른 가족들과 고기를 <span class="vb">나눈다</span>. <span class="sp-note">★ Instead of -ing: '~하는 대신에' / who have a lucky day: 관계절 S+V도 표기</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">( <span class="nc">③</span> ) And they don't just share a little; they share a lot — fully 90%. ( <span class="nc">④</span> ) In exchange for this generosity, their neighbors share with them on days <span class="gr">[when the luck runs the other way]</span>.</div>
-        <div class="sp-ko">그리고 그들은 조금만 나누는 것이 아니라; 많이 나눈다 — 완전히 90%를. / 이 관대함의 대가로, 그들의 이웃들은 운이 반대로 흐르는 날에 그들과 나눈다. <span class="sp-note">★ In exchange for: "~의 대가로" / when절: days 수식</span></div>
+        <div class="sp-en">( ③ ) And <span class="subj">they</span> <span class="vb">don't just share</span> a little; <span class="subj">they</span> <span class="vb">share</span> a lot — fully 90%. <span class="sv-slash">//</span> ( ④ ) In exchange for this generosity, <span class="subj">their neighbors</span> <span class="vb">share</span> with them on days <span class="gr">[when <span class="subj">the luck</span> <span class="vb">runs</span> the other way]</span>.</div>
+        <div class="sp-ko"><span class="subj">그들</span>은 조금만 <span class="vb">나누는 것이 아니라</span>; <span class="subj">그들</span>은 많이 — 완전히 90%를 <span class="vb">나눈다</span>. <span class="sv-slash">//</span> 이 관대함의 대가로, <span class="subj">그들의 이웃들</span>은 <span class="subj">운</span>이 반대로 <span class="vb">흐르는</span> 날에 그들과 <span class="vb">나눈다</span>. <span class="sp-note">★ In exchange for: '~의 대가로' / when절: days 수식 / 관계절 안 S+V도 표기</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">( <span class="nc">⑤</span> ) By <span class="gr">exchanging resources, particularly <span class="gr">those that are unpredictable and uncertain (like meat from the hunt, as opposed to vegetable crops)</span></span>, the group provides a mutual <span class="vw">insurance policy<span class="tt">보험 증서</span></span> against starvation.</div>
-        <div class="sp-ko">자원들, 특히 예측 불가능하고 불확실한 것들(채소 작물과 달리 사냥에서 나온 고기처럼)을 교환함으로써, 그 집단은 기아에 대한 상호 보험 정책을 제공한다. <span class="sp-note">★ by -ing: 수단 / as opposed to: "~와는 달리, ~에 반해서" / mutual insurance policy: "상호 보험 정책"</span></div>
+        <div class="sp-en">( ⑤ ) By <span class="gr">exchanging resources, particularly <span class="subj">those</span> that are unpredictable and uncertain (like meat from the hunt, as opposed to vegetable crops)</span>, <span class="sv-slash">/</span> <span class="subj">the group</span> <span class="vb">provides</span> a mutual <span class="vw">insurance policy<span class="tt">보험 증서</span></span> against starvation.</div>
+        <div class="sp-ko">자원들, 특히 예측 불가능하고 불확실한 것들을 <span class="vb">교환함</span>으로써, <span class="sv-slash">/</span> <span class="subj">그 집단</span>은 기아에 대한 상호 보험 정책을 <span class="vb">제공한다</span>. <span class="sp-note">★ by -ing: 수단 / as opposed to: '~와는 달리'</span></div>
       </div>
     </div>
     <div class="gr-note">
