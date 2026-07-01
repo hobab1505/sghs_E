@@ -78,6 +78,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
 .sp{margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border2);}
 .sp:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
 .sp-en{font-family:'Crimson Pro',serif;font-size:1.05rem;line-height:1.9;color:var(--ink);}
+.subj{color:#1a4b8c;font-weight:600;}
+.verb{color:#1a6b3a;font-weight:600;}
+.subj .gr{color:#1a4b8c;background:rgba(26,75,140,.10);}
+.verb .gr{color:#1a6b3a;}
+.slash{color:#b0a896;font-weight:400;margin:0 3px;}
+.sv-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;padding:8px 14px;background:var(--bg);border-radius:7px;font-size:.74rem;}
+.sv-legend span{display:inline-flex;align-items:center;gap:5px;}
+.sv-dot{display:inline-block;width:11px;height:11px;border-radius:50%;}
 .sp-ko{font-size:.81rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:3px solid var(--border);margin-top:5px;}
 .sp-note{display:inline-block;font-size:.74rem;color:var(--green);font-weight:600;background:var(--green-bg);padding:1px 6px;border-radius:3px;margin-left:6px;}
 .vw{color:var(--blue-light);font-weight:600;cursor:help;border-bottom:1.5px dotted var(--blue-light);position:relative;display:inline;}
@@ -266,28 +274,29 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
   <div class="card">
     <div class="card-lbl">02 구문 해석 — 원문 전체</div>
     <div class="passage-box">
-      <div class="sp">
-        <div class="sp-en">Today's cultural tourist is <span class="gr">just as likely to be in search of 'popular', 'everyday' or 'street' culture</span> as they are likely to visit a <span class="vw">heritage<span class="tt">문화유산</span></span> site or a museum.</div>
+      <div class="sv-legend"><span><span class="sv-dot" style="background:#1a4b8c;"></span> 주어(S)</span><span><span class="sv-dot" style="background:#1a6b3a;"></span> 동사(V)</span><span><span class="slash">/</span> 의미 단위 끊기</span><span><span class="gr" style="padding:1px 4px;">초록 음영</span> = 구·절 묶음</span></div>
+          <div class="sp">
+        <div class="sp-en"><span class="subj">Today's cultural tourist</span> <span class="slash">/</span> <span class="verb">is</span> <span class="gr">just as likely to be in search of 'popular', 'everyday' or 'street' culture</span> <span class="slash">/</span> as they are likely to visit a <span class="vw">heritage<span class="tt">문화유산</span></span> site or a museum.</div>
         <div class="sp-ko">오늘날의 문화 관광객은 문화유산 명소나 박물관을 방문할 가능성만큼이나 '대중적', '일상적', 또는 '거리' 문화를 탐색할 가능성이 있다. <span class="sp-note">★ just as ~ as: "~와 마찬가지로 ~한" (원급 비교) / be in search of ~: ~을 탐색하다</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">The museum seems to have <span class="gr">① lost</span> its <span class="vw">dominant<span class="tt">지배적인</span></span> role as a factory of meaning in (post)modern society, // so cultural tourists have gone in search of meaning elsewhere.</div>
+        <div class="sp-en"><span class="subj">The museum</span> <span class="slash">/</span> <span class="verb">seems to have</span> <span class="gr">① lost</span> its <span class="vw">dominant<span class="tt">지배적인</span></span> role as a factory of meaning in (post)modern society, <span class="slash">//</span> so <span class="subj">cultural tourists</span> <span class="slash">/</span> <span class="verb">have gone</span> in search of meaning elsewhere.</div>
         <div class="sp-ko">박물관은 (탈)현대 사회에서 의미의 공장으로서의 지배적 역할을 잃은 것처럼 보이며, / 그래서 문화 관광객들은 다른 곳에서 의미를 찾기 시작했다. <span class="sp-note">★ seem to have p.p.: "~한 것처럼 보인다"(완료 부정사) / so: 결과 접속사</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">The <span class="vw">predominant<span class="tt">주된, 지배적인</span></span> direction of <span class="ul-word">② expansion</span> has been into 'everyday life'.</div>
+        <div class="sp-en"><span class="subj">The <span class="vw">predominant<span class="tt">주된, 지배적인</span></span> direction of <span class="ul-word">② expansion</span></span> <span class="slash">/</span> <span class="verb">has been</span> into 'everyday life'.</div>
         <div class="sp-ko">② 확장의 주된 방향은 '일상 생활'로 향했다. <span class="sp-note">★ predominant: "주된, 지배적인"(= dominant) / ② expansion: 적절 — 일상 생활로의 확장이 문맥상 자연스러움</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Cultural tourism is <span class="gr">as much based on experiencing as it is on seeing</span>; therefore, Raymond Williams' definitions of culture as a whole way of life as well as the arts and learning are particularly relevant here.</div>
+        <div class="sp-en"><span class="subj">Cultural tourism</span> <span class="slash">/</span> <span class="verb">is</span> <span class="gr">as much based on experiencing as it is on seeing</span>; <span class="slash">/</span> therefore, <span class="subj">Raymond Williams' definitions of culture as a whole way of life as well as the arts and learning</span> <span class="slash">/</span> <span class="verb">are</span> particularly relevant here.</div>
         <div class="sp-ko">문화 관광은 보는 것 못지않게 경험하는 것에도 기반을 두고 있다; 따라서, 레이먼드 윌리엄스의 예술과 학습뿐 아니라 삶의 전체적인 방식으로서의 문화 정의가 여기서 특히 관련이 있다. <span class="sp-note">★ as much A as B: "B 못지않게 A" / as well as: "뿐만 아니라"</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Past definitions of cultural tourism have placed too <span class="wrong-word">③ little</span> <span class="right-word">(→ much)</span> emphasis on cultural tourism as a form of arts or <span class="vw">heritage<span class="tt">유산</span></span> tourism in its narrowest sense; for example, visiting museums, monuments, galleries and theatres.</div>
+        <div class="sp-en"><span class="subj">Past definitions of cultural tourism</span> <span class="slash">/</span> <span class="verb">have placed</span> too <span class="wrong-word">③ little</span> <span class="right-word">(→ much)</span> emphasis on cultural tourism as a form of arts or <span class="vw">heritage<span class="tt">유산</span></span> tourism in its narrowest sense; <span class="slash">/</span> for example, visiting museums, monuments, galleries and theatres.</div>
         <div class="sp-ko">과거의 문화 관광 정의들은 가장 좁은 의미에서 예술 또는 유산 관광의 형태로서의 문화 관광에 너무 <span class="right-word">많은</span> 강조를 두어왔다; 예를 들어, 박물관, 기념물, 갤러리, 극장 방문. <span class="sp-note">★ ③ little → much (오답): 문맥상 과거 정의가 좁은 유산 관광에 "너무 많이" 집중한 것이 문제 / have placed: 현재완료(과거부터 지속된 경향)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Cultural tourists are also interested in the more <span class="ul-word">④ experiential</span> aspects of culture. In an international context, particularly in the context of indigenous or <span class="vw">ethnic<span class="tt">민족의</span></span> tourism, the way of life of a people can be a central focus, // <span class="gr">where the traveller is ⑤ motivated primarily by first-hand, authentic or intimate contact</span> with people <span class="gr">{whose ethnic or cultural background is different from their own}</span>.</div>
+        <div class="sp-en"><span class="subj">Cultural tourists</span> <span class="slash">/</span> <span class="verb">are</span> also interested in the more <span class="ul-word">④ experiential</span> aspects of culture. <span class="slash">/</span> In an international context, particularly in the context of indigenous or <span class="vw">ethnic<span class="tt">민족의</span></span> tourism, <span class="slash">/</span> <span class="subj">the way of life of a people</span> <span class="slash">/</span> <span class="verb">can be</span> a central focus, <span class="slash">//</span> <span class="gr">where the traveller is ⑤ motivated primarily by first-hand, authentic or intimate contact</span> with people <span class="gr">{whose ethnic or cultural background is different from their own}</span>.</div>
         <div class="sp-ko">문화 관광객들은 또한 문화의 더 체험적인 측면에도 관심을 가진다. / 국제적 맥락에서, 특히 원주민 또는 민족 관광의 맥락에서, 한 민족의 삶의 방식은 중심 초점이 될 수 있으며, / 거기서 여행자는 주로 자신과 다른 민족적 또는 문화적 배경을 가진 사람들과의 직접적이고 진정성 있거나 친밀한 접촉에 의해 동기부여 된다. <span class="sp-note">★ where ~: 관계부사절(context 부연) / whose ~: 소유격 관계절(people 수식)</span></div>
       </div>
     </div>
@@ -391,24 +400,25 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
   <div class="card">
     <div class="card-lbl">02 구문 해석 — 원문 전체</div>
     <div class="passage-box">
-      <div class="sp">
-        <div class="sp-en">Although many U.S. Americans consider mathematics boring and <span class="vw">tedious<span class="tt">따분한</span></span>, all forms of <span class="vw">standardized<span class="tt">표준화된</span></span> rankings involve figures and numbers.</div>
+      <div class="sv-legend"><span><span class="sv-dot" style="background:#1a4b8c;"></span> 주어(S)</span><span><span class="sv-dot" style="background:#1a6b3a;"></span> 동사(V)</span><span><span class="slash">/</span> 의미 단위 끊기</span><span><span class="gr" style="padding:1px 4px;">초록 음영</span> = 구·절 묶음</span></div>
+          <div class="sp">
+        <div class="sp-en">Although many U.S. Americans consider mathematics boring and <span class="vw">tedious<span class="tt">따분한</span></span>, <span class="slash">/</span> <span class="subj">all forms of <span class="vw">standardized<span class="tt">표준화된</span></span> rankings</span> <span class="slash">/</span> <span class="verb">involve</span> figures and numbers.</div>
         <div class="sp-ko">많은 미국인들이 수학을 지루하고 따분하다고 여기지만, 모든 형태의 표준화된 순위는 수치와 숫자를 수반한다. <span class="sp-note">★ Although: 양보 접속사 / consider + O + C: "O를 C라고 여기다"(5형식)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">When ranking <span class="vw">quarterbacks<span class="tt">쿼터백</span></span>, for instance, the NFL standardizes the ranking process by defining different <span class="vw">numerical<span class="tt">수치의</span></span> categories <span class="gr">{that cover all aspects of the position}</span>.</div>
+        <div class="sp-en">When ranking <span class="vw">quarterbacks<span class="tt">쿼터백</span></span>, for instance, <span class="slash">/</span> <span class="subj">the NFL</span> <span class="slash">/</span> <span class="verb">standardizes</span> the ranking process by defining different <span class="vw">numerical<span class="tt">수치의</span></span> categories <span class="gr">{that cover all aspects of the position}</span>.</div>
         <div class="sp-ko">예를 들어, 쿼터백을 순위 매길 때, NFL은 그 포지션의 모든 측면을 다루는 다양한 수치 범주를 정의함으로써 순위 과정을 표준화한다. <span class="sp-note">★ by defining ~: 수단의 by + 동명사 / that cover ~: 관계절(categories 수식)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Each quarterback has certain numbers and figures, <span class="gr">ranging from "percentage of pass completions" to "interceptions over touchdowns" to "number of yards passed per game."</span></div>
+        <div class="sp-en"><span class="subj">Each quarterback</span> <span class="slash">/</span> <span class="verb">has</span> certain numbers and figures, <span class="gr">ranging from "percentage of pass completions" to "interceptions over touchdowns" to "number of yards passed per game."</span></div>
         <div class="sp-ko">각 쿼터백은 특정 숫자와 수치를 가지는데, "패스 성공률"부터 "터치다운 대비 패스 차단 수", "경기당 통과 야드 수"에 이르기까지 다양하다. <span class="sp-note">★ ranging from A to B (to C): "A에서 B까지 (그리고 C까지) 다양하다"(분사구문)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">The quarterback's <span class="vw">livelihood<span class="tt">생계</span></span> depends on those numbers. To negotiate a raise, a quarterback has to improve his numbers, and when a quarterback is <span class="vw">benched<span class="tt">출전 제외되다</span></span>, it is often due to unsatisfactory numbers.</div>
+        <div class="sp-en"><span class="subj">The quarterback's <span class="vw">livelihood<span class="tt">생계</span></span></span> <span class="slash">/</span> <span class="verb">depends on</span> those numbers. <span class="slash">/</span> To negotiate a raise, <span class="slash">/</span> <span class="subj">a quarterback</span> <span class="slash">/</span> <span class="verb">has to improve</span> his numbers, <span class="slash">/</span> and when a quarterback is <span class="vw">benched<span class="tt">출전 제외되다</span></span>, <span class="slash">/</span> <span class="subj">it</span> <span class="slash">/</span> <span class="verb">is</span> often due to unsatisfactory numbers.</div>
         <div class="sp-ko">쿼터백의 생계는 그 숫자들에 달려 있다. / 연봉 인상을 협상하기 위해서는 숫자를 향상시켜야 하고, 쿼터백이 출전에서 제외될 때 그것은 종종 불만족스러운 숫자들 때문이다. <span class="sp-note">★ To negotiate: 목적 부사구(= In order to negotiate) / due to: "~때문에"(전치사)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Similarly, at least 13 million Americans belong to virtual football leagues // in which participants select players from different professional teams; // at the end of the season, the participant <span class="gr">{whose virtual team has amassed the most points, defined by each virtual league differently}</span>, wins the jackpot.</div>
+        <div class="sp-en">Similarly, <span class="subj">at least 13 million Americans</span> <span class="slash">/</span> <span class="verb">belong to</span> virtual football leagues <span class="slash">//</span> in which participants select players from different professional teams; <span class="slash">//</span> at the end of the season, <span class="subj">the participant <span class="gr">{whose virtual team has amassed the most points, defined by each virtual league differently}</span></span>, <span class="slash">/</span> <span class="verb">wins</span> the jackpot.</div>
         <div class="sp-ko">마찬가지로, 최소 1300만 명의 미국인들이 참가자들이 서로 다른 프로 팀의 선수들을 선발하는 가상 풋볼 리그에 속해 있다; / 시즌 말에 각 가상 리그마다 다르게 정의된 포인트를 가장 많이 모은 가상 팀을 보유한 참가자가 잭팟을 딴다. <span class="sp-note">★ in which: 관계사구(= where) / whose virtual team has amassed ~: 소유격 관계절 / defined by ~: 수동 분사구(삽입)</span></div>
       </div>
     </div>
@@ -527,32 +537,33 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
   <div class="card">
     <div class="card-lbl">02 구문 해석 — 원문 전체</div>
     <div class="passage-box">
-      <div class="sp">
-        <div class="sp-en">The sports historian can (as can historians in other areas) explore beyond the obvious and add context to the events <span class="gr">being described</span>.</div>
+      <div class="sv-legend"><span><span class="sv-dot" style="background:#1a4b8c;"></span> 주어(S)</span><span><span class="sv-dot" style="background:#1a6b3a;"></span> 동사(V)</span><span><span class="slash">/</span> 의미 단위 끊기</span><span><span class="gr" style="padding:1px 4px;">초록 음영</span> = 구·절 묶음</span></div>
+          <div class="sp">
+        <div class="sp-en"><span class="subj">The sports historian</span> <span class="slash">/</span> <span class="verb">can</span> (as can historians in other areas) <span class="verb">explore</span> beyond the obvious <span class="slash">/</span> and <span class="verb">add</span> context to the events <span class="gr">being described</span>.</div>
         <div class="sp-ko">스포츠 역사가는 (다른 분야의 역사가들과 마찬가지로) 명백한 것을 넘어 탐구하고 묘사되고 있는 사건들에 맥락을 추가할 수 있다. <span class="sp-note">★ as can historians in other areas: 삽입 도치(= as historians in other areas can) / being described: 현재분사(수동, 진행 중인 묘사)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Let us head south, to the <span class="vw">picturesque<span class="tt">그림 같이 아름다운</span></span> Adelaide Oval in South Australia, // <span class="gr">where in 1932 a cricket Test match was played between Australia and England</span>.</div>
+        <div class="sp-en"><span class="verb">Let</span> <span class="subj">us</span> <span class="verb">head</span> south, to the <span class="vw">picturesque<span class="tt">그림 같이 아름다운</span></span> Adelaide Oval in South Australia, <span class="slash">//</span> <span class="gr">where in 1932 a cricket Test match was played between Australia and England</span>.</div>
         <div class="sp-ko">남쪽의, 남호주의 그림 같이 아름다운 애들레이드 오벌로 이동해 보자, / 거기서는 1932년에 호주와 영국 사이에 크리켓 테스트 매치가 열렸다. <span class="sp-note">★ Let us V: "~하자"(청유) / where ~: 관계부사절(Adelaide Oval 부연)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">This was the <span class="vw">infamous<span class="tt">악명 높은</span></span> Bodyline Test match // <span class="gr">in which, to counter the brilliance of the Australian batsmen, the English bowlers operated a strategy of bowling short-pitched deliveries aimed at the batsmen's bodies</span>.</div>
+        <div class="sp-en"><span class="subj">This</span> <span class="slash">/</span> <span class="verb">was</span> the <span class="vw">infamous<span class="tt">악명 높은</span></span> Bodyline Test match <span class="slash">//</span> <span class="gr">in which, to counter the brilliance of the Australian batsmen, the English bowlers operated a strategy of bowling short-pitched deliveries aimed at the batsmen's bodies</span>.</div>
         <div class="sp-ko">이것은 악명 높은 보디라인 테스트 매치였는데, 거기서 호주 타자들의 탁월함에 대응하기 위해 / 영국 투수들은 타자들의 몸을 겨냥한 짧게 던진 투구 전략을 구사했다. <span class="sp-note">★ in which ~: 관계절(the Bodyline Test match 내용 설명) / to counter ~: 목적 부사구 / aimed at ~: 수동 분사구(deliveries 수식)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">【②에 삽입】 This led to <span class="vw">hostile<span class="tt">적대적인</span></span> crowd protests and a telegram from the Australian Cricket Board to Marylebone Cricket Club, <span class="gr">complaining about the tactics</span>.</div>
+        <div class="sp-en">【②에 삽입】 <span class="subj">This</span> <span class="slash">/</span> <span class="verb">led to</span> <span class="vw">hostile<span class="tt">적대적인</span></span> crowd protests and a telegram from the Australian Cricket Board to Marylebone Cricket Club, <span class="gr">complaining about the tactics</span>.</div>
         <div class="sp-ko">이것은 적대적인 관중 항의와 호주 크리켓 위원회가 메릴본 크리켓 클럽에 전술에 대해 항의하는 전보로 이어졌다. <span class="sp-note">★ lead to + 명사: "~로 이어지다" / complaining about ~: 분사구문(= and complained about ~)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">However, it was not just about cricket. The <span class="vw">accusation<span class="tt">비난</span></span> of <span class="vw">unsporting<span class="tt">비신사적인</span></span> behaviour on the part of the English cricket team becomes much more meaningful // <span class="gr">when it is noted that there was an international economic depression at the time</span>.</div>
+        <div class="sp-en">However, <span class="subj">it</span> <span class="slash">/</span> <span class="verb">was</span> not just about cricket. <span class="slash">/</span> <span class="subj">The <span class="vw">accusation<span class="tt">비난</span></span> of <span class="vw">unsporting<span class="tt">비신사적인</span></span> behaviour on the part of the English cricket team</span> <span class="slash">/</span> <span class="verb">becomes</span> much more meaningful <span class="slash">//</span> <span class="gr">when it is noted that there was an international economic depression at the time</span>.</div>
         <div class="sp-ko">그러나 그것은 단지 크리켓에 관한 것이 아니었다. / 영국 크리켓 팀의 비신사적 행동에 대한 비난은 / 그 당시 국제적인 경제 공황이 있었다는 것이 언급될 때 훨씬 더 의미심장해진다. <span class="sp-note">★ on the part of ~: "~의 편에서, ~에 의한" / when it is noted that ~: "~가 언급될 때"(it ~ that 가주어 구문)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">Many Australians, <span class="gr">fearful that imperial preference was being undermined in trade negotiations</span>, thought Britain was not 'playing the game' politically and economically.</div>
+        <div class="sp-en"><span class="subj">Many Australians</span>, <span class="gr">fearful that imperial preference was being undermined in trade negotiations</span>, <span class="slash">/</span> <span class="verb">thought</span> Britain was not 'playing the game' politically and economically.</div>
         <div class="sp-ko">특혜 관세가 무역 협상에서 약화되고 있다고 두려워한 많은 호주인들은 / 영국이 정치적으로 그리고 경제적으로 '정당하게 행동하지' 않고 있다고 생각했다. <span class="sp-note">★ fearful that ~: 형용사구(삽입구 — "~를 두려워하는") / 'playing the game': 관용구("정당하게 행동하다")</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">The Test series became a convenient <span class="vw">avenue<span class="tt">수단, 통로</span></span> for unorganized public protest.</div>
+        <div class="sp-en"><span class="subj">The Test series</span> <span class="slash">/</span> <span class="verb">became</span> a convenient <span class="vw">avenue<span class="tt">수단, 통로</span></span> for unorganized public protest.</div>
         <div class="sp-ko">테스트 시리즈는 비조직적인 공공 항의를 위한 편리한 수단이 되었다. <span class="sp-note">★ avenue for ~: "~을 위한 수단/통로"</span></div>
       </div>
     </div>
@@ -669,32 +680,33 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink)
   <div class="card">
     <div class="card-lbl">02 구문 해석 — 원문 전체</div>
     <div class="passage-box">
-      <div class="sp">
-        <div class="sp-en">One of the key <span class="vw">constraints<span class="tt">제약</span></span> on the development of sports tourism <span class="vw">prior to<span class="tt">~이전에</span></span> the nineteenth century // was the lack of <span class="vw">suitable<span class="tt">적합한</span></span> transport.</div>
+      <div class="sv-legend"><span><span class="sv-dot" style="background:#1a4b8c;"></span> 주어(S)</span><span><span class="sv-dot" style="background:#1a6b3a;"></span> 동사(V)</span><span><span class="slash">/</span> 의미 단위 끊기</span><span><span class="gr" style="padding:1px 4px;">초록 음영</span> = 구·절 묶음</span></div>
+          <div class="sp">
+        <div class="sp-en"><span class="subj">One of the key <span class="vw">constraints<span class="tt">제약</span></span> on the development of sports tourism <span class="vw">prior to<span class="tt">~이전에</span></span> the nineteenth century</span> <span class="slash">//</span> <span class="verb">was</span> the lack of <span class="vw">suitable<span class="tt">적합한</span></span> transport.</div>
         <div class="sp-ko">19세기 이전 스포츠 관광 발전의 핵심 제약 중 하나는 / 적합한 교통수단의 부재였다. <span class="sp-note">★ One of the key constraints on ~: "~에 대한 핵심 제약 중 하나" / prior to: "~이전에"(= before)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">There were incremental improvements from the fifteenth century <span class="vw">onwards<span class="tt">이후로</span></span> // involving more comfortable <span class="vw">coaches<span class="tt">마차</span></span> and, in the eighteenth century, greatly improved roads, // at least in Britain if not everywhere in Europe.</div>
+        <div class="sp-en"><span class="verb">There were</span> <span class="subj">incremental improvements</span> from the fifteenth century <span class="vw">onwards<span class="tt">이후로</span></span> <span class="slash">//</span> involving more comfortable <span class="vw">coaches<span class="tt">마차</span></span> and, in the eighteenth century, greatly improved roads, <span class="slash">//</span> at least in Britain if not everywhere in Europe.</div>
         <div class="sp-ko">15세기 이후부터 더 편안한 마차를 포함하는 점진적인 개선이 있었고, / 18세기에는 크게 개선된 도로가 있었다, / 유럽 전역은 아닐지라도 적어도 영국에서는. <span class="sp-note">★ involving ~: 분사구문(부연 설명) / at least ~ if not ~: "~까지는 아니더라도 적어도 ~"</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">But transport was primarily slow and costly.</div>
+        <div class="sp-en">But <span class="subj">transport</span> <span class="slash">/</span> <span class="verb">was</span> primarily slow and costly.</div>
         <div class="sp-ko">그러나 교통수단은 주로 느리고 비쌌다. <span class="sp-note">★ But: 역접 접속사(앞의 점진적 개선에도 불구하고 여전히 한계가 있었음을 강조) / primarily: 주로</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">For example, the journey time from London to Bath in 1680, <span class="gr">a distance of 107 miles</span>, was around sixty hours.</div>
+        <div class="sp-en">For example, <span class="subj">the journey time from London to Bath in 1680</span>, <span class="gr">a distance of 107 miles</span>, <span class="slash">/</span> <span class="verb">was</span> around sixty hours.</div>
         <div class="sp-ko">예를 들어, 1680년 런던에서 배스까지의 여행 시간은, 107마일의 거리로, 약 60시간이었다. <span class="sp-note">★ a distance of 107 miles: 동격 삽입구(the journey를 부연) / was around sixty hours: 느리고 비쌌다는 주장의 구체적 근거</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en"><span class="vw">Vastly<span class="tt">크게</span></span> improved roads had cut this time to ten hours by 1800 // but the time and cost still meant <span class="gr">that only the wealthy in society could travel <span class="vw">substantial<span class="tt">상당한</span></span> distances</span>.</div>
+        <div class="sp-en"><span class="subj"><span class="vw">Vastly<span class="tt">크게</span></span> improved roads</span> <span class="slash">/</span> <span class="verb">had cut</span> this time to ten hours by 1800 <span class="slash">//</span> but <span class="subj">the time and cost</span> <span class="slash">/</span> still <span class="verb">meant</span> <span class="gr">that only the wealthy in society could travel <span class="vw">substantial<span class="tt">상당한</span></span> distances</span>.</div>
         <div class="sp-ko">크게 개선된 도로는 1800년까지 이 시간을 10시간으로 단축했지만, / 시간과 비용은 여전히 사회에서 부유층만이 상당한 거리를 여행할 수 있다는 것을 의미했다. <span class="sp-note">★ had cut: 과거완료(1800년 이전 시점에 이미 단축됨) / meant that ~: "~을 의미했다" / only the wealthy: "오직 부유층만"</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en"><span class="gr">It was not until the development of the railways in the nineteenth century</span> that a relatively cheap and efficient form of transport was afforded to the population <span class="vw">at large<span class="tt">전체의, 일반 대중의</span></span>, // <span class="gr">enabling sports tourism to develop beyond the small and exclusive upper class activity {that had existed hitherto}</span>.</div>
+        <div class="sp-en"><span class="gr">It was not until the development of the railways in the nineteenth century</span> <span class="slash">/</span> that <span class="subj">a relatively cheap and efficient form of transport</span> <span class="slash">/</span> <span class="verb">was afforded</span> to the population <span class="vw">at large<span class="tt">전체의, 일반 대중의</span></span>, <span class="slash">//</span> <span class="gr">enabling sports tourism to develop beyond the small and exclusive upper class activity {that had existed hitherto}</span>.</div>
         <div class="sp-ko">19세기에 철도가 발전하고 나서야 비로소 비교적 저렴하고 효율적인 교통수단이 일반 대중에게 제공되었으며, / 그것은 스포츠 관광이 그때까지 존재했던 소규모 독점적 상류층 활동을 넘어 발전할 수 있게 해주었다. <span class="sp-note">★ It was not until ~ that ~: "~하고 나서야 비로소 ~했다"(강조 구문) / enabling ~: 분사구문(결과)</span></div>
       </div>
       <div class="sp">
-        <div class="sp-en">As Wray Vamplew points out, the railways 'revolutionized sport in England <span class="gr">by widening the <span class="vw">catchment area<span class="tt">유입 범위</span></span> for spectators and by enabling participants to compete nationally</span>'.</div>
+        <div class="sp-en">As Wray Vamplew points out, <span class="slash">/</span> <span class="subj">the railways</span> <span class="slash">/</span> '<span class="verb">revolutionized</span> sport in England <span class="gr">by widening the <span class="vw">catchment area<span class="tt">유입 범위</span></span> for spectators and by enabling participants to compete nationally</span>'.</div>
         <div class="sp-ko">웨이 밤플류가 지적하듯이, 철도는 '관중들을 위한 유입 범위를 넓히고 참가자들이 전국적으로 경쟁할 수 있게 함으로써 잉글랜드의 스포츠를 혁명화했다'. <span class="sp-note">★ by widening ~ and by enabling ~: 수단의 by + 동명사(병렬) / enable A to V: A가 V하도록 가능하게 하다</span></div>
       </div>
     </div>
